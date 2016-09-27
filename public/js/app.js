@@ -133,7 +133,7 @@
     };
     $rootScope.findById = function(object, id) {
       return _.findWhere(object, {
-        id: parseInt(id)
+        id: id
       });
     };
     $rootScope.total = function(array, prop, prop2) {
@@ -333,6 +333,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -439,11 +444,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
