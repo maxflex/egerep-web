@@ -1,0 +1,63 @@
+$line-1: #ca5948;
+$line-2: #528c5d;
+$line-3: #5a68a0;
+$line-4: #4babd8;
+$line-5: #9b6144;
+$line-6: #d78a4b;
+$line-7: #a25980;
+$line-8: #ebe457;
+$line-9: #838382;
+$line-10: #79b872;
+$line-11: #4c7ea9;
+$line-12: #b0cccb;
+
+.metro-circle {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    &.in-autocomplete {
+        position: relative;
+        left: -5px;
+    }
+    &.line-1 {background-color: $line-1}
+    &.line-2 {background-color: $line-2}
+    &.line-3 {background-color: $line-3}
+    &.line-4 {background-color: $line-4}
+    &.line-5 {background-color: $line-5}
+    &.line-6 {background-color: $line-6}
+    &.line-7 {background-color: $line-7}
+    &.line-8 {background-color: $line-8}
+    &.line-9 {background-color: $line-9}
+    &.line-10 {background-color: $line-10}
+    &.line-11 {background-color: $line-11}
+    &.line-12 {background-color: $line-12}
+}
+
+.search-result-metro-list .metro-circle {
+    margin-right: 5px;
+}
+
+
+
+.link-like {
+    color: #648362;
+    text-decoration: underline;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-result-reviews-more {
+    cursor: pointer;
+}
+
+div[id^='gmap'] {
+    width: 100%;
+    height: 300px;
+    margin: 10px 0;
+}
+
+div[id^='svg'] {
+    text-align: center;
+    margin: 10px 0;
+}

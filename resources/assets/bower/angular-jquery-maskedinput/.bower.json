@@ -1,0 +1,35 @@
+{
+  "name": "angular-jquery-maskedinput",
+  "main": "angular-jquery-maskedinput.js",
+  "homepage": "https://github.com/danicomas/angular-jquery-maskedinput",
+  "authors": [
+    "Daniel Comas Fernández <danicomas@gmail.com>"
+  ],
+  "description": "Angular directive for jquery-maskedinput",
+  "keywords": [
+    "angular",
+    "jquery",
+    "mask",
+    "masked",
+    "input"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery.maskedinput": "jquery-maskedinput#~1.4.1"
+  },
+  "_release": "0213c2dc0e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0213c2dc0e1cd29c9e0072313e55a5673e527cd7"
+  },
+  "_source": "https://github.com/danicomas/angular-jquery-maskedinput.git",
+  "_target": "*",
+  "_originalSource": "angular-jquery-maskedinput"
+}
