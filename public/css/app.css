@@ -1692,4 +1692,10 @@ div[id^='svg'] {
   text-align: center;
   margin: 10px 0; }
 
+.loading {
+  text-align: center;
+  padding: 200px 0; }
+  .loading img {
+    width: 100px; }
+
 /*# sourceMappingURL=app.css.map */

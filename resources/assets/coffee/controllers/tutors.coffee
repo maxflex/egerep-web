@@ -1,6 +1,6 @@
 angular
     .module 'Egerep'
-    .constant 'REVIEWS_PER_PAGE', 2
+    .constant 'REVIEWS_PER_PAGE', 5
     .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
         $timeout ->
@@ -67,9 +67,9 @@ angular
                 viewed_tutors.push tutor_id
 
         $scope.filter = (subject_id) ->
+            $scope.tutors = []
             unselectSubjects(subject_id)
             $scope.page = 1
-            $scope.tutors = []
             search()
         $scope.nextPage = ->
             $scope.page++

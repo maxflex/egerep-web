@@ -96,7 +96,7 @@ angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngMaterial', 'ngAnimate',
             $rootScope.saving = false
 
         $rootScope.findById = (object, id) ->
-            _.findWhere(object, {id: id})
+            _.findWhere(object, {id: parseInt(id)})
 
         # prop2 – второй уровень вложенности
         $rootScope.total = (array, prop, prop2 = false) ->

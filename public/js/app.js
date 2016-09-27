@@ -133,7 +133,7 @@
     };
     $rootScope.findById = function(object, id) {
       return _.findWhere(object, {
-        id: id
+        id: parseInt(id)
       });
     };
     $rootScope.total = function(array, prop, prop2) {
@@ -179,7 +179,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 2).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
     var search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     $timeout(function() {
@@ -249,9 +249,9 @@
       }
     };
     $scope.filter = function(subject_id) {
+      $scope.tutors = [];
       unselectSubjects(subject_id);
       $scope.page = 1;
-      $scope.tutors = [];
       return search();
     };
     $scope.nextPage = function() {
