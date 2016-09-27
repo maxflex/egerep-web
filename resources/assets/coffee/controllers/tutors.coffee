@@ -1,4 +1,4 @@
-    angular
+angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 2
     .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
@@ -6,6 +6,7 @@
         $timeout ->
             $scope.chunked_subjects = chunk($scope.subjects, 4)
             metroAutocomplete($scope)
+            $scope.filter() if not parseInt($scope.search.station_id)
 
         # пары предметов
         $scope.pairs = [

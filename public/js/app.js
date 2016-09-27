@@ -184,7 +184,10 @@
     bindArguments($scope, arguments);
     $timeout(function() {
       $scope.chunked_subjects = chunk($scope.subjects, 4);
-      return metroAutocomplete($scope);
+      metroAutocomplete($scope);
+      if (!parseInt($scope.search.station_id)) {
+        return $scope.filter();
+      }
     });
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
