@@ -1,6 +1,6 @@
 {
   "name": "angular-ladda",
-  "version": "0.3.4",
+  "version": "0.4.2",
   "homepage": "https://github.com/remotty/angular-ladda",
   "authors": [
     "Chungsub Kim <subicura@subicura.com>"
@@ -21,11 +21,12 @@
     "protractor.conf.js",
     "gulpfile.js",
     "bower_components",
-    "node_modules"
+    "node_modules",
+    "test"
   ],
   "dependencies": {
-    "angular": "^1.2.0",
-    "ladda": "~0.9.8"
+    "angular": ">=1.2.0 <2.0",
+    "ladda": ">=0.9.8"
   },
   "devDependencies": {
     "bootstrap": "^3.3.1",

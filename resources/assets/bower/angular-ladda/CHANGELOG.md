@@ -1,5 +1,18 @@
 # angular-ladda
 
+## 0.4.2
+ * fix size caculate error
+
+## 0.4.1
+ * fix npm package dependency setting
+
+## 0.4
+ * update bower & npm config file
+ * update ladda version 1.0 & angular version
+
+## 0.3.4
+ * change bower dependency version
+
 ## 0.3.3
  * support global spinner-size, spinner-color config
 

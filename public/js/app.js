@@ -5,7 +5,11 @@
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
-  ]).filter('cut', function() {
+  ]).config(function(laddaProvider) {
+    return laddaProvider.setOption({
+      spinnerColor: '#83b060'
+    });
+  }).filter('cut', function() {
     return function(value, wordwise, max, nothing, tail) {
       var lastspace;
       if (nothing == null) {
@@ -218,12 +222,16 @@
           return map.setZoom(12);
         });
       }
-      return tutor.map_shown = tutor.map_shown ? false : true;
+      return $scope.toggleShow(tutor, 'map_shown', 'gmap');
     };
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
     };
     $scope.reviews = function(tutor) {
+      Tutor.iteraction({
+        id: tutor.id,
+        type: 'reviews'
+      });
       return tutor.all_reviews = Tutor.reviews({
         id: tutor.id
       }, function(response) {
@@ -232,6 +240,10 @@
     };
     $scope.showMoreReviews = function(tutor) {
       var from, to;
+      Tutor.iteraction({
+        id: tutor.id,
+        type: 'reviews_more'
+      });
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
       from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
       to = from + REVIEWS_PER_PAGE;
@@ -242,8 +254,9 @@
     };
     $scope.countView = function(tutor_id) {
       if (viewed_tutors.indexOf(tutor_id) === -1) {
-        Tutor.view({
-          id: tutor_id
+        Tutor.iteraction({
+          id: tutor_id,
+          type: 'views'
         });
         return viewed_tutors.push(tutor_id);
       }
@@ -281,10 +294,12 @@
       }
     };
     search = function() {
+      $scope.searching = true;
       return Tutor.search({
         page: $scope.page,
         search: $scope.search
       }, function(response) {
+        $scope.searching = false;
         if (response.hasOwnProperty('url')) {
           return redirect(response.url);
         } else {
@@ -304,7 +319,7 @@
       $scope.search.station_id = 0;
       return $scope.filter();
     };
-    return $scope.showSvg = function(tutor) {
+    $scope.showSvg = function(tutor) {
       var map;
       if (tutor.show_svg === void 0) {
         map = new SVGMap({
@@ -316,14 +331,20 @@
         map.deselectAll();
         map.select(tutor.svg_map);
       }
-      return tutor.show_svg = tutor.show_svg ? false : true;
+      return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
+    };
+    return $scope.toggleShow = function(tutor, prop, iteraction_type) {
+      if (tutor[prop]) {
+        return tutor[prop] = false;
+      } else {
+        tutor[prop] = true;
+        return Tutor.iteraction({
+          id: tutor.id,
+          type: iteraction_type
+        });
+      }
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -478,11 +499,17 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
     return $resource(apiPath('tutors'), {
-      id: '@id'
+      id: '@id',
+      type: '@type'
     }, {
       search: {
         method: 'POST',
@@ -493,9 +520,9 @@
         isArray: true,
         url: apiPath('tutors', 'reviews')
       },
-      view: {
+      iteraction: {
         method: 'GET',
-        url: apiPath('tutors', 'view')
+        url: "api/tutors/iteraction/:id/:type"
       }
     });
   }).factory('Request', function($resource) {

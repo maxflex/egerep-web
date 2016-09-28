@@ -1,3 +1,6 @@
+$green-main-dark: #35a45b;
+$green-main-light: #83b060;
+
 $line-1: #ca5948;
 $line-2: #528c5d;
 $line-3: #5a68a0;
@@ -58,7 +61,7 @@ div[id^='gmap'] {
 }
 
 div[id^='svg'] {
-    text-align: center;
+    // text-align: center;
     margin: 10px 0;
 }
 
@@ -69,3 +72,14 @@ div[id^='svg'] {
         width: 100px;
     }
 }
+
+.gmnoprint:not(.gm-bundled-control) {
+    display: none;
+}
+
+.gm-bundled-control .gmnoprint {
+    display: block;
+}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+a[href^="https://www.google.com/maps"]{display:none !important}

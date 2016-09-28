@@ -58,4 +58,17 @@ class Tutor extends Model
     {
         return $query->where('public_desc', '!=', '');
     }
+
+    /**
+     * Iteraction – create row if not exists
+     */
+    public static function iteraction($id)
+    {
+        if (! egerep('tutor_iteractions')->where('tutor_id', $id)->exists()) {
+            egerep('tutor_iteractions')->insert([
+                'tutor_id' => $id
+            ]);
+        }
+        return egerep('tutor_iteractions')->where('tutor_id', $id);
+    }
 }

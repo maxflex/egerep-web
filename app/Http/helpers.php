@@ -174,3 +174,10 @@
     {
         return \App\Models\Service\Factory::json($table, $select);
     }
+
+    /**
+     * Egerep connection helper
+     */
+    function egerep($table) {
+        return \DB::connection('egerep')->table($table);
+    }

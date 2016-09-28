@@ -40,19 +40,20 @@ angular
                 map.fitBounds bounds
                 map.panToBounds bounds
                 map.setZoom 12
-            tutor.map_shown = if tutor.map_shown then false else true
-
+            $scope.toggleShow(tutor, 'map_shown', 'gmap')
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
         $scope.reviews = (tutor) ->
+            Tutor.iteraction {id: tutor.id, type: 'reviews'}
             tutor.all_reviews = Tutor.reviews
                 id: tutor.id
             , (response) ->
                 $scope.showMoreReviews(tutor)
 
         $scope.showMoreReviews = (tutor) ->
+            Tutor.iteraction {id: tutor.id, type: 'reviews_more'}
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
@@ -63,7 +64,7 @@ angular
 
         $scope.countView = (tutor_id) ->
             if viewed_tutors.indexOf(tutor_id) is -1
-                Tutor.view {id: tutor_id}
+                Tutor.iteraction {id: tutor_id, type: 'views'}
                 viewed_tutors.push tutor_id
 
         $scope.filter = (subject_id) ->
@@ -71,6 +72,7 @@ angular
             unselectSubjects(subject_id)
             $scope.page = 1
             search()
+
         $scope.nextPage = ->
             $scope.page++
             search()
@@ -88,10 +90,12 @@ angular
                     $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
 
         search = ->
+            $scope.searching = true
             Tutor.search
                 page: $scope.page
                 search: $scope.search
             , (response) ->
+                $scope.searching = false
                 if response.hasOwnProperty('url')
                     redirect response.url
                 else
@@ -122,4 +126,11 @@ angular
                 #             $('#svg-' + tutor.id).hide()
                 #         , 200
                 # return
-            tutor.show_svg = if tutor.show_svg then false else true
+            $scope.toggleShow(tutor, 'show_svg', 'svg_map')
+
+        $scope.toggleShow = (tutor, prop, iteraction_type) ->
+            if tutor[prop]
+                tutor[prop] = false
+            else
+                tutor[prop] = true
+                Tutor.iteraction {id: tutor.id, type: iteraction_type}

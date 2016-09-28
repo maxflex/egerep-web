@@ -1,6 +1,6 @@
 angular.module('Egerep')
     .factory 'Tutor', ($resource) ->
-        $resource apiPath('tutors'), {id: '@id'},
+        $resource apiPath('tutors'), {id: '@id', type: '@type'},
             search:
                 method: 'POST'
                 url: apiPath('tutors', 'search')
@@ -8,9 +8,9 @@ angular.module('Egerep')
                 method: 'GET'
                 isArray: true
                 url: apiPath('tutors', 'reviews')
-            view:
+            iteraction:
                 method: 'GET'
-                url: apiPath('tutors', 'view')
+                url: "api/tutors/iteraction/:id/:type"
 
     .factory 'Request', ($resource) ->
         $resource apiPath('requests'), {id: '@id'}, updatable()

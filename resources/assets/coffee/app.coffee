@@ -4,6 +4,9 @@ angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngMaterial', 'ngAnimate',
         ($compileProvider) ->
             $compileProvider.aHrefSanitizationWhitelist /^\s*(https?|ftp|mailto|chrome-extension|sip):/
 	]
+    .config (laddaProvider) ->
+        laddaProvider.setOption
+            spinnerColor: '#83b060'
     .filter 'cut', ->
       (value, wordwise, max, nothing = '', tail) ->
         if !value

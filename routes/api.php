@@ -1,8 +1,8 @@
 <?php
 
-Route::group(['namespace' => 'Api'], function () {
+Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('tutors/search', 'TutorsController@search');
-    Route::get('tutors/view/{id}', 'TutorsController@view');
+    Route::get('tutors/iteraction/{id}/{type}', 'TutorsController@iteraction');
     Route::get('tutors/reviews/{id}', 'TutorsController@reviews');
     Route::resource('requests', 'RequestsController', ['only' => 'store']);
 });

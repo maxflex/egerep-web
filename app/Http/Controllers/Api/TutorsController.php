@@ -78,11 +78,11 @@ class TutorsController extends Controller
     }
 
     /**
-     * Засчитать просмотр
+     * Count view
      */
-    public function view($id)
+    public function iteraction($id, $type)
     {
-        DB::connection('egerep')->table('tutors')->whereId($id)->increment('views');
+        Tutor::iteraction($id)->increment($type);
     }
 
     /**
@@ -138,6 +138,31 @@ class TutorsController extends Controller
                 # отсеиваем репетиторов без зеленых маркеров
                 $query->has('markers');
             }
+        }
+
+        switch ($sort) {
+            case 1:
+                $query->orderBy('public_price', 'desc');
+                break;
+            case 2:
+                $query->orderBy('public_price', 'asc');
+                break;
+            case 4:
+                if ($station_id) {
+                    $query->has('markers')->orderBy(DB::raw(
+                            "(select min(d.distance + m.minutes)
+                                from markers mr
+                                join metros m on m.marker_id = mr.id
+                                join distances d on d.from = m.station_id and d.to = {$station_id}
+                                where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
+                             )"), 'asc');
+                    break;
+                }
+                // @notice break внутри if конструкции чтоб если не указан station_id перескакивал на сортиворку по популярности,
+                // что и есть дефолт сортивока изначально насколько я понял.
+            case 3:
+            default:
+                $query->select(DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'));
         }
 
         $query->select([
