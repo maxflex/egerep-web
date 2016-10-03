@@ -10,13 +10,13 @@ angular.module('Egerep')
                 url: apiPath('tutors', 'reviews')
             iteraction:
                 method: 'GET'
-                url: "api/tutors/iteraction/:id/:type"
+                url: "/api/tutors/iteraction/:id/:type"
 
     .factory 'Request', ($resource) ->
         $resource apiPath('requests'), {id: '@id'}, updatable()
 
 apiPath = (entity, additional = '') ->
-    "api/#{entity}/" + (if additional then additional + '/' else '') + ":id"
+    "/api/#{entity}/" + (if additional then additional + '/' else '') + ":id"
 
 
 updatable = ->

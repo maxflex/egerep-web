@@ -5,7 +5,7 @@ angular.module 'Egerep'
             count: '='      # кол-во
             type: '@'       # тип plural age | student | ...
             noneText: '@'   # текст, если кол-во равно нулю
-        templateUrl: 'directives/plural'
+        templateUrl: '/directives/plural'
         controller: ($scope, $element, $attrs, $timeout) ->
             $scope.textOnly = $attrs.hasOwnProperty('textOnly')
             $scope.hideZero = $attrs.hasOwnProperty('hideZero')
@@ -25,3 +25,5 @@ angular.module 'Egerep'
                 'review': ['отзыв', 'отзыва', 'отзывов']
                 'request': ['заявка', 'заявки', 'заявок']
                 'station': ['станцию', 'станции', 'станций']
+                'tutor': ['репетитор', 'репетитора', 'репетиторов']
+                'profile': ['анкета', 'анкеты', 'анкет']

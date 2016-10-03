@@ -1,12 +1,20 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
+    .controller 'TutorProfile', ($scope) ->
+        console.log 1
     .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
-        $timeout ->
-            $scope.chunked_subjects = chunk($scope.subjects, 4)
-            metroAutocomplete($scope)
-            $scope.filter() if not parseInt($scope.search.station_id)
+
+        # страница преподавателя
+        if window.location.pathname.indexOf('/tutor/') is 0
+            console.log 'here'
+        else
+        # страница поиска
+            $timeout ->
+                $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
+                metroAutocomplete($scope)
+                $scope.filter() if not parseInt($scope.search.station_id)
 
         # пары предметов
         $scope.pairs = [
@@ -134,3 +142,9 @@ angular
             else
                 tutor[prop] = true
                 Tutor.iteraction {id: tutor.id, type: iteraction_type}
+
+        $scope.subjectsLink = (tutor) ->
+            link = ['tutors']
+            tutor.subjects.forEach (subject_id) ->
+                link.push $scope.subjects[subject_id].eng
+            '/' + link.join('-')

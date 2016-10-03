@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Shared\Model;
 use App\Models\Variable;
 use App\Models\Service\Parser;
+use App\Scopes\PageScope;
 
 class Page extends Model
 {
@@ -52,5 +53,10 @@ class Page extends Model
             $query->whereRaw("FIND_IN_SET($subject_id, subjects)");
         }
         $query->where('place', $place)->where('station_id', $station_id)->where('id', '!=', $id);
+    }
+
+    public static function boot()
+    {
+        static::addGlobalScope(new PageScope);
     }
 }

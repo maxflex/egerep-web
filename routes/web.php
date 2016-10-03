@@ -5,5 +5,8 @@
         return view("directives.{$directive}");
     });
 
+    # Tutor profile page
+    Route::get('tutor/{id}', 'PagesController@tutor');
+
     # MAIN ALL PAGES ROUTE
     Route::get('{url?}', 'PagesController@index');

@@ -6,7 +6,7 @@ use Cache;
 
 class Factory
 {
-    public static function get($table, $select = null)
+    public static function get($table, $key = 'id', $select = null)
     {
         $query = DB::connection('factory')->table($table);
 
@@ -14,12 +14,18 @@ class Factory
             $query->select('id', $select);
         }
 
-        return $query->get();
+        $return = $query->get();
+
+        if ($key) {
+            $return = array_combine($return->pluck($key)->all(), $return->all());
+        }
+
+        return $return;
     }
 
-    public static function json($table, $select = null)
+    public static function json($table, $key = 'id', $select = null)
     {
-        $data = static::get($table, $select);
+        $data = static::get($table, $key, $select);
         return json_encode($data);
     }
 
@@ -33,5 +39,10 @@ class Factory
             Cache::forever($key, $value);
             return $value;
         }
+    }
+
+    public static function getSubjectId($subject_eng)
+    {
+        return dbFactory('subjects')->where('eng', $subject_eng)->value('id');
     }
 }

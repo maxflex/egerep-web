@@ -183,16 +183,42 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
+  angular.module('Egerep').controller('Index', function($scope, Tutor) {
+    bindArguments($scope, arguments);
+    return $scope.getSubjects = function(tutor) {
+      var subject_ids;
+      if ('string' === typeof tutor.subjects) {
+        subject_ids = tutor.subjects.split(',').map(function(id) {
+          return +id;
+        });
+      } else {
+        subject_ids = tutor.subjects;
+      }
+      return _.filter($scope.subjects, function(subject) {
+        return subject_ids.indexOf(subject.id) !== -1;
+      });
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('TutorProfile', function($scope) {
+    return console.log(1);
+  }).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
     var search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
-    $timeout(function() {
-      $scope.chunked_subjects = chunk($scope.subjects, 4);
-      metroAutocomplete($scope);
-      if (!parseInt($scope.search.station_id)) {
-        return $scope.filter();
-      }
-    });
+    if (window.location.pathname.indexOf('/tutor/') === 0) {
+      console.log('here');
+    } else {
+      $timeout(function() {
+        $scope.chunked_subjects = chunk(toArray($scope.subjects), 4);
+        metroAutocomplete($scope);
+        if (!parseInt($scope.search.station_id)) {
+          return $scope.filter();
+        }
+      });
+    }
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
     $scope.request = function(tutor) {
@@ -333,7 +359,7 @@
       }
       return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
-    return $scope.toggleShow = function(tutor, prop, iteraction_type) {
+    $scope.toggleShow = function(tutor, prop, iteraction_type) {
       if (tutor[prop]) {
         return tutor[prop] = false;
       } else {
@@ -343,6 +369,14 @@
           type: iteraction_type
         });
       }
+    };
+    return $scope.subjectsLink = function(tutor) {
+      var link;
+      link = ['tutors'];
+      tutor.subjects.forEach(function(subject_id) {
+        return link.push($scope.subjects[subject_id].eng);
+      });
+      return '/' + link.join('-');
     };
   });
 
@@ -442,7 +476,7 @@
         type: '@',
         noneText: '@'
       },
-      templateUrl: 'directives/plural',
+      templateUrl: '/directives/plural',
       controller: function($scope, $element, $attrs, $timeout) {
         $scope.textOnly = $attrs.hasOwnProperty('textOnly');
         $scope.hideZero = $attrs.hasOwnProperty('hideZero');
@@ -460,11 +494,18 @@
           'mark': ['оценки', 'оценок', 'оценок'],
           'review': ['отзыв', 'отзыва', 'отзывов'],
           'request': ['заявка', 'заявки', 'заявок'],
-          'station': ['станцию', 'станции', 'станций']
+          'station': ['станцию', 'станции', 'станций'],
+          'tutor': ['репетитор', 'репетитора', 'репетиторов'],
+          'profile': ['анкета', 'анкеты', 'анкет']
         };
       }
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -522,7 +563,7 @@
       },
       iteraction: {
         method: 'GET',
-        url: "api/tutors/iteraction/:id/:type"
+        url: "/api/tutors/iteraction/:id/:type"
       }
     });
   }).factory('Request', function($resource) {
@@ -535,7 +576,7 @@
     if (additional == null) {
       additional = '';
     }
-    return ("api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
   };
 
   updatable = function() {
@@ -553,11 +594,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

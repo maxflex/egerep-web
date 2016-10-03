@@ -2,55 +2,55 @@
 var ICON_BLUE, ICON_GREEN, ICON_HOME, ICON_HOME_BLUE, ICON_RED, ICON_SCHOOL, ICON_SCHOOL_BLUE, ICON_SEARCH, INIT_COORDS, MAP_CENTER, RECOM_BOUNDS;
 
 ICON_WHITE = {
-  url: "img/maps/whitepin.png",
+  url: "/img/maps/whitepin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_BLUE = {
-  url: "img/maps/bluepin.png",
+  url: "/img/maps/bluepin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_RED = {
-  url: "img/maps/redpin.png",
+  url: "/img/maps/redpin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_GREEN = {
-  url: "img/maps/greenpin.png",
+  url: "/img/maps/greenpin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_SCHOOL = {
-  url: "img/maps/schoolpin.png",
+  url: "/img/maps/schoolpin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_SCHOOL_BLUE = {
-  url: "img/maps/schoolpin_blue.png",
+  url: "/img/maps/schoolpin_blue.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_HOME = {
-  url: "img/maps/homepin.png",
+  url: "/img/maps/homepin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_HOME_BLUE = {
-  url: "img/maps/homepin_blue.png",
+  url: "/img/maps/homepin_blue.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
 
 ICON_SEARCH = {
-  url: "img/maps/bluepin.png",
+  url: "/img/maps/bluepin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };

@@ -2,6 +2,8 @@
     namespace App\Models\Service;
     use App\Models\Variable;
     use App\Models\Tutor;
+    use App\Models\Client;
+    use App\Models\Review;
 
     /**
      * Parser
@@ -30,11 +32,13 @@
             return $html;
         }
 
+
         /**
          * Компилирует функции типа [factory|subjects|name]
          */
         public static function compileFunctions(&$html, $var)
         {
+            $replacement = '';
             $args = explode('|', $var);
             if (count($args) > 1) {
                 $function_name = $args[0];
@@ -43,12 +47,32 @@
                     case 'factory':
                         $replacement = fact(...$args);
                         break;
-                    case 'const':
-                        $replacement = Factory::constant($args[0]);
-                        break;
                     case 'tutor':
                         $replacement = Tutor::find($args[0])->toJson();
                         break;
+                    case 'tutors':
+                        $replacement = Tutor::bySubject(...$args)->toJson();
+                        break;
+                    case 'reviews':
+                        $replacement = Review::get(...$args)->toJson();
+                        break;
+                    case 'const':
+                        $replacement = Factory::constant($args[0]);
+                        break;
+                    case 'count':
+                        $type = array_shift($args);
+                        switch($type) {
+                            case 'tutors':
+                                $replacement = Tutor::count(...$args);
+                                break;
+                            case 'clients':
+                                $replacement = Client::count();
+                                break;
+                            case 'reviews':
+                                $replacement = Review::count();
+                                break;
+                        }
+                    break;
                 }
                 static::_replace($html, $var, $replacement);
             }
@@ -70,6 +94,17 @@
                 }
             }
             return $html;
+        }
+
+        /**
+         * Компилировать страницу препода
+         */
+        public static function compileTutor($id, &$html)
+        {
+            $tutor = Tutor::with('markers')->selectDefault()->find($id);
+            $similar_tutors = Tutor::getSimilar($tutor);
+            static::_replace($html, 'current_tutor', $tutor->toJson());
+            static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
         }
 
         public static function interpolate($text = '')

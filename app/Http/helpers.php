@@ -170,9 +170,12 @@
         return $n . ' ' . $text;
 	}
 
-    function fact($table, $select = null)
+    /**
+     * Get from factory
+     */
+    function fact($table, $key = 'id', $select = null)
     {
-        return \App\Models\Service\Factory::json($table, $select);
+        return \App\Models\Service\Factory::json($table, $key, $select);
     }
 
     /**
@@ -180,4 +183,13 @@
      */
     function egerep($table) {
         return \DB::connection('egerep')->table($table);
+    }
+
+    /**
+     * Factory connection helper
+     * @return [type]  [description]
+     */
+    function dbFactory($table)
+    {
+        return \DB::connection('factory')->table($table);
     }

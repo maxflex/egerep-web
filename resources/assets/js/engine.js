@@ -2,7 +2,7 @@
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
     })
-    
+
     angular.element(document).ready(function() {
 		setTimeout(function() {
 			setScope()
@@ -346,4 +346,12 @@ function selectAutocomplete(scope) {
         $(menu[0].children[0]).click()
         $('.search-metro-autocomplete').blur()
     }
+}
+
+function toArray(object) {
+    arr = []
+    $.each(object, function(i, v) {
+        arr.push(v)
+    })
+    return arr
 }

@@ -101,86 +101,26 @@ class TutorsController extends Controller
     /**
      * Поиск по преподам
      */
-    public function search(Request $reqeust)
+    public function search(Request $request)
     {
-        @extract($reqeust->search);
+        @extract($request->search);
 
         // очищаем deselect-значения  {7: false}
         $subjects = array_filter($subjects);
 
         // если указаны какие либо-параметры, пытаемся найти serp-страницу с параметрами
         if (count($subjects) || $place || $station_id) {
-            $page = \App\Models\Page::findByParams($reqeust->search);
+            $page = \App\Models\Page::findByParams($request->search);
             if ($page->exists()) {
                 return ['url' => $page->value('url')];
             }
         }
 
         // force current page
-        Paginator::currentPageResolver(function() use ($reqeust) {
-            return $reqeust->page;
+        Paginator::currentPageResolver(function() use ($request) {
+            return $request->page;
         });
 
-        $query = Tutor::published()->with(['markers']);
-
-        foreach($subjects as $subject_id => $enabled) {
-            if ($enabled) {
-                $query->whereRaw("FIND_IN_SET($subject_id, subjects)");
-            }
-        }
-
-        # Оставляем только зеленые маркеры, если клиент едет к репетитору
-        if ($place) {
-            if ($place == 1) {
-                # если "Клиент едет к репетитору", то только репетиторы с картой выезда
-                $query->where('svg_map', '<>', '');
-            } else {
-                # отсеиваем репетиторов без зеленых маркеров
-                $query->has('markers');
-            }
-        }
-
-        switch ($sort) {
-            case 1:
-                $query->orderBy('public_price', 'desc');
-                break;
-            case 2:
-                $query->orderBy('public_price', 'asc');
-                break;
-            case 4:
-                if ($station_id) {
-                    $query->has('markers')->orderBy(DB::raw(
-                            "(select min(d.distance + m.minutes)
-                                from markers mr
-                                join metros m on m.marker_id = mr.id
-                                join distances d on d.from = m.station_id and d.to = {$station_id}
-                                where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
-                             )"), 'asc');
-                    break;
-                }
-                // @notice break внутри if конструкции чтоб если не указан station_id перескакивал на сортиворку по популярности,
-                // что и есть дефолт сортивока изначально насколько я понял.
-            case 3:
-            default:
-                $query->select(DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'));
-        }
-
-        $query->select([
-                'id',
-                'first_name',
-                'middle_name',
-                'subjects',
-                'public_desc',
-                'photo_extension',
-                'start_career_year',
-                'birth_year',
-                'svg_map',
-                'lesson_duration',
-                'public_price',
-                'departure_price',
-                DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'),
-            ])->orderBy('clients_count', 'desc');
-
-        return $query->paginate(10);
+        return Tutor::search($request->search)->paginate(10);
     }
 }
