@@ -107,6 +107,26 @@
             static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
         }
 
+        /**
+         * Компилировать сео-страницу
+         * [seo_text_top] или [seo_text_bottom] в зависимости от $page->seo_desktop
+         */
+        public static function compileSeo($page, &$html)
+        {
+            if ($page->seo_desktop == 0) {
+                static::_replace($html, 'seo_text_top', '');
+                static::_replace($html, 'seo_text_bottom', '');
+            }
+            if ($page->seo_desktop == 1) {
+                static::_replace($html, 'seo_text_top', $page->getClean('html'));
+                static::_replace($html, 'seo_text_bottom', '');
+            }
+            if ($page->seo_desktop == 2) {
+                static::_replace($html, 'seo_text_top', '');
+                static::_replace($html, 'seo_text_bottom', $page->getClean('html'));
+            }
+        }
+
         public static function interpolate($text = '')
         {
             return self::START_VAR . $text . self::END_VAR;

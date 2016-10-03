@@ -113,6 +113,9 @@ class Tutor extends Model
                     $subject_id = Service\Factory::getSubjectId($type);
                     $query->whereSubject($subject_id);
             }
+        } else {
+            // если не указан тип, считаем всех преподов
+            $query->withoutGlobalScope(TutorScope::class);
         }
 
         return $query->count();

@@ -22,6 +22,17 @@ jsFromBower = (scripts) => {
     return bower_scripts
 }
 
+fileFromBower = (file) => {
+    return `resources/assets/bower/${file}`
+}
+
+filesFromBowerFolder = (folder, files) => {
+    bower_files = []
+    files.forEach((file) => {
+        bower_files.push(fileFromBower(folder + '/' + file))
+    })
+    return bower_files
+}
 
 elixir(mix => {
     mix
@@ -34,7 +45,7 @@ elixir(mix => {
         })
         .sass('app.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
-        .copy('resources/assets/bower/SVG-Loaders/svg-loaders/three-dots.svg', 'public/img/svg')
+        .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .scripts(jsFromBower([
             'jquery/dist/jquery',
             'bootstrap/dist/js/bootstrap.min',

@@ -143,16 +143,19 @@ textarea {
         font-family: 'helveticaneuecyrroman';
     }
         .header-phone:after {
-            content: '';
-
+            content: "\f095";
+            font: normal normal normal 14px/1 FontAwesome;
             position: absolute;
             top: 2px;
             left: 0;
-
-            width: 21px;
-            height: 20px;
-
-            background: url('../img/icons/ic1.gif') no-repeat;
+            font-size: 16px;
+            color: white;
+            background-color: #74a168;
+            border-radius: 50%;
+            height: 25px;
+            width: 25px;
+            text-align: center;
+            line-height: 26px;
         }
 
         .header-phone-work-hour {
@@ -821,7 +824,7 @@ textarea {
                 line-height: 16px;
                 color: #4c4a40;
                 font-family: 'helveticaneuecyrlight_italic';
-
+                height: 140px;
                 padding: 0 0 8px 0;
             }
             .index-reviews-list-author {
@@ -1134,16 +1137,15 @@ textarea {
             cursor: pointer;
         }
             .footer-search-button:after {
-                content: '';
-
                 position: absolute;
                 top: 10px;
                 left: 19px;
 
                 width: 15px;
                 height: 15px;
-
-                background: url('../img/icons/ic2.png') no-repeat;
+                content: "\f002";
+                font: normal normal normal 14px/1 FontAwesome;
+                color: white;
             }
 
 /*
@@ -1337,16 +1339,12 @@ span.customSelect {
         border: 1px solid #82a06b;
     }
         .custom-checkbox.checked:before {
-            content: '';
-
-            position: absolute;
-            top: 4px;
-            left: 3px;
-
-            width: 9px;
-            height: 7px;
-
-            background: url('../img/icons/cb-checked.gif') no-repeat;
+            font: normal normal normal 14px/1 FontAwesome;
+            color: white;
+            left: 1px;
+            font-size: 11px;
+            padding-left: 2px;
+            content: "\f00c";
         }
         .custom-radio.checked:before {
             content: '';

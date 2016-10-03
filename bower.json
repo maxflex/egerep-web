@@ -21,7 +21,7 @@
     "bootswatch-scss": "~3.2.0",
     "normalize-css": "normalize.css#~3.0.3",
     "Ionicons": "ionicons#~2.0.1",
-    "font-awesome": "~4.5.0",
+    "font-awesome": "^4.6.3",
     "angular": "~1.4.8",
     "jquery.inputmask": "~3.2.5",
     "jquery-ui": "jquery.ui#1.11.4",
@@ -59,6 +59,7 @@
     "angular-inview": "^2.0.0",
     "angularjs-google-maps": "^0.5.0",
     "google-maps": "^3.2.1",
-    "normalize-strings": "normalize#^1.1.0"
+    "normalize-strings": "normalize#^1.1.0",
+    "iCheck": "icheck#^1.0.2"
   }
 }

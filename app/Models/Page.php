@@ -18,6 +18,11 @@ class Page extends Model
        'sort'       => 'string',
    ];
 
+   public function variable()
+   {
+       return $this->belongsTo(Variable::class);
+   }
+
     public function getSubjectsAttribute($value)
     {
         if ($value) {
@@ -41,8 +46,14 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        $value = Parser::compileVars($value);
-        return   Parser::compilePage($this, $value);
+        // если расширение от шаблона
+        if ($this->variable_id) {
+            $value = $this->variable->html;
+            Parser::compileSeo($this, $value);
+        } else {
+            $value = Parser::compileVars($value);
+        }
+        return Parser::compilePage($this, $value);
     }
 
     public function scopeFindByParams($query, $search)

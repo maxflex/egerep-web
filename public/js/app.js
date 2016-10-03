@@ -393,6 +393,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -535,16 +540,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -594,6 +589,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
