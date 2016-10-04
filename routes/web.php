@@ -6,7 +6,7 @@
     });
 
     # Tutor profile page
-    Route::get('tutor/{id}', 'PagesController@tutor');
+    Route::get('{id}', 'PagesController@tutor')->where('id', '[0-9]+');;
 
     # MAIN ALL PAGES ROUTE
     Route::get('{url?}', 'PagesController@index');

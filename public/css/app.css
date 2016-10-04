@@ -4097,4 +4097,7 @@ a[href^="https://www.google.com/maps"] {
   height: 95px;
   border-radius: 6px; }
 
+.header-message {
+  background: #53ab53; }
+
 /*# sourceMappingURL=app.css.map */
