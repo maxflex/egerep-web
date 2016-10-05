@@ -205,7 +205,7 @@ class Tutor extends Model
     public static function getSimilar(Tutor $tutor)
     {
         // пока только по предметам похожих находим
-        return static::select('id', 'first_name', 'last_name', 'subjects', 'photo_extension')
+        return static::select('id', 'first_name', 'middle_name', 'subjects', 'photo_extension')
             ->where('subjects', implode(',', $tutor->subjects))
             ->where('id', '!=', $tutor->id)
             ->take(3)
