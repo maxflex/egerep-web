@@ -93,7 +93,8 @@ class TutorsController extends Controller
         return Tutor::reviews($id)->select(
             'reviews.score',
             'reviews.comment',
-            'reviews.signature'
+            'reviews.signature',
+            DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count')
         )->get();
     }
 

@@ -171,6 +171,12 @@ class Tutor extends Model
                     $query->orderBy('public_price', 'asc');
                     break;
                 case 4:
+                    $query->orderBy(DB::raw('(
+                        SELECT AVG(r.score) FROM reviews r
+                        join attachments a on a.id = r.attachment_id
+                        where r.score between 1 and 10 and a.tutor_id = tutors.id
+                    )'), 'desc');
+                case 5:
                     if ($station_id) {
                         $query->has('markers')->orderBy(DB::raw(
                         "(select min(d.distance + m.minutes)

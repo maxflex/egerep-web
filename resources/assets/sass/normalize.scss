@@ -68,6 +68,14 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Glober';
+    src: url('../fonts/Glober-SemiBold.otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
 /**
  * 1. Set default font family to sans-serif.
  * 2. Prevent iOS and IE text size adjust after device orientation change,
@@ -160,7 +168,7 @@ template {
  */
 
 a {
-  color: #648362;
+  color: $green-main-dark;
   background-color: transparent;
 }
 

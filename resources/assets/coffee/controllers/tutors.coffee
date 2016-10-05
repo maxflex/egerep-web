@@ -1,8 +1,6 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'TutorProfile', ($scope) ->
-        console.log 1
     .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
 
@@ -34,12 +32,18 @@ angular
                 tutor.request_sent = true
             console.log tutor
 
+        # bug
+        # если открывать gmap в первый раз, то зум сильно большой
+        first_time_gmap_open = true
         $scope.gmap = (tutor) ->
             if tutor.map_shown is undefined then $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),
                     center: MAP_CENTER
                     scrollwheel: false,
                     zoom: 8
+                    disableDefaultUI: true
+                    zoomControl: true
+                    scaleControl: true
 
                 bounds = new (google.maps.LatLngBounds)
                 tutor.markers.forEach (marker) ->
@@ -48,6 +52,8 @@ angular
                 map.fitBounds bounds
                 map.panToBounds bounds
                 map.setZoom 12
+                first_time_gmap_open = false
+
             $scope.toggleShow(tutor, 'map_shown', 'gmap')
 
         $scope.getMetros = (tutor) ->
@@ -55,10 +61,12 @@ angular
 
         $scope.reviews = (tutor) ->
             Tutor.iteraction {id: tutor.id, type: 'reviews'}
-            tutor.all_reviews = Tutor.reviews
-                id: tutor.id
-            , (response) ->
-                $scope.showMoreReviews(tutor)
+            if tutor.all_reviews is undefined
+                tutor.all_reviews = Tutor.reviews
+                    id: tutor.id
+                , (response) ->
+                    $scope.showMoreReviews(tutor)
+            $scope.toggleShow(tutor, 'show_reviews', 'all_reviews')
 
         $scope.showMoreReviews = (tutor) ->
             Tutor.iteraction {id: tutor.id, type: 'reviews_more'}

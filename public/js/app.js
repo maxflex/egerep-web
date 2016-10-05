@@ -203,10 +203,8 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('TutorProfile', function($scope) {
-    return console.log(1);
-  }).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
-    var search, unselectSubjects, viewed_tutors;
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
+    var first_time_gmap_open, search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     if (window.location.pathname.indexOf('/tutor/') === 0) {
       console.log('here');
@@ -228,6 +226,7 @@
       });
       return console.log(tutor);
     };
+    first_time_gmap_open = true;
     $scope.gmap = function(tutor) {
       if (tutor.map_shown === void 0) {
         $timeout(function() {
@@ -235,7 +234,10 @@
           map = new google.maps.Map(document.getElementById("gmap-" + tutor.id), {
             center: MAP_CENTER,
             scrollwheel: false,
-            zoom: 8
+            zoom: 8,
+            disableDefaultUI: true,
+            zoomControl: true,
+            scaleControl: true
           });
           bounds = new google.maps.LatLngBounds;
           tutor.markers.forEach(function(marker) {
@@ -245,7 +247,8 @@
           });
           map.fitBounds(bounds);
           map.panToBounds(bounds);
-          return map.setZoom(12);
+          map.setZoom(12);
+          return first_time_gmap_open = false;
         });
       }
       return $scope.toggleShow(tutor, 'map_shown', 'gmap');
@@ -258,11 +261,14 @@
         id: tutor.id,
         type: 'reviews'
       });
-      return tutor.all_reviews = Tutor.reviews({
-        id: tutor.id
-      }, function(response) {
-        return $scope.showMoreReviews(tutor);
-      });
+      if (tutor.all_reviews === void 0) {
+        tutor.all_reviews = Tutor.reviews({
+          id: tutor.id
+        }, function(response) {
+          return $scope.showMoreReviews(tutor);
+        });
+      }
+      return $scope.toggleShow(tutor, 'show_reviews', 'all_reviews');
     };
     $scope.showMoreReviews = function(tutor) {
       var from, to;

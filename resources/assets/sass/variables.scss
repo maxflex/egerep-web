@@ -1,5 +1,12 @@
-$green-main-dark: #53ab53;
-$green-main-light: #83b060;
+$green-main: #53ab53;
+$green-main-light: lighten($green-main, 10);
+$green-main-heavy-light: lighten($green-main, 45);
+$green-main-dark: darken($green-main, 10);
+$green-main-heavy-dark: darken($green-main, 15);
+
+$gray: #777777;
+
+$buttons-padding: 0 12px;
 
 $line-1: #ca5948;
 $line-2: #528c5d;
@@ -13,3 +20,13 @@ $line-9: #838382;
 $line-10: #79b872;
 $line-11: #4c7ea9;
 $line-12: #b0cccb;
+
+$logo-black: #4c493d;
+
+$border-radius: 4px;
+
+.button-base {
+    padding: 0 12px;
+    line-height: 36px;
+    border-radius: $border-radius;
+}
