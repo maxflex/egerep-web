@@ -2369,6 +2369,25 @@
   line-height: 36px;
   border-radius: 4px; }
 
+.logo-base, .header-logo, .footer-logo {
+  height: 65px;
+  width: 500px;
+  overflow: hidden;
+  text-indent: 80px;
+  text-decoration: none !important; }
+  .logo-base p, .header-logo p, .footer-logo p {
+    padding: 0;
+    color: black; }
+    .logo-base p:first-child, .header-logo p:first-child, .footer-logo p:first-child {
+      padding-top: 10px;
+      font-size: 29px;
+      font-family: 'Glober'; }
+    .logo-base p:last-child, .header-logo p:last-child, .footer-logo p:last-child {
+      font-size: 12px;
+      position: relative;
+      top: -5px;
+      left: 2px; }
+
 /**
 * Fonts
 **/
@@ -2799,7 +2818,7 @@ th {
    ========================================================================== */
 html {
   font-family: 'helveticaneuecyrlight';
-  color: #4c4a40;
+  color: black;
   font-size: 14px; }
 
 /*
@@ -2892,21 +2911,7 @@ textarea {
 
 .header-logo {
   display: block;
-  width: 500px;
-  height: 60px;
-  overflow: hidden;
-  background: url(../img/logo/header.svg) no-repeat;
-  text-indent: 80px;
-  text-decoration: none; }
-  .header-logo p {
-    padding: 0;
-    color: #4c493d; }
-    .header-logo p:first-child {
-      padding-top: 10px;
-      font-size: 22px;
-      font-family: 'Glober'; }
-    .header-logo p:last-child {
-      font-size: 12px; }
+  background: url(../img/logo/header.svg) no-repeat; }
 
 .header-phone {
   position: absolute;
@@ -2915,7 +2920,7 @@ textarea {
   padding: 0 0 0 34px;
   font-size: 23px;
   line-height: 26px;
-  color: #4c4a40;
+  color: black;
   text-align: right;
   font-family: 'helveticaneuecyrroman'; }
 
@@ -2923,16 +2928,16 @@ textarea {
   content: "\f095";
   font: normal normal normal 14px/1 FontAwesome;
   position: absolute;
-  top: 2px;
-  left: 0;
-  font-size: 16px;
+  top: 3px;
+  left: 8px;
+  font-size: 14px;
   color: white;
   background-color: #53ab53;
   border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   text-align: center;
-  line-height: 26px; }
+  line-height: 22px; }
 
 .header-phone-work-hour {
   font-size: 14px;
@@ -3087,7 +3092,7 @@ textarea {
 .short-tutor-list-name {
   font-size: 20px;
   font-family: 'helveticaneuecyrmedium';
-  color: #4c4a40;
+  color: black;
   padding: 0 0 13px; }
 
 .short-tutor-list-info > ul {
@@ -3113,7 +3118,7 @@ textarea {
 * Search filter
 --------------------------------*/
 .search-filter {
-  padding: 26px 0 20px;
+  padding: 21px 0 20px;
   border-bottom: 20px solid #f0f0f0; }
 
 .search-filter .global:after {
@@ -3126,13 +3131,13 @@ textarea {
 .search-filter-title {
   font-size: 23px;
   font-family: 'helveticaneuecyrroman';
-  padding: 0 0 36px; }
+  padding: 0 0 6px; }
 
 .search-filter-row {
   vertical-align: top;
   display: inline-block;
   width: 202px;
-  padding: 0 0 30px; }
+  padding: 0 0 13px; }
 
 .search-filter-row.large {
   width: 300px;
@@ -3189,11 +3194,11 @@ textarea {
 .search-filter-metro-clear {
   display: none;
   position: absolute;
-  top: 14px;
-  right: 17px;
-  width: 10px;
-  height: 10px;
-  background: url(../img/icons/ic-remove.png) no-repeat;
+  top: 12px;
+  right: 13px;
+  width: 14px;
+  height: 14px;
+  background: url(../img/svg/cross.svg) no-repeat;
   cursor: pointer; }
 
 /*
@@ -3201,7 +3206,7 @@ textarea {
 --------------------------------*/
 .search-result {
   margin: 0;
-  padding: 10px 0 28px;
+  padding: 0 0 28px;
   list-style: none; }
 
 .search-result .search-result-item {
@@ -3220,7 +3225,7 @@ textarea {
   padding: 0 30px 0 0; }
 
 .search-result-userpic {
-  padding: 0 0 15px; }
+  padding: 0 0 7px; }
 
 .search-result-userpic img {
   border-radius: 4px;
@@ -3244,9 +3249,10 @@ textarea {
 
 .search-result-title {
   font-size: 16px;
-  color: #4c4a40;
+  color: black;
   font-family: 'helveticaneuecyrmedium';
-  padding: 0 0 14px; }
+  padding: 0 0 14px;
+  line-height: 22px; }
 
 .search-result-info {
   margin: 0;
@@ -3255,9 +3261,6 @@ textarea {
 .search-result-info li {
   display: inline-block;
   width: 140px; }
-
-.search-result-info li span {
-  color: #777777; }
 
 .search-result-text {
   padding: 0 0 8px; }
@@ -3355,7 +3358,8 @@ textarea {
 .search-result-contact {
   background: #f8f8f8;
   padding: 30px 30px 21px;
-  margin: 20px 0 0; }
+  margin: 20px 0 0;
+  border-radius: 4px; }
 
 .search-result-contact-row {
   width: 296px;
@@ -3367,7 +3371,7 @@ textarea {
   margin: 0 0 12px; }
 
 .search-result-contact .textarea {
-  width: 453px;
+  width: 429px;
   height: 75px; }
 
 .search-result-contact-button {
@@ -3430,7 +3434,7 @@ textarea {
 .index-reviews-list-user-right b {
   display: block;
   font-size: 14px;
-  color: #4c4a40;
+  color: black;
   font-weight: normal;
   line-height: 18px;
   font-family: 'helveticaneuecyrmedium';
@@ -3439,7 +3443,7 @@ textarea {
 .index-reviews-list-text {
   font-size: 13px;
   line-height: 16px;
-  color: #4c4a40;
+  color: black;
   font-family: 'helveticaneuecyrlight_italic';
   height: 140px;
   padding: 0 0 8px; }
@@ -3526,7 +3530,7 @@ textarea {
 
 .other-tutor-list-right b {
   font-size: 15px;
-  color: #4c4a40;
+  color: black;
   font-weight: normal;
   font-family: 'helveticaneuecyrmedium';
   display: block; }
@@ -3548,10 +3552,10 @@ textarea {
   width: 100%;
   height: 312px;
   background: #f0f0f0;
-  color: #4c4a40; }
+  color: black; }
 
 .footer a {
-  color: #4c4a40;
+  color: black;
   text-decoration: none; }
 
 .footer a:hover {
@@ -3566,22 +3570,10 @@ textarea {
 .footer-logo {
   position: absolute;
   top: 20px;
-  left: 0;
-  width: 500px;
-  height: 65px;
+  left: -62px;
   background: url(../img/logo/footer.svg) no-repeat;
-  overflow: hidden;
-  text-indent: 80px;
-  text-decoration: none !important; }
-  .footer-logo p {
-    padding: 0;
-    color: #4c493d; }
-    .footer-logo p:first-child {
-      padding-top: 10px;
-      font-size: 22px;
-      font-family: 'Glober'; }
-    .footer-logo p:last-child {
-      font-size: 12px; }
+  -webkit-transform: scale(0.75);
+  transform: scale(0.75); }
 
 .footer-contacts {
   float: right;
@@ -3705,6 +3697,9 @@ textarea {
 .color-gray {
   color: #797979; }
 
+.color-gray-light {
+  color: #a9a9a9; }
+
 .button-large-green {
   border: 0;
   border-radius: 4px;
@@ -3782,7 +3777,7 @@ textarea {
 --------------------------------*/
 .custom-select {
   font-size: 19px;
-  color: #4c4a40;
+  color: black;
   font-family: 'helveticaneuecyrroman';
   text-align: left; }
 
@@ -3792,7 +3787,7 @@ span.customSelect {
   border: 1px solid #bdbdbd;
   border-radius: 4px;
   font-size: 19px;
-  color: #4c4a40;
+  color: black;
   font-family: 'helveticaneuecyrroman';
   text-align: left;
   height: 45px;
@@ -3871,7 +3866,7 @@ span.customSelect.custom-select-small .customSelectInner {
   background: #efefef; }
 
 .ui-autocomplete li .ui-menu-item-wrapper {
-  padding: 10px 5px 10px 34px;
+  padding: 10px 5px 10px 12px;
   cursor: pointer; }
 
 .ui-autocomplete li .metro-bullet {
@@ -4121,7 +4116,7 @@ a[href^="https://www.google.com/maps"] {
   display: block;
   padding: 0;
   margin: 0;
-  margin-bottom: 25px; }
+  margin-bottom: 20px; }
 
 .text-gray {
   color: #777777; }

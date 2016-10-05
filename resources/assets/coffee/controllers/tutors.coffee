@@ -25,12 +25,20 @@ angular
         # просмотренные преподаватели (чтобы не засчитывались просмотры несколько раз)
         viewed_tutors = []
 
+        # личная страница преподавателя?
+        $scope.profilePage = (url) ->
+            url is 'tutor'
+
         # отправить заявку
         $scope.request = (tutor) ->
             tutor.request.tutor_id = tutor.id
             Request.save tutor.request, ->
                 tutor.request_sent = true
             console.log tutor
+
+        # сотрудничает с 12 сентября 2000 года
+        $scope.dateToText = (date) ->
+            moment(date).format 'D MMMM YYYY'
 
         # bug
         # если открывать gmap в первый раз, то зум сильно большой
@@ -42,6 +50,8 @@ angular
                     scrollwheel: false,
                     zoom: 8
                     disableDefaultUI: true
+                    clickableLabels: false
+                    clickableIcons: false
                     zoomControl: true
                     scaleControl: true
 

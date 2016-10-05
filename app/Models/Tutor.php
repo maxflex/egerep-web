@@ -79,7 +79,9 @@ class Tutor extends Model
             'public_price',
             'departure_price',
             'comment_extended',
-        ])->addSelect(\DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'));
+            \DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'),
+            \DB::raw('(SELECT MIN(date) FROM attachments WHERE attachments.tutor_id = tutors.id) as first_attachment_date')
+        ]);
     }
 
     /**

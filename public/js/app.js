@@ -1,7 +1,7 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngMaterial', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angular-inview']).config([
+  angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngAnimate', 'angular-ladda', 'angular-inview']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
@@ -219,12 +219,18 @@
     }
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
+    $scope.profilePage = function(url) {
+      return url === 'tutor';
+    };
     $scope.request = function(tutor) {
       tutor.request.tutor_id = tutor.id;
       Request.save(tutor.request, function() {
         return tutor.request_sent = true;
       });
       return console.log(tutor);
+    };
+    $scope.dateToText = function(date) {
+      return moment(date).format('D MMMM YYYY');
     };
     first_time_gmap_open = true;
     $scope.gmap = function(tutor) {
@@ -236,6 +242,8 @@
             scrollwheel: false,
             zoom: 8,
             disableDefaultUI: true,
+            clickableLabels: false,
+            clickableIcons: false,
             zoomControl: true,
             scaleControl: true
           });
@@ -385,11 +393,6 @@
       return '/' + link.join('-');
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -600,6 +603,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

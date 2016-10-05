@@ -1,4 +1,4 @@
-angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngMaterial', 'ngAnimate', 'ui.sortable', 'ui.bootstrap', 'angular-ladda', 'angular-inview'])
+angular.module("Egerep", ['ngSanitize', 'ngResource', 'ngAnimate', 'angular-ladda', 'angular-inview'])
     .config [
         '$compileProvider'
         ($compileProvider) ->

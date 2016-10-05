@@ -5,6 +5,7 @@ $green-main-dark: darken($green-main, 10);
 $green-main-heavy-dark: darken($green-main, 15);
 
 $gray: #777777;
+$gray-light: #a9a9a9;
 
 $buttons-padding: 0 12px;
 
@@ -21,7 +22,7 @@ $line-10: #79b872;
 $line-11: #4c7ea9;
 $line-12: #b0cccb;
 
-$logo-black: #4c493d;
+$logo-black: black;
 
 $border-radius: 4px;
 
@@ -29,4 +30,27 @@ $border-radius: 4px;
     padding: 0 12px;
     line-height: 36px;
     border-radius: $border-radius;
+}
+
+.logo-base {
+    height: 65px;
+    width: 500px;
+    overflow: hidden;
+    text-indent: 80px;
+    text-decoration: none !important;
+    & p {
+        padding: 0;
+        color: $logo-black;
+        &:first-child {
+            padding-top: 10px;
+            font-size: 29px;
+            font-family: 'Glober';
+        }
+        &:last-child {
+            font-size: 12px;
+            position: relative;
+            top: -5px;
+            left: 2px;
+        }
+    }
 }
