@@ -3377,7 +3377,8 @@ textarea {
   text-align: right; }
 
 .search-result-wrap-more {
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 20px; }
 
 .search-result-more-info {
   padding: 0 0 15px; }
@@ -4099,9 +4100,11 @@ a[href^="https://www.google.com/maps"] {
   .custom-select-sort span {
     white-space: normal !important; }
 
-.other-tutor-list img {
-  height: 95px;
-  border-radius: 4px; }
+.other-tutor-list {
+  margin-bottom: 20px; }
+  .other-tutor-list img {
+    height: 95px;
+    border-radius: 4px; }
 
 .text-green {
   color: #428942; }
