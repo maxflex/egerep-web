@@ -255,8 +255,8 @@
             return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
           });
           if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
-            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.02, bounds.getNorthEast().lng() + 0.02);
+            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.02, bounds.getNorthEast().lng() - 0.02);
             bounds.extend(extendPoint1);
             bounds.extend(extendPoint2);
           }
@@ -399,6 +399,59 @@
       return '/' + link.join('-');
     };
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 
@@ -551,59 +604,6 @@
 
 (function() {
 
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 

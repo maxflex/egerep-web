@@ -62,8 +62,8 @@ angular
 
                 # one marker bug fix
                 if bounds.getNorthEast().equals(bounds.getSouthWest())
-                    extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01)
-                    extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01)
+                    extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.02, bounds.getNorthEast().lng() + 0.02)
+                    extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.02, bounds.getNorthEast().lng() - 0.02)
                     bounds.extend(extendPoint1)
                     bounds.extend(extendPoint2)
 
