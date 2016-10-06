@@ -38,11 +38,11 @@ angular
 
         # сотрудничает с 12 сентября 2000 года
         $scope.dateToText = (date) ->
-            moment(date).format 'D MMMM YYYY'
+            text_date = moment(date).format 'DD MMMM YYYY'
+            # вырезаем дату, оставляем месяц и год
+            # нужно именно так, чтобы осталось правильное склонение месяца
+            text_date.substr(3)
 
-        # bug
-        # если открывать gmap в первый раз, то зум сильно большой
-        first_time_gmap_open = true
         $scope.gmap = (tutor) ->
             if tutor.map_shown is undefined then $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),
@@ -59,10 +59,17 @@ angular
                 tutor.markers.forEach (marker) ->
                     bounds.extend(new google.maps.LatLng(marker.lat, marker.lng))
                     new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map)
+
+                # one marker bug fix
+                if bounds.getNorthEast().equals(bounds.getSouthWest())
+                    extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01)
+                    extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01)
+                    bounds.extend(extendPoint1)
+                    bounds.extend(extendPoint2)
+
                 map.fitBounds bounds
                 map.panToBounds bounds
                 map.setZoom 12
-                first_time_gmap_open = false
 
             $scope.toggleShow(tutor, 'map_shown', 'gmap')
 
@@ -145,7 +152,7 @@ angular
                     places: $scope.svg
                 map.init()
                 map.deselectAll()
-                map.select(tutor.svg_map);
+                map.select(tutor.svg_map)
                 # $(document.getElementById('svg-iframe-'+tutor.id).contentWindow.document).keydown (e) ->
                 #     if e.keyCode == 27
                 #         setTimeout ->

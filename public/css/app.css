@@ -3119,7 +3119,7 @@ textarea {
 --------------------------------*/
 .search-filter {
   padding: 21px 0 20px;
-  border-bottom: 20px solid #f0f0f0; }
+  border-bottom: 13px solid #f0f0f0; }
 
 .search-filter .global:after {
   content: '';
@@ -3245,10 +3245,9 @@ textarea {
   display: inline-block;
   vertical-align: top;
   width: 806px;
-  padding: 3px 0 0; }
+  margin-top: -4px; }
 
 .search-result-title {
-  font-size: 16px;
   color: black;
   font-family: 'helveticaneuecyrmedium';
   padding: 0 0 14px;
@@ -3540,7 +3539,7 @@ textarea {
 --------------------------------*/
 .footer-fix {
   clear: both;
-  height: 380px; }
+  height: 312px; }
 
 .footer-fix.footer-top-indent {
   height: 430px; }
@@ -3700,6 +3699,9 @@ textarea {
 .color-gray-light {
   color: #a9a9a9; }
 
+.color-green {
+  color: #53ab53; }
+
 .button-large-green {
   border: 0;
   border-radius: 4px;
@@ -3768,9 +3770,9 @@ textarea {
   font-size: 20px;
   font-family: 'helveticaneuecyrmedium';
   border-bottom: 1px solid #e8e8e8;
-  padding: 0 0 14px 30px;
-  margin: 0 0 34px -30px;
-  position: relative; }
+  padding: 0 0 14px 0;
+  position: relative;
+  margin-bottom: 34px; }
 
 /*
 * Custom select
@@ -4092,9 +4094,9 @@ a[href^="https://maps.google.com/maps"] {
 a[href^="https://www.google.com/maps"] {
   display: none !important; }
 
-.custom-select-subjects {
+.custom-select-sort {
   width: 233px; }
-  .custom-select-subjects span {
+  .custom-select-sort span {
     white-space: normal !important; }
 
 .other-tutor-list img {
@@ -4120,5 +4122,30 @@ a[href^="https://www.google.com/maps"] {
 
 .text-gray {
   color: #777777; }
+
+.circle-separator {
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 8px;
+  margin: 0 5px;
+  top: -1px;
+  position: relative; }
+  .circle-separator:before {
+    content: "\f111"; }
+
+.no-tutor-request {
+  width: 746px;
+  margin: 0 auto; }
+
+.content-align-center {
+  height: 400px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center; }
+
+.center {
+  text-align: center; }
 
 /*# sourceMappingURL=app.css.map */

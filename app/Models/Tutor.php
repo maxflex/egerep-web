@@ -166,10 +166,10 @@ class Tutor extends Model
 
         if (isset($sort)) {
             switch ($sort) {
-                case 1:
+                case 2:
                     $query->orderBy('public_price', 'desc');
                     break;
-                case 2:
+                case 3:
                     $query->orderBy('public_price', 'asc');
                     break;
                 case 4:

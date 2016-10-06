@@ -204,7 +204,7 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
-    var first_time_gmap_open, search, unselectSubjects, viewed_tutors;
+    var search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     if (window.location.pathname.indexOf('/tutor/') === 0) {
       console.log('here');
@@ -230,13 +230,14 @@
       return console.log(tutor);
     };
     $scope.dateToText = function(date) {
-      return moment(date).format('D MMMM YYYY');
+      var text_date;
+      text_date = moment(date).format('DD MMMM YYYY');
+      return text_date.substr(3);
     };
-    first_time_gmap_open = true;
     $scope.gmap = function(tutor) {
       if (tutor.map_shown === void 0) {
         $timeout(function() {
-          var bounds, map;
+          var bounds, extendPoint1, extendPoint2, map;
           map = new google.maps.Map(document.getElementById("gmap-" + tutor.id), {
             center: MAP_CENTER,
             scrollwheel: false,
@@ -253,10 +254,15 @@
             bounds.extend(new google.maps.LatLng(marker.lat, marker.lng));
             return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
           });
+          if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.01, bounds.getNorthEast().lng() + 0.01);
+            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.01, bounds.getNorthEast().lng() - 0.01);
+            bounds.extend(extendPoint1);
+            bounds.extend(extendPoint2);
+          }
           map.fitBounds(bounds);
           map.panToBounds(bounds);
-          map.setZoom(12);
-          return first_time_gmap_open = false;
+          return map.setZoom(12);
         });
       }
       return $scope.toggleShow(tutor, 'map_shown', 'gmap');
@@ -549,11 +555,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -603,6 +604,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

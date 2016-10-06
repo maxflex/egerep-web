@@ -118,7 +118,7 @@ textarea {
     left: 8px;
     font-size: 14px;
     color: white;
-    background-color: #53ab53;
+    background-color: $green-main;
     border-radius: 50%;
     height: 20px;
     width: 20px;
@@ -306,7 +306,7 @@ textarea {
 --------------------------------*/
 .search-filter {
     padding: 21px 0 20px;
-    border-bottom: 20px solid #f0f0f0;
+    border-bottom: 13px solid #f0f0f0;
 }
 .search-filter .global:after {
     content: '';
@@ -432,10 +432,9 @@ textarea {
     display: inline-block;
     vertical-align: top;
     width: 806px;
-    padding: 3px 0 0;
+    margin-top: -4px;
 }
 .search-result-title {
-    font-size: 16px;
     color: black;
     font-family: 'helveticaneuecyrmedium';
     padding: 0 0 14px;
@@ -730,7 +729,7 @@ textarea {
 --------------------------------*/
 .footer-fix {
     clear: both;
-    height: 380px;
+    height: 312px;
 }
 .footer-fix.footer-top-indent {
     height: 430px;
@@ -890,6 +889,10 @@ textarea {
 .color-gray-light {
     color: $gray-light;
 }
+.color-green {
+    color: $green-main;
+}
+
 .button-large-green {
     border: 0;
     border-radius: $border-radius;
@@ -960,9 +963,9 @@ textarea {
     font-size: 20px;
     font-family: 'helveticaneuecyrmedium';
     border-bottom: 1px solid #e8e8e8;
-    padding: 0 0 14px 30px;
-    margin: 0 0 34px -30px;
+    padding: 0 0 14px 0;
     position: relative;
+    margin-bottom: 34px;
 }
 /*
 * Custom select

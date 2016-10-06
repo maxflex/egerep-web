@@ -10,6 +10,6 @@ class Client extends Model
 
     public static function count()
     {
-        return DB::connection('egerep')->table('attachments')->distinct('client_id')->count('client_id');
+        return DB::connection('egerep')->table('attachments')->count('client_id');
     }
 }

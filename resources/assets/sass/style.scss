@@ -65,7 +65,7 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
 a[href^="https://maps.google.com/maps"]{display:none !important}
 a[href^="https://www.google.com/maps"]{display:none !important}
 
-.custom-select-subjects {
+.custom-select-sort {
     width: 233px;
     & span {
         white-space: normal !important;
@@ -104,4 +104,31 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 
 .text-gray {
     color: $gray;
+}
+
+.circle-separator {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 8px;
+    margin: 0 5px;
+    top: -1px;
+    position: relative;
+    &:before {
+        content: "\f111";
+    }
+}
+
+.no-tutor-request {
+    width: 746px;
+    margin: 0 auto;
+}
+
+.content-align-center {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center {
+    text-align: center;
 }

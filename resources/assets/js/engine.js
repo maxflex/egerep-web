@@ -1,6 +1,12 @@
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
+        $('.footer-search-input')
+            .on('keydown', function(event) {
+                if (event.keyCode == 13) {
+                    goTutor()
+                }
+            })
     })
 
     angular.element(document).ready(function() {
@@ -324,8 +330,10 @@ function metroAutocomplete(scope) {
 	            .addClass(ui.item.icon);
 	        $('.search-filter-metro-wrap').addClass('active');
             scope.search.station_id = ui.item.id
+            scope.search.sort = "5" // по метро
             scope.filter()
             scope.$apply()
+            $('.custom-select-sort').trigger('render')
 	    },
 	    search: function( event, ui ) {
 	        $('.search-filter-metro-wrap').removeClass('active');
@@ -354,4 +362,12 @@ function toArray(object) {
         arr.push(v)
     })
     return arr
+}
+
+function goTutor() {
+    tutor_id = $('.footer-search-input').val()
+    tutor_id = parseInt(tutor_id)
+    if (tutor_id > 0) {
+        window.location = '/' + tutor_id
+    }
 }
