@@ -183,6 +183,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').controller('Index', function($scope, Tutor) {
     bindArguments($scope, arguments);
     return $scope.getSubjects = function(tutor) {
@@ -466,6 +471,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -574,16 +584,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

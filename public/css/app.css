@@ -3800,7 +3800,7 @@ span.customSelect .customSelectInner {
   height: 45px;
   padding: 0 30px;
   line-height: 45px;
-  white-space: pre; }
+  white-space: nowrap; }
 
 span.customSelect.custom-select-small {
   height: 36px;
@@ -4069,6 +4069,8 @@ div[id^='gmap'] {
   width: 100%;
   height: 403px;
   margin: 10px 0; }
+  div[id^='gmap'] div {
+    border-radius: 4px; }
 
 div[id^='svg'] {
   margin: 0;
@@ -4094,11 +4096,6 @@ a[href^="https://maps.google.com/maps"] {
 
 a[href^="https://www.google.com/maps"] {
   display: none !important; }
-
-.custom-select-sort {
-  width: 233px; }
-  .custom-select-sort span {
-    white-space: normal !important; }
 
 .other-tutor-list {
   margin-bottom: 20px; }
@@ -4150,5 +4147,8 @@ a[href^="https://www.google.com/maps"] {
 
 .center {
   text-align: center; }
+
+.custom-select-sort {
+  width: 300px; }
 
 /*# sourceMappingURL=app.css.map */

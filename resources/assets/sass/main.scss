@@ -993,7 +993,8 @@ span.customSelect .customSelectInner {
     height: 45px;
     padding: 0 30px;
     line-height: 45px;
-    white-space: pre;
+    white-space: nowrap;
+    // white-space: pre;
 }
 span.customSelect.custom-select-small {
     height: 36px;
