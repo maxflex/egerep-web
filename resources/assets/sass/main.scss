@@ -108,7 +108,7 @@ textarea {
     line-height: 26px;
     color: black;
     text-align: right;
-    font-family: 'helveticaneuecyrroman';
+    font-family: 'helveticaneuecyrlight';
 }
 .header-phone:after {
     content: "\f095";
@@ -135,7 +135,7 @@ textarea {
     font-size: 15px;
     text-decoration: none;
     text-align: center;
-    font-family: 'helveticaneuecyrmedium';
+    font-family: 'helveticaneuecyrlight';
     float: right;
     border: 1px solid $green-main;
     margin: 7px 0 0;
@@ -201,14 +201,14 @@ textarea {
     background: $green-main;
     color: #fff;
     font-size: 13px;
-    font-family: 'helveticaneuecyrroman';
+    font-family: 'helveticaneuecyrlight';
     padding: 12px 0 13px;
 }
 /*
 * Breadcrumbs
 --------------------------------*/
 .breadcrumbs {
-    border-bottom: 1px solid #f0f0f0;
+    // border-bottom: 1px solid #f0f0f0;
     margin-bottom: 23px;
 }
 .breadcrumbs-inner {
@@ -468,10 +468,16 @@ textarea {
     margin: 0;
     padding: 0;
     list-style: none;
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
 }
 .search-result-metro-list li {
-    margin-top: 10px;
     position: relative;
+    font-family: 'helveticaneuecyrlight';
+    &:not(:last-child) {
+        margin-bottom: 3px;
+    }
 }
 .metro-bullet:before {
     content: '';
@@ -767,9 +773,9 @@ textarea {
 }
 .footer-contacts {
     float: right;
-    font-family: 'helveticaneuecyrroman';
     position: relative;
     margin: -7px 0 0;
+    font-family: 'helveticaneuecyrlight';
 }
 .footer-social-media {
     margin: 0 0 20px;
@@ -780,6 +786,7 @@ textarea {
     font-size: 18px;
     padding: 0 0 9px;
 }
+
 .footer-contacts-email {
     text-align: right;
     font-size: 18px;
@@ -826,11 +833,12 @@ textarea {
     margin: 0 0 0 13px;
     font-size: 12px;
     color: #737373;
+    float: left;
 }
 .footer-copy-right li:after {
     content: '';
     position: absolute;
-    top: 6px;
+    top: 5px;
     left: 0;
     width: 4px;
     height: 4px;
@@ -952,7 +960,7 @@ textarea {
     height: 36px;
     line-height: 36px;
     font-size: 14px;
-    font-family: 'helveticaneuecyrroman';
+    font-family: 'helveticaneuecyrlight';
 }
 .textarea {
     overflow: auto;
@@ -1230,5 +1238,5 @@ span.customSelect.custom-select-small .customSelectInner {
 }
 
 .button-green:disabled {
-    background-color: rgba(#83b060, .5);
+    background-color: rgba($gray-light, .5);
 }

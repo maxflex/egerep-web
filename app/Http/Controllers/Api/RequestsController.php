@@ -38,6 +38,13 @@ class RequestsController extends Controller
      */
     public function store(Request $request)
     {
+        // if (! session()->exists('sent_tutor_ids')) {
+        //     session('sent_tutor_ids', []);
+        // }
+        // session()->push('sent_tutor_ids', $request->tutor_id);
+        // $sent_tutor_ids = $_SESSION['sent_tutor_ids'] || [];
+        // $sent_tutor_ids[] = $request->tutor_id;
+        $_SESSION['sent_ids'][] = $request->tutor_id;
         Api::exec('requestNew', $request->input());
     }
 

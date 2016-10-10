@@ -183,11 +183,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Index', function($scope, Tutor) {
     bindArguments($scope, arguments);
     return $scope.getSubjects = function(tutor) {
@@ -211,9 +206,10 @@
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
     var search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
-    if (window.location.pathname.indexOf('/tutor/') === 0) {
-      console.log('here');
-    } else {
+    $scope.profilePage = function() {
+      return RegExp(/^\/[\d]+$/).test(window.location.pathname);
+    };
+    if (!$scope.profilePage()) {
       $timeout(function() {
         $scope.chunked_subjects = chunk(toArray($scope.subjects), 4);
         metroAutocomplete($scope);
@@ -224,13 +220,10 @@
     }
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
-    $scope.profilePage = function(url) {
-      return url === 'tutor';
-    };
     $scope.request = function(tutor) {
       tutor.request.tutor_id = tutor.id;
       Request.save(tutor.request, function() {
-        return tutor.request_sent = true;
+        return $scope.sent_ids.push(tutor.id);
       });
       return console.log(tutor);
     };
@@ -251,6 +244,9 @@
             clickableLabels: false,
             clickableIcons: false,
             zoomControl: true,
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_BOTTOM
+            },
             scaleControl: true
           });
           bounds = new google.maps.LatLngBounds;
@@ -408,64 +404,6 @@
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -603,12 +541,102 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').directive('subjectList', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        subjects: '=',
+        subjectIds: '='
+      },
+      templateUrl: '/directives/subject-list'
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('tutorName', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        tutor: '='
+      },
+      templateUrl: '/directives/tutor-name'
+    };
+  });
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
 
 (function() {
 
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 

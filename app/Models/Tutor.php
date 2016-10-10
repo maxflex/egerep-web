@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Shared\Model;
 use App\Scopes\TutorScope;
+use App\Scopes\ReviewScope;
 use DB;
 
 class Tutor extends Model
@@ -42,7 +43,27 @@ class Tutor extends Model
 
     public function getReviewAvgAttribute()
     {
-        return number_format(DB::connection('egerep')->table('reviews')->join('attachments', 'attachments.id', '=', 'attachment_id')->where('tutor_id', $this->id)->whereBetween('score', [1, 10])->select('reviews.score')->avg('reviews.score'), 1, ',', '');
+        $query = Review::withoutGlobalScope(ReviewScope::class)->join('attachments', 'attachments.id', '=', 'attachment_id')->where('tutor_id', $this->id)->whereBetween('score', [1, 10]);
+        $sum = $query->newQuery()->sum('reviews.score');
+        $count = $query->newQuery()->count();
+        switch($this->js) {
+            case 10: {
+                $js = 8;
+                break;
+            }
+            case 8: {
+                $js = 10;
+                break;
+            }
+            default: {
+                $js = $this->js;
+            }
+        }
+        if ($this->id == 5) {
+            \Log::info($sum . ' | ' . $count);
+        }
+        $avg = (4 * (($this->lk + $this->tb + $js) / 3) + $sum)/(4 + $count);
+        return number_format($avg, 1, ',', '');
     }
 
     public static function reviews($tutor_id)
@@ -66,7 +87,7 @@ class Tutor extends Model
     public function scopeSelectDefault($query)
     {
         return $query->select([
-            'id',
+            'tutors.id',
             'first_name',
             'middle_name',
             'subjects',
@@ -79,6 +100,9 @@ class Tutor extends Model
             'public_price',
             'departure_price',
             'comment_extended',
+            'lk',
+            'tb',
+            'js',
             \DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'),
             \DB::raw('(SELECT MIN(date) FROM attachments WHERE attachments.tutor_id = tutors.id) as first_attachment_date')
         ]);
@@ -173,11 +197,14 @@ class Tutor extends Model
                     $query->orderBy('public_price', 'asc');
                     break;
                 case 4:
-                    $query->orderBy(DB::raw('(
-                        SELECT AVG(r.score) FROM reviews r
-                        join attachments a on a.id = r.attachment_id
-                        where r.score between 1 and 10 and a.tutor_id = tutors.id
-                    )'), 'desc');
+                    $query->leftJoin(DB::raw('(
+                        SELECT tt.id, count(DISTINCT r.id) as cnt, sum(r.score) as sm FROM tutors tt
+                        join attachments a on a.tutor_id = tt.id
+                        join reviews r on r.attachment_id = a.id
+                        where r.score between 1 and 10
+                        GROUP BY tt.id
+                    ) revs'), 'revs.id', '=', 'tutors.id');
+                    $query->orderBy(DB::raw('((4 * ((lk + tb + IF(js=10, 8, IF(js=8, 10, js))) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
                 case 5:
                     if ($station_id) {
                         $query->has('markers')->orderBy(DB::raw(
@@ -218,3 +245,11 @@ class Tutor extends Model
         static::addGlobalScope(new TutorScope);
     }
 }
+
+// (
+//     SELECT
+//         ((4* ((lk + tb + IF(js=10, 8, IF(js=8, 10, js))) / 3) + SUM(r.score))/(4 + COUNT(r.id)))
+//     FROM reviews r
+//     join attachments a on a.id = r.attachment_id
+//     where r.score between 1 and 10
+// )

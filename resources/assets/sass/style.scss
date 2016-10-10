@@ -28,7 +28,7 @@
 
 
 .link-like {
-    color: $green-main;
+    color: $green-main-dark;
     text-decoration: underline;
     cursor: pointer;
     outline: none;
@@ -92,11 +92,14 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 }
 
 
-.search-result-tutor-info > * {
-    display: block;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 20px;
+.search-result-tutor-info {
+    position: relative;
+    & > * {
+        display: block;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 20px;
+    }
 }
 
 .text-gray {
@@ -131,5 +134,30 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 }
 
 .custom-select-sort {
-    width: 300px
+    width: 300px;
+}
+
+label {
+    font-family: 'helveticaneuecyrlight';
+}
+
+.metro-label {
+    display: inline-block;
+    width: 135px;
+    vertical-align: top;
+}
+
+.metro-list {
+    display: inline-block;
+}
+
+.metro-toggle-gmap {
+    position: absolute;
+    right: 0;
+}
+
+.search-more-hint {
+    color: $gray-light;
+    font-family: 'helveticaneuecyrlight';
+    text-align: center;
 }

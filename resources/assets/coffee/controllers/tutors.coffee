@@ -4,10 +4,11 @@ angular
     .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
 
-        # страница преподавателя
-        if window.location.pathname.indexOf('/tutor/') is 0
-            console.log 'here'
-        else
+        # личная страница преподавателя?
+        $scope.profilePage = ->
+            RegExp(/^\/[\d]+$/).test(window.location.pathname)
+
+        if not $scope.profilePage()
         # страница поиска
             $timeout ->
                 $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
@@ -25,15 +26,11 @@ angular
         # просмотренные преподаватели (чтобы не засчитывались просмотры несколько раз)
         viewed_tutors = []
 
-        # личная страница преподавателя?
-        $scope.profilePage = (url) ->
-            url is 'tutor'
-
         # отправить заявку
         $scope.request = (tutor) ->
             tutor.request.tutor_id = tutor.id
             Request.save tutor.request, ->
-                tutor.request_sent = true
+                $scope.sent_ids.push(tutor.id)
             console.log tutor
 
         # сотрудничает с 12 сентября 2000 года
@@ -53,6 +50,8 @@ angular
                     clickableLabels: false
                     clickableIcons: false
                     zoomControl: true
+                    zoomControlOptions:
+                        position: google.maps.ControlPosition.LEFT_BOTTOM
                     scaleControl: true
 
                 bounds = new (google.maps.LatLngBounds)
