@@ -240,8 +240,7 @@ class Tutor extends Model
         if (count($tutor->markers)) {
             $query->join('markers', function($join) {
                 $join->on('markers.markerable_id', '=', 'tutors.id')
-                    ->where('markers.markerable_type', '=', 'App\Models\Tutor')
-                    ->where('markers.type', '=', 'green');
+                    ->where('markers.markerable_type', '=', 'App\Models\Tutor');
             })
             ->orderBy(DB::raw("SQRT(
                 POW(69.1 * (markers.lat - {$tutor->markers[0]->lat}), 2) +
