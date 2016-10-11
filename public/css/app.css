@@ -2930,7 +2930,7 @@ textarea {
 
 .header-button-search-tutor {
   color: #53ab53;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   text-align: center;
   font-family: 'helveticaneuecyrlight';
@@ -3464,7 +3464,7 @@ textarea {
   display: inline-block;
   height: 38px;
   line-height: 38px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'helveticaneuecyrmedium';
   text-decoration: none;
   padding: 0 12px; }
@@ -3681,7 +3681,7 @@ textarea {
   content: "\f002";
   font: normal normal normal 14px/1 FontAwesome;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased; }
 
 /*
@@ -3740,7 +3740,7 @@ textarea {
   border: 1px solid #53ab53;
   text-align: center;
   color: #53ab53;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   font-family: 'helveticaneuecyrmedium';
   cursor: pointer; }
