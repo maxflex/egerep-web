@@ -110,23 +110,9 @@ textarea {
     text-align: right;
     font-family: 'helveticaneuecyrlight';
 }
-.header-phone:after {
-    content: "\f095";
-    font: normal normal normal 14px/1 FontAwesome;
-    position: absolute;
-    top: 3px;
-    left: 8px;
-    font-size: 14px;
-    color: white;
-    background-color: $green-main;
-    border-radius: 50%;
-    height: 20px;
-    width: 20px;
-    text-align: center;
-    line-height: 22px;
-}
+
 .header-phone-work-hour {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
 }
 .header-button-search-tutor {
@@ -451,6 +437,7 @@ textarea {
 
 .search-result-text {
     padding: 0 0 8px;
+    line-height: 20px;
 }
 .search-result-cooperation {
     padding: 0 0 9px;
