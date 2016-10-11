@@ -1,1 +1,1 @@
-<span ng-repeat="subject_id in subjectIds track by $index">@{{ subjects[subject_id].dative }}@{{ $last ? '' : ($index + 2 == subjectIds.length) ? ', ' : ', ' }}</span>
+<span ng-repeat="subject_id in subjectIds track by $index">@{{ byId ? findById(subjects, subject_id)[case] : subjects[subject_id][case] }}@{{ $last ? '' : ($index + 2 == subjectIds.length) ? ', ' : ', ' }}</span>

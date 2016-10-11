@@ -1148,7 +1148,7 @@
 .fa-angle-up:before {
   content: "\f106"; }
 
-.fa-angle-down:before {
+.fa-angle-down:before, span.customSelect:after {
   content: "\f107"; }
 
 .fa-desktop:before {
@@ -2956,7 +2956,7 @@ textarea {
   font-family: 'helveticaneuecyrroman'; }
 
 .header-search-tutor-form .button-large-green {
-  margin-left: 17px; }
+  margin-left: 20px; }
 
 .header-search-tutor-form-title {
   display: inline-block;
@@ -2967,9 +2967,9 @@ textarea {
 .header-search-tutor-counter {
   font-size: 20px;
   text-align: left;
-  font-family: 'helveticaneuecyrmedium';
+  font-family: 'helveticaneuecyrlight';
   text-align: center;
-  padding: 0 0 0 56px; }
+  margin-left: -215px; }
 
 .header-search-tutor-counter-inner {
   display: inline-block;
@@ -3138,6 +3138,7 @@ textarea {
   font-size: 13px; }
 
 .sort-by {
+  position: relative;
   float: right;
   font-size: 14px;
   font-family: 'helveticaneuecyrlight'; }
@@ -3400,7 +3401,8 @@ textarea {
   border-radius: 4px;
   width: 262px;
   padding: 15px 24px 18px;
-  margin: 0 8px 30px 0; }
+  margin: 0 8px 30px 0;
+  vertical-align: top; }
 
 .index-reviews-list-user {
   padding: 0 0 12px;
@@ -3418,7 +3420,11 @@ textarea {
   width: 200px;
   padding: 0;
   top: -5px;
-  position: relative; }
+  position: relative;
+  vertical-align: top; }
+
+.index-reviews-list-user .index-reviews-list-user-right {
+  top: -2px; }
 
 .index-reviews-list-user-right b {
   display: block;
@@ -3434,7 +3440,6 @@ textarea {
   line-height: 16px;
   color: black;
   font-family: 'helveticaneuecyrlight_italic';
-  height: 140px;
   padding: 0 0 8px; }
 
 .index-reviews-list-author {
@@ -3462,7 +3467,7 @@ textarea {
   font-size: 15px;
   font-family: 'helveticaneuecyrmedium';
   text-decoration: none;
-  padding: 0 42px; }
+  padding: 0 12px; }
 
 /*
 * Index text
@@ -3480,7 +3485,7 @@ textarea {
 .footer-search-tutor-inner {
   width: 910px;
   margin: 0 auto;
-  padding: 35px 0 0;
+  padding: 58px 0 0;
   text-align: center; }
 
 .footer-search-tutor-title {
@@ -3699,11 +3704,8 @@ textarea {
   border: 0;
   border-radius: 4px;
   background: #53ab53;
-  height: 47px;
+  height: 37px;
   min-width: 144px;
-  padding: 0 20px;
-  vertical-align: middle;
-  line-height: 47px;
   text-align: center;
   color: #fff;
   font-size: 17px;
@@ -3786,7 +3788,14 @@ span.customSelect {
   font-family: 'helveticaneuecyrroman';
   text-align: left;
   height: 45px;
-  background: #fff url(../img/icons/ic3.png) no-repeat 100% 50%; }
+  background: white; }
+  span.customSelect:after {
+    top: 11px;
+    position: absolute;
+    right: 12px;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 16px;
+    color: #777777; }
 
 span.customSelect .customSelectInner {
   height: 45px;
@@ -4168,5 +4177,17 @@ label {
   color: #a9a9a9;
   font-family: 'helveticaneuecyrlight';
   text-align: center; }
+
+.relative {
+  position: relative; }
+
+.header-search-tutor-form > .sort-by {
+  float: none;
+  display: inline-block; }
+
+.footer-search-tutor-inner > .sort-by {
+  float: none;
+  display: inline-block;
+  color: white; }
 
 /*# sourceMappingURL=app.css.map */

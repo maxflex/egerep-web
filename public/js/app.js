@@ -263,7 +263,10 @@
           }
           map.fitBounds(bounds);
           map.panToBounds(bounds);
-          return map.setZoom(12);
+          map.setZoom(12);
+          return google.maps.event.addListenerOnce(map, 'idle', function() {
+            return $('div:has(>a[href^="https://www.google.com/maps"])').remove();
+          });
         });
       }
       return $scope.toggleShow(tutor, 'map_shown', 'gmap');
@@ -405,59 +408,6 @@
 
 (function() {
 
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
@@ -604,9 +554,17 @@
       restrict: 'E',
       scope: {
         subjects: '=',
-        subjectIds: '='
+        subjectIds: '=',
+        "case": '@'
       },
-      templateUrl: '/directives/subject-list'
+      templateUrl: '/directives/subject-list',
+      controller: function($scope, $element, $attrs, $rootScope) {
+        $scope.byId = $attrs.byId !== void 0;
+        if ($scope["case"] === void 0) {
+          $scope["case"] = 'dative';
+        }
+        return $scope.findById = $rootScope.findById;
+      }
     };
   });
 
@@ -637,6 +595,59 @@
 
 (function() {
 
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 

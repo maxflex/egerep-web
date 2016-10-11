@@ -47,6 +47,7 @@ class Tutor extends Model
         $sum = $query->newQuery()->sum('reviews.score');
         $count = $query->newQuery()->count();
         switch($this->js) {
+            case 6:
             case 10: {
                 $js = 8;
                 break;
@@ -55,12 +56,13 @@ class Tutor extends Model
                 $js = 10;
                 break;
             }
+            case 7: {
+                $js = 9;
+                break;
+            }
             default: {
                 $js = $this->js;
             }
-        }
-        if ($this->id == 5) {
-            \Log::info($sum . ' | ' . $count);
         }
         $avg = (4 * (($this->lk + $this->tb + $js) / 3) + $sum)/(4 + $count);
         return number_format($avg, 1, ',', '');
@@ -204,18 +206,33 @@ class Tutor extends Model
                         where r.score between 1 and 10
                         GROUP BY tt.id
                     ) revs'), 'revs.id', '=', 'tutors.id');
-                    $query->orderBy(DB::raw('((4 * ((lk + tb + IF(js=10, 8, IF(js=8, 10, js))) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
+                    $query->orderBy(DB::raw('((4 * ((lk + tb +
+                        CASE js
+                            WHEN 6 THEN 8
+                            WHEN 10 THEN 8
+                            WHEN 8 THEN 10
+                            WHEN 7 THEN 9
+                            ELSE js
+                        END
+                    ) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
                 case 5:
-                    if ($station_id) {
-                        $query->has('markers')->orderBy(DB::raw(
-                        "(select min(d.distance + m.minutes)
-                            from markers mr
-                            join metros m on m.marker_id = mr.id
-                            join distances d on d.from = m.station_id and d.to = {$station_id}
-                            where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
-                        )"), 'asc');
-                        break;
+                    if ($station_id && isset($place) && $place) {
+                        if ($place == 1) {
+                            $query->orderBy(DB::raw("(
+                                select min(d.distance + m.minutes)
+                                from markers mr
+                                join metros m on m.marker_id = mr.id
+                                join distances d on d.from = m.station_id and d.to = {$station_id}
+                                where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
+                            )"), 'asc');
+                        } else {
+                            $query->orderBy(DB::raw("(
+                                select min(distance) from distances
+                                where `from` IN (tutors.svg_map) and `to` = {$station_id}
+                            )"));
+                        }
                     }
+                    break;
                 // @notice break внутри if конструкции чтоб если не указан station_id перескакивал на сортиворку по популярности,
                 // что и есть дефолт сортивока изначально насколько я понял.
             }

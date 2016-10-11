@@ -13,7 +13,8 @@ class Review extends Model
     protected $connection = 'egerep';
 
     protected $hidden = [
-        'score',
+        'id',
+        'attachment_id',
         'state',
         'updated_at',
         'created_at',
@@ -35,7 +36,10 @@ class Review extends Model
 
     public static function get($limit = 3)
     {
-        return static::with('tutor')->take($limit)->orderBy('created_at', 'desc')->get();
+        return static::with('tutor')->take($limit)->join('attachments', 'attachments.id', '=', 'attachment_id')
+            ->select('reviews.*')
+            ->addSelect(DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count'))
+            ->orderBy('reviews.created_at', 'desc')->get();
     }
 
     public static function boot()

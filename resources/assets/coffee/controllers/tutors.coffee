@@ -70,6 +70,10 @@ angular
                 map.panToBounds bounds
                 map.setZoom 12
 
+                # bug fix – убираем квадратик в правом нижнем углу
+                google.maps.event.addListenerOnce map, 'idle', ->
+                    $('div:has(>a[href^="https://www.google.com/maps"])').remove()
+
             $scope.toggleShow(tutor, 'map_shown', 'gmap')
 
         $scope.getMetros = (tutor) ->

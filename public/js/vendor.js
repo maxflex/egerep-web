@@ -15799,6 +15799,7 @@ a.version="2.14.1",b(rb),a.fn=Se,a.min=tb,a.max=ub,a.now=Fe,a.utc=j,a.unix=Jc,a.
                     goTutor()
                 }
             })
+        $('div:has(>a[href^="https://www.google.com/maps"])').remove()
     })
 
     angular.element(document).ready(function() {

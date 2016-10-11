@@ -7,6 +7,7 @@
                     goTutor()
                 }
             })
+        $('div:has(>a[href^="https://www.google.com/maps"])').remove()
     })
 
     angular.element(document).ready(function() {

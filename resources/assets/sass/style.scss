@@ -64,6 +64,7 @@ div[id^='svg'] {
 .gm-bundled-control .gmnoprint {
     display: block;
 }
+
 a[href^="http://maps.google.com/maps"]{display:none !important}
 a[href^="https://maps.google.com/maps"]{display:none !important}
 a[href^="https://www.google.com/maps"]{display:none !important}
@@ -160,4 +161,19 @@ label {
     color: $gray-light;
     font-family: 'helveticaneuecyrlight';
     text-align: center;
+}
+
+.relative {
+    position: relative;
+}
+
+.header-search-tutor-form > .sort-by {
+    float: none;
+    display: inline-block;
+}
+
+.footer-search-tutor-inner > .sort-by {
+    float: none;
+    display: inline-block;
+    color: white;
 }
