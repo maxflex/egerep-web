@@ -245,7 +245,7 @@ class Tutor extends Model
             })
             ->orderBy(DB::raw("SQRT(
                 POW(69.1 * (markers.lat - {$tutor->markers[0]->lat}), 2) +
-                POW(69.1 * (37.5382 - {$tutor->markers[0]->lng}) * COS(markers.lat / 57.3), 2)
+                POW(69.1 * ({$tutor->markers[0]->lng} - markers.lng) * COS(markers.lat / 57.3), 2)
             )"), 'asc')
             ->groupBy('tutors.id');
         } else {
