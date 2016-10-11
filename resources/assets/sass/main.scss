@@ -343,7 +343,7 @@ textarea {
 .sort-by {
     float: right;
     font-size: 14px;
-    font-family: 'helveticaneuecyrroman';
+    font-family: 'helveticaneuecyrlight';
 }
 .sort-by .custom-select {
     margin-left: 20px;
@@ -1002,6 +1002,7 @@ span.customSelect .customSelectInner {
     padding: 0 30px;
     line-height: 45px;
     white-space: nowrap;
+    font-family: 'helveticaneuecyrlight';
     // white-space: pre;
 }
 span.customSelect.custom-select-small {

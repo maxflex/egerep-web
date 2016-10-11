@@ -180,11 +180,11 @@ class Tutor extends Model
         # Оставляем только зеленые маркеры, если клиент едет к репетитору
         if (isset($place) && $place) {
             if ($place == 1) {
-                # если "Клиент едет к репетитору", то только репетиторы с картой выезда
-                $query->where('svg_map', '<>', '');
-            } else {
                 # отсеиваем репетиторов без зеленых маркеров
                 $query->has('markers');
+            } else {
+                # если "строго у себя дома", то только репетиторы с картой выезда
+                $query->where('svg_map', '<>', '');
             }
         }
 
@@ -232,12 +232,25 @@ class Tutor extends Model
     public static function getSimilar(Tutor $tutor)
     {
         // пока только по предметам похожих находим
-        return static::select('id', 'first_name', 'middle_name', 'subjects', 'photo_extension')
-            ->where('subjects', implode(',', $tutor->subjects))
-            ->where('id', '!=', $tutor->id)
-            ->take(3)
-            ->inRandomOrder()
-            ->get();
+        $query = static::select('tutors.id', 'first_name', 'middle_name', 'subjects', 'photo_extension', 'js', 'tb', 'lk')
+            ->where('subjects', $tutor->getClean('subjects'))
+            ->where('tutors.id', '!=', $tutor->id)
+            ->take(3);
+
+        if (count($tutor->markers)) {
+            $query->join('markers', function($join) {
+                $join->on('markers.markerable_id', '=', 'tutors.id')
+                    ->where('markers.markerable_type', '=', 'App\Models\Tutor');
+            })
+            ->orderBy(DB::raw("SQRT(
+                POW(69.1 * (markers.lat - {$tutor->markers[0]->lat}), 2) +
+                POW(69.1 * (37.5382 - {$tutor->markers[0]->lng}) * COS(markers.lat / 57.3), 2)
+            )"));
+        } else {
+            $query->inRandomOrder();
+        }
+
+        return $query->get();
     }
 
     public static function boot()
