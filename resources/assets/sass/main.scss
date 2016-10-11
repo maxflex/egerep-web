@@ -195,7 +195,7 @@ textarea {
 --------------------------------*/
 .breadcrumbs {
     // border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 23px;
+    margin-bottom: 5px;
 }
 .breadcrumbs-inner {
     width: 960px;
@@ -706,10 +706,12 @@ textarea {
     display: inline-block;
     width: 198px;
     padding: 0 0 0 22px;
-    vertical-align: middle;
+    vertical-align: top;
     font-size: 14px;
     line-height: 22px;
     color: $gray;
+    top: -3px;
+    position: relative;
 }
 .other-tutor-list-right b {
     font-size: 15px;
@@ -1227,4 +1229,8 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .button-green:disabled {
     background-color: rgba($gray-light, .5);
+}
+
+.other-tutor-list-right > div {
+    height: 17px;
 }

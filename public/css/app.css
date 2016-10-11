@@ -3006,7 +3006,7 @@ textarea {
 * Breadcrumbs
 --------------------------------*/
 .breadcrumbs {
-  margin-bottom: 23px; }
+  margin-bottom: 5px; }
 
 .breadcrumbs-inner {
   width: 960px;
@@ -3512,10 +3512,12 @@ textarea {
   display: inline-block;
   width: 198px;
   padding: 0 0 0 22px;
-  vertical-align: middle;
+  vertical-align: top;
   font-size: 14px;
   line-height: 22px;
-  color: #777777; }
+  color: #777777;
+  top: -3px;
+  position: relative; }
 
 .other-tutor-list-right b {
   font-size: 15px;
@@ -4014,6 +4016,9 @@ span.customSelect.custom-select-small .customSelectInner {
 .button-green:disabled {
   background-color: rgba(169, 169, 169, 0.5); }
 
+.other-tutor-list-right > div {
+  height: 17px; }
+
 .metro-circle {
   height: 10px;
   width: 10px;
@@ -4114,7 +4119,7 @@ a[href^="https://www.google.com/maps"] {
     margin-bottom: 15px; }
 
 .text-gray {
-  color: #777777; }
+  color: #b5b5b5; }
 
 .circle-separator {
   font: normal normal normal 14px/1 FontAwesome;
