@@ -835,7 +835,7 @@ textarea {
     color: #737373;
     float: left;
 }
-.footer-copy-right li:after {
+.footer-copy-right li:not(:first-child):after {
     content: '';
     position: absolute;
     top: 5px;
