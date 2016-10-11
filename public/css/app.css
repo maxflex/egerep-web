@@ -2925,12 +2925,12 @@ textarea {
   font-family: 'helveticaneuecyrlight'; }
 
 .header-phone-work-hour {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px; }
 
 .header-button-search-tutor {
   color: #53ab53;
-  font-size: 15px;
+  font-size: 16px;
   text-decoration: none;
   text-align: center;
   font-family: 'helveticaneuecyrlight';
@@ -2998,7 +2998,7 @@ textarea {
 .header-message {
   background: #53ab53;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   font-family: 'helveticaneuecyrlight';
   padding: 12px 0 13px; }
 
@@ -3135,7 +3135,7 @@ textarea {
 
 .search-filter-list li {
   padding: 0 0 8px;
-  font-size: 13px; }
+  font-size: 14px; }
 
 .sort-by {
   position: relative;
@@ -3436,7 +3436,7 @@ textarea {
   padding: 0; }
 
 .index-reviews-list-text {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 16px;
   color: black;
   font-family: 'helveticaneuecyrlight_italic';
@@ -3464,7 +3464,7 @@ textarea {
   display: inline-block;
   height: 38px;
   line-height: 38px;
-  font-size: 15px;
+  font-size: 16px;
   font-family: 'helveticaneuecyrmedium';
   text-decoration: none;
   padding: 0 12px; }
@@ -3525,7 +3525,7 @@ textarea {
   position: relative; }
 
 .other-tutor-list-right b {
-  font-size: 15px;
+  font-size: 16px;
   color: black;
   font-weight: normal;
   font-family: 'helveticaneuecyrmedium';
@@ -3616,7 +3616,7 @@ textarea {
   list-style: none; }
 
 .footer-menu li {
-  font-size: 13px;
+  font-size: 14px;
   padding: 0 0 15px; }
 
 .footer-copy-right {
@@ -3660,7 +3660,7 @@ textarea {
   padding: 0 0 0 16px;
   width: 170px;
   height: 34px;
-  font-size: 13px;
+  font-size: 14px;
   font-family: 'helveticaneuecyrroman'; }
 
 .footer-search-button {
@@ -3740,7 +3740,7 @@ textarea {
   border: 1px solid #53ab53;
   text-align: center;
   color: #53ab53;
-  font-size: 15px;
+  font-size: 16px;
   text-decoration: none;
   font-family: 'helveticaneuecyrmedium';
   cursor: pointer; }
@@ -3832,7 +3832,7 @@ span.customSelect.custom-select-small .customSelectInner {
   font: normal normal normal 14px/1 FontAwesome;
   color: white;
   left: 1px;
-  font-size: 11px;
+  font-size: 12px;
   padding-left: 2px;
   content: "\f00c"; }
 
