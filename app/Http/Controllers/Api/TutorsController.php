@@ -104,14 +104,19 @@ class TutorsController extends Controller
      */
     public function search(Request $request)
     {
-        @extract($request->search);
+        // потому что надо поменять subjects, а из $request нельзя
+        $search = $request->search;
 
         // очищаем deselect-значения  {7: false}
-        $subjects = array_filter($subjects);
+        if (isAssoc($search['subjects'])) {
+            $search['subjects'] = array_keys(array_filter($search['subjects']));
+        }
+
+        @extract($search);
 
         // если указаны какие либо-параметры, пытаемся найти serp-страницу с параметрами
         if (count($subjects) || $place || $station_id) {
-            $page = \App\Models\Page::findByParams($request->search);
+            $page = \App\Models\Page::findByParams($search);
             if ($page->exists()) {
                 return ['url' => $page->value('url')];
             }
@@ -122,6 +127,6 @@ class TutorsController extends Controller
             return $request->page;
         });
 
-        return Tutor::search($request->search)->paginate(10);
+        return Tutor::search($search)->paginate(10);
     }
 }

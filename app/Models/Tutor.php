@@ -157,7 +157,8 @@ class Tutor extends Model
     {
         $subject_id = Service\Factory::getSubjectId($subject_eng);
         return static::search([
-            'subjects' => [$subject_id => true]
+            'subjects'      => [$subject_id],
+            'with_pictures' => true,
         ])->take($limit)->get();
     }
 
@@ -169,14 +170,18 @@ class Tutor extends Model
         @extract($search);
 
         // очищаем deselect-значения  {7: false}
-        $subjects = array_filter($subjects);
+        if (isAssoc($subjects)) {
+            $subjects = array_keys(array_filter($subjects));
+        }
 
         $query = Tutor::with(['markers']);
 
-        foreach($subjects as $subject_id => $enabled) {
-            if ($enabled) {
-                $query->whereSubject($subject_id);
-            }
+        foreach($subjects as $subject_id) {
+            $query->whereSubject($subject_id);
+        }
+
+        if (isset($with_pictures)) {
+            $query->where('photo_extension', '!=', '');
         }
 
         # Оставляем только зеленые маркеры, если клиент едет к репетитору
@@ -276,11 +281,3 @@ class Tutor extends Model
         static::addGlobalScope(new TutorScope);
     }
 }
-
-// (
-//     SELECT
-//         ((4* ((lk + tb + IF(js=10, 8, IF(js=8, 10, js))) / 3) + SUM(r.score))/(4 + COUNT(r.id)))
-//     FROM reviews r
-//     join attachments a on a.id = r.attachment_id
-//     where r.score between 1 and 10
-// )

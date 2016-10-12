@@ -56,15 +56,30 @@ class Page extends Model
         return Parser::compilePage($this, $value);
     }
 
+    public function scopeWhereSubject($query, $subject_id)
+    {
+        return $query->whereRaw("FIND_IN_SET($subject_id, subjects)");;
+    }
+
     public function scopeFindByParams($query, $search)
     {
         @extract($search);
-        $subjects = array_filter($subjects);
-        foreach($subjects as $subject_id => $enabled) {
-            $query->whereRaw("FIND_IN_SET($subject_id, subjects)");
+        \Log::info('Subjects: ' . json_encode($subjects));
+        foreach($subjects as $subject_id) {
+            $query->whereSubject($subject_id);
         }
-        $query->where('place', $place)->where('station_id', $station_id)->where('id', '!=', $id);
+        if (isset($place)) {
+            $query->where('place', $place);
+        }
+        if (isset($station_id)) {
+            $query->where('station_id', $station_id);
+        }
+        if (isset($id)) {
+            $query->where('id', '!=', $id);
+        }
+        return $query;
     }
+
 
     public static function boot()
     {

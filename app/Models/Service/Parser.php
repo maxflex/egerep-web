@@ -62,6 +62,9 @@
                     case 'session':
                         $replacement = json_encode($_SESSION[$args[0]]);
                         break;
+                    case 'param':
+                        $replacement = json_encode(@$_GET[$args[0]]);
+                        break;
                     case 'count':
                         $type = array_shift($args);
                         switch($type) {
@@ -106,8 +109,21 @@
         {
             $tutor = Tutor::with('markers')->selectDefault()->find($id);
             $similar_tutors = Tutor::getSimilar($tutor);
+
+            // Ссылка «все репетиторы по ...»
+            $subjects_url = '/tutors?subjects=' . implode(',', $tutor->subjects);
+
+            $page = \App\Models\Page::findByParams([
+                'subjects' => $tutor->subjects
+            ]);
+            if ($page->exists()) {
+                $subjects_url = $page->value('url');
+            }
+            // Конец
+
             static::_replace($html, 'current_tutor', $tutor->toJson());
             static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
+            static::_replace($html, 'subjects_url', $subjects_url);
         }
 
         /**

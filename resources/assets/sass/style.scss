@@ -103,10 +103,6 @@ a[href^="https://www.google.com/maps"]{display:none !important}
     }
 }
 
-.text-gray {
-    color: #b5b5b5;
-}
-
 .circle-separator {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: 8px;
@@ -158,8 +154,6 @@ label {
 }
 
 .search-more-hint {
-    color: $gray-light;
-    font-family: 'helveticaneuecyrlight';
     text-align: center;
 }
 

@@ -11,6 +11,10 @@ angular
         if not $scope.profilePage()
         # страница поиска
             $timeout ->
+                # если есть предустановленные предметы
+                if $scope.selected_subjects
+                    $scope.selected_subjects.split(',').forEach (subject_id) ->
+                        $scope.search.subjects[subject_id] = true
                 $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
                 metroAutocomplete($scope)
                 $scope.filter() if not parseInt($scope.search.station_id)
@@ -156,12 +160,6 @@ angular
                 map.init()
                 map.deselectAll()
                 map.select(tutor.svg_map)
-                # $(document.getElementById('svg-iframe-'+tutor.id).contentWindow.document).keydown (e) ->
-                #     if e.keyCode == 27
-                #         setTimeout ->
-                #             $('#svg-' + tutor.id).hide()
-                #         , 200
-                # return
             $scope.toggleShow(tutor, 'show_svg', 'svg_map')
 
         $scope.toggleShow = (tutor, prop, iteraction_type) ->
@@ -170,9 +168,3 @@ angular
             else
                 tutor[prop] = true
                 Tutor.iteraction {id: tutor.id, type: iteraction_type}
-
-        $scope.subjectsLink = (tutor) ->
-            link = ['tutors']
-            tutor.subjects.forEach (subject_id) ->
-                link.push $scope.subjects[subject_id].eng
-            '/' + link.join('-')

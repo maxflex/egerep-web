@@ -2364,7 +2364,7 @@
   clip: auto; }
 
 .button-base, .header-button-search-tutor, .search-result-reviews-more, .button-light-green,
-.button-green, .button-border-green {
+.button-green, .button-border-green, .button-border-gray {
   padding: 0 12px;
   line-height: 36px;
   border-radius: 4px; }
@@ -3071,13 +3071,13 @@ textarea {
   display: inline-block;
   vertical-align: top;
   width: 290px;
-  padding: 4px 0 0 32px; }
+  padding: 0 0 0 16px; }
 
 .short-tutor-list-name {
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'helveticaneuecyrmedium';
   color: black;
-  padding: 0 0 13px; }
+  padding: 0 0 10px; }
 
 .short-tutor-list-info > ul {
   margin: 0;
@@ -3516,7 +3516,7 @@ textarea {
 .other-tutor-list-right {
   display: inline-block;
   width: 198px;
-  padding: 0 0 0 22px;
+  padding: 0 0 0 15px;
   vertical-align: top;
   font-size: 14px;
   line-height: 22px;
@@ -3525,7 +3525,7 @@ textarea {
   position: relative; }
 
 .other-tutor-list-right b {
-  font-size: 16px;
+  font-size: 14px;
   color: black;
   font-weight: normal;
   font-family: 'helveticaneuecyrmedium';
@@ -3691,11 +3691,11 @@ textarea {
   width: 960px;
   margin: 0 auto; }
 
-.color-gray {
-  color: #797979; }
+.color-gray, .text-gray {
+  color: #777777; }
 
-.color-gray-light {
-  color: #a9a9a9; }
+.color-gray-light, .text-gray-light {
+  color: #b5b5b5; }
 
 .color-green {
   color: #53ab53; }
@@ -3745,6 +3745,17 @@ textarea {
   font-family: 'helveticaneuecyrmedium';
   cursor: pointer; }
 
+.button-border-gray {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #b5b5b5;
+  text-align: center;
+  color: #b5b5b5;
+  font-size: 14px;
+  text-decoration: none;
+  font-family: 'helveticaneuecyrmedium';
+  margin: 40px 0 80px; }
+
 .input-text,
 .textarea {
   border: 1px solid #dedede;
@@ -3767,7 +3778,7 @@ textarea {
   border-bottom: 1px solid #e8e8e8;
   padding: 0 0 14px 0;
   position: relative;
-  margin-bottom: 34px; }
+  margin-bottom: 30px; }
 
 /*
 * Custom select
@@ -3831,10 +3842,11 @@ span.customSelect.custom-select-small .customSelectInner {
 .custom-checkbox.checked:before {
   font: normal normal normal 14px/1 FontAwesome;
   color: white;
-  left: 1px;
+  left: 1.5px;
   font-size: 12px;
-  padding-left: 2px;
-  content: "\f00c"; }
+  content: "\f00c";
+  position: relative;
+  top: -1px; }
 
 .custom-radio.checked:before {
   content: '';
@@ -4023,10 +4035,10 @@ span.customSelect.custom-select-small .customSelectInner {
   outline: none; }
 
 .button-green:disabled {
-  background-color: rgba(169, 169, 169, 0.5); }
+  background-color: rgba(181, 181, 181, 0.5); }
 
 .other-tutor-list-right > div {
-  height: 17px; }
+  height: 20px; }
 
 .metro-circle {
   height: 10px;
@@ -4127,9 +4139,6 @@ a[href^="https://www.google.com/maps"] {
     margin: 0;
     margin-bottom: 15px; }
 
-.text-gray {
-  color: #b5b5b5; }
-
 .circle-separator {
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 8px;
@@ -4174,8 +4183,6 @@ label {
   right: 0; }
 
 .search-more-hint {
-  color: #a9a9a9;
-  font-family: 'helveticaneuecyrlight';
   text-align: center; }
 
 .relative {
