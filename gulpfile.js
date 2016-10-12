@@ -48,23 +48,11 @@ elixir(mix => {
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .scripts(jsFromBower([
             'jquery/dist/jquery',
-            'bootstrap/dist/js/bootstrap.min',
             'angular/angular.min',
-            'angular-animate/angular-animate.min',
-            'angular-sanitize/angular-sanitize.min',
             'angular-resource/angular-resource.min',
-            'angular-aria/angular-aria.min',
-            'angular-messages/angular-messages.min',
-            'angular-material/angular-material.min',
             'angular-i18n/angular-locale_ru-ru',
             'angular-inview/angular-inview',
-            'nprogress/nprogress',
             'underscore/underscore-min',
-            'bootstrap-select/dist/js/bootstrap-select',
-            'bootstrap-datepicker/dist/js/bootstrap-datepicker',
-            'bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min',
-            'angular-ui-sortable/sortable.min',
-            'angular-bootstrap/ui-bootstrap.min',
             'ladda/dist/spin.min',
             'ladda/dist/ladda.min',
             'angular-ladda/dist/angular-ladda.min',
@@ -72,5 +60,8 @@ elixir(mix => {
             'moment/locale/ru',
             'jquery.maskedinput/dist/jquery.maskedinput.min',
             'notifyjs/dist/notify',
+            'jquery-ui/jquery-ui.min',
+            'jquery.customSelect/jquery.customSelect.min',
+            'iCheck/icheck.min',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });
