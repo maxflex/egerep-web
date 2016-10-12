@@ -183,6 +183,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').controller('Index', function($scope, Tutor) {
     bindArguments($scope, arguments);
     return $scope.dateToText = function(date) {
@@ -195,7 +200,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, REVIEWS_PER_PAGE) {
     var search, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     $scope.profilePage = function() {
@@ -217,13 +222,6 @@
     }
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
-    $scope.request = function(tutor) {
-      tutor.request.tutor_id = tutor.id;
-      Request.save(tutor.request, function() {
-        return $scope.sent_ids.push(tutor.id);
-      });
-      return console.log(tutor);
-    };
     $scope.dateToText = function(date) {
       var text_date;
       text_date = moment(date).format('DD MMMM YYYY');
@@ -396,9 +394,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').component('requestForm', {
-    templateUrl: 'directives/request-form'
-  });
+
 
 }).call(this);
 
@@ -532,6 +528,60 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').directive('requestForm', function() {
+    return {
+      replace: true,
+      scope: {
+        tutor: '=',
+        sentIds: '='
+      },
+      templateUrl: 'directives/request-form',
+      controller: function($scope, $element, $timeout, Request) {
+        var checkForm, isFull, notify_options;
+        $scope.request = function() {
+          if (checkForm()) {
+            $scope.tutor.request.tutor_id = $scope.tutor.id;
+            return Request.save($scope.tutor.request, function() {
+              $scope.tutor.request_sent = true;
+              if ($scope.sentIds !== void 0) {
+                return $scope.sentIds.push($scope.tutor.id);
+              }
+            });
+          }
+        };
+        checkForm = function() {
+          var phone_element, phone_number;
+          phone_element = $($element).find('.phone-field');
+          if (!isFull(phone_element.val())) {
+            phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+            return false;
+          }
+          phone_number = phone_element.val().match(/\d/g).join('');
+          if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+            phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+            return false;
+          }
+          return true;
+        };
+        isFull = function(number) {
+          if (number === void 0 || number === "") {
+            return false;
+          }
+          return !number.match(/_/);
+        };
+        return notify_options = {
+          hideAnimation: 'fadeOut',
+          showDuration: 0,
+          hideDuration: 400,
+          autoHideDelay: 3000
+        };
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
@@ -646,11 +696,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

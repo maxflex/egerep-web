@@ -70,6 +70,7 @@ elixir(mix => {
             'angular-ladda/dist/angular-ladda.min',
             'moment/min/moment.min',
             'moment/locale/ru',
-            'jquery.maskedinput/dist/jquery.maskedinput.min'
+            'jquery.maskedinput/dist/jquery.maskedinput.min',
+            'notifyjs/dist/notify',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });

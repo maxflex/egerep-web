@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, Request, REVIEWS_PER_PAGE) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
 
         # личная страница преподавателя?
@@ -29,13 +29,6 @@ angular
 
         # просмотренные преподаватели (чтобы не засчитывались просмотры несколько раз)
         viewed_tutors = []
-
-        # отправить заявку
-        $scope.request = (tutor) ->
-            tutor.request.tutor_id = tutor.id
-            Request.save tutor.request, ->
-                $scope.sent_ids.push(tutor.id)
-            console.log tutor
 
         # сотрудничает с 12 сентября 2000 года
         $scope.dateToText = (date) ->
