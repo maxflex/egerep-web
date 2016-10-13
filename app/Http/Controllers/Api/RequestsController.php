@@ -51,7 +51,7 @@ class RequestsController extends Controller
         $egerep_request_count = intval(Redis::get(self::REDIS_REQUEST_COUNT));
 
         // максимум – 10 заявок в минуту
-        if ($egerep_request_count < 1) {
+        if ($egerep_request_count < 10) {
             $_SESSION['sent_ids'][] = $request->tutor_id;
             Api::exec('requestNew', $request->input());
             Redis::incr(self::REDIS_REQUEST_COUNT);
