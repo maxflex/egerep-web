@@ -13,6 +13,9 @@ angular.module('Egerep')
                     Request.save $scope.tutor.request, ->
                         $scope.tutor.request_sent = true
                         if $scope.sentIds isnt undefined then $scope.sentIds.push($scope.tutor.id)
+                    , ->
+                        $scope.tutor.request_error = true
+
 
             # проверить перед отправкой форму
             checkForm = ->

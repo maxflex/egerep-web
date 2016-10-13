@@ -3095,7 +3095,7 @@ textarea {
 
 .short-tutor-sub-text {
   font-size: 20px;
-  padding: 0 0 100px; }
+  padding: 0 0 50px; }
 
 /*
 * Search filter
@@ -4199,14 +4199,23 @@ label {
   -webkit-font-smoothing: antialiased;
   padding-left: 14px !important; }
 
-.main .search-result-item.button-green {
+.error-message {
+  border-radius: 4px;
+  background-color: #ff8181;
+  color: white;
+  text-align: center;
+  padding: 11px 0;
+  margin-top: 12px;
+  font-family: "helveticaneuecyrroman"; }
+
+.index-page .search-result-item.button-green {
   vertical-align: middle;
   margin-left: 13px; }
 
-.main .customSelect {
+.index-page .customSelect {
   width: 200px; }
 
-.main .header-search-tutor-form {
+.index-page .header-search-tutor-form {
   padding: 170px 0; }
 
 /*# sourceMappingURL=app.css.map */

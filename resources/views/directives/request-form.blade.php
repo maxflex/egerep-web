@@ -11,4 +11,8 @@
            Отправить
        </button>
    </div>
+
+   <div class="error-message" ng-show='tutor.request_error'>
+       В настоящий момент заявка не может быть отправлена. Оставьте заявку по телефону +7 495 646-10-80
+   </div>
 </form>

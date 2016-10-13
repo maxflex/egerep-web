@@ -175,16 +175,26 @@ label {
 .notifyjs-bootstrap-error {
     color: white !important;
     background: none !important;
-    background-color: rgb(255, 129, 129) !important;
-    border-color: rgb(255, 129, 129) !important;
+    background-color: $red !important;
+    border-color: $red !important;
     font-family: $font-light;
     text-shadow: none !important;
     -webkit-font-smoothing: antialiased;
     padding-left: 14px !important;
 }
 
+.error-message {
+    border-radius: $border-radius;
+    background-color: $red;
+    color: white;
+    text-align: center;
+    padding: 11px 0;
+    margin-top: 12px;
+    font-family: $font-roman;
+}
+
 // Главная страница
-.main {
+.index-page {
     & .search-result-item.button-green {
         vertical-align: middle;
         margin-left: 13px;

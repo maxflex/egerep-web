@@ -221,7 +221,19 @@ class Tutor extends Model
                         END
                     ) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
                 case 5:
-                    if ($station_id && isset($place) && $place) {
+                    if ($station_id && isset($place)) {
+                        if ($place == 0) {
+                            $query->orderBy(DB::raw("LEAST((
+                                select min(d.distance + m.minutes)
+                                from markers mr
+                                join metros m on m.marker_id = mr.id
+                                join distances d on d.from = m.station_id and d.to = {$station_id}
+                                where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
+                            ), (
+                                select min(distance) from distances
+                                where `from` IN (tutors.svg_map) and `to` = {$station_id}
+                            ))"), 'asc');
+                        }
                         if ($place == 1) {
                             $query->orderBy(DB::raw("(
                                 select min(d.distance + m.minutes)
@@ -230,7 +242,8 @@ class Tutor extends Model
                                 join distances d on d.from = m.station_id and d.to = {$station_id}
                                 where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
                             )"), 'asc');
-                        } else {
+                        }
+                        if ($place == 2) {
                             $query->orderBy(DB::raw("(
                                 select min(distance) from distances
                                 where `from` IN (tutors.svg_map) and `to` = {$station_id}

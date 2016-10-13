@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Cache;
 use App\Http\Controllers\Controller;
 use App\Models\Service\Api;
+use Illuminate\Support\Facades\Redis;
 
 class RequestsController extends Controller
 {
+    const REDIS_REQUEST_COUNT = 'egerep:request:count';
+    const REDIS_REQUEST_BLOCKED = 'egerep:request:blocked';
     /**
      * Display a listing of the resource.
      *
@@ -44,8 +48,18 @@ class RequestsController extends Controller
         // session()->push('sent_tutor_ids', $request->tutor_id);
         // $sent_tutor_ids = $_SESSION['sent_tutor_ids'] || [];
         // $sent_tutor_ids[] = $request->tutor_id;
-        $_SESSION['sent_ids'][] = $request->tutor_id;
-        Api::exec('requestNew', $request->input());
+        $egerep_request_count = intval(Redis::get(self::REDIS_REQUEST_COUNT));
+
+        // максимум – 10 заявок в минуту
+        if ($egerep_request_count < 1) {
+            $_SESSION['sent_ids'][] = $request->tutor_id;
+            Api::exec('requestNew', $request->input());
+            Redis::incr(self::REDIS_REQUEST_COUNT);
+            Redis::expire(self::REDIS_REQUEST_COUNT, 60);
+        } else {
+            Redis::sadd(self::REDIS_REQUEST_BLOCKED, json_encode($request->input()));
+            return abort(403);
+        }
     }
 
     /**
