@@ -1,0 +1,130 @@
+[10:46:59] Using gulpfile ~/projects/egerep-web/gulpfile.js
+[10:46:59] Starting 'watch'...
+[10:46:59] Starting 'all'...
+[10:46:59] Starting 'browserSync'...
+[10:46:59] Finished 'browserSync' after 777 μs
+[10:46:59] Starting 'sass'...
+[10:46:59] Finished 'sass' after 294 ms
+[10:46:59] Starting 'coffee'...
+[10:46:59] Finished 'coffee' after 8.5 ms
+[10:46:59] Starting 'copy'...
+[10:46:59] Finished 'copy' after 31 ms
+[10:46:59] Starting 'scripts'...
+[10:46:59] Finished 'scripts' after 7.82 ms
+[10:46:59] Finished 'all' after 346 ms
+[10:46:59] Starting 'default'...
+┌───────────────────┬───────────────────────────┬──────────────────────────────────────────────────────────────────────────┬─────────────────────┐
+│ Task              │ Summary                   │ Source Files                                                             │ Destination         │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.browserSync() │ 1. Starting Browsersync   │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.sass()        │ 1. Compiling Sass         │ resources/assets/sass/app.scss                                           │ public/css/app.css  │
+│                   │ 2. Autoprefixing CSS      │                                                                          │                     │
+│                   │ 3. Concatenating Files    │                                                                          │                     │
+│                   │ 4. Writing Source Maps    │                                                                          │                     │
+│                   │ 5. Saving to Destination  │                                                                          │                     │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.coffee()      │ 1. Compiling CoffeeScript │ resources/assets/coffee/*.coffee                                         │ public/js/app.js    │
+│                   │ 2. Concatenating Files    │ resources/assets/coffee/*/*.coffee                                       │                     │
+│                   │ 3. Writing Source Maps    │                                                                          │                     │
+│                   │ 4. Saving to Destination  │                                                                          │                     │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.copy()        │ 1. Saving to Destination  │ resources/assets/bower/SVG-Loaders/svg-loaders/three-dots.svg            │ public/img/svg      │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.scripts()     │ 1. Concatenating Files    │ resources/assets/bower/jquery/dist/jquery.js                             │ public/js/vendor.js │
+│                   │ 2. Writing Source Maps    │ resources/assets/bower/angular/angular.min.js                            │                     │
+│                   │ 3. Saving to Destination  │ resources/assets/bower/angular-resource/angular-resource.min.js          │                     │
+│                   │                           │ resources/assets/bower/angular-i18n/angular-locale_ru-ru.js              │                     │
+│                   │                           │ resources/assets/bower/angular-inview/angular-inview.js                  │                     │
+│                   │                           │ resources/assets/bower/underscore/underscore-min.js                      │                     │
+│                   │                           │ resources/assets/bower/ladda/dist/spin.min.js                            │                     │
+│                   │                           │ resources/assets/bower/ladda/dist/ladda.min.js                           │                     │
+│                   │                           │ resources/assets/bower/angular-ladda/dist/angular-ladda.min.js           │                     │
+│                   │                           │ resources/assets/bower/moment/min/moment.min.js                          │                     │
+│                   │                           │ resources/assets/bower/moment/locale/ru.js                               │                     │
+│                   │                           │ resources/assets/bower/jquery.maskedinput/dist/jquery.maskedinput.min.js │                     │
+│                   │                           │ resources/assets/bower/notifyjs/dist/notify.js                           │                     │
+│                   │                           │ resources/assets/bower/jquery-ui/jquery-ui.min.js                        │                     │
+│                   │                           │ resources/assets/bower/jquery.customSelect/jquery.customSelect.min.js    │                     │
+│                   │                           │ resources/assets/bower/iCheck/icheck.min.js                              │                     │
+│                   │                           │ resources/assets/js/*.js                                                 │                     │
+└───────────────────┴───────────────────────────┴──────────────────────────────────────────────────────────────────────────┴─────────────────────┘
+[10:46:59] Finished 'default' after 5.29 ms
+[10:46:59] Finished 'watch' after 398 ms
+[BS] Proxying: https://egecms.app:8084
+[BS] Access URLs:
+ ------------------------------------
+       Local: https://localhost:8085
+    External: https://egerep.app:8085
+ ------------------------------------
+          UI: http://localhost:3001
+ UI External: http://egerep.app:3001
+ ------------------------------------
+[BS] Watching files...
+[BS] File changed: public/js/vendor.js
+[BS] File changed: public/js/app.js
+[10:47:49] Using gulpfile ~/projects/egerep-web/gulpfile.js
+[10:47:49] Starting 'watch'...
+[10:47:49] Starting 'all'...
+[10:47:49] Starting 'browserSync'...
+[10:47:49] Finished 'browserSync' after 776 μs
+[10:47:49] Starting 'sass'...
+[10:47:50] Finished 'sass' after 223 ms
+[10:47:50] Starting 'coffee'...
+[10:47:50] Finished 'coffee' after 12 ms
+[10:47:50] Starting 'copy'...
+[10:47:50] Finished 'copy' after 22 ms
+[10:47:50] Starting 'scripts'...
+[10:47:50] Finished 'scripts' after 9.07 ms
+[10:47:50] Finished 'all' after 272 ms
+[10:47:50] Starting 'default'...
+┌───────────────────┬───────────────────────────┬──────────────────────────────────────────────────────────────────────────┬─────────────────────┐
+│ Task              │ Summary                   │ Source Files                                                             │ Destination         │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.browserSync() │ 1. Starting Browsersync   │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.sass()        │ 1. Compiling Sass         │ resources/assets/sass/app.scss                                           │ public/css/app.css  │
+│                   │ 2. Autoprefixing CSS      │                                                                          │                     │
+│                   │ 3. Concatenating Files    │                                                                          │                     │
+│                   │ 4. Writing Source Maps    │                                                                          │                     │
+│                   │ 5. Saving to Destination  │                                                                          │                     │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.coffee()      │ 1. Compiling CoffeeScript │ resources/assets/coffee/*.coffee                                         │ public/js/app.js    │
+│                   │ 2. Concatenating Files    │ resources/assets/coffee/*/*.coffee                                       │                     │
+│                   │ 3. Writing Source Maps    │                                                                          │                     │
+│                   │ 4. Saving to Destination  │                                                                          │                     │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.copy()        │ 1. Saving to Destination  │ resources/assets/bower/SVG-Loaders/svg-loaders/three-dots.svg            │ public/img/svg      │
+├───────────────────┼───────────────────────────┼──────────────────────────────────────────────────────────────────────────┼─────────────────────┤
+│ mix.scripts()     │ 1. Concatenating Files    │ resources/assets/bower/jquery/dist/jquery.js                             │ public/js/vendor.js │
+│                   │ 2. Writing Source Maps    │ resources/assets/bower/angular/angular.min.js                            │                     │
+│                   │ 3. Saving to Destination  │ resources/assets/bower/angular-resource/angular-resource.min.js          │                     │
+│                   │                           │ resources/assets/bower/angular-i18n/angular-locale_ru-ru.js              │                     │
+│                   │                           │ resources/assets/bower/angular-inview/angular-inview.js                  │                     │
+│                   │                           │ resources/assets/bower/underscore/underscore-min.js                      │                     │
+│                   │                           │ resources/assets/bower/ladda/dist/spin.min.js                            │                     │
+│                   │                           │ resources/assets/bower/ladda/dist/ladda.min.js                           │                     │
+│                   │                           │ resources/assets/bower/angular-ladda/dist/angular-ladda.min.js           │                     │
+│                   │                           │ resources/assets/bower/moment/min/moment.min.js                          │                     │
+│                   │                           │ resources/assets/bower/moment/locale/ru.js                               │                     │
+│                   │                           │ resources/assets/bower/jquery.maskedinput/dist/jquery.maskedinput.min.js │                     │
+│                   │                           │ resources/assets/bower/notifyjs/dist/notify.js                           │                     │
+│                   │                           │ resources/assets/bower/jquery-ui/jquery-ui.min.js                        │                     │
+│                   │                           │ resources/assets/bower/jquery.customSelect/jquery.customSelect.min.js    │                     │
+│                   │                           │ resources/assets/bower/iCheck/icheck.min.js                              │                     │
+│                   │                           │ resources/assets/js/*.js                                                 │                     │
+└───────────────────┴───────────────────────────┴──────────────────────────────────────────────────────────────────────────┴─────────────────────┘
+[10:47:50] Finished 'default' after 5.98 ms
+[10:47:50] Finished 'watch' after 332 ms
+[BS] Proxying: https://egecms.app:8084
+[BS] Access URLs:
+ ------------------------------------
+       Local: https://localhost:8085
+    External: https://egerep.app:8085
+ ------------------------------------
+          UI: http://localhost:3001
+ UI External: http://egerep.app:3001
+ ------------------------------------
+[BS] Watching files...
+[BS] File changed: public/js/app.js
+[BS] File changed: public/js/vendor.js

@@ -299,10 +299,6 @@
     };
     $scope.countView = function(tutor_id) {
       if (viewed_tutors.indexOf(tutor_id) === -1) {
-        Tutor.iteraction({
-          id: tutor_id,
-          type: 'views'
-        });
         return viewed_tutors.push(tutor_id);
       }
     };
@@ -508,7 +504,7 @@
           'station': ['станцию', 'станции', 'станций'],
           'tutor': ['репетитор', 'репетитора', 'репетиторов'],
           'profile': ['анкета', 'анкеты', 'анкет'],
-          'schooler': ['школьник нашел', 'школьника нашли', 'школьников нашло'],
+          'schooler': ['школьник нашел', 'школьника нашли', 'школьников нашли'],
           'taught': ['Обучен', 'Обучено', 'Обучено']
         };
       }

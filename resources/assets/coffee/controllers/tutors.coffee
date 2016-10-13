@@ -97,7 +97,7 @@ angular
 
         $scope.countView = (tutor_id) ->
             if viewed_tutors.indexOf(tutor_id) is -1
-                Tutor.iteraction {id: tutor_id, type: 'views'}
+                # Tutor.iteraction {id: tutor_id, type: 'views'}
                 viewed_tutors.push tutor_id
 
         $scope.filter = (subject_id) ->

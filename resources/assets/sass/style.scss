@@ -182,3 +182,19 @@ label {
     -webkit-font-smoothing: antialiased;
     padding-left: 14px !important;
 }
+
+// Главная страница
+.main {
+    & .search-result-item.button-green {
+        vertical-align: middle;
+        margin-left: 13px;
+    }
+
+    & .customSelect {
+        width: 200px;
+    }
+
+    & .header-search-tutor-form {
+        padding: 170px 0;
+    }
+}

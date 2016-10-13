@@ -1148,7 +1148,7 @@
 .fa-angle-up:before {
   content: "\f106"; }
 
-.fa-angle-down:before, span.customSelect:after {
+.fa-angle-down:before {
   content: "\f107"; }
 
 .fa-desktop:before {
@@ -2943,12 +2943,12 @@ textarea {
 --------------------------------*/
 .header-search-tutor {
   background: #f0f0f0;
-  margin: 0 0 85px; }
+  margin: 0 0 30px; }
 
 .header-search-tutor-inner {
   width: 960px;
   margin: 0 auto;
-  padding: 48px 0 33px;
+  padding: 30px 0 33px;
   text-align: center; }
 
 .header-search-tutor-form {
@@ -2965,11 +2965,10 @@ textarea {
   padding: 0 16px 0 0; }
 
 .header-search-tutor-counter {
-  font-size: 20px;
+  font-size: 17px;
   text-align: left;
   font-family: 'helveticaneuecyrlight';
-  text-align: center;
-  margin-left: -212px; }
+  text-align: center; }
 
 .header-search-tutor-counter-inner {
   display: inline-block;
@@ -3033,7 +3032,7 @@ textarea {
 --------------------------------*/
 .index-info-text {
   text-align: center;
-  padding: 0 0 75px; }
+  padding: 0 0 50px; }
 
 /*
 * Short tutor
@@ -3047,7 +3046,7 @@ textarea {
   font-family: 'helveticaneuecyrmedium';
   border-bottom: 1px solid #e8e8e8;
   padding: 0 0 14px 30px;
-  margin: 0 0 37px -30px;
+  margin: 0 0 30px -30px;
   position: relative; }
 
 .short-tutor-title-count {
@@ -3381,7 +3380,7 @@ textarea {
 --------------------------------*/
 .index-reviews {
   background: #f0f0f0;
-  padding: 43px 0 50px;
+  padding: 30px 0 50px;
   margin: 0; }
 
 .index-reviews-text {
@@ -3400,14 +3399,13 @@ textarea {
   background: #fff;
   border-radius: 4px;
   width: 262px;
-  padding: 15px 24px 18px;
+  padding: 24px 24px 18px;
   margin: 0 8px 30px 0;
   vertical-align: top; }
 
 .index-reviews-list-user {
   padding: 0 0 12px;
-  color: #777777;
-  font-size: 12px; }
+  color: #777777; }
 
 .index-reviews-list-user-img {
   border-radius: 4px;
@@ -3415,7 +3413,6 @@ textarea {
   margin: 0 9px 0 0; }
 
 .index-reviews-list-user-right {
-  font-size: 12px;
   display: inline-block;
   width: 200px;
   padding: 0;
@@ -3444,7 +3441,6 @@ textarea {
 
 .index-reviews-list-author {
   text-align: right;
-  font-size: 12px;
   color: #777777;
   padding: 0 5px 0 0; }
 
@@ -3473,7 +3469,8 @@ textarea {
 * Index text
 --------------------------------*/
 .index-text {
-  padding: 77px 0 75px; }
+  padding: 40px 0;
+  line-height: 20px; }
 
 /*
 * Footer search tutor
@@ -3617,7 +3614,7 @@ textarea {
 
 .footer-menu li {
   font-size: 14px;
-  padding: 0 0 15px; }
+  padding: 0 0 8px; }
 
 .footer-copy-right {
   margin: 0;
@@ -3661,7 +3658,7 @@ textarea {
   width: 170px;
   height: 34px;
   font-size: 14px;
-  font-family: 'helveticaneuecyrroman'; }
+  font-family: 'helveticaneuecyrlight'; }
 
 .footer-search-button {
   position: absolute;
@@ -3795,18 +3792,12 @@ span.customSelect {
   border: 1px solid #bdbdbd;
   border-radius: 4px;
   font-size: 19px;
-  color: black;
+  color: #4c4a40;
   font-family: 'helveticaneuecyrroman';
   text-align: left;
   height: 45px;
-  background: white; }
-  span.customSelect:after {
-    top: 11px;
-    position: absolute;
-    right: 12px;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: 16px;
-    color: #777777; }
+  background: #fff url(../img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
+  background-size: 14px; }
 
 span.customSelect .customSelectInner {
   height: 45px;
@@ -3816,8 +3807,9 @@ span.customSelect .customSelectInner {
   font-family: 'helveticaneuecyrlight'; }
 
 span.customSelect.custom-select-small {
-  height: 36px;
-  font-size: 14px; }
+  height: 34px;
+  font-size: 14px;
+  vertical-align: middle; }
 
 span.customSelect.custom-select-small .customSelectInner {
   height: 36px;
@@ -4206,5 +4198,15 @@ label {
   text-shadow: none !important;
   -webkit-font-smoothing: antialiased;
   padding-left: 14px !important; }
+
+.main .search-result-item.button-green {
+  vertical-align: middle;
+  margin-left: 13px; }
+
+.main .customSelect {
+  width: 200px; }
+
+.main .header-search-tutor-form {
+  padding: 170px 0; }
 
 /*# sourceMappingURL=app.css.map */
