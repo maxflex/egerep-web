@@ -3,6 +3,9 @@ angular
     .controller 'Cv', ($scope, Tutor, FileUploader, Cv) ->
         bindArguments($scope, arguments)
 
+        $scope.application =
+            agree_to_publish: 1
+
         FileUploader.FileSelect.prototype.isEmptyAfterSelection = ->
             true
 

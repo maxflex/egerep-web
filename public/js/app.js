@@ -191,6 +191,9 @@
   angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv) {
     var onWhenAddingFileFailed;
     bindArguments($scope, arguments);
+    $scope.application = {
+      agree_to_publish: 1
+    };
     FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
       return true;
     };
