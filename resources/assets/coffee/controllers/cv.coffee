@@ -1,6 +1,6 @@
 angular
     .module 'Egerep'
-    .controller 'Cv', ($scope, Tutor, FileUploader, Cv) ->
+    .controller 'Cv', ($scope, Tutor, FileUploader, Cv, PhoneService) ->
         bindArguments($scope, arguments)
 
         $scope.application =
@@ -10,24 +10,25 @@ angular
             true
 
         $scope.uploader = new FileUploader
-            url: '/cv/uploadPhoto'
-            alias: 'cv'
+            url: 'api/cv/uploadPhoto'
+            alias: 'photo'
             autoUpload: true
             method: 'post'
             removeAfterUpload: true
             onCompleteItem: (i, response, status) ->
-                notifySuccess 'Импортирован' if status is 200
-                notifyError 'Ошибка!' if status isnt 200
+                console.log(i, response, status)
+                # notifySuccess 'Импортирован' if status is 200
+                # notifyError 'Ошибка!' if status isnt 200
             onWhenAddingFileFailed  = (item, filter, options) ->
                 if filter.name is "queueLimit"
                     this.clearQueue()
                     this.addToQueue(item)
 
-        $scope.uploader.filters.push
-            name: 'imageFilter',
-            fn: (item, options) ->
-                type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                return '|jpg|png|jpeg|bmp|gif|svg|'.indexOf(type) isnt -1
+        # $scope.uploader.filters.push
+        #     name: 'imageFilter',
+        #     fn: (item, options) ->
+        #         type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+        #         return '|jpg|png|jpeg|bmp|gif|svg|'.indexOf(type) isnt -1
 
         $scope.upload = (e) ->
             e.preventDefault()
@@ -35,5 +36,6 @@ angular
             false
 
         $scope.sendApplication = ->
-            Cv.save $scope.application, ->
-                $scope.application.sent = true
+            if PhoneService.checkForm $('.phone-input')
+                Cv.save $scope.application, ->
+                    $scope.application.sent = true

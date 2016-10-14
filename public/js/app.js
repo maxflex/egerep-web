@@ -188,7 +188,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv) {
+  angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv, PhoneService) {
     var onWhenAddingFileFailed;
     bindArguments($scope, arguments);
     $scope.application = {
@@ -198,31 +198,18 @@
       return true;
     };
     $scope.uploader = new FileUploader({
-      url: '/cv/uploadPhoto',
-      alias: 'cv',
+      url: 'api/cv/uploadPhoto',
+      alias: 'photo',
       autoUpload: true,
       method: 'post',
       removeAfterUpload: true,
       onCompleteItem: function(i, response, status) {
-        if (status === 200) {
-          notifySuccess('Импортирован');
-        }
-        if (status !== 200) {
-          return notifyError('Ошибка!');
-        }
+        return console.log(i, response, status);
       }
     }, onWhenAddingFileFailed = function(item, filter, options) {
       if (filter.name === "queueLimit") {
         this.clearQueue();
         return this.addToQueue(item);
-      }
-    });
-    $scope.uploader.filters.push({
-      name: 'imageFilter',
-      fn: function(item, options) {
-        var type;
-        type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-        return '|jpg|png|jpeg|bmp|gif|svg|'.indexOf(type) !== -1;
       }
     });
     $scope.upload = function(e) {
@@ -231,9 +218,11 @@
       return false;
     };
     return $scope.sendApplication = function() {
-      return Cv.save($scope.application, function() {
-        return $scope.application.sent = true;
-      });
+      if (PhoneService.checkForm($('.phone-input'))) {
+        return Cv.save($scope.application, function() {
+          return $scope.application.sent = true;
+        });
+      }
     };
   });
 
@@ -452,6 +441,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -579,10 +573,9 @@
         sentIds: '='
       },
       templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request) {
-        var checkForm, isFull, notify_options;
-        $scope.request = function() {
-          if (checkForm()) {
+      controller: function($scope, $element, $timeout, Request, PhoneService) {
+        return $scope.request = function() {
+          if (PhoneService.checkForm($element)) {
             $scope.tutor.request.tutor_id = $scope.tutor.id;
             return Request.save($scope.tutor.request, function() {
               $scope.tutor.request_sent = true;
@@ -593,32 +586,6 @@
               return $scope.tutor.request_error = true;
             });
           }
-        };
-        checkForm = function() {
-          var phone_element, phone_number;
-          phone_element = $($element).find('.phone-field');
-          if (!isFull(phone_element.val())) {
-            phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-            return false;
-          }
-          phone_number = phone_element.val().match(/\d/g).join('');
-          if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-            phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-            return false;
-          }
-          return true;
-        };
-        isFull = function(number) {
-          if (number === void 0 || number === "") {
-            return false;
-          }
-          return !number.match(/_/);
-        };
-        return notify_options = {
-          hideAnimation: 'fadeOut',
-          showDuration: 0,
-          hideDuration: 400,
-          autoHideDelay: 3000
         };
       }
     };
@@ -668,11 +635,6 @@
       templateUrl: '/directives/tutor-name'
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -749,7 +711,36 @@
 }).call(this);
 
 (function() {
-
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull, notify_options;
+    notify_options = {
+      hideAnimation: 'fadeOut',
+      showDuration: 0,
+      hideDuration: 400,
+      autoHideDelay: 3000
+    };
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
 
 }).call(this);
 
