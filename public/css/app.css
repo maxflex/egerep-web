@@ -4569,7 +4569,9 @@ textarea {
 --------------------------------*/
 .footer-search-tutor {
   height: 147px;
-  background: url(../img/icons/bg1.jpg) repeat-x 50% 0; }
+  background: url(../img/icons/bg.jpg) repeat-x 50% 0;
+  background-size: cover;
+  background-position-y: -27px; }
 
 .footer-search-tutor-inner {
   width: 910px;

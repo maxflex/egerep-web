@@ -183,11 +183,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv, PhoneService) {
     bindArguments($scope, arguments);
     $scope.application = {
@@ -634,6 +629,11 @@
       templateUrl: '/directives/tutor-name'
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
