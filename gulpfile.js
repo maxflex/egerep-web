@@ -63,5 +63,6 @@ elixir(mix => {
             'jquery-ui/jquery-ui.min',
             'jquery.customSelect/jquery.customSelect.min',
             'iCheck/icheck.min',
+            'angular-file-upload/dist/angular-file-upload.min',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });

@@ -60,6 +60,7 @@
     "angularjs-google-maps": "^0.5.0",
     "google-maps": "^3.2.1",
     "normalize-strings": "normalize#^1.1.0",
-    "iCheck": "icheck#^1.0.2"
+    "iCheck": "icheck#^1.0.2",
+    "angular-file-upload": "^2.3.4"
   }
 }

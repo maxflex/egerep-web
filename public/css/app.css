@@ -4218,4 +4218,45 @@ label {
 .index-page .header-search-tutor-form {
   padding: 170px 0; }
 
+.cv-page h1 {
+  padding: 30px 0; }
+
+.cv-page .conditions {
+  margin-bottom: 30px; }
+  .cv-page .conditions > div:not(:last-child) {
+    margin-bottom: 8px; }
+
+.cv-page .publish-options {
+  margin-bottom: 30px; }
+
+.cv-page .upload-photo-link {
+  color: #a9a9a9;
+  margin-left: 16px;
+  cursor: pointer; }
+
+.cv-page .send-application {
+  text-align: center;
+  margin-top: 30px; }
+
+.cv-page .cv-fields {
+  margin-bottom: 30px; }
+  .cv-page .cv-fields .field-group {
+    margin-bottom: 10px; }
+    .cv-page .cv-fields .field-group > div {
+      display: inline-block;
+      width: 300px;
+      vertical-align: middle; }
+      .cv-page .cv-fields .field-group > div input, .cv-page .cv-fields .field-group > div textarea {
+        width: 100%; }
+      .cv-page .cv-fields .field-group > div textarea {
+        height: 130px; }
+    .cv-page .cv-fields .field-group > span {
+      margin-left: 40px;
+      display: inline-block;
+      max-width: 610px;
+      vertical-align: middle; }
+      .cv-page .cv-fields .field-group > span.example-top {
+        vertical-align: top;
+        padding-top: 5px; }
+
 /*# sourceMappingURL=app.css.map */

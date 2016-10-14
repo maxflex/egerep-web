@@ -1,7 +1,7 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview']).config([
+  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angularFileUpload']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
@@ -184,6 +184,55 @@
 
 (function() {
 
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv) {
+    var onWhenAddingFileFailed;
+    bindArguments($scope, arguments);
+    FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
+      return true;
+    };
+    $scope.uploader = new FileUploader({
+      url: '/cv/uploadPhoto',
+      alias: 'cv',
+      autoUpload: true,
+      method: 'post',
+      removeAfterUpload: true,
+      onCompleteItem: function(i, response, status) {
+        if (status === 200) {
+          notifySuccess('Импортирован');
+        }
+        if (status !== 200) {
+          return notifyError('Ошибка!');
+        }
+      }
+    }, onWhenAddingFileFailed = function(item, filter, options) {
+      if (filter.name === "queueLimit") {
+        this.clearQueue();
+        return this.addToQueue(item);
+      }
+    });
+    $scope.uploader.filters.push({
+      name: 'imageFilter',
+      fn: function(item, options) {
+        var type;
+        type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+        return '|jpg|png|jpeg|bmp|gif|svg|'.indexOf(type) !== -1;
+      }
+    });
+    $scope.upload = function(e) {
+      e.preventDefault();
+      $('#upload-button').trigger('click');
+      return false;
+    };
+    return $scope.sendApplication = function() {
+      return Cv.save($scope.application, function() {
+        return $scope.application.sent = true;
+      });
+    };
+  });
 
 }).call(this);
 
@@ -386,64 +435,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -689,6 +680,68 @@
 
 (function() {
 
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 

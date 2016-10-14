@@ -1,4 +1,4 @@
-angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview'])
+angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angularFileUpload'])
     .config [
         '$compileProvider'
         ($compileProvider) ->

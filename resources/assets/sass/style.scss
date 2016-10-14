@@ -208,3 +208,57 @@ label {
         padding: 170px 0;
     }
 }
+
+// Отправка анкеты
+.cv-page {
+    $cv-margin: 30px;
+    & h1 {
+        padding: $cv-margin 0;
+    }
+    & .conditions {
+        & > div:not(:last-child) {
+            margin-bottom: 8px;
+        }
+        margin-bottom: $cv-margin;
+    }
+
+    & .publish-options {
+        margin-bottom: $cv-margin;
+    }
+    & .upload-photo-link {
+        color: $gray-placeholder;
+        margin-left: 16px;
+        cursor: pointer;
+    }
+    & .send-application {
+        text-align: center;
+        margin-top: $cv-margin;
+    }
+    & .cv-fields {
+        margin-bottom: $cv-margin;
+        & .field-group {
+            & > div {
+                display: inline-block;
+                width: 300px;
+                vertical-align: middle;
+                & input, & textarea {
+                    width: 100%;
+                }
+                & textarea {
+                    height: 130px;
+                }
+            }
+            & > span {
+                margin-left: 40px;
+                display: inline-block;
+                max-width: 610px;
+                vertical-align: middle;
+                &.example-top {
+                    vertical-align: top;
+                    padding-top: 5px;
+                }
+            }
+            margin-bottom: 10px;
+        }
+    }
+}

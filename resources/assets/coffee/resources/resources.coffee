@@ -15,6 +15,9 @@ angular.module('Egerep')
     .factory 'Request', ($resource) ->
         $resource apiPath('requests'), {id: '@id'}, updatable()
 
+    .factory 'Cv', ($resource) ->
+        $resource apiPath('cv'), {id: '@id'}
+
 apiPath = (entity, additional = '') ->
     "/api/#{entity}/" + (if additional then additional + '/' else '') + ":id"
 
