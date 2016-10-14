@@ -34,7 +34,6 @@
     "ngmap": "^1.17.4",
     "underscore": "~1.8.3",
     "angular-jquery-maskedinput": "*",
-    "bootstrap-select": "~1.9.4",
     "ui-select": "angular-ui-select#~0.14.0",
     "nya-bootstrap-select": "~2.1.2",
     "animate.css": "^3.5.1",
@@ -61,6 +60,10 @@
     "google-maps": "^3.2.1",
     "normalize-strings": "normalize#^1.1.0",
     "iCheck": "icheck#^1.0.2",
-    "angular-file-upload": "^2.3.4"
+    "angular-file-upload": "^2.3.4",
+    "bootstrap-select": "^1.11.2"
+  },
+  "devDependencies": {
+    "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"
   }
 }

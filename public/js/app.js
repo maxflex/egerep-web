@@ -440,6 +440,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -629,11 +634,6 @@
       templateUrl: '/directives/tutor-name'
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

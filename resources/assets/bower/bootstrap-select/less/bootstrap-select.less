@@ -6,6 +6,11 @@
 }
 
 // Rules
+select.bs-select-hidden,
+select.selectpicker {
+  display: none !important;
+}
+
 .bootstrap-select {
   width: 220px \0; /*IE9 and below*/
 
@@ -14,13 +19,19 @@
     width: 100%;
     padding-right: 25px;
     z-index: 1;
+
+    &.bs-placeholder,
+    &.bs-placeholder:hover,
+    &.bs-placeholder:focus,
+    &.bs-placeholder:active { color: @input-color-placeholder; }
   }
 
   > select {
     position: absolute !important;
     bottom: 0;
     left: 50%;
-    width: 0.11px !important;
+    display: block !important;
+    width: 0.5px !important;
     height: 100% !important;
     padding: 0 !important;
     opacity: 0 !important;
@@ -67,6 +78,12 @@
 
   &.input-group-btn {
     z-index: auto;
+
+    &:not(:first-child):not(:last-child) {
+      > .btn {
+        border-radius: 0;
+      }
+    }
   }
 }
 
@@ -116,6 +133,8 @@
 
   &.bs-container {
     position: absolute;
+    height: 0 !important;
+    padding: 0 !important;
     
     .dropdown-menu {
       z-index: @zindex-select-dropdown;

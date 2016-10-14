@@ -262,3 +262,46 @@ label {
         }
     }
 }
+
+.bootstrap-select {
+    width: 100% !important;
+}
+
+.bootstrap-select, .dropdown-toggle {
+    outline: none !important;
+}
+
+.bootstrap-select > .dropdown-toggle {
+    padding: 8px 12px 8px 15px !important;
+    width: calc(100% + 16px);
+}
+
+span.check-mark {
+    margin-top: 3px !important;
+}
+
+.btn-default {
+    border: 1px solid $gray-border;
+}
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder {
+    color: $gray-placeholder;
+}
+
+.glyphicon {
+    @extend .fa;
+}
+
+.glyphicon-ok {
+    @extend .fa-check;
+}
+
+.caret {
+    background: transparent url(../img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
+    background-size: 14px;
+    height: 15px;
+    width: 27px;
+    right: 0 !important;
+    top: 17px;
+    border: 0 !important;
+}

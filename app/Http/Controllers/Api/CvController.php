@@ -19,7 +19,7 @@ class CvController extends Controller
     {
         if ($request->hasFile('photo')) {
             $filename = uniqid() . '.' . $request->photo->extension();
-            $request->photo->storeAs('tutors', $filename);
+            $request->photo->storeAs('uploads', $filename);
             return $filename;
         } else {
             abort(400);
