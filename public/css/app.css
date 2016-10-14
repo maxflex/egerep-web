@@ -3694,6 +3694,9 @@ textarea {
 .color-gray-light, .text-gray-light {
   color: #b5b5b5; }
 
+.color-gray-placeholer, .text-gray-placeholder {
+  color: #a9a9a9; }
+
 .color-green {
   color: #53ab53; }
 

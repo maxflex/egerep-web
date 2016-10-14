@@ -16,13 +16,11 @@ angular
             method: 'post'
             removeAfterUpload: true
             onCompleteItem: (i, response, status) ->
-                console.log(i, response, status)
-                # notifySuccess 'Импортирован' if status is 200
-                # notifyError 'Ошибка!' if status isnt 200
-            onWhenAddingFileFailed  = (item, filter, options) ->
-                if filter.name is "queueLimit"
-                    this.clearQueue()
-                    this.addToQueue(item)
+                if status is 200
+                    $scope.application.filename = response
+                else
+                    $('.upload-photo-link').notify 'ошибка загрузки файла', notify_options
+                    $scope.application.filename = null
 
         # $scope.uploader.filters.push
         #     name: 'imageFilter',

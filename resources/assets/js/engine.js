@@ -16,6 +16,14 @@
 		}, 50)
 	})
 
+    // настройки оповещения
+    notify_options = {
+        hideAnimation: 'fadeOut',
+        showDuration: 0,
+        hideDuration: 400,
+        autoHideDelay: 3000
+    }
+
 	/**
 	 * Remove by id
 	 */

@@ -12047,6 +12047,14 @@ b[_type],e=/wn|up/.test(d)?t:v;if(!c[n]){if(d==_click)A(a,!1,!0);else{if(/wn|er|
 		}, 50)
 	})
 
+    // настройки оповещения
+    notify_options = {
+        hideAnimation: 'fadeOut',
+        showDuration: 0,
+        hideDuration: 400,
+        autoHideDelay: 3000
+    }
+
 	/**
 	 * Remove by id
 	 */

@@ -1,11 +1,5 @@
 angular.module 'Egerep'
     .service 'PhoneService', ->
-        notify_options =
-            hideAnimation: 'fadeOut'
-            showDuration: 0
-            hideDuration: 400
-            autoHideDelay: 3000
-
         # проверить перед отправкой форму
         this.checkForm = (element)->
             phone_element = $(element).find('.phone-field')

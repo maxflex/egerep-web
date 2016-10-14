@@ -189,7 +189,6 @@
 
 (function() {
   angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv, PhoneService) {
-    var onWhenAddingFileFailed;
     bindArguments($scope, arguments);
     $scope.application = {
       agree_to_publish: 1
@@ -204,12 +203,12 @@
       method: 'post',
       removeAfterUpload: true,
       onCompleteItem: function(i, response, status) {
-        return console.log(i, response, status);
-      }
-    }, onWhenAddingFileFailed = function(item, filter, options) {
-      if (filter.name === "queueLimit") {
-        this.clearQueue();
-        return this.addToQueue(item);
+        if (status === 200) {
+          return $scope.application.filename = response;
+        } else {
+          $('.upload-photo-link').notify('ошибка загрузки файла', notify_options);
+          return $scope.application.filename = null;
+        }
       }
     });
     $scope.upload = function(e) {
@@ -441,11 +440,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -654,6 +648,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -712,13 +711,7 @@
 
 (function() {
   angular.module('Egerep').service('PhoneService', function() {
-    var isFull, notify_options;
-    notify_options = {
-      hideAnimation: 'fadeOut',
-      showDuration: 0,
-      hideDuration: 400,
-      autoHideDelay: 3000
-    };
+    var isFull;
     this.checkForm = function(element) {
       var phone_element, phone_number;
       phone_element = $(element).find('.phone-field');
