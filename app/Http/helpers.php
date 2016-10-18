@@ -206,7 +206,7 @@
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
-    function getSize($file, $precision = 2)
+    function getSize($file, $precision = 1)
     {
         $size = filesize($file);
         $base = log($size, 1024);
