@@ -755,7 +755,6 @@ textarea {
 .footer-inner {
     width: 960px;
     margin: 0 auto;
-    padding: 102px 0 0;
     position: relative;
 }
 .footer-logo {
@@ -801,10 +800,24 @@ textarea {
 .sm-tw {
     background-position: -56px 0;
 }
+
+.footer-rows {
+    display: flex;
+    justify-content: space-between;
+}
+
 .footer-row {
-    width: 352px;
-    float: left;
-    padding: 0 0 27px;
+    padding-right: 20px;
+    & > b {
+        font-weight: normal;
+        font-family: $font-medium;
+        margin: 25px 0 20px;
+        display: block;
+    }
+    & .copyright-year {
+        position: absolute;
+        bottom: 8px;
+    }
 }
 .footer-menu {
     margin: 0;
@@ -849,12 +862,14 @@ textarea {
     position: relative;
     margin-top: 7px;
     padding: 0 35px 0 0;
+    width: 250px;
 }
 .footer-search-input {
-    border: 1px solid #bdbdbd;
+    border: 1px solid #e3e3e3;
+    background-color: #e3e3e3;
     border-radius: $border-radius 0 0 $border-radius;
     padding: 0 0 0 16px;
-    width: 170px;
+    width: 231px;
     height: 34px;
     font-size: 14px;
     font-family: 'helveticaneuecyrlight';
@@ -867,18 +882,13 @@ textarea {
     height: 36px;
     border: 0;
     border-radius: 0 6px 6px 0;
-    background: $green-main;
+    background: #e3e3e3;
     cursor: pointer;
-}
-.footer-search-button:after {
-    position: absolute;
-    top: 9px;
-    left: 10px;
-    content: "\f002";
-    font: normal normal normal 14px/1 FontAwesome;
-    color: white;
-    font-size: 14px;
-    -webkit-font-smoothing: antialiased;
+    text-align: right;
+    padding-right: 12px;
+    & img {
+        height: 15px;
+    }
 }
 /*
 * Partial
