@@ -223,15 +223,23 @@ class Tutor extends Model
                 case 5:
                     if ($station_id && isset($place)) {
                         if ($place == 0) {
-                            $query->orderBy(DB::raw("LEAST((
-                                select min(d.distance + m.minutes)
-                                from markers mr
-                                join metros m on m.marker_id = mr.id
-                                join distances d on d.from = m.station_id and d.to = {$station_id}
-                                where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
-                            ), (
-                                select min(distance) from distances
-                                where `from` IN (tutors.svg_map) and `to` = {$station_id}
+                            $query->orderBy(DB::raw("LEAST(
+                            IFNULL(
+                                (
+                                    select min(d.distance + m.minutes)
+                                    from markers mr
+                                    join metros m on m.marker_id = mr.id
+                                    join distances d on d.from = m.station_id and d.to = {$station_id}
+                                    where mr.markerable_id = tutors.id and mr.markerable_type = 'App\\\\Models\\\\Tutor' and mr.type='green'
+                                ), 
+                                1000
+                            ), 
+                            IFNULL(
+                                (
+                                    select min(distance) from distances
+                                    where `from` IN (tutors.svg_map) and `to` = {$station_id}
+                                ), 
+                                1000
                             ))"), 'asc');
                         }
                         if ($place == 1) {
