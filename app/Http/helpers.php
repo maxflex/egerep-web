@@ -205,3 +205,11 @@
         if (array() === $arr) return false;
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
+
+    function getSize($file, $precision = 2)
+    {
+        $size = filesize($file);
+        $base = log($size, 1024);
+        $suffixes = array('байт', 'Кб', 'Мб', 'Гб', 'Тб');
+        return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    }

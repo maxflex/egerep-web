@@ -221,7 +221,8 @@
       onCompleteItem: function(i, response, status) {
         $scope.percentage = void 0;
         if (status === 200) {
-          return $scope.application.filename = response;
+          $scope.application.filename = response.filename;
+          return $scope.application.filesize = response.size;
         } else {
           $scope.upload_error = true;
           return $scope.application.filename = void 0;

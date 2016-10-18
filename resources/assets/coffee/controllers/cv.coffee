@@ -28,7 +28,8 @@ angular
             onCompleteItem: (i, response, status) ->
                 $scope.percentage = undefined
                 if status is 200
-                    $scope.application.filename = response
+                    $scope.application.filename = response.filename
+                    $scope.application.filesize = response.size
                 else
                     $scope.upload_error = true
                     $scope.application.filename = undefined
@@ -36,11 +37,6 @@ angular
         $scope.clearFile = ->
             $scope.upload_error = false
             $scope.application.filename = undefined
-        # $scope.uploader.filters.push
-        #     name: 'imageFilter',
-        #     fn: (item, options) ->
-        #         type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-        #         return '|jpg|png|jpeg|bmp|gif|svg|'.indexOf(type) isnt -1
 
         $scope.upload = (e) ->
             e.preventDefault()
