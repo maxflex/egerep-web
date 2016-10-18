@@ -191,6 +191,11 @@ label {
     padding: 11px 0;
     margin-top: 12px;
     font-family: $font-roman;
+    &.button-like {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 11px 12px;
+    }
 }
 
 // Главная страница
@@ -225,10 +230,16 @@ label {
     & .publish-options {
         margin-bottom: $cv-margin;
     }
-    & .upload-photo-link {
-        color: $gray-placeholder;
+    & .upload-photo {
         margin-left: 16px;
-        cursor: pointer;
+        & .upload-photo-link {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        & .upload-percentage {
+            @extend .text-gray-light;
+            margin-left: 10px;
+        }
     }
     & .send-application {
         text-align: center;
@@ -251,11 +262,15 @@ label {
             & > span {
                 margin-left: 40px;
                 display: inline-block;
-                max-width: 610px;
+                max-width: 600px;
                 vertical-align: middle;
                 &.example-top {
                     vertical-align: top;
                     padding-top: 5px;
+                    & .error {
+                        margin-top: 10px;
+                        white-space: nowrap;
+                    }
                 }
             }
             margin-bottom: 10px;
@@ -304,4 +319,38 @@ span.check-mark {
     right: 0 !important;
     top: 17px;
     border: 0 !important;
+}
+
+
+.page-not-found {
+    padding: 120px 0;
+    text-align: center;
+    & > div:not(:last-child) {
+        margin-bottom: 5px;
+    }
+}
+
+.notifyjs-bootstrap-base {
+    font-weight: normal !important;
+    font-family: $font-roman;
+}
+
+.request-form-sent {
+    height: 136px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    & h2 {
+        padding-bottom: 10px;
+    }
+}
+
+textarea {
+    line-height: normal !important;
+    padding-top: 10px !important;
+}
+
+.red-background {
+    background-color: $red !important;
 }

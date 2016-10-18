@@ -23,7 +23,7 @@
     "Ionicons": "ionicons#~2.0.1",
     "font-awesome": "^4.6.3",
     "angular": "~1.4.8",
-    "jquery.inputmask": "~3.2.5",
+    "jquery.inputmask": "^3.3.3",
     "jquery-ui": "^1.12.1",
     "angular-animate": "~1.4.8",
     "angular-sanitize": "~1.4.8",

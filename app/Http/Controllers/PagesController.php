@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\Page;
+use App\Models\Tutor;
 use App\Models\Service\Parser;
 
 class PagesController extends Controller
@@ -15,8 +16,13 @@ class PagesController extends Controller
      */
     public function index($url = '')
     {
-        $page = Page::where('url', $url)->first();
-        return view('pages.index')->with(['html' => $page->html]);
+        $page = Page::whereUrl($url);
+
+        if (! $page->exists()) {
+            $page = Page::whereUrl(404);
+        }
+
+        return view('pages.index')->with(['html' => $page->first()->html]);
     }
 
     /**
@@ -24,8 +30,12 @@ class PagesController extends Controller
      */
     public function tutor($id)
     {
-        $html = Page::where('url', 'tutor')->first()->html;
-        Parser::compileTutor($id, $html);
+        if (Tutor::whereId($id)->exists()) {
+            $html = Page::whereUrl('tutor')->first()->html;
+            Parser::compileTutor($id, $html);
+        } else {
+            $html = Page::whereUrl(404)->first()->html;
+        }
         return view('pages.index')->with(compact('html'));
     }
 }

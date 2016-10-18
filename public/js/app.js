@@ -183,8 +183,26 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Cv', function($scope, Tutor, FileUploader, Cv, PhoneService) {
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
+    var checkForm;
     bindArguments($scope, arguments);
+    $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
+    $timeout(function() {
+      $('.name-field').inputmask("Regex", {
+        regex: "[A-Za-zа-яА-Я- ]*"
+      });
+      $('textarea').inputmask("Regex", {
+        regex: "[0-9A-Za-zа-яА-Я()-., ]*"
+      });
+      return $('.digits-only').inputmask("Regex", {
+        regex: "[0-9]*"
+      });
+    }, 1000);
     $scope.application = {
       agree_to_publish: 1
     };
@@ -197,26 +215,57 @@
       autoUpload: true,
       method: 'post',
       removeAfterUpload: true,
+      onProgressItem: function(i, progress) {
+        return $scope.percentage = progress;
+      },
       onCompleteItem: function(i, response, status) {
+        $scope.percentage = void 0;
         if (status === 200) {
           return $scope.application.filename = response;
         } else {
-          $('.upload-photo-link').notify('ошибка загрузки файла', notify_options);
-          return $scope.application.filename = null;
+          $scope.upload_error = true;
+          return $scope.application.filename = void 0;
         }
       }
     });
+    $scope.clearFile = function() {
+      $scope.upload_error = false;
+      return $scope.application.filename = void 0;
+    };
     $scope.upload = function(e) {
       e.preventDefault();
+      $scope.upload_error = false;
       $('#upload-button').trigger('click');
       return false;
     };
-    return $scope.sendApplication = function() {
-      if (PhoneService.checkForm($('.phone-input'))) {
+    $scope.sendApplication = function() {
+      if (PhoneService.checkForm($('.phone-input')) && checkForm()) {
         return Cv.save($scope.application, function() {
           return $scope.application.sent = true;
+        }, function() {
+          return $scope.application.error = true;
         });
       }
+    };
+    return checkForm = function() {
+      var valid;
+      valid = true;
+      $scope.errors = {};
+      $('.name-field').each(function(index, element) {
+        if ($(element).val().length > 60) {
+          valid = false;
+          $(element).focus().notify('ошибка: максимальная длина текста – 60 символов', notify_options);
+        }
+      });
+      $('textarea').each(function(index, element) {
+        var model;
+        if ($(element).val().length > 1000) {
+          valid = false;
+          model = $(element).focus().attr('ng-model').split('.')[1];
+          $scope.errors[model] = true;
+        }
+      });
+      return valid;
     };
   });
 
@@ -261,6 +310,9 @@
       var text_date;
       text_date = moment(date).format('DD MMMM YYYY');
       return text_date.substr(3);
+    };
+    $scope.requestSent = function(tutor) {
+      return tutor.request_sent || $scope.sent_ids.indexOf(tutor.id) !== -1;
     };
     $scope.gmap = function(tutor) {
       if (tutor.map_shown === void 0) {
@@ -435,11 +487,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -568,19 +615,31 @@
       },
       templateUrl: 'directives/request-form',
       controller: function($scope, $element, $timeout, Request, PhoneService) {
-        return $scope.request = function() {
-          if (PhoneService.checkForm($element)) {
+        var checkLength;
+        $scope.request = function() {
+          if (PhoneService.checkForm($element) && checkLength('request-name', 60) && checkLength('request-comment', 1000)) {
             $scope.tutor.request.tutor_id = $scope.tutor.id;
             return Request.save($scope.tutor.request, function() {
-              $scope.tutor.request_sent = true;
-              if ($scope.sentIds !== void 0) {
-                return $scope.sentIds.push($scope.tutor.id);
-              }
+              return $scope.tutor.request_sent = true;
             }, function() {
               return $scope.tutor.request_error = true;
             });
           }
         };
+        checkLength = function(element_class, max_length) {
+          var el;
+          el = $($element).find('.' + element_class);
+          if (el.val().length > max_length) {
+            el.notify("ошибка: максимальная длина текста - " + max_length + " символов", notify_options);
+            return false;
+          }
+          return true;
+        };
+        return $timeout(function() {
+          return $($element).find('input:not(.phone-field), textarea').inputmask("Regex", {
+            regex: "[0-9A-Za-zа-яА-Я()-., ]*"
+          });
+        });
       }
     };
   });

@@ -66,5 +66,6 @@ elixir(mix => {
             'angular-file-upload/dist/angular-file-upload.min',
             'bootstrap-select/dist/js/bootstrap-select.min',
             'bootstrap/js/bootstrap.min',
+            'jquery.inputmask/dist/jquery.inputmask.bundle',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });

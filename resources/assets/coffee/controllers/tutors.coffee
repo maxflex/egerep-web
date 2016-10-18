@@ -37,6 +37,9 @@ angular
             # нужно именно так, чтобы осталось правильное склонение месяца
             text_date.substr(3)
 
+        $scope.requestSent = (tutor) ->
+            tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
+
         $scope.gmap = (tutor) ->
             if tutor.map_shown is undefined then $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),

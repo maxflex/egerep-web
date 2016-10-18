@@ -1,4 +1,9 @@
 <?php
+
+    const NAME_VALIDATION_REGEX = '/^[A-Za-zа-яА-Я-\s]*$/u';
+    const TEXT_VALIDATION_REGEX = '/^[0-9A-Za-zа-яА-Я()-.,\s]*$/u';
+    const PHONE_REGEX = '/^\+7 \([4|9]{1}[\d]{2}\) [\d]{3}-[\d]{2}-[\d]{2}$/';
+
     function dateRange($strDateFrom, $strDateTo)
     {
         $aryRange=array();

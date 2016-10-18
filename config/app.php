@@ -54,6 +54,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
     'api-url' => env('API_URL'),
 
+    'admin-phone-numbers' => explode(',', env('ADMIN_PHONE_NUMBERS')),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

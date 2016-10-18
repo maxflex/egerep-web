@@ -894,6 +894,10 @@ textarea {
     color: $gray-light;
 }
 
+.color-red, .error, .text-red {
+    color: $red;
+}
+
 .color-gray-placeholer, .text-gray-placeholder {
     color: $gray-placeholder;
 }
