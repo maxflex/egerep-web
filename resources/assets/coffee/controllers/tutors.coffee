@@ -80,16 +80,15 @@ angular
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
         $scope.reviews = (tutor) ->
-            Tutor.iteraction {id: tutor.id, type: 'reviews'}
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id
                 , (response) ->
                     $scope.showMoreReviews(tutor)
-            $scope.toggleShow(tutor, 'show_reviews', 'all_reviews')
+            $scope.toggleShow(tutor, 'show_reviews', 'reviews')
 
         $scope.showMoreReviews = (tutor) ->
-            Tutor.iteraction {id: tutor.id, type: 'reviews_more'}
+            Tutor.iteraction {id: tutor.id, type: 'reviews_more'} if tutor.reviews_page
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
