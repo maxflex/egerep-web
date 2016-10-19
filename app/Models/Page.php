@@ -6,6 +6,7 @@ use Shared\Model;
 use App\Models\Variable;
 use App\Models\Service\Parser;
 use App\Scopes\PageScope;
+use App\Models\Service\Factory;
 
 class Page extends Model
 {
@@ -64,7 +65,6 @@ class Page extends Model
     public function scopeFindByParams($query, $search)
     {
         @extract($search);
-        \Log::info('Subjects: ' . json_encode($subjects));
         foreach($subjects as $subject_id) {
             $query->whereSubject($subject_id);
         }
@@ -80,6 +80,22 @@ class Page extends Model
         return $query;
     }
 
+    /**
+     * Получить URL'ы предметов
+     *
+     * @return array [1 => 'repetitor-po-matematike', ...]
+     */
+    public static function getSubjectRoutes()
+    {
+        $routes = [];
+        foreach(Factory::get('subjects') as $subject) {
+            $page = \App\Models\Page::findByParams([
+                'subjects' => [$subject->id]
+            ]);
+            $routes[$subject->id] = $page->exists() ? $page->value('url') : '/tutors?subjects=' . $subject->id;
+        }
+        return $routes;
+    }
 
     public static function boot()
     {

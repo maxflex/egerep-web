@@ -121,6 +121,9 @@
       }
       return moment(date).format("DD.MM.YY" + (full_year ? "YY" : ""));
     };
+    $rootScope.formatDateFull = function(date) {
+      return moment(date).format("D MMMM YYYY");
+    };
     $rootScope.dialog = function(id) {
       $("#" + id).modal('show');
     };
@@ -188,250 +191,11 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('icheck', function($timeout, $parse) {
-    return {
-      require: 'ngModel',
-      link: function($scope, element, $attrs, ngModel) {
-        return $timeout(function() {
-          var value;
-          value = void 0;
-          value = $attrs['value'];
-          $scope.$watch($attrs['ngModel'], function(newValue) {
-            $(element).iCheck('update');
-          });
-          return $(element).iCheck({
-            checkboxClass: 'custom-checkbox',
-            radioClass: 'custom-radio',
-            checkedClass: 'checked',
-            cursor: true
-          }).on('ifChanged', function(event) {
-            if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
-              $scope.$apply(function() {
-                return ngModel.$setViewValue(event.target.checked);
-              });
-            }
-            if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
-              return $scope.$apply(function() {
-                return ngModel.$setViewValue(value);
-              });
-            }
-          });
-        });
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('ngPhone', function() {
-    return {
-      restrict: 'A',
-      link: function($scope, element) {
-        return $(element).mask("+7 (999) 999-99-99", {
-          autoclear: false
-        });
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('plural', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        count: '=',
-        type: '@',
-        noneText: '@'
-      },
-      templateUrl: '/directives/plural',
-      controller: function($scope, $element, $attrs, $timeout) {
-        $scope.textOnly = $attrs.hasOwnProperty('textOnly');
-        $scope.hideZero = $attrs.hasOwnProperty('hideZero');
-        return $scope.when = {
-          'age': ['год', 'года', 'лет'],
-          'student': ['ученик', 'ученика', 'учеников'],
-          'minute': ['минуту', 'минуты', 'минут'],
-          'hour': ['час', 'часа', 'часов'],
-          'day': ['день', 'дня', 'дней'],
-          'meeting': ['встреча', 'встречи', 'встреч'],
-          'score': ['балл', 'балла', 'баллов'],
-          'rubbles': ['рубль', 'рубля', 'рублей'],
-          'lesson': ['занятие', 'занятия', 'занятий'],
-          'client': ['клиент', 'клиента', 'клиентов'],
-          'mark': ['оценки', 'оценок', 'оценок'],
-          'review': ['отзыв', 'отзыва', 'отзывов'],
-          'request': ['заявка', 'заявки', 'заявок'],
-          'station': ['станцию', 'станции', 'станций'],
-          'tutor': ['репетитор', 'репетитора', 'репетиторов'],
-          'profile': ['анкета', 'анкеты', 'анкет'],
-          'schooler': ['школьник нашел', 'школьника нашли', 'школьников нашли'],
-          'taught': ['Обучен', 'Обучено', 'Обучено']
-        };
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('requestForm', function() {
-    return {
-      replace: true,
-      scope: {
-        tutor: '=',
-        sentIds: '='
-      },
-      templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request, PhoneService) {
-        var checkLength;
-        $scope.request = function() {
-          if (PhoneService.checkForm($element) && checkLength('request-name', 60) && checkLength('request-comment', 1000)) {
-            $scope.tutor.request.tutor_id = $scope.tutor.id;
-            return Request.save($scope.tutor.request, function() {
-              return $scope.tutor.request_sent = true;
-            }, function() {
-              return $scope.tutor.request_error = true;
-            });
-          }
-        };
-        checkLength = function(element_class, max_length) {
-          var el;
-          el = $($element).find('.' + element_class);
-          if (el.val().length > max_length) {
-            el.notify("ошибка: максимальная длина текста - " + max_length + " символов", notify_options);
-            return false;
-          }
-          return true;
-        };
-        return $timeout(function() {
-          return $($element).find('input:not(.phone-field), textarea').inputmask("Regex", {
-            regex: "[0-9A-Za-zа-яА-Я()-., ]*"
-          });
-        });
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('subjectList', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        subjects: '=',
-        subjectIds: '=',
-        "case": '@'
-      },
-      templateUrl: '/directives/subject-list',
-      controller: function($scope, $element, $attrs, $rootScope) {
-        $scope.byId = $attrs.byId !== void 0;
-        if ($scope["case"] === void 0) {
-          $scope["case"] = 'dative';
-        }
-        return $scope.findById = $rootScope.findById;
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').directive('tutorName', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        tutor: '='
-      },
-      templateUrl: '/directives/tutor-name'
-    };
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
-    var checkForm;
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
     $timeout(function() {
-      $('.name-field').inputmask("Regex", {
-        regex: "[A-Za-zа-яА-Я- ]*"
-      });
-      $('textarea').inputmask("Regex", {
-        regex: "[0-9A-Za-zа-яА-Я()-., ]*"
-      });
-      return $('.digits-only').inputmask("Regex", {
-        regex: "[0-9]*"
-      });
+      return console.log(1);
     }, 1000);
     $scope.application = {
       agree_to_publish: 1
@@ -469,42 +233,39 @@
       $('#upload-button').trigger('click');
       return false;
     };
-    $scope.sendApplication = function() {
-      if (PhoneService.checkForm($('.phone-input')) && checkForm()) {
-        return Cv.save($scope.application, function() {
-          return $scope.application.sent = true;
-        }, function() {
+    return $scope.sendApplication = function() {
+      return Cv.save($scope.application, function() {
+        return $scope.application.sent = true;
+      }, function(response) {
+        if (response.status === 422) {
+          $scope.errors = {};
+          return angular.forEach(response.data, function(errors, field) {
+            var selector;
+            $scope.errors[field] = errors;
+            selector = "[ng-model$='" + field + "']";
+            return $("input" + selector + ", textarea" + selector).focus();
+          });
+        } else {
           return $scope.application.error = true;
-        });
-      }
-    };
-    return checkForm = function() {
-      var valid;
-      valid = true;
-      $scope.errors = {};
-      $('.name-field').each(function(index, element) {
-        if ($(element).val().length > 60) {
-          valid = false;
-          $(element).focus().notify('ошибка: максимальная длина текста – 60 символов', notify_options);
         }
       });
-      $('textarea').each(function(index, element) {
-        var model;
-        if ($(element).val().length > 1000) {
-          valid = false;
-          model = $(element).focus().attr('ng-model').split('.')[1];
-          $scope.errors[model] = true;
-        }
-      });
-      return valid;
     };
   });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Index', function($scope, Tutor) {
+  angular.module('Egerep').controller('Index', function($scope, $timeout, Tutor) {
     bindArguments($scope, arguments);
+    $scope.selected_subject = '1';
+    $scope.refreshSelect = function() {
+      return $timeout(function() {
+        return $('.custom-select-sort').trigger('render');
+      });
+    };
+    $scope.goSubject = function() {
+      return window.location = $scope.subject_routes[$scope.selected_subject];
+    };
     return $scope.dateToText = function(date) {
       var text_date;
       text_date = moment(date).format('DD MMMM YYYY');
@@ -674,7 +435,11 @@
       $('.search-metro-autocomplete').val('');
       $('.search-filter-metro-wrap').removeClass('active');
       $scope.search.station_id = 0;
-      return $scope.filter();
+      $scope.search.sort = '1';
+      $scope.filter();
+      return $timeout(function() {
+        return $('.custom-select-sort').trigger('render');
+      });
     };
     $scope.showSvg = function(tutor) {
       var map;
@@ -711,30 +476,249 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('errors', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'directives/errors',
+      scope: {
+        model: '@'
+      },
+      controller: function($scope, $element, $attrs) {
+        $scope.only_first = $attrs.hasOwnProperty('onlyFirst');
+        return $scope.getErrors = function() {
+          var errors;
+          if ($scope.$parent.errors === void 0) {
+            return;
+          }
+          errors = $scope.$parent.errors[$scope.model];
+          if ($scope.only_first) {
+            return [errors[0]];
+          } else {
+            return errors;
+          }
+        };
       }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
     };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
   });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('icheck', function($timeout, $parse) {
+    return {
+      require: 'ngModel',
+      link: function($scope, element, $attrs, ngModel) {
+        return $timeout(function() {
+          var value;
+          value = void 0;
+          value = $attrs['value'];
+          $scope.$watch($attrs['ngModel'], function(newValue) {
+            $(element).iCheck('update');
+          });
+          return $(element).iCheck({
+            checkboxClass: 'custom-checkbox',
+            radioClass: 'custom-radio',
+            checkedClass: 'checked',
+            cursor: true
+          }).on('ifChanged', function(event) {
+            if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
+              $scope.$apply(function() {
+                return ngModel.$setViewValue(event.target.checked);
+              });
+            }
+            if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+              return $scope.$apply(function() {
+                return ngModel.$setViewValue(value);
+              });
+            }
+          });
+        });
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('ngPhone', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, element) {
+        return $(element).mask("+7 (999) 999-99-99", {
+          autoclear: false
+        });
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('plural', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        count: '=',
+        type: '@',
+        noneText: '@'
+      },
+      templateUrl: '/directives/plural',
+      controller: function($scope, $element, $attrs, $timeout) {
+        $scope.textOnly = $attrs.hasOwnProperty('textOnly');
+        $scope.hideZero = $attrs.hasOwnProperty('hideZero');
+        return $scope.when = {
+          'age': ['год', 'года', 'лет'],
+          'student': ['ученик', 'ученика', 'учеников'],
+          'minute': ['минуту', 'минуты', 'минут'],
+          'hour': ['час', 'часа', 'часов'],
+          'day': ['день', 'дня', 'дней'],
+          'meeting': ['встреча', 'встречи', 'встреч'],
+          'score': ['балл', 'балла', 'баллов'],
+          'rubbles': ['рубль', 'рубля', 'рублей'],
+          'lesson': ['занятие', 'занятия', 'занятий'],
+          'client': ['клиент', 'клиента', 'клиентов'],
+          'mark': ['оценки', 'оценок', 'оценок'],
+          'review': ['отзыв', 'отзыва', 'отзывов'],
+          'request': ['заявка', 'заявки', 'заявок'],
+          'station': ['станцию', 'станции', 'станций'],
+          'tutor': ['репетитор', 'репетитора', 'репетиторов'],
+          'profile': ['анкета', 'анкеты', 'анкет'],
+          'schooler': ['школьник нашел', 'школьника нашли', 'школьников нашли'],
+          'taught': ['Обучен', 'Обучено', 'Обучено']
+        };
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('requestForm', function() {
+    return {
+      replace: true,
+      scope: {
+        tutor: '=',
+        sentIds: '='
+      },
+      templateUrl: 'directives/request-form',
+      controller: function($scope, $element, $timeout, Request, PhoneService) {
+        return $scope.request = function() {
+          if ($scope.tutor.request === void 0) {
+            $scope.tutor.request = {};
+          }
+          $scope.tutor.request.tutor_id = $scope.tutor.id;
+          return Request.save($scope.tutor.request, function() {
+            return $scope.tutor.request_sent = true;
+          }, function(response) {
+            if (response.status === 422) {
+              return angular.forEach(response.data, function(errors, field) {
+                var selector;
+                selector = "[ng-model$='" + field + "']";
+                return $($element).find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
+              });
+            } else {
+              return $scope.tutor.request_error = true;
+            }
+          });
+        };
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('subjectList', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        subjects: '=',
+        subjectIds: '=',
+        "case": '@'
+      },
+      templateUrl: '/directives/subject-list',
+      controller: function($scope, $element, $attrs, $rootScope) {
+        $scope.byId = $attrs.byId !== void 0;
+        if ($scope["case"] === void 0) {
+          $scope["case"] = 'dative';
+        }
+        return $scope.findById = $rootScope.findById;
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('tutorName', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        tutor: '='
+      },
+      templateUrl: '/directives/tutor-name'
+    };
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -792,6 +776,34 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
 
 }).call(this);
 

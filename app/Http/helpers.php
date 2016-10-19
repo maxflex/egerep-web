@@ -3,6 +3,8 @@
     const NAME_VALIDATION_REGEX = '/^[A-Za-zа-яА-Я-\s]*$/u';
     const TEXT_VALIDATION_REGEX = '/^[0-9A-Za-zа-яА-Я()-.,\s]*$/u';
     const PHONE_REGEX = '/^\+7 \([4|9]{1}[\d]{2}\) [\d]{3}-[\d]{2}-[\d]{2}$/';
+    const MAX_COMMENT_LENGTH = 1000;
+    const MAX_NAME_LENGTH    = 60;
 
     function dateRange($strDateFrom, $strDateTo)
     {

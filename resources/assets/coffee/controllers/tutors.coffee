@@ -144,7 +144,10 @@ angular
             $('.search-metro-autocomplete').val('')
             $('.search-filter-metro-wrap').removeClass('active')
             $scope.search.station_id = 0
+            $scope.search.sort = '1'
             $scope.filter()
+            $timeout ->
+                $('.custom-select-sort').trigger('render')
 
         $scope.showSvg = (tutor) ->
             if tutor.show_svg is undefined

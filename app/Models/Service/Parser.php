@@ -4,6 +4,7 @@
     use App\Models\Tutor;
     use App\Models\Client;
     use App\Models\Review;
+    use App\Models\Page;
 
     /**
      * Parser
@@ -64,6 +65,9 @@
                         break;
                     case 'param':
                         $replacement = json_encode(@$_GET[$args[0]]);
+                        break;
+                    case 'subject':
+                        $replacement = json_encode(Page::getSubjectRoutes());
                         break;
                     case 'count':
                         $type = array_shift($args);

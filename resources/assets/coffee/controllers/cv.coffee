@@ -6,9 +6,8 @@ angular
         $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов'
 
         $timeout ->
-            $('.name-field').inputmask("Regex", {regex: "[A-Za-zа-яА-Я- ]*"})
-            $('textarea').inputmask("Regex", {regex: "[0-9A-Za-zа-яА-Я()-., ]*"})
-            $('.digits-only').inputmask("Regex", {regex: "[0-9]*"})
+            console.log 1
+            # $('.digits-only').inputmask("Regex", {regex: "[0-9]*"})
         , 1000
 
         $scope.application =
@@ -45,27 +44,15 @@ angular
             false
 
         $scope.sendApplication = ->
-            if PhoneService.checkForm($('.phone-input')) and checkForm()
-                Cv.save $scope.application, ->
-                    $scope.application.sent = true
-                , ->
+            # if PhoneService.checkForm($('.phone-input'))
+            Cv.save $scope.application, ->
+                $scope.application.sent = true
+            , (response) ->
+                if response.status is 422
+                    $scope.errors = {}
+                    angular.forEach response.data, (errors, field) ->
+                        $scope.errors[field] = errors
+                        selector = "[ng-model$='#{field}']"
+                        $("input#{selector}, textarea#{selector}").focus()
+                else
                     $scope.application.error = true
-
-        checkForm = ->
-            valid = true
-            $scope.errors = {}
-
-            $('.name-field').each (index, element) ->
-                if $(element).val().length > 60
-                    valid = false
-                    $(element).focus().notify 'ошибка: максимальная длина текста – 60 символов', notify_options
-                    return
-
-            $('textarea').each (index, element) ->
-                if $(element).val().length > 1000
-                    valid = false
-                    model = $(element).focus().attr('ng-model').split('.')[1]
-                    $scope.errors[model] = true
-                    return
-
-            valid

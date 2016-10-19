@@ -82,6 +82,9 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angu
             return '' if not date
             moment(date).format "DD.MM.YY" + (if full_year then "YY" else "")
 
+        $rootScope.formatDateFull = (date) ->
+            moment(date).format "D MMMM YYYY"
+
         $rootScope.dialog = (id) ->
             $("##{id}").modal 'show'
             return

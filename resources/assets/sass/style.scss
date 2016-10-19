@@ -203,14 +203,21 @@ label {
     & .search-result-item.button-green {
         vertical-align: middle;
         margin-left: 13px;
+        position: relative;
     }
-
     & .customSelect {
         width: 200px;
     }
-
+    & .customSelectInner {
+        width: 150px !important;
+    }
     & .header-search-tutor-form {
         padding: 170px 0;
+    }
+    & .short-tutor-title {
+        & a {
+            text-decoration: none !important;
+        }
     }
 }
 
@@ -353,4 +360,16 @@ textarea {
 
 .red-background {
     background-color: $red !important;
+}
+
+.footer-search-tutor {
+    position: relative;
+}
+.footer-lightbox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(black, .5);
 }

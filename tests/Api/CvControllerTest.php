@@ -25,13 +25,13 @@ class CvControllerTest extends TestCase
         $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER))->seeStatusCode(200);
 
         // Имя
-        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, self::str(CvController::MAX_NAME_LENGTH + 1)))->seeStatusCode(302);
-        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, self::str(CvController::MAX_NAME_LENGTH)))->seeStatusCode(200);
+        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, self::str(MAX_NAME_LENGTH + 1)))->seeStatusCode(302);
+        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, self::str(MAX_NAME_LENGTH)))->seeStatusCode(200);
         $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '%'))->seeStatusCode(302);
 
         // Описание
-        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '', self::str(CvController::MAX_COMMENT_LENGTH + 1)))->seeStatusCode(302);
-        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '', self::str(CvController::MAX_COMMENT_LENGTH)))->seeStatusCode(200);
+        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '', self::str(MAX_COMMENT_LENGTH + 1)))->seeStatusCode(302);
+        $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '', self::str(MAX_COMMENT_LENGTH)))->seeStatusCode(200);
         $this->post(route('api.cv.store'), self::params(self::PHONE_NUMBER, '', '%'))->seeStatusCode(302);
     }
 

@@ -1,7 +1,16 @@
 angular
     .module 'Egerep'
-    .controller 'Index', ($scope, Tutor) ->
+    .controller 'Index', ($scope, $timeout, Tutor) ->
         bindArguments($scope, arguments)
+        $scope.selected_subject = '1'
+
+        $scope.refreshSelect = ->
+            $timeout ->
+                $('.custom-select-sort').trigger('render')
+
+        $scope.goSubject = ->
+            window.location = $scope.subject_routes[$scope.selected_subject]
+
         # сотрудничает с 12 сентября 2000 года
         $scope.dateToText = (date) ->
             text_date = moment(date).format 'DD MMMM YYYY'

@@ -91,11 +91,12 @@ class TutorsController extends Controller
     public function reviews($id)
     {
         return Tutor::reviews($id)->select(
+            'reviews.created_at',
             'reviews.score',
             'reviews.comment',
             'reviews.signature',
             DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count')
-        )->get();
+        )->orderBy('reviews.created_at', 'desc')->get();
     }
 
 
