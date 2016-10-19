@@ -80,9 +80,11 @@ textarea {
 --------------------------------*/
 .main {
     min-height: 100%;
-    height: auto !important;
-    height: 100%;
+    height: auto;
     position: relative;
+    &.full-height {
+        height: 100% !important;
+    }
 }
 /*
 * Header
@@ -266,6 +268,10 @@ textarea {
     font-family: 'helveticaneuecyrmedium';
     color: black;
     padding: 0 0 10px;
+    & a {
+        text-decoration: none;
+        color: black;
+    }
 }
 .short-tutor-list-info > ul {
     margin: 0;
@@ -1271,4 +1277,12 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .other-tutor-list-right > div {
     height: 20px;
+}
+
+.review-badge {
+    padding: 3px 4px;
+    background-color: $green-main-light;
+    border-radius: $border-radius;
+    color: white;
+    display: inline-block;
 }
