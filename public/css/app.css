@@ -5248,8 +5248,7 @@ a[href^="https://www.google.com/maps"] {
     content: "\f111"; }
 
 .no-tutor-request {
-  width: 746px;
-  margin: 0 auto; }
+  width: 746px; }
 
 .content-align-center {
   height: 400px;
@@ -5450,5 +5449,8 @@ textarea {
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.5); }
+
+.request-page h1 {
+  padding: 30px 0; }
 
 /*# sourceMappingURL=app.css.map */

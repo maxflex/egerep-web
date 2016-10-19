@@ -116,7 +116,6 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 
 .no-tutor-request {
     width: 746px;
-    margin: 0 auto;
 }
 
 .content-align-center {
@@ -372,4 +371,11 @@ textarea {
     left: 0;
     top: 0;
     background-color: rgba(black, .5);
+}
+
+
+.request-page {
+    & h1 {
+        padding: 30px 0;
+    }
 }
