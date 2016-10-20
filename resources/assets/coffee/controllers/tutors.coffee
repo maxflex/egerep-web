@@ -154,7 +154,9 @@ angular
                 $.each $scope.search.hidden_filter, (index, phrase) ->
                     $(".#{className}").mark phrase,
                         separateWordSearch: true
-                        accuracy: 'exactly'
+                        accuracy:
+                            value: 'exactly'
+                            limiters: ['!', '@', '#', '&', '*', '(', ')', '-', '–', '—', '+', '=', '[', ']', '{', '}', '|', ':', ';', '\'', '\"', '‘', '’', '“', '”', ',', '.', '<', '>', '/', '?']
 
         $scope.clearMetro = ->
             $('.search-metro-autocomplete').val('')
