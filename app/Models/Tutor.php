@@ -205,7 +205,7 @@ class Tutor extends Model
                     OR EXISTS (
                         SELECT 1 FROM reviews r
                         JOIN attachments a on a.id = r.attachment_id
-                        WHERE r.comment REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id
+                        WHERE r.comment REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id AND r.state = 'published'
                     )
                 )";
             }
