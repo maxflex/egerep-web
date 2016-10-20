@@ -17,6 +17,7 @@ class Review extends Model
         'attachment_id',
         'state',
         'updated_at',
+        'created_at',
         'errors',
         'user_id',
     ];
@@ -38,7 +39,7 @@ class Review extends Model
         return static::with('tutor')->take($limit)->join('attachments', 'attachments.id', '=', 'attachment_id')
             ->select('reviews.*')
             ->addSelect(DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count'))
-            ->inRandomOrder()->get();
+            ->orderBy('reviews.created_at', 'desc')->get();
     }
 
     public static function boot()
