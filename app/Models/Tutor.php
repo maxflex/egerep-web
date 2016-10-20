@@ -6,7 +6,7 @@ use Shared\Model;
 use App\Scopes\TutorScope;
 use App\Scopes\ReviewScope;
 use DB;
-use Queries\TutorQuery;
+use App\Models\Queries\TutorQuery;
 
 class Tutor extends Model
 {
