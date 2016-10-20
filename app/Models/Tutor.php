@@ -200,12 +200,12 @@ class Tutor extends Model
             $hidden_filter_conditions = [];
             foreach($hidden_filter as $phrase) {
                 $hidden_filter_conditions[] = "(
-                    public_desc REGEXP '[[:<:]]{$phrase}[[:>:]]'
-                    OR education REGEXP '[[:<:]]{$phrase}[[:>:]]'
+                    LOWER(public_desc) REGEXP '[[:<:]]{$phrase}[[:>:]]'
+                    OR LOWER(education) REGEXP '[[:<:]]{$phrase}[[:>:]]'
                     OR EXISTS (
                         SELECT 1 FROM reviews r
                         JOIN attachments a on a.id = r.attachment_id
-                        WHERE r.comment REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id AND r.state = 'published'
+                        WHERE LOWER(r.comment) REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id AND r.state = 'published'
                     )
                 )";
             }
