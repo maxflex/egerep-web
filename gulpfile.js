@@ -67,5 +67,6 @@ elixir(mix => {
             'bootstrap-select/dist/js/bootstrap-select.min',
             'bootstrap/js/bootstrap.min',
             'jquery.inputmask/dist/jquery.inputmask.bundle',
+            'mark.js/dist/jquery.mark.min',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });

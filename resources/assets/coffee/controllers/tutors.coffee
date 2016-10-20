@@ -4,6 +4,9 @@ angular
     .controller 'Tutors', ($scope, $timeout, Tutor, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
 
+        # сколько загрузок преподавателей было
+        search_count = 0
+
         # личная страница преподавателя?
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
@@ -93,6 +96,7 @@ angular
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
             tutor.displayed_reviews = tutor.all_reviews.slice(0, to)
+            highlight('search-result-reviews-text')
 
         $scope.reviewsLeft = (tutor) ->
             tutor.all_reviews.length - tutor.displayed_reviews.length
@@ -107,6 +111,8 @@ angular
             unselectSubjects(subject_id)
             $scope.page = 1
             search()
+            # деселект hidden_filter при смене параметров
+            delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
 
         $scope.nextPage = ->
             $scope.page++
@@ -130,6 +136,7 @@ angular
                 page: $scope.page
                 search: $scope.search
             , (response) ->
+                search_count++
                 $scope.searching = false
                 if response.hasOwnProperty('url')
                     redirect response.url
@@ -139,6 +146,15 @@ angular
                     #comma separated fields
                     angular.forEach $scope.tutors, (tutor) ->
                         tutor.svg_map = _.filter tutor.svg_map.split(',') if 'string' == typeof tutor.svg_map
+                    highlight('search-result-text')
+
+        # highlight hidden filter
+        highlight = (className)->
+            if $scope.search.hidden_filter then $timeout ->
+                $.each $scope.search.hidden_filter, (index, phrase) ->
+                    $(".#{className}").mark phrase,
+                        separateWordSearch: true
+                        accuracy: 'exactly'
 
         $scope.clearMetro = ->
             $('.search-metro-autocomplete').val('')

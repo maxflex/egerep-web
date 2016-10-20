@@ -196,6 +196,22 @@ class Tutor extends Model
             }
         }
 
+        if (isset($hidden_filter)) {
+            $hidden_filter_conditions = [];
+            foreach($hidden_filter as $phrase) {
+                $hidden_filter_conditions[] = "(
+                    public_desc REGEXP '[[:<:]]{$phrase}[[:>:]]'
+                    OR education REGEXP '[[:<:]]{$phrase}[[:>:]]'
+                    OR EXISTS (
+                        SELECT 1 FROM reviews r
+                        JOIN attachments a on a.id = r.attachment_id
+                        WHERE r.comment REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id
+                    )
+                )";
+            }
+            $query->whereRaw('(' . implode(' OR ', $hidden_filter_conditions) . ')');
+        }
+
         if (isset($sort)) {
             switch ($sort) {
                 case 2:

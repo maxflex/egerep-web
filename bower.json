@@ -61,7 +61,8 @@
     "normalize-strings": "normalize#^1.1.0",
     "iCheck": "icheck#^1.0.2",
     "angular-file-upload": "^2.3.4",
-    "bootstrap-select": "^1.11.2"
+    "bootstrap-select": "^1.11.2",
+    "mark.js": "^8.4.0"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"

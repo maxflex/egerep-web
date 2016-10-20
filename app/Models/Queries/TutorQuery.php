@@ -5,7 +5,7 @@
     use App\Models\Tutor;
 
     class TutorQuery {
-        //написано через строку а не scope чтобы в least(Tutor.php:226) можно было использовать
+
         public static function orderByMetroDistance($station_id)
         {
             return

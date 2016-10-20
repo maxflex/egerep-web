@@ -277,8 +277,9 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, REVIEWS_PER_PAGE) {
-    var search, unselectSubjects, viewed_tutors;
+    var highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
+    search_count = 0;
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
     };
@@ -369,7 +370,8 @@
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
       from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
       to = from + REVIEWS_PER_PAGE;
-      return tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
+      tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
+      return highlight('search-result-reviews-text');
     };
     $scope.reviewsLeft = function(tutor) {
       return tutor.all_reviews.length - tutor.displayed_reviews.length;
@@ -383,7 +385,10 @@
       $scope.tutors = [];
       unselectSubjects(subject_id);
       $scope.page = 1;
-      return search();
+      search();
+      if ($scope.search.hidden_filter && search_count) {
+        return delete $scope.search.hidden_filter;
+      }
     };
     $scope.nextPage = function() {
       $scope.page++;
@@ -417,19 +422,33 @@
         page: $scope.page,
         search: $scope.search
       }, function(response) {
+        search_count++;
         $scope.searching = false;
         if (response.hasOwnProperty('url')) {
           return redirect(response.url);
         } else {
           $scope.data = response;
           $scope.tutors = $scope.tutors.concat(response.data);
-          return angular.forEach($scope.tutors, function(tutor) {
+          angular.forEach($scope.tutors, function(tutor) {
             if ('string' === typeof tutor.svg_map) {
               return tutor.svg_map = _.filter(tutor.svg_map.split(','));
             }
           });
+          return highlight('search-result-text');
         }
       });
+    };
+    highlight = function(className) {
+      if ($scope.search.hidden_filter) {
+        return $timeout(function() {
+          return $.each($scope.search.hidden_filter, function(index, phrase) {
+            return $("." + className).mark(phrase, {
+              separateWordSearch: true,
+              accuracy: 'exactly'
+            });
+          });
+        });
+      }
     };
     $scope.clearMetro = function() {
       $('.search-metro-autocomplete').val('');
@@ -723,6 +742,34 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -776,34 +823,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
-      }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
-    };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
-  });
 
 }).call(this);
 
