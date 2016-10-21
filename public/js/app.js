@@ -503,11 +503,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('errors', function() {
     return {
       restrict: 'E',
@@ -726,6 +721,11 @@
       templateUrl: '/directives/tutor-name'
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

@@ -296,8 +296,11 @@ textarea {
 * Search filter
 --------------------------------*/
 .search-filter {
-    padding: 21px 0 20px;
+    padding: 0 0 20px;
     border-bottom: 13px solid #f0f0f0;
+    & h1 {
+        padding: 30px 0 25px;
+    }
 }
 .search-filter .global:after {
     content: '';
@@ -566,7 +569,7 @@ textarea {
 }
 .search-result-wrap-more {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 44px;
 }
 .search-result-more-info {
     padding: 0 0 15px;
