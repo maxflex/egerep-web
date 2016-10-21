@@ -43,7 +43,7 @@ class Page extends Model
             $data[$field] = $this->{$field};
         }
         if ($this->hidden_filter) {
-            $data['hidden_filter'] = explode(',', str_replace(' ', '', strtolower($this->hidden_filter)));
+            $data['hidden_filter'] = explode(',', str_replace(' ', '', mb_strtolower($this->hidden_filter)));
         }
         return json_encode($data, JSON_FORCE_OBJECT);
     }
