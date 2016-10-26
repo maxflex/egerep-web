@@ -168,10 +168,17 @@
         }
 
         /**
-         * Заменить переносы строки и двойные пробелы
+         * Заменить переносы строки и двойные пробелы,
+         * а так же пробел перед запятыми, пробелы на краях
          */
         private static function _cleanString($text)
         {
-            return trim(preg_replace('!\s+!', ' ', str_replace(PHP_EOL, ' ', $text)));
+            return str_replace(' ,', ',',
+                trim(
+                    preg_replace('!\s+!', ' ',
+                        str_replace(PHP_EOL, ' ', $text)
+                    )
+                )
+            );
         }
     }
