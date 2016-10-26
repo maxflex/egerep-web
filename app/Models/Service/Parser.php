@@ -172,6 +172,6 @@
          */
         private static function _cleanString($text)
         {
-            return preg_replace('!\s+!', ' ', str_replace(PHP_EOL, ' ', $text));
+            return trim(preg_replace('!\s+!', ' ', str_replace(PHP_EOL, ' ', $text)));
         }
     }
