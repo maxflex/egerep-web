@@ -113,7 +113,7 @@
         {
             $tutor = Tutor::with('markers')->selectDefault()->find($id);
             $similar_tutors = Tutor::getSimilar($tutor);
-
+            
             // Ссылка «все репетиторы по ...»
             $subjects_url = '/tutors?subjects=' . implode(',', $tutor->subjects);
 
@@ -128,6 +128,10 @@
             static::_replace($html, 'current_tutor', $tutor->toJson());
             static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
             static::_replace($html, 'subjects_url', $subjects_url);
+
+            // h1 и desc
+            static::_replace($html, 'title', view('tutor.title', compact('tutor')));
+            static::_replace($html, 'desc', view('tutor.desc', compact('tutor')));
         }
 
         /**
