@@ -113,7 +113,7 @@
         {
             $tutor = Tutor::with('markers')->selectDefault()->find($id);
             $similar_tutors = Tutor::getSimilar($tutor);
-            
+
             // Ссылка «все репетиторы по ...»
             $subjects_url = '/tutors?subjects=' . implode(',', $tutor->subjects);
 
@@ -131,7 +131,7 @@
 
             // h1 и desc
             static::_replace($html, 'title', view('tutor.title', compact('tutor')));
-            static::_replace($html, 'desc', view('tutor.desc', compact('tutor')));
+            static::_replace($html, 'desc', self::_cleanString(view('tutor.desc', compact('tutor'))));
         }
 
         /**
@@ -165,5 +165,13 @@
         private static function _replace(&$html, $var, $replacement)
         {
             $html = str_replace(static::interpolate($var), $replacement, $html);
+        }
+
+        /**
+         * Заменить переносы строки и двойные пробелы
+         */
+        private static function _cleanString($text)
+        {
+            return preg_replace('!\s+!', ' ', str_replace(PHP_EOL, ' ', $text));
         }
     }
