@@ -4517,8 +4517,9 @@ textarea {
   top: -5px;
   position: relative;
   vertical-align: top; }
-  .index-reviews-list-user-right a {
-    text-decoration: none !important; }
+
+.other-tutor-list-right a, .index-reviews-list-user-right a {
+  text-decoration: none !important; }
 
 .index-reviews-list-user .index-reviews-list-user-right {
   top: -2px; }
