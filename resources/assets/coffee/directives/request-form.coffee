@@ -12,6 +12,7 @@ angular.module('Egerep')
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
+                    trackDataLayer()
                 , (response) ->
                     if response.status is 422
                         angular.forEach response.data, (errors, field) ->
@@ -19,3 +20,21 @@ angular.module('Egerep')
                             $($element).find("input#{selector}, textarea#{selector}").focus().notify errors[0], notify_options
                     else
                         $scope.tutor.request_error = true
+
+            trackDataLayer = ->
+                window.dataLayer = window.dataLayer || []
+                window.dataLayer.push
+                    event: 'purchase'
+                    ecommerce:
+                        currencyCode: 'RUR'
+                        purchase:
+                            actionField:
+                                tutor_id: $scope.tutor.id
+                                revenue: $scope.tutor.public_price
+                            products: [
+                                tutor_id: $scope.tutor.id
+                                price: $scope.tutor.public_price
+                                brand: $scope.tutor.subjects
+                                category: $scope.tutor.markers
+                                quantity: 1
+                            ]

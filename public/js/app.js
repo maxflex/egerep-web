@@ -186,11 +186,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
@@ -498,96 +493,6 @@
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
-      }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
-    };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -744,13 +649,15 @@
       },
       templateUrl: 'directives/request-form',
       controller: function($scope, $element, $timeout, Request, PhoneService) {
-        return $scope.request = function() {
+        var trackDataLayer;
+        $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
           }
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
-            return $scope.tutor.request_sent = true;
+            $scope.tutor.request_sent = true;
+            return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
               return angular.forEach(response.data, function(errors, field) {
@@ -760,6 +667,30 @@
               });
             } else {
               return $scope.tutor.request_error = true;
+            }
+          });
+        };
+        return trackDataLayer = function() {
+          window.dataLayer = window.dataLayer || [];
+          return window.dataLayer.push({
+            event: 'purchase',
+            ecommerce: {
+              currencyCode: 'RUR',
+              purchase: {
+                actionField: {
+                  tutor_id: $scope.tutor.id,
+                  revenue: $scope.tutor.public_price
+                },
+                products: [
+                  {
+                    tutor_id: $scope.tutor.id,
+                    price: $scope.tutor.public_price,
+                    brand: $scope.tutor.subjects,
+                    category: $scope.tutor.markers,
+                    quantity: 1
+                  }
+                ]
+              }
             }
           });
         };
@@ -826,6 +757,96 @@
 
 (function() {
 
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
 
 }).call(this);
 
