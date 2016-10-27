@@ -15,7 +15,8 @@ class Tutor extends Model
     protected $appends = [
         'photo_url',
         'review_avg',
-        'reviews_count'
+        'reviews_count',
+        'subjects_string',
     ];
 
     const SERVER_URL = 'https://lk.ege-repetitor.ru/img/tutors/';
@@ -67,6 +68,13 @@ class Tutor extends Model
         }
         $avg = (4 * (($this->lk + $this->tb + $js) / 3) + $sum)/(4 + $count);
         return number_format($avg, 1, ',', '');
+    }
+
+    public function getSubjectsStringAttribute()
+    {
+        return implode(', ', array_map(function($subject_id) {
+            return dbFactory('subjects')->whereId($subject_id)->value('dative');
+        }, $this->subjects));
     }
 
     public static function reviews($tutor_id)
@@ -186,7 +194,7 @@ class Tutor extends Model
         }
 
         # Оставляем только зеленые маркеры, если клиент едет к репетитору
-        if (isset($place) && $place) {
+        if (isset($place)) {
             if ($place == 1) {
                 # отсеиваем репетиторов без зеленых маркеров
                 $query->has('markers');
@@ -238,14 +246,12 @@ class Tutor extends Model
                         END
                     ) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
                 case 5:
-                    if ($station_id && isset($place)) {
-                        if ($place == 0) {
+                    if ($station_id) {
+                        if (! isset($place)) {
                             $query->orderBy(DB::raw("LEAST(" . TutorQuery::orderByMarkerDistance($station_id) . ", " . TutorQuery::orderByMetroDistance($station_id) . ")"), "asc");
-                        }
-                        if ($place == 1) {
+                        } else if ($place == 1) {
                             $query->orderBy(DB::raw(TutorQuery::orderByMarkerDistance($station_id)), 'asc');
-                        }
-                        if ($place == 2) {
+                        } else if ($place == 2) {
                             $query->orderBy(DB::raw(TutorQuery::orderByMetroDistance($station_id)));
                         }
                     }
