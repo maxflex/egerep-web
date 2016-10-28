@@ -10,6 +10,22 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
+
+    // Соответствия между разделами и ID предмета
+    static $subject_page_id = [
+        '1'   => 194,
+        '2'   => 195,
+        '3'   => 198,
+        '4'   => 199,
+        '5'   => 203,
+        '6'   => 196,
+        '7'   => 197,
+        '8'   => 201,
+        '9'   => 200,
+        '10'  => 202,
+        '1,2' => 247,
+    ];
+
     // also serp fields
     protected $casts = [
        'id'         => 'int', // ID нужен, чтобы идентифицировать текущую страницу в search
@@ -23,6 +39,11 @@ class Page extends Model
    {
        return $this->belongsTo(Variable::class);
    }
+
+    public function useful()
+    {
+        return $this->hasMany(PageUseful::class);
+    }
 
     public function getSubjectsAttribute($value)
     {
@@ -74,6 +95,9 @@ class Page extends Model
         if (isset($place)) {
             $query->where('place', $place);
         }
+        if (isset($sort)) {
+            $query->where('sort', $sort);
+        }
         if (isset($station_id)) {
             $query->where('station_id', $station_id);
         }
@@ -83,25 +107,18 @@ class Page extends Model
         return $query;
     }
 
-    /**
-     * Получить URL'ы предметов
-     *
-     * @return array [1 => 'repetitor-po-matematike', ...]
-     */
-    public static function getSubjectRoutes()
-    {
-        $routes = [];
-        foreach(Factory::get('subjects') as $subject) {
-            $page = \App\Models\Page::findByParams([
-                'subjects' => [$subject->id]
-            ]);
-            $routes[$subject->id] = $page->exists() ? $page->value('url') : '/tutors?subjects=' . $subject->id;
-        }
-        return $routes;
-    }
-
     public static function boot()
     {
         static::addGlobalScope(new PageScope);
+    }
+
+    public static function getUrl($id)
+    {
+        return self::whereId($id)->value('url');
+    }
+
+    public static function getSubjectUrl($subject_eng)
+    {
+        return self::getUrl(Page::$subject_page_id[Factory::getSubjectId($subject_eng)]);
     }
 }

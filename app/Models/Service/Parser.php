@@ -69,6 +69,10 @@
                     case 'subject':
                         $replacement = json_encode(Page::getSubjectRoutes());
                         break;
+                    case 'link':
+                        // получить ссылку либо по [link|id_раздела] или по [link|math]
+                        $replacement = is_numeric($args[0]) ? Page::getUrl($args[0]) : Page::getSubjectUrl($args[0]);
+                        break;
                     case 'count':
                         $type = array_shift($args);
                         switch($type) {
@@ -103,6 +107,7 @@
                     static::_replace($html, $var, $page->{$field});
                 }
             }
+            static::_replace($html, 'useful', view('blocks.useful', compact('page')));
             return $html;
         }
 
@@ -115,15 +120,7 @@
             $similar_tutors = Tutor::getSimilar($tutor);
 
             // Ссылка «все репетиторы по ...»
-            $subjects_url = '/tutors?subjects=' . implode(',', $tutor->subjects);
-
-            $page = \App\Models\Page::findByParams([
-                'subjects' => $tutor->subjects
-            ]);
-            if ($page->exists()) {
-                $subjects_url = $page->value('url');
-            }
-            // Конец
+            $subjects_url = Page::getUrl(@Page::$subject_page_id[implode(',', $tutor->subjects)]);
 
             static::_replace($html, 'current_tutor', $tutor->toJson());
             static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
