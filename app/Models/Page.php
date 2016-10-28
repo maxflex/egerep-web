@@ -95,9 +95,9 @@ class Page extends Model
         if (isset($place)) {
             $query->where('place', $place);
         }
-        if (isset($sort)) {
-            $query->where('sort', $sort);
-        }
+        // if (isset($sort)) {
+        //     $query->where('sort', $sort);
+        // }
         if (isset($station_id)) {
             $query->where('station_id', $station_id);
         }
