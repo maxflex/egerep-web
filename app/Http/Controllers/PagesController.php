@@ -38,4 +38,23 @@ class PagesController extends Controller
         }
         return view('pages.index')->with(compact('html'));
     }
+
+    /**
+     * Auto login from CRM
+     */
+    public function login($hash)
+    {
+        $salt = 'AxQWRu2y3PhE1D';
+        $date = date('Y-m-d H');
+        $tutor_id_hash = substr($hash, -32, 32);
+        $hash = substr($hash, 0, 32);
+        if (md5($salt . $date) == $hash) {
+            $tutor = Tutor::loggable()->whereRaw("MD5(CONCAT(id, '{$salt}', '{$hash}'))='{$tutor_id_hash}'");
+            if ($tutor->exists()) {
+                $_SESSION['logged_tutor_id'] = $tutor->value('id');
+                return redirect('login');
+            }
+        }
+        abort(404);
+    }
 }

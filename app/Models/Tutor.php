@@ -312,6 +312,14 @@ class Tutor extends Model
         return $query->whereRaw('(' . implode(' OR ', $sql) . ')');
     }
 
+    /**
+     * Преподы, которые могут логиниться
+     */
+    public function scopeLoggable($scope)
+    {
+        return $scope->where('debt_calc', '>', 0);
+    }
+
     public static function boot()
     {
         static::addGlobalScope(new TutorScope);

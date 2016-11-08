@@ -5,6 +5,9 @@
         return view("directives.{$directive}");
     });
 
+    # Tutor auto login
+    Route::get('login/{hash}', 'PagesController@login');
+
     # Tutor profile page
     Route::get('{id}', 'PagesController@tutor')->where('id', '[0-9]+');;
 

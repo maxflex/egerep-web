@@ -44,7 +44,7 @@ class SmsController extends Controller
      */
     public function store(Request $request)
     {
-        $tutor = Tutor::findByPhone($request->phone)->where('debt_calc', '>', 0)->where('debtor', 0);
+        $tutor = Tutor::loggable()->findByPhone($request->phone);
         if ($tutor->exists()) {
             $tutor_id = $tutor->value('id');
             $code = SmsCode::create(compact('tutor_id'))->code;
