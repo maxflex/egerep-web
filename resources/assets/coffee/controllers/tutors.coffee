@@ -140,6 +140,7 @@ angular
                 $scope.searching = false
                 if response.hasOwnProperty('url')
                     redirect response.url
+                    # console.log response.url
                 else
                     $scope.data = response
                     $scope.tutors = $scope.tutors.concat(response.data)

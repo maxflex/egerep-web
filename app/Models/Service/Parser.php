@@ -137,15 +137,10 @@
          */
         public static function compileSeo($page, &$html)
         {
-            if ($page->seo_desktop == 0) {
-                static::_replace($html, 'seo_text_top', '');
-                static::_replace($html, 'seo_text_bottom', '');
-            }
-            if ($page->seo_desktop == 1) {
+            if ($page->seo_desktop) {
                 static::_replace($html, 'seo_text_top', $page->getClean('html'));
                 static::_replace($html, 'seo_text_bottom', '');
-            }
-            if ($page->seo_desktop == 2) {
+            } else {
                 static::_replace($html, 'seo_text_top', '');
                 static::_replace($html, 'seo_text_bottom', $page->getClean('html'));
             }

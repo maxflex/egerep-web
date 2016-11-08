@@ -115,12 +115,10 @@ class TutorsController extends Controller
 
         @extract($search);
 
-        // если указаны какие либо-параметры, пытаемся найти serp-страницу с параметрами
-        if (count($subjects) || isset($place) || $station_id) {
-            $page = \App\Models\Page::findByParams($search);
-            if ($page->exists()) {
-                return ['url' => $page->value('url')];
-            }
+        // пытаемся найти serp-страницу с такими параметрами
+        $page = \App\Models\Page::findByParams($search);
+        if ($page->exists()) {
+            return ['url' => $page->inRandomOrder()->value('url')];
         }
 
         // force current page

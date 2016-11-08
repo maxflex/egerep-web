@@ -7,6 +7,9 @@ use App\Models\Service\Parser;
 
 class Variable extends Model
 {
+    // ID переменной SERP
+    const SERP_ID = 20;
+
     protected $attributes = [
         'name' => 'новая переменная'
     ];

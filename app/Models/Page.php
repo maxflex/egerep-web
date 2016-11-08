@@ -10,7 +10,6 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
-
     // Соответствия между разделами и ID предмета
     static $subject_page_id = [
         '1'   => 194,
@@ -81,6 +80,22 @@ class Page extends Model
         return Parser::compilePage($this, $value);
     }
 
+    public function getH1Attribute($value)
+    {
+        if ($value) {
+            return "<h1>{$value}</h1>";
+        }
+        return ' ';
+    }
+
+    public function getH1BottomAttribute($value)
+    {
+        if ($value) {
+            return "<h1>{$value}</h1>";
+        }
+        return ' ';
+    }
+
     public function scopeWhereSubject($query, $subject_id)
     {
         return $query->whereRaw("FIND_IN_SET($subject_id, subjects)");;
@@ -89,21 +104,14 @@ class Page extends Model
     public function scopeFindByParams($query, $search)
     {
         @extract($search);
-        foreach($subjects as $subject_id) {
-            $query->whereSubject($subject_id);
-        }
-        if (isset($place)) {
-            $query->where('place', $place);
-        }
-        // if (isset($sort)) {
-        //     $query->where('sort', $sort);
-        // }
-        if (isset($station_id)) {
-            $query->where('station_id', $station_id);
-        }
-        if (isset($id)) {
-            $query->where('id', '!=', $id);
-        }
+
+        $query->where('variable_id', Variable::SERP_ID);
+        $query->where('subjects', implode(',', $subjects));
+        $query->where('place', setOrNull(@$place));
+        $query->where('sort', setOrNull(@$sort));
+        $query->where('station_id', setOrNull(@$station_id));
+        $query->where('id', '!=', $id);
+
         return $query;
     }
 

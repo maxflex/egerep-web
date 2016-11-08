@@ -11,7 +11,7 @@ use App\Models\Queries\TutorQuery;
 class Tutor extends Model
 {
     protected $connection = 'egerep';
-
+    static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
     protected $appends = [
         'photo_url',
         'review_avg',
@@ -292,6 +292,19 @@ class Tutor extends Model
         }
 
         return $query->get();
+    }
+
+    /**
+     * Найти по номеру телефона
+     */
+    public function scopeFindByPhone($query, $phone)
+    {
+        $sql = [];
+        $phone = cleanNumber($phone);
+        foreach (static::$phone_fields as $phone_field) {
+            $sql[] = "{$phone_field} = '$phone'";
+        }
+        return $query->whereRaw('(' . implode(' OR ', $sql) . ')');
     }
 
     public static function boot()

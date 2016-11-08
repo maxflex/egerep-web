@@ -5466,7 +5466,7 @@ textarea {
   top: 0;
   background-color: rgba(0, 0, 0, 0.5); }
 
-.request-page h1 {
+.request-page h1, .login-page h1 {
   padding: 30px 0; }
 
 .vertical-align {
@@ -5491,5 +5491,16 @@ textarea {
   padding: 0 0 6px;
   font-size: 14px;
   line-height: 20px; }
+
+.phone-login-form {
+  display: inline-block;
+  margin: 0;
+  text-align: center; }
+
+.mb {
+  margin-bottom: 10px; }
+
+.login-page {
+  text-align: center; }
 
 /*# sourceMappingURL=app.css.map */

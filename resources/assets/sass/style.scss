@@ -374,7 +374,7 @@ textarea {
 }
 
 
-.request-page {
+.request-page, .login-page {
     & h1 {
         padding: 30px 0;
     }
@@ -401,4 +401,18 @@ textarea {
     padding: 0 0 6px;
     font-size: 14px;
     line-height: 20px;
+}
+
+.phone-login-form {
+    display: inline-block;
+    margin: 0;
+    text-align: center;
+}
+
+.mb {
+    margin-bottom: 10px;
+}
+
+.login-page {
+    text-align: center;
 }

@@ -37,6 +37,11 @@
         return (object)[];
     }
 
+    function setOrNull($var)
+    {
+        return (isset($var) && $var) ? $var : null;
+    }
+
     /**
 	 * Форматировать дату в наш формат.
 	 *

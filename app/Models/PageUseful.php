@@ -14,4 +14,12 @@ class PageUseful extends Model
     {
         return $this->belongsTo(Page::class, 'page_id_field');
     }
+
+    public function getTextAttribute($value)
+    {
+        if (empty($value)) {
+            return $this->page->keyphrase;
+        }
+        return $value;
+    }
 }

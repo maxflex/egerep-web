@@ -271,6 +271,27 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').controller('LoginCtrl', function($scope, Sms) {
+    $scope.sendCode = function() {
+      $scope.phone_error = false;
+      return Sms.save({
+        phone: $scope.phone
+      }, function() {
+        return $scope.code_sent = true;
+      }, function() {
+        return $scope.phone_error = true;
+      });
+    };
+    return $scope.checkCode = function() {
+      return Sms.get({
+        code: $scope.code
+      });
+    };
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, REVIEWS_PER_PAGE) {
     var highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
@@ -766,6 +787,34 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -789,6 +838,10 @@
     });
   }).factory('Request', function($resource) {
     return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
       id: '@id'
     }, updatable());
   }).factory('Cv', function($resource) {
@@ -819,34 +872,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
-      }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
-    };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
-  });
 
 }).call(this);
 
