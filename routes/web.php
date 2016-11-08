@@ -1,5 +1,6 @@
 <?php
-
+    URL::forceSchema('https');
+    
     # Templates for angular directives
     Route::get('directives/{directive}', function($directive) {
         return view("directives.{$directive}");
