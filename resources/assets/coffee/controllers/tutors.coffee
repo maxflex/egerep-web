@@ -106,6 +106,8 @@ angular
                 # Tutor.iteraction {id: tutor_id, type: 'views'}
                 viewed_tutors.push tutor_id
 
+        # чтобы не редиректило в начале
+        filter_used = false
         $scope.filter = (subject_id) ->
             $scope.tutors = []
             unselectSubjects(subject_id)
@@ -113,6 +115,7 @@ angular
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
+            filter_used = true
 
         $scope.nextPage = ->
             $scope.page++
@@ -133,6 +136,7 @@ angular
         search = ->
             $scope.searching = true
             Tutor.search
+                filter_used: filter_used
                 page: $scope.page
                 search: $scope.search
             , (response) ->
