@@ -129,4 +129,16 @@ class Page extends Model
     {
         return self::getUrl(Page::$subject_page_id[Factory::getSubjectId($subject_eng)]);
     }
+
+    public static function getSubjectRoutes()
+    {
+        $subject_routes = [];
+        foreach(self::$subject_page_id as $subject_id => $page_id) {
+            // ссылки только к отдельным предметам
+            if (strpos($subject_id, ',') === false) {
+                $subject_routes[$subject_id] = self::getUrl($page_id);
+            }
+        }
+        return $subject_routes;
+    }
 }

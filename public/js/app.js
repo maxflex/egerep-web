@@ -271,20 +271,35 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('LoginCtrl', function($scope, Sms) {
+  angular.module('Egerep').controller('LoginCtrl', function($scope, Sms, Tutor) {
+    var login;
+    bindArguments($scope, arguments);
+    login = function() {
+      return Tutor.login({}, function(response) {
+        return $scope.tutor = response;
+      }, function() {
+        return $scope.tutor = null;
+      });
+    };
+    login();
     $scope.sendCode = function() {
-      $scope.phone_error = false;
+      $scope.error_message = false;
       return Sms.save({
         phone: $scope.phone
       }, function() {
         return $scope.code_sent = true;
       }, function() {
-        return $scope.phone_error = true;
+        return $scope.error_message = 'неверный номер телефона';
       });
     };
     return $scope.checkCode = function() {
+      $scope.error_message = false;
       return Sms.get({
         code: $scope.code
+      }, function() {
+        return login();
+      }, function() {
+        return $scope.error_message = 'код введен неверно';
       });
     };
   });
@@ -809,6 +824,10 @@
       iteraction: {
         method: 'GET',
         url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
       }
     });
   }).factory('Request', function($resource) {

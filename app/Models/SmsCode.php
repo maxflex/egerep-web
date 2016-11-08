@@ -13,15 +13,15 @@ class SmsCode extends Model
         return $this->belongsTo(Tutor::class);
     }
 
-    public static function get($tutor_id, $code)
+    public static function activate($tutor_id, $code)
     {
-        return self::latest()->where('tutor_id', $tutor_id)->where('code', $code)->where('activated', false)->first();
-    }
-
-    public function activate()
-    {
-        $this->activated = true;
-        $this->save();
+        $latest_code = self::latest()->where('tutor_id', $tutor_id)->where('activated', false)->first();
+        if ($latest_code !== null && $code == $latest_code->code) {
+            $latest_code->activated = true;
+            $latest_code->save();
+            return true;
+        }
+        return false;
     }
 
     public static function boot()

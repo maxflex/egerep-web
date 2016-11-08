@@ -1,14 +1,29 @@
 angular.module('Egerep')
-    .controller 'LoginCtrl', ($scope, Sms) ->
+    .controller 'LoginCtrl', ($scope, Sms, Tutor) ->
+        bindArguments($scope, arguments)
+
+        login = ->
+            Tutor.login {}, (response) ->
+                $scope.tutor = response
+            , ->
+                $scope.tutor = null
+
+        login()
+
         $scope.sendCode = ->
-            $scope.phone_error = false
+            $scope.error_message = false
             Sms.save
                 phone: $scope.phone
             , ->
                 $scope.code_sent = true
             , ->
-                $scope.phone_error = true
+                $scope.error_message = 'неверный номер телефона'
 
         $scope.checkCode = ->
+            $scope.error_message = false
             Sms.get
                 code: $scope.code
+            , ->
+                login()
+            , ->
+                $scope.error_message = 'код введен неверно'

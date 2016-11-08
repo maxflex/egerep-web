@@ -11,6 +11,9 @@ angular.module('Egerep')
             iteraction:
                 method: 'GET'
                 url: "/api/tutors/iteraction/:id/:type"
+            login:
+                method: 'GET'
+                url: apiPath('tutors', 'login')
 
     .factory 'Request', ($resource) ->
         $resource apiPath('requests'), {id: '@id'}, updatable()

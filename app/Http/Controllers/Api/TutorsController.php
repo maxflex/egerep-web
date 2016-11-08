@@ -130,4 +130,12 @@ class TutorsController extends Controller
 
         return Tutor::search($search)->paginate(10);
     }
+
+    public function login()
+    {
+        if (isset($_SESSION['logged_tutor_id'])) {
+            return Tutor::with(['accounts'])->find($_SESSION['logged_tutor_id']);
+        }
+        abort(401);
+    }
 }

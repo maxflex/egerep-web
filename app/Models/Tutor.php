@@ -26,7 +26,12 @@ class Tutor extends Model
 
     public function markers()
     {
-        return $this->morphMany('App\Models\Marker', 'markerable')->where('type', 'green');
+        return $this->morphMany(Marker::class, 'markerable')->where('type', 'green');
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
     }
 
     public function getPhotoUrlAttribute()

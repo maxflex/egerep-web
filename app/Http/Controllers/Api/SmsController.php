@@ -19,9 +19,8 @@ class SmsController extends Controller
      */
     public function index(Request $request)
     {
-        $code = SmsCode::get($_SESSION['tutor_id'], $request->code);
-        if ($code !== null) {
-            $code->activate();
+        if (SmsCode::activate($_SESSION['tutor_id'], $request->code)) {
+            $_SESSION['logged_tutor_id'] = $_SESSION['tutor_id']; // логинимся
         } else {
             abort(422);
         }
