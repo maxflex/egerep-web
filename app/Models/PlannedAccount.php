@@ -12,6 +12,6 @@ class PlannedAccount extends Model
     public function getUserAttribute()
     {
         return egecrm('users')->whereId($this->user_id)
-                ->select('id', 'first_name', 'last_name', 'photo_extension')->first();
+                ->select('id', 'first_name', 'last_name', 'photo_extension', 'phone')->first();
     }
 }
