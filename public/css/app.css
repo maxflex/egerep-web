@@ -5506,4 +5506,9 @@ textarea {
 .h-margin {
   padding: 30px 0 25px; }
 
+.user-img {
+  height: 150px;
+  width: 120px;
+  border-radius: 5px; }
+
 /*# sourceMappingURL=app.css.map */

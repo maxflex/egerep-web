@@ -198,6 +198,13 @@
     }
 
     /**
+     * Egerep connection helper
+     */
+    function egecrm($table) {
+        return \DB::connection('egecrm')->table($table);
+    }
+
+    /**
      * Factory connection helper
      * @return [type]  [description]
      */

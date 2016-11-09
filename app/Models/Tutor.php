@@ -34,6 +34,11 @@ class Tutor extends Model
         return $this->hasMany(Account::class);
     }
 
+    public function plannedAccount()
+    {
+        return $this->hasOne(PlannedAccount::class);
+    }
+
     public function getPhotoUrlAttribute()
     {
         if ($this->photo_extension) {
