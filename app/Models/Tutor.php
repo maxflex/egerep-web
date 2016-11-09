@@ -31,7 +31,7 @@ class Tutor extends Model
 
     public function accounts()
     {
-        return $this->hasMany(Account::class);
+        return $this->hasMany(Account::class)->latest()->take(3);
     }
 
     public function plannedAccount()
