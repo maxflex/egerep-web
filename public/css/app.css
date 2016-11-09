@@ -5511,4 +5511,7 @@ textarea {
   width: 120px;
   border-radius: 5px; }
 
+.login-page p {
+  line-height: 20px; }
+
 /*# sourceMappingURL=app.css.map */
