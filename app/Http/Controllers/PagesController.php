@@ -51,7 +51,7 @@ class PagesController extends Controller
         if (md5($salt . $date) == $hash) {
             $tutor = Tutor::loggable()->whereRaw("MD5(CONCAT(id, '{$salt}', '{$hash}'))='{$tutor_id_hash}'");
             if ($tutor->exists()) {
-                $_SESSION['logged_tutor_id'] = $tutor->value('id');
+                Tutor::login($tutor->value('id'), false);
                 return redirect('login');
             }
         }

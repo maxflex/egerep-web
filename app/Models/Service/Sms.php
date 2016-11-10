@@ -34,7 +34,7 @@ class Sms
 		}
 
 
-		return $result;
+		return @$result;
 	}
 
 	protected static function exec($url, $params)
@@ -46,4 +46,12 @@ class Sms
 		$result = curl_exec($ch);
 		curl_close($ch);
 	}
+
+    public static function generateCode($tutor_id)
+    {
+        $code = mt_rand(1000, 9999);
+        cache(["codes:{$tutor_id}" => $code], 3);
+        \Log::info("Cache codes:{$tutor_id} to $code");
+        return $code;
+    }
 }

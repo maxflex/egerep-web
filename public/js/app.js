@@ -298,7 +298,10 @@
         code: $scope.code
       }, function() {
         return login();
-      }, function() {
+      }, function(response) {
+        if (response.status === 403) {
+          redirect('/');
+        }
         return $scope.error_message = 'код введен неверно';
       });
     };
@@ -523,11 +526,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -786,6 +784,11 @@
       templateUrl: '/directives/tutor-name'
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

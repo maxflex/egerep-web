@@ -25,5 +25,6 @@ angular.module('Egerep')
                 code: $scope.code
             , ->
                 login()
-            , ->
+            , (response) ->
+                redirect('/') if response.status == 403
                 $scope.error_message = 'код введен неверно'

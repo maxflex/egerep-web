@@ -133,8 +133,8 @@ class TutorsController extends Controller
 
     public function login()
     {
-        if (isset($_SESSION['logged_tutor_id'])) {
-            return Tutor::with(['accounts', 'plannedAccount'])->find($_SESSION['logged_tutor_id']);
+        if (isset($_SESSION['tutor_id'])) {
+            return Tutor::with(['accounts', 'plannedAccount'])->find($_SESSION['tutor_id']);
         }
         abort(401);
     }

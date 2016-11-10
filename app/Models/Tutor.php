@@ -305,6 +305,19 @@ class Tutor extends Model
     }
 
     /**
+     * $log_time – логировать время входа?
+     */
+    public static function login($tutor_id, $log_time = true)
+    {
+        $_SESSION['tutor_id'] = $tutor_id;
+        if ($log_time) {
+            egerep('tutors')->whereId($tutor_id)->update([
+                'last_login_time' => now()
+            ]);
+        }
+    }
+
+    /**
      * Найти по номеру телефона
      */
     public function scopeFindByPhone($query, $phone)

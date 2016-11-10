@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\SmsCode;
 use App\Models\Tutor;
 use App\Models\Service\Sms;
+use App\Http\Requests\SmsStore;
+use App\Http\Requests\SmsIndex;
+use App\Service\Limiter;
+use Illuminate\Support\Facades\Redis;
 
 class SmsController extends Controller
 {
@@ -17,12 +21,20 @@ class SmsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(SmsIndex $request)
     {
-        if (SmsCode::activate($_SESSION['tutor_id'], $request->code)) {
-            $_SESSION['logged_tutor_id'] = $_SESSION['tutor_id']; // логинимся
+        $tutor_id = $_SESSION['tmp_tutor_id'];
+        if (cache("codes:{$tutor_id}") == $request->code) {
+            Tutor::login($tutor_id);
         } else {
-            abort(422);
+            $_SESSION['incorrect_code'] = isset($_SESSION['incorrect_code']) ? ($_SESSION['incorrect_code'] + 1) : 0;
+            // если код введен неправильно 3 раза – выкидываем
+            if ($_SESSION['incorrect_code'] > 3) {
+                unset($_SESSION['incorrect_code']);
+                unset($_SESSION['tmp_tutor_id']);
+                return abort(403);
+            }
+            return abort(422);
         }
     }
 
@@ -42,17 +54,23 @@ class SmsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SmsStore $request)
     {
-        $tutor = Tutor::loggable()->findByPhone($request->phone);
-        if ($tutor->exists()) {
-            $tutor_id = $tutor->value('id');
-            $code = SmsCode::create(compact('tutor_id'))->code;
-            $_SESSION['tutor_id'] = $tutor_id;
-            Sms::send($request->phone, $code . ' – код доступа к личному кабинету ЕГЭ-Репетитор');
-        } else {
-            abort(422);
-        }
+        return Limiter::run('sms', 24, 20, function() use ($request) {
+            $tutor = Tutor::loggable()->findByPhone($request->phone);
+            if ($tutor->exists()) {
+                $tutor_id = $tutor->value('id');
+                $code = Sms::generateCode($tutor_id);
+                $phone = cleanNumber($request->phone);
+                $_SESSION['tmp_tutor_id'] = $tutor_id;
+                $data = compact('code', 'phone');
+                return Limiter::run("code:{$phone}", 24, 5, function() use ($data) {
+                    Sms::send($data['phone'], $data['code'] . ' – код доступа к личному кабинету ЕГЭ-Репетитор');
+                });
+            } else {
+                return abort(422);
+            }
+        });
     }
 
     /**
