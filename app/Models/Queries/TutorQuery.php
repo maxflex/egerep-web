@@ -12,7 +12,7 @@
             "IFNULL(
                 (
                     select min(distance) from distances
-                    where `from` IN (tutors.svg_map) and `to` = {$station_id}
+                    where FIND_IN_SET(`from`, tutors.svg_map) and `to` = {$station_id}
                 ),
                 999999
             )";
