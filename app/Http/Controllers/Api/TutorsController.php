@@ -116,7 +116,8 @@ class TutorsController extends Controller
         @extract($search);
 
         // пытаемся найти serp-страницу с такими параметрами
-        if ($request->filter_used) {
+        // если находит при пагинации страницу с похожими параметрами – не редиректить
+        if ($request->filter_used && $request->page < 2) {
             $page = \App\Models\Page::findByParams($search);
             if ($page->exists()) {
                 return ['url' => $page->inRandomOrder()->value('url')];
