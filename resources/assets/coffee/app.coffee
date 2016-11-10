@@ -93,6 +93,10 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angu
             $("##{id}").modal 'hide'
             return
 
+        $rootScope.onEnter = (event, fun, prevent_default = true) ->
+            event.preventDefault() if prevent_default
+            fun() if event.keyCode is 13
+
         $rootScope.ajaxStart = ->
             ajaxStart()
             $rootScope.saving = true

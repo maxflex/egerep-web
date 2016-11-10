@@ -1,5 +1,5 @@
 angular.module('Egerep')
-    .controller 'LoginCtrl', ($scope, Sms, Tutor) ->
+    .controller 'LoginCtrl', ($scope, $timeout, Sms, Tutor) ->
         bindArguments($scope, arguments)
 
         login = ->
@@ -16,6 +16,7 @@ angular.module('Egerep')
                 phone: $scope.phone
             , ->
                 $scope.code_sent = true
+                $timeout -> $('#code-input').focus()
             , ->
                 $scope.error_message = 'неверный номер телефона'
 
