@@ -95,7 +95,6 @@ class Page extends Model
     {
         @extract($search);
 
-        $query->where('variable_id', Variable::SERP_ID);
         $query->where('subjects', implode(',', $subjects));
         $query->where('place', setOrNull(@$place));
         $query->where('sort', setOrNull(@$sort));
