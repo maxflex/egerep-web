@@ -17,6 +17,7 @@ class Tutor extends Model
         'review_avg',
         'reviews_count',
         'subjects_string',
+        'subjects_string_common',
     ];
 
     const SERVER_URL = 'https://lk.ege-repetitor.ru/img/tutors/';
@@ -84,6 +85,13 @@ class Tutor extends Model
     {
         return implode(', ', array_map(function($subject_id) {
             return dbFactory('subjects')->whereId($subject_id)->value('dative');
+        }, $this->subjects));
+    }
+
+    public function getSubjectsStringCommonAttribute()
+    {
+        return implode(', ', array_map(function($subject_id) {
+            return dbFactory('subjects')->whereId($subject_id)->value('name');
         }, $this->subjects));
     }
 

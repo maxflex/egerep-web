@@ -55,7 +55,11 @@
                         $replacement = Tutor::bySubject(...$args)->toJson();
                         break;
                     case 'reviews':
-                        $replacement = Review::get(...$args)->toJson();
+                        if ($args[0] === 'random') {
+                            $replacement = Review::get(1, true)->toJson();                            
+                        } else {
+                            $replacement = Review::get(...$args)->toJson();
+                        }
                         break;
                     case 'const':
                         $replacement = Factory::constant($args[0]);

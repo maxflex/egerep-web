@@ -34,11 +34,6 @@ class Page extends Model
        'sort'       => 'string',
    ];
 
-   public function variable()
-   {
-       return $this->belongsTo(Variable::class);
-   }
-
     public function useful()
     {
         return $this->hasMany(PageUseful::class);
@@ -70,13 +65,8 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        // если расширение от шаблона
-        if ($this->variable_id) {
-            $value = $this->variable->html;
-            Parser::compileSeo($this, $value);
-        } else {
-            $value = Parser::compileVars($value);
-        }
+        $value = Variable::getSerp()->html;
+        Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }
 

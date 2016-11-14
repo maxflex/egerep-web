@@ -1,6 +1,6 @@
 angular
     .module 'Egerep'
-    .controller 'Index', ($scope, $timeout, Tutor) ->
+    .controller 'Index', ($scope, $timeout, $http, Tutor) ->
         bindArguments($scope, arguments)
         $scope.selected_subject = '1'
 
@@ -17,3 +17,8 @@ angular
             # вырезаем дату, оставляем месяц и год
             # нужно именно так, чтобы осталось правильное склонение месяца
             text_date.substr(3)
+
+        $scope.randomReview = ->
+            $http.get 'api/reviews/random'
+            .then (response) ->
+                $scope.random_review = response.data

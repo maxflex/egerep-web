@@ -34,14 +34,18 @@ class Review extends Model
         );
     }
 
-    public static function get($limit = 3)
+    public static function get($limit = 3, $random = false)
     {
         // @todo globalScope для tutor даже при eager loading не применяется для tutor а.
-        return static::has('tutor')->with('tutor')
+        $query = static::has('tutor')->with('tutor')
             ->take($limit)->join('attachments', 'attachments.id', '=', 'attachment_id')
             ->select('reviews.*')
-            ->addSelect(DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count'))
-            ->orderBy('reviews.created_at', 'desc')->get();
+            ->addSelect(DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count'));
+        if ($random) {
+            return $query->inRandomOrder()->first();
+        } else {
+            return $query->orderBy('reviews.created_at', 'desc')->get();
+        }
     }
 
     public static function boot()

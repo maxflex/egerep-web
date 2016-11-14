@@ -29,10 +29,11 @@ angular.module('Egerep')
                         currencyCode: 'RUR'
                         purchase:
                             actionField:
-                                tutor_id: $scope.tutor.id
+                                id: $scope.tutor.id
+                                affilaction: 'serp' # @todo: profile|request
                                 revenue: $scope.tutor.public_price
                             products: [
-                                tutor_id: $scope.tutor.id
+                                id: $scope.tutor.id
                                 price: $scope.tutor.public_price
                                 brand: $scope.tutor.subjects
                                 category: $scope.tutor.markers

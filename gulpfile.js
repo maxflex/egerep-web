@@ -44,6 +44,7 @@ elixir(mix => {
             https: true
         })
         .sass('app.scss')
+        .sass('mobile.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .scripts(jsFromBower([

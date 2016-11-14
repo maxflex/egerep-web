@@ -233,3 +233,8 @@
     {
         return date('Y') - $year;
     }
+
+    function isMobile()
+    {
+        return (new \Jenssegers\Agent\Agent)->isMobile();
+    }

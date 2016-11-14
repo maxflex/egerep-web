@@ -29,4 +29,14 @@ class Variable extends Model
     {
         return $query->where('name', $name);
     }
+
+    public static function getSerp()
+    {
+        return self::whereId(self::SERP_ID)->first();
+    }
+
+    public static function display($name)
+    {
+        return self::findByName($name)->first()->html;
+    }
 }
