@@ -92,6 +92,7 @@ angular
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
         $scope.reviews = (tutor) ->
+            console.log 'reviews click'
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id

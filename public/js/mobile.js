@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 function bindToggle()
 {
-	$('.toggle-widget__title').off('click').click(function() {
+	$('.toggle-widget__title').on('click').click(function() {
 		var $parent = $(this).parent('.toggle-widget');
 		var $toggleBlock = $parent.children('.toggle-widget__inner');
 
@@ -32,7 +32,7 @@ function bindToggle()
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	});
-    $('.accordions .accordions__title').off('click').click(function() {
+    $('.accordions .accordions__title').on('click').click(function() {
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$(this).toggleClass('active');
