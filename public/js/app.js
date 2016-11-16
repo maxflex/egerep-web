@@ -329,7 +329,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).constant('REVIEWS_PER_PAGE_MOBILE', 10).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, REVIEWS_PER_PAGE_MOBILE) {
     var filter_used, highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -418,7 +418,7 @@
       return $scope.toggleShow(tutor, 'show_reviews', 'reviews');
     };
     $scope.showMoreReviews = function(tutor) {
-      var from, to;
+      var from, ref, ref1, to;
       if (tutor.reviews_page) {
         Tutor.iteraction({
           id: tutor.id,
@@ -426,13 +426,30 @@
         });
       }
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
-      from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
-      to = from + REVIEWS_PER_PAGE;
+      from = (tutor.reviews_page - 1) * ((ref = $scope.mobile) != null ? ref : {
+        REVIEWS_PER_PAGE_MOBILE: REVIEWS_PER_PAGE
+      });
+      to = from + ((ref1 = $scope.mobile) != null ? ref1 : {
+        REVIEWS_PER_PAGE_MOBILE: REVIEWS_PER_PAGE
+      });
       tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
       return highlight('search-result-reviews-text');
     };
     $scope.reviewsLeft = function(tutor) {
-      return tutor.all_reviews.length - tutor.displayed_reviews.length;
+      var ref, ref1, reviews_left;
+      if (!tutor.all_reviews) {
+        return;
+      }
+      reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
+      if (reviews_left > ((ref = $scope.mobile) != null ? ref : {
+        REVIEWS_PER_PAGE_MOBILE: REVIEWS_PER_PAGE
+      })) {
+        return (ref1 = $scope.mobile) != null ? ref1 : {
+          REVIEWS_PER_PAGE_MOBILE: REVIEWS_PER_PAGE
+        };
+      } else {
+        return reviews_left;
+      }
     };
     $scope.countView = function(tutor_id) {
       if (viewed_tutors.indexOf(tutor_id) === -1) {
@@ -565,6 +582,11 @@
       return $scope.filter();
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -843,76 +865,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -983,6 +935,71 @@
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 
