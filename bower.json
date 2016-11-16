@@ -21,7 +21,7 @@
     "bootswatch-scss": "~3.2.0",
     "normalize-css": "normalize.css#~3.0.3",
     "Ionicons": "ionicons#~2.0.1",
-    "font-awesome": "^4.6.3",
+    "font-awesome": "^4.7.0",
     "angular": "~1.4.8",
     "jquery.inputmask": "^3.3.3",
     "jquery-ui": "^1.12.1",
@@ -62,7 +62,8 @@
     "iCheck": "icheck#^1.0.2",
     "angular-file-upload": "^2.3.4",
     "bootstrap-select": "^1.11.2",
-    "mark.js": "^8.4.0"
+    "mark.js": "^8.4.0",
+    "angular-toArrayFilter": "^1.0.1"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"

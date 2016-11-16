@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, REVIEWS_PER_PAGE) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -18,9 +18,15 @@ angular
                 if $scope.selected_subjects
                     $scope.selected_subjects.split(',').forEach (subject_id) ->
                         $scope.search.subjects[subject_id] = true
-                $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
-                metroAutocomplete($scope)
-                $scope.filter() if not parseInt($scope.search.station_id)
+
+                SubjectService.init($scope.search.subjects)
+
+                if $scope.mobile
+                    $scope.filter()
+                else
+                    $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
+                    metroAutocomplete($scope)
+                    $scope.filter() if not parseInt($scope.search.station_id)
 
         # пары предметов
         $scope.pairs = [
@@ -152,6 +158,7 @@ angular
                     angular.forEach $scope.tutors, (tutor) ->
                         tutor.svg_map = _.filter tutor.svg_map.split(',') if 'string' == typeof tutor.svg_map
                     highlight('search-result-text')
+                    if $scope.mobile then $timeout -> bindAccordions()
 
         # highlight hidden filter
         highlight = (className)->
@@ -189,3 +196,11 @@ angular
             else
                 tutor[prop] = true
                 Tutor.iteraction {id: tutor.id, type: iteraction_type}
+
+        #
+        # MOBILE
+        #
+        $scope.changeFilter = (param, value = null) ->
+            $scope.search[param] = value if value isnt null
+            $scope.overlay[param] = false
+            $scope.filter()

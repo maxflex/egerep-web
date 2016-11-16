@@ -1,5 +1,6 @@
 @import "variables";
 @import "normalize";
+@import "../bower/font-awesome/css/font-awesome";
 
 $green-mobile: #528d56;
 $green-mobile-btn: #5db05c;
@@ -319,9 +320,9 @@ h1 {
 
     font-size: 1.6em;
 }
-h2 {
-    padding: 0 0 25px 0;
-
+h2, .serp-page h1 {
+    text-align: left;
+    padding: 0 0 20px 0;
     font-size: 1.500em;
 }
 h3 {
@@ -1178,7 +1179,7 @@ textarea {
 
     list-style: none;
 }
-    .accordions > li {
+    .accordions > li:not(:last-child) {
         border-bottom: 1px solid #d7d7d7;
     }
 
@@ -1196,7 +1197,7 @@ textarea {
         }
 
             .accordions__title span {
-                font-size: 1.500em;
+                // font-size: 1.500em;
             }
 
             .accordions__title.active .accordions__arrow {
@@ -1205,6 +1206,7 @@ textarea {
                 -o-transform: rotate( -180deg);
                 -ms-transform: rotate(90deg);
                 transform: rotate( -180deg );
+                margin-top: -1em;
             }
     .accordions__content {
         display: none;
@@ -1215,15 +1217,15 @@ textarea {
     .accordions__arrow {
         position: absolute;
 
-        width: 1.042em;
-        height: 0.583em;
+        width: 2em;
+        height: 2em;
 
         top: 50%;
         right: 1.042em;
 
         margin-top: -0.25em;
 
-        background: url('../images/mobile/arrow-bottom_icon.png') no-repeat;
+        background: url('/img/svg/dropdown.svg') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2266,22 +2268,6 @@ textarea {
         background-size: 100% 100%;
     }
 
-/* btn blue */
-.btn-green {
-    display: inline-block;
-	padding: 0.4em 1.1em;
-/*     padding: 0.833em 1.458em; */
-
-    background: #1f7240;
-
-    border-radius: 56px;
-    border: 0.125em solid #e9f1ec;
-
-    color: #fff;
-    font-size: 1.500em;
-    text-decoration: none;
-}
-
 /* btn gradient */
 .btn-gradient {
     display: inline-block;
@@ -2293,6 +2279,12 @@ textarea {
     color: $green-mobile-btn;
     cursor: pointer;
     text-decoration: none !important;
+}
+
+.btn-green {
+    @extend .btn-gradient;
+    background: $green-mobile-btn;
+    color: white;
 }
 
 .btn-gray {
@@ -2531,7 +2523,7 @@ textarea {
     right: 1.042em;
     margin-top: -0.25em;
 
-    background: url('../images/mobile/arrow-bottom_icon.png') no-repeat;
+    background: url('/img/svg/dropdown.svg') no-repeat;
     background-size: 100% 100%;
 }
 .toggle-widget__title.active .toggle-widget__arrow {
@@ -2610,11 +2602,9 @@ textarea {
     .user-list__img {
         position: absolute;
         top: 50%;
-        left: 1.042em;
-
-        margin-top: -2.583em;
-
-        width: 5.167em;
+        left: 1em;
+        margin-top: -3.4em;
+        width: 6.5em;
     }
         .user-list__img img {
             width: 100%;
@@ -3448,7 +3438,7 @@ li.text-danger:before {
 .right-tutor-info {
 	position: relative;
     top: -.9em;
-    font-size: 1.1em;
+    // font-size: 1.1em;
 }
 .place_mark {
 	display: inline-block;
@@ -3648,4 +3638,40 @@ li.text-danger:before {
         margin-bottom: 5px;
     }
     padding-bottom: 3em;
+}
+
+.al {
+    text-align: left;
+}
+
+.serp-params {
+    margin-bottom: 1em;
+    & > div {
+        margin-bottom: 3px;
+    }
+}
+
+.right-tutor-info {
+    margin-left: 1em;
+    width: 87%;
+    & > div {
+        margin-bottom: .3em;
+        font-size: 1em;
+    }
+}
+
+.info-multi {
+    margin: 1em 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.info-line:not(:last-child) {
+    margin-bottom: .3em;
+}
+
+.search-result-wrap-more {
+    text-align: center;
+    margin: 3em 0;
 }

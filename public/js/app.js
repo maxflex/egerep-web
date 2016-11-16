@@ -1,7 +1,7 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angularFileUpload']).config([
+  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angularFileUpload', 'angular-toArrayFilter']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
@@ -329,7 +329,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, REVIEWS_PER_PAGE) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE) {
     var filter_used, highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -343,10 +343,15 @@
             return $scope.search.subjects[subject_id] = true;
           });
         }
-        $scope.chunked_subjects = chunk(toArray($scope.subjects), 4);
-        metroAutocomplete($scope);
-        if (!parseInt($scope.search.station_id)) {
+        SubjectService.init($scope.search.subjects);
+        if ($scope.mobile) {
           return $scope.filter();
+        } else {
+          $scope.chunked_subjects = chunk(toArray($scope.subjects), 4);
+          metroAutocomplete($scope);
+          if (!parseInt($scope.search.station_id)) {
+            return $scope.filter();
+          }
         }
       });
     }
@@ -490,7 +495,12 @@
               return tutor.svg_map = _.filter(tutor.svg_map.split(','));
             }
           });
-          return highlight('search-result-text');
+          highlight('search-result-text');
+          if ($scope.mobile) {
+            return $timeout(function() {
+              return bindAccordions();
+            });
+          }
         }
       });
     };
@@ -533,7 +543,7 @@
       }
       return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
-    return $scope.toggleShow = function(tutor, prop, iteraction_type) {
+    $scope.toggleShow = function(tutor, prop, iteraction_type) {
       if (tutor[prop]) {
         return tutor[prop] = false;
       } else {
@@ -544,100 +554,22 @@
         });
       }
     };
+    return $scope.changeFilter = function(param, value) {
+      if (value == null) {
+        value = null;
+      }
+      if (value !== null) {
+        $scope.search[param] = value;
+      }
+      $scope.overlay[param] = false;
+      return $scope.filter();
+    };
   });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
-      }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
-    };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
-  });
 
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
@@ -916,7 +848,141 @@
 }).call(this);
 
 (function() {
+  var apiPath, countable, updatable;
 
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('SubjectService', function() {
+    this.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
+    this.init = function(subjects) {
+      return this.subjects = subjects;
+    };
+    this.pairsControl = function(subject_id) {
+      if (subject_id) {
+        return angular.forEach(this.subjects, (function(_this) {
+          return function(enabled, id) {
+            var pair;
+            pair = _.filter(_this.pairs, function(p) {
+              return p.indexOf(parseInt(subject_id)) !== -1;
+            });
+            if (!pair.length) {
+              pair.push([subject_id]);
+            }
+            if (pair[0].indexOf(parseInt(id)) === -1) {
+              return _this.subjects[id] = false;
+            }
+          };
+        })(this));
+      }
+    };
+    this.selected = function(subject_id) {
+      return this.subjects !== void 0 && this.subjects[subject_id] !== void 0 && this.subjects[subject_id];
+    };
+    this.select = function(subject_id) {
+      this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
+      return this.pairsControl(subject_id);
+    };
+    this.getSelected = function() {
+      var ids;
+      ids = [];
+      angular.forEach(this.subjects, function(enabled, id) {
+        if (enabled) {
+          return ids.push(id);
+        }
+      });
+      return ids;
+    };
+    return this;
+  });
 
 }).call(this);
 

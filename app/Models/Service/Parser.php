@@ -45,6 +45,9 @@
                 $function_name = $args[0];
                 array_shift($args);
                 switch ($function_name) {
+                    case 'mobile':
+                        $replacement = isMobile();
+                        break;
                     case 'factory':
                         $replacement = fact(...$args);
                         break;
@@ -56,7 +59,7 @@
                         break;
                     case 'reviews':
                         if ($args[0] === 'random') {
-                            $replacement = Review::get(1, true)->toJson();                            
+                            $replacement = Review::get(1, true)->toJson();
                         } else {
                             $replacement = Review::get(...$args)->toJson();
                         }

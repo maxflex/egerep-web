@@ -4,7 +4,7 @@
     URL::forceSchema('https');
 
     Route::get('/', function() {
-        return Variable::display(isMobile() ? 'page-index-mobile' : 'page-index-desktop');
+        return Variable::display(isMobile() ? 'page-index-mobile' : 'page-index');
     });
     Route::get('/request', function() {
         return Variable::display('page-tutor-request');
