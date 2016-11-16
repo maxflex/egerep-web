@@ -4759,17 +4759,18 @@ textarea {
 
 .toggle-widget__arrow {
   position: absolute;
-  width: 1.042em;
-  height: 0.583em;
+  width: 2em;
+  height: 2em;
   top: 50%;
   right: 1.042em;
-  margin-top: -0.25em;
-  background: url("/img/svg/dropdown.svg") no-repeat;
+  margin-top: -0.6em;
+  background: url(/img/svg/dropdown.svg) no-repeat;
   background-size: 100% 100%; }
 
 .toggle-widget__title.active .toggle-widget__arrow {
   -webkit-transform: rotate(-180deg);
-  transform: rotate(-180deg); }
+  transform: rotate(-180deg);
+  margin-top: -1.3em; }
 
 /* User list */
 .user-content__priÑe {
@@ -5759,5 +5760,14 @@ li.text-danger:before {
 .search-result-wrap-more {
   text-align: center;
   margin: 3em 0; }
+
+.review-block {
+  margin-bottom: 20px;
+  line-height: 1.2em; }
+  .review-block .review-text {
+    font-style: italic;
+    margin-bottom: 20px; }
+  .review-block .review-signature {
+    text-align: right; }
 
 /*# sourceMappingURL=mobile.css.map */

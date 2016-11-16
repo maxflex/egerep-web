@@ -32,11 +32,7 @@ function bindToggle()
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	});
-}
-
-function bindAccordions()
-{
-	$('.accordions .accordions__title').off('click').click(function() {
+    $('.accordions .accordions__title').off('click').click(function() {
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$(this).toggleClass('active');
@@ -44,4 +40,9 @@ function bindAccordions()
 		$toggleBlock.slideToggle();
 		// $('.svg-map-wrapper').css('height', ($('.svg-map-wrapper').width() * 0.75) + 'px')
 	});
+}
+
+function bindAccordions()
+{
+
 }

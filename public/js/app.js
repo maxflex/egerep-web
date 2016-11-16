@@ -498,7 +498,7 @@
           highlight('search-result-text');
           if ($scope.mobile) {
             return $timeout(function() {
-              return bindAccordions();
+              return bindToggle();
             });
           }
         }
@@ -565,11 +565,6 @@
       return $scope.filter();
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -829,6 +824,11 @@
       templateUrl: '/directives/tutor-name'
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

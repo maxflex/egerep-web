@@ -158,7 +158,7 @@ angular
                     angular.forEach $scope.tutors, (tutor) ->
                         tutor.svg_map = _.filter tutor.svg_map.split(',') if 'string' == typeof tutor.svg_map
                     highlight('search-result-text')
-                    if $scope.mobile then $timeout -> bindAccordions()
+                    if $scope.mobile then $timeout -> bindToggle()
 
         # highlight hidden filter
         highlight = (className)->
