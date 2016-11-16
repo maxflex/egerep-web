@@ -2,7 +2,7 @@ angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
     .constant 'REVIEWS_PER_PAGE_MOBILE', 10
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, REVIEWS_PER_PAGE_MOBILE) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, REVIEWS_PER_PAGE_MOBILE, Request) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -208,7 +208,26 @@ angular
         #
         # MOBILE
         #
+        $scope.overlay = {}
+
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
             $scope.overlay[param] = false
             $scope.filter()
+
+        $scope.requestDialog = (tutor) ->
+            $scope.sending_tutor = tutor
+            $scope.overlay.request = true
+
+        $scope.sendRequest = ->
+            $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined
+            $scope.sending_tutor.request.tutor_id = $scope.sending_tutor.id
+            Request.save $scope.sending_tutor.request, ->
+                $scope.sending_tutor.request_sent = true
+            , (response) ->
+                if response.status is 422
+                    angular.forEach response.data, (errors, field) ->
+                        selector = "[ng-model$='#{field}']"
+                        $('.request-overlay').find("input#{selector}, textarea#{selector}").focus().notify errors[0], notify_options
+                else
+                    $scope.sending_tutor.request_error = true

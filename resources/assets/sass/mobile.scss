@@ -2487,12 +2487,14 @@ textarea {
 /* Toggle widget  */
 .toggle-widget {
 	position: relative;
-/*     padding: 0 0 1.042em 0; */
     padding-left: -1.042em !important;
     margin-left: -1.042em;
     width: calc(100% + (1.042em * 2));
     border-top: 1px solid #d6d7d7;
     background-color: white;
+    &.last-child {
+        border-bottom: 1px solid #d6d7d7;
+    }
 }
 .toggle-widget__inner {
     display: none;
@@ -3542,6 +3544,12 @@ li.text-danger:before {
 .overlay-header-floating {
 	display: inline-block;
 	float: right;
+    & img {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        z-index: 99;
+    }
 }
 
 .accordions__title-form {
@@ -3715,4 +3723,32 @@ div[id^='svg'] {
     margin-left: -1em;
     margin-top: 1em;
     overflow: scroll;
+}
+
+.public-price {
+    margin: 1em 0;
+    & .price-number {
+        font-weight: bold;
+        color: #037500;
+    }
+    font-size: 1.3em;
+}
+
+.connect-buttons {
+    text-align: center;
+    margin: 2em 0;
+    & > *:not(:last-child) {
+        margin-bottom: 1em;
+    }
+}
+
+.gmnoprint{display:none !important}
+
+.text-gray-light {
+    color: $gray-light;
+}
+
+.btn-large {
+    padding: 0.4em 1.1em;
+    font-size: 1.4em;
 }

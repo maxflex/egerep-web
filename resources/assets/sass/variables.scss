@@ -97,3 +97,14 @@ $border-radius: 4px;
 a[href^="http://maps.google.com/maps"]{display:none !important}
 a[href^="https://maps.google.com/maps"]{display:none !important}
 a[href^="https://www.google.com/maps"]{display:none !important}
+
+.notifyjs-bootstrap-error {
+    color: white !important;
+    background: none !important;
+    background-color: $red !important;
+    border-color: $red !important;
+    font-family: $font-light;
+    text-shadow: none !important;
+    -webkit-font-smoothing: antialiased;
+    padding-left: 14px !important;
+}

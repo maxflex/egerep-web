@@ -65,6 +65,16 @@ a[href^="https://maps.google.com/maps"] {
 a[href^="https://www.google.com/maps"] {
   display: none !important; }
 
+.notifyjs-bootstrap-error {
+  color: white !important;
+  background: none !important;
+  background-color: #f20007 !important;
+  border-color: #f20007 !important;
+  font-family: "helveticaneuecyrlight";
+  text-shadow: none !important;
+  -webkit-font-smoothing: antialiased;
+  padding-left: 14px !important; }
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -5433,16 +5443,6 @@ label {
   float: none;
   display: inline-block;
   color: white; }
-
-.notifyjs-bootstrap-error {
-  color: white !important;
-  background: none !important;
-  background-color: #f20007 !important;
-  border-color: #f20007 !important;
-  font-family: "helveticaneuecyrlight";
-  text-shadow: none !important;
-  -webkit-font-smoothing: antialiased;
-  padding-left: 14px !important; }
 
 .error-message {
   border-radius: 4px;

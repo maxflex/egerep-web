@@ -65,6 +65,16 @@ a[href^="https://maps.google.com/maps"] {
 a[href^="https://www.google.com/maps"] {
   display: none !important; }
 
+.notifyjs-bootstrap-error {
+  color: white !important;
+  background: none !important;
+  background-color: #f20007 !important;
+  border-color: #f20007 !important;
+  font-family: "helveticaneuecyrlight";
+  text-shadow: none !important;
+  -webkit-font-smoothing: antialiased;
+  padding-left: 14px !important; }
+
 /**
 * Fonts
 **/
@@ -4776,12 +4786,13 @@ textarea {
 /* Toggle widget  */
 .toggle-widget {
   position: relative;
-  /*     padding: 0 0 1.042em 0; */
   padding-left: -1.042em !important;
   margin-left: -1.042em;
   width: calc(100% + (1.042em * 2));
   border-top: 1px solid #d6d7d7;
   background-color: white; }
+  .toggle-widget.last-child {
+    border-bottom: 1px solid #d6d7d7; }
 
 .toggle-widget__inner {
   display: none;
@@ -5696,6 +5707,11 @@ li.text-danger:before {
 .overlay-header-floating {
   display: inline-block;
   float: right; }
+  .overlay-header-floating img {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    z-index: 99; }
 
 .accordions__title-form {
   color: black;
@@ -5836,5 +5852,28 @@ div[id^='svg'] {
   margin-left: -1em;
   margin-top: 1em;
   overflow: scroll; }
+
+.public-price {
+  margin: 1em 0;
+  font-size: 1.3em; }
+  .public-price .price-number {
+    font-weight: bold;
+    color: #037500; }
+
+.connect-buttons {
+  text-align: center;
+  margin: 2em 0; }
+  .connect-buttons > *:not(:last-child) {
+    margin-bottom: 1em; }
+
+.gmnoprint {
+  display: none !important; }
+
+.text-gray-light {
+  color: #b5b5b5; }
+
+.btn-large {
+  padding: 0.4em 1.1em;
+  font-size: 1.4em; }
 
 /*# sourceMappingURL=mobile.css.map */

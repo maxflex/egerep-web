@@ -2,8 +2,6 @@
     margin-right: 5px;
 }
 
-
-
 .link-like {
     color: $green-main-dark;
     text-decoration: underline;
@@ -142,17 +140,6 @@ label {
     float: none;
     display: inline-block;
     color: white;
-}
-
-.notifyjs-bootstrap-error {
-    color: white !important;
-    background: none !important;
-    background-color: $red !important;
-    border-color: $red !important;
-    font-family: $font-light;
-    text-shadow: none !important;
-    -webkit-font-smoothing: antialiased;
-    padding-left: 14px !important;
 }
 
 .error-message {
