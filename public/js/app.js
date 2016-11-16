@@ -552,9 +552,13 @@
         map.init();
         map.deselectAll();
         map.select(tutor.svg_map);
-        $timeout(function() {
-          return $("#svg-" + tutor.id).scrollLeft(90).scrollTop(100);
-        });
+        if ($scope.mobile) {
+          $timeout(function() {
+            var svg;
+            svg = $("#svg-" + tutor.id);
+            return svg.scrollLeft(svg.width() / 4).scrollTop(svg.height() / 3);
+          });
+        }
       }
       return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
@@ -858,11 +862,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -924,6 +923,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

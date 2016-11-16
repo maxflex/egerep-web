@@ -193,7 +193,9 @@ angular
                 map.init()
                 map.deselectAll()
                 map.select(tutor.svg_map)
-                $timeout -> $("#svg-#{tutor.id}").scrollLeft(90).scrollTop(100)
+                if $scope.mobile then $timeout ->
+                    svg = $("#svg-#{tutor.id}")
+                    svg.scrollLeft(svg.width() / 4).scrollTop(svg.height() / 3)
             $scope.toggleShow(tutor, 'show_svg', 'svg_map')
 
         $scope.toggleShow = (tutor, prop, iteraction_type) ->
