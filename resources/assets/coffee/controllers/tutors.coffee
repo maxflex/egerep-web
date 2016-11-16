@@ -92,7 +92,6 @@ angular
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
         $scope.reviews = (tutor) ->
-            console.log 'reviews click'
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id
@@ -194,6 +193,7 @@ angular
                 map.init()
                 map.deselectAll()
                 map.select(tutor.svg_map)
+                $timeout -> $("#svg-#{tutor.id}").scrollLeft(90).scrollTop(100)
             $scope.toggleShow(tutor, 'show_svg', 'svg_map')
 
         $scope.toggleShow = (tutor, prop, iteraction_type) ->

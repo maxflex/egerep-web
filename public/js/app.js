@@ -411,7 +411,6 @@
       return _.chain(tutor.markers).pluck('metros').flatten().value();
     };
     $scope.reviews = function(tutor) {
-      console.log('reviews click');
       if (tutor.all_reviews === void 0) {
         tutor.all_reviews = Tutor.reviews({
           id: tutor.id
@@ -553,6 +552,9 @@
         map.init();
         map.deselectAll();
         map.select(tutor.svg_map);
+        $timeout(function() {
+          return $("#svg-" + tutor.id).scrollLeft(90).scrollTop(100);
+        });
       }
       return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
