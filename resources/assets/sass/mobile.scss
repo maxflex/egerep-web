@@ -2497,7 +2497,7 @@ textarea {
 .toggle-widget__inner {
     display: none;
 /*     padding: 0 0 0 0; */
-	padding: 0 1em;
+	padding: 1em;
 }
 
 .toggle-widget__title, .toggle-widget__title-fake {
@@ -3684,4 +3684,35 @@ li.text-danger:before {
     & .review-signature {
         text-align: right;
     }
+}
+
+.search-result-metro-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    &:not(:last-of-type) {
+        margin-bottom: 10px;
+    }
+    & li {
+        position: relative;
+        font-family: 'helveticaneuecyrlight';
+        &:not(:last-child) {
+            margin-bottom: 3px;
+        }
+    }
+}
+
+div[id^='gmap'] {
+    width: calc(100% + 2em);
+    height: 20em;
+    margin-left: -1em;
+    margin-top: 1em;
+}
+
+div[id^='svg'] {
+    width: calc(100% + 2em);
+    height: 20em;
+    margin-left: -1em;
+    margin-top: 1em;
+    overflow: scroll;
 }

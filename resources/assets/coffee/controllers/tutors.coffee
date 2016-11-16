@@ -22,6 +22,8 @@ angular
 
                 SubjectService.init($scope.search.subjects)
 
+                REVIEWS_PER_PAGE = REVIEWS_PER_PAGE_MOBILE if $scope.mobile
+
                 if $scope.mobile
                     $scope.filter()
                 else
@@ -100,15 +102,15 @@ angular
         $scope.showMoreReviews = (tutor) ->
             Tutor.iteraction {id: tutor.id, type: 'reviews_more'} if tutor.reviews_page
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
-            from = (tutor.reviews_page - 1) * ($scope.mobile ? REVIEWS_PER_PAGE_MOBILE : REVIEWS_PER_PAGE)
-            to = from + ($scope.mobile ? REVIEWS_PER_PAGE_MOBILE : REVIEWS_PER_PAGE)
+            from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
+            to = from + REVIEWS_PER_PAGE
             tutor.displayed_reviews = tutor.all_reviews.slice(0, to)
             highlight('search-result-reviews-text')
 
         $scope.reviewsLeft = (tutor) ->
             return if not tutor.all_reviews
             reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length
-            if reviews_left > ($scope.mobile ? REVIEWS_PER_PAGE_MOBILE : REVIEWS_PER_PAGE) then ($scope.mobile ? REVIEWS_PER_PAGE_MOBILE : REVIEWS_PER_PAGE) else reviews_left
+            if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
 
         $scope.countView = (tutor_id) ->
             if viewed_tutors.indexOf(tutor_id) is -1
