@@ -192,11 +192,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
@@ -436,7 +431,7 @@
     };
     $scope.reviewsLeft = function(tutor) {
       var reviews_left;
-      if (!tutor.all_reviews) {
+      if (!tutor.all_reviews || !tutor.displayed_reviews) {
         return;
       }
       reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
@@ -517,7 +512,7 @@
       });
     };
     highlight = function(className) {
-      if ($scope.search.hidden_filter) {
+      if ($scope.search && $scope.search.hidden_filter) {
         return $timeout(function() {
           return $.each($scope.search.hidden_filter, function(index, phrase) {
             return $("." + className).mark(phrase, {
@@ -588,7 +583,7 @@
       $scope.sending_tutor = tutor;
       return $scope.overlay.request = true;
     };
-    return $scope.sendRequest = function() {
+    $scope.sendRequest = function() {
       if ($scope.sending_tutor.request === void 0) {
         $scope.sending_tutor.request = {};
       }
@@ -607,72 +602,24 @@
         }
       });
     };
+    return angular.element(document).ready(function() {
+      if ($scope.mobile) {
+        return $timeout(function() {
+          return bindToggle();
+        });
+      }
+    });
   });
 
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
 
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
 
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
+}).call(this);
 
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
+(function() {
 
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
@@ -951,6 +898,71 @@
 }).call(this);
 
 (function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1021,11 +1033,6 @@
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
