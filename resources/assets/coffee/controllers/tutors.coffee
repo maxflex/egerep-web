@@ -108,7 +108,7 @@ angular
             highlight('search-result-reviews-text')
 
         $scope.reviewsLeft = (tutor) ->
-            return if not tutor.all_reviews
+            return if not tutor.all_reviews or not tutor.displayed_reviews
             reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
 
@@ -167,7 +167,7 @@ angular
 
         # highlight hidden filter
         highlight = (className)->
-            if $scope.search.hidden_filter then $timeout ->
+            if $scope.search and $scope.search.hidden_filter then $timeout ->
                 $.each $scope.search.hidden_filter, (index, phrase) ->
                     $(".#{className}").mark phrase,
                         separateWordSearch: true
@@ -231,3 +231,6 @@ angular
                         $('.request-overlay').find("input#{selector}, textarea#{selector}").focus().notify errors[0], notify_options
                 else
                     $scope.sending_tutor.request_error = true
+
+        angular.element(document).ready ->
+            if $scope.mobile then $timeout -> bindToggle()

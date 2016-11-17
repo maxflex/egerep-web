@@ -32,7 +32,7 @@ function bindToggle()
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	});
-    $('.accordions .accordions__title').on('click').click(function() {
+    $('.accordions .accordions__title:not(.locked)').on('click').click(function() {
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$(this).toggleClass('active');

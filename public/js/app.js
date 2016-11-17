@@ -436,7 +436,7 @@
     };
     $scope.reviewsLeft = function(tutor) {
       var reviews_left;
-      if (!tutor.all_reviews) {
+      if (!tutor.all_reviews || !tutor.displayed_reviews) {
         return;
       }
       reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
@@ -517,7 +517,7 @@
       });
     };
     highlight = function(className) {
-      if ($scope.search.hidden_filter) {
+      if ($scope.search && $scope.search.hidden_filter) {
         return $timeout(function() {
           return $.each($scope.search.hidden_filter, function(index, phrase) {
             return $("." + className).mark(phrase, {
@@ -588,7 +588,7 @@
       $scope.sending_tutor = tutor;
       return $scope.overlay.request = true;
     };
-    return $scope.sendRequest = function() {
+    $scope.sendRequest = function() {
       if ($scope.sending_tutor.request === void 0) {
         $scope.sending_tutor.request = {};
       }
@@ -607,6 +607,13 @@
         }
       });
     };
+    return angular.element(document).ready(function() {
+      if ($scope.mobile) {
+        return $timeout(function() {
+          return bindToggle();
+        });
+      }
+    });
   });
 
 }).call(this);
