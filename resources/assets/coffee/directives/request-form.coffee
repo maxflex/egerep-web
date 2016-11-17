@@ -5,7 +5,7 @@ angular.module('Egerep')
             tutor: '='
             sentIds: '='
         templateUrl: 'directives/request-form'
-        controller: ($scope, $element, $timeout, Request, PhoneService) ->
+        controller: ($scope, $element, $timeout, Request) ->
             # отправить заявку
             $scope.request = ->
                 $scope.tutor.request = {} if $scope.tutor.request is undefined

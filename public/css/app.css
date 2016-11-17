@@ -75,6 +75,19 @@ a[href^="https://www.google.com/maps"] {
   -webkit-font-smoothing: antialiased;
   padding-left: 14px !important; }
 
+.error-message {
+  border-radius: 4px;
+  background-color: #f20007;
+  color: white;
+  text-align: center;
+  padding: 11px 0;
+  margin-top: 12px;
+  font-family: "helveticaneuecyrroman"; }
+  .error-message.button-like {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 11px 12px; }
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -5443,19 +5456,6 @@ label {
   float: none;
   display: inline-block;
   color: white; }
-
-.error-message {
-  border-radius: 4px;
-  background-color: #f20007;
-  color: white;
-  text-align: center;
-  padding: 11px 0;
-  margin-top: 12px;
-  font-family: "helveticaneuecyrroman"; }
-  .error-message.button-like {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 11px 12px; }
 
 .index-page .search-result-item.button-green {
   vertical-align: middle;

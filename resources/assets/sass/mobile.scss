@@ -1261,6 +1261,9 @@ textarea {
 /* Content */
 .content {
     padding: 1.458em 1.667em 0 1.667em;
+    &.only {
+        padding-bottom: 1.458em;
+    }
 }
 
 /* Top img */
@@ -3751,4 +3754,22 @@ div[id^='svg'] {
 .btn-large {
     padding: 0.4em 1.1em;
     font-size: 1.4em;
+}
+
+.error-message {
+    margin: 20px 0;
+}
+
+.request-form-sent {
+    margin: 6em 0;
+    text-align: center;
+    & h2 {
+        text-align: center;
+    }
+}
+
+.btn[disabled] {
+    border-color: $gray-light;
+    color: $gray-light;
+    background-color: transparent;
 }

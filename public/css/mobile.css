@@ -75,6 +75,19 @@ a[href^="https://www.google.com/maps"] {
   -webkit-font-smoothing: antialiased;
   padding-left: 14px !important; }
 
+.error-message {
+  border-radius: 4px;
+  background-color: #f20007;
+  color: white;
+  text-align: center;
+  padding: 11px 0;
+  margin-top: 12px;
+  font-family: "helveticaneuecyrroman"; }
+  .error-message.button-like {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 11px 12px; }
+
 /**
 * Fonts
 **/
@@ -3838,6 +3851,8 @@ textarea {
 /* Content */
 .content {
   padding: 1.458em 1.667em 0 1.667em; }
+  .content.only {
+    padding-bottom: 1.458em; }
 
 /* Top img */
 .top-img {
@@ -5875,5 +5890,19 @@ div[id^='svg'] {
 .btn-large {
   padding: 0.4em 1.1em;
   font-size: 1.4em; }
+
+.error-message {
+  margin: 20px 0; }
+
+.request-form-sent {
+  margin: 6em 0;
+  text-align: center; }
+  .request-form-sent h2 {
+    text-align: center; }
+
+.btn[disabled] {
+  border-color: #b5b5b5;
+  color: #b5b5b5;
+  background-color: transparent; }
 
 /*# sourceMappingURL=mobile.css.map */

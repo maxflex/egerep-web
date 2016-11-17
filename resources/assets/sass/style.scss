@@ -142,21 +142,6 @@ label {
     color: white;
 }
 
-.error-message {
-    border-radius: $border-radius;
-    background-color: $red;
-    color: white;
-    text-align: center;
-    padding: 11px 0;
-    margin-top: 12px;
-    font-family: $font-roman;
-    &.button-like {
-        display: inline-block;
-        margin-top: 30px;
-        padding: 11px 12px;
-    }
-}
-
 // Главная страница
 .index-page {
     & .search-result-item.button-green {

@@ -612,71 +612,6 @@
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -829,6 +764,25 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').directive('requestFormMobile', function() {
+    return {
+      replace: true,
+      scope: {
+        tutor: '=',
+        sentIds: '='
+      },
+      templateUrl: 'directives/request-form-mobile',
+      controller: function($scope, $element, $timeout, Request, RequestService) {
+        return $scope.request = function() {
+          return RequestService.request($scope.tutor, $element);
+        };
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('requestForm', function() {
     return {
       replace: true,
@@ -837,7 +791,7 @@
         sentIds: '='
       },
       templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request, PhoneService) {
+      controller: function($scope, $element, $timeout, Request) {
         var trackDataLayer;
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
@@ -951,6 +905,76 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -972,6 +996,59 @@
         return false;
       }
       return !number.match(/_/);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('RequestService', function(Request) {
+    var trackDataLayer;
+    this.request = function(tutor, element) {
+      if (tutor.request === void 0) {
+        tutor.request = {};
+      }
+      tutor.request.tutor_id = tutor.id;
+      return Request.save(tutor.request, function() {
+        tutor.request_sent = true;
+        return trackDataLayer();
+      }, function(response) {
+        if (response.status === 422) {
+          return angular.forEach(response.data, function(errors, field) {
+            var selector;
+            selector = "[ng-model$='" + field + "']";
+            return $(element).find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
+          });
+        } else {
+          return tutor.request_error = true;
+        }
+      });
+    };
+    trackDataLayer = function(tutor) {
+      window.dataLayer = window.dataLayer || [];
+      return window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          currencyCode: 'RUR',
+          purchase: {
+            actionField: {
+              id: tutor.id,
+              affilaction: 'serp',
+              revenue: tutor.public_price
+            },
+            products: [
+              {
+                id: tutor.id,
+                price: tutor.public_price,
+                brand: tutor.subjects,
+                category: tutor.markers,
+                quantity: 1
+              }
+            ]
+          }
+        }
+      });
     };
     return this;
   });
@@ -1021,11 +1098,6 @@
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
