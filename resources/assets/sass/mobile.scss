@@ -2278,7 +2278,7 @@ textarea {
     border-radius: 8px;
     border: 2px solid $green-mobile-btn;
     background: transparent;
-	font-size: 1em;
+	font-size: 1.1em;
     color: $green-mobile-btn;
     cursor: pointer;
     text-decoration: none !important;
@@ -2505,7 +2505,7 @@ textarea {
 	padding: 1em;
 }
 
-.toggle-widget__title, .toggle-widget__title-fake {
+.toggle-widget__title {
     position: relative;
 /*     padding: 1.042em 1em 1.042em; */
 	padding: 0.6em 3.333em 0.6em 1.042em;
@@ -2513,7 +2513,7 @@ textarea {
     background: white;
     z-index: 1;
 }
-    .toggle-widget__title span, .toggle-widget__title-fake span {
+    .toggle-widget__title span {
         font-size: 1.300em;
     }
 
@@ -3540,7 +3540,7 @@ li.text-danger:before {
     margin-bottom: 1.5em;
 }
 
-.toggle-widget__title-fake .toggle-widget__arrow {
+.toggle-widget__title.locked .toggle-widget__arrow {
 	display: none;
 }
 
@@ -3657,9 +3657,8 @@ li.text-danger:before {
 
 .serp-params {
     margin-bottom: 1em;
-    & > div {
-        margin-bottom: 3px;
-    }
+    font-size: 1.2em;
+    line-height: 1.5em;
 }
 
 .right-tutor-info {

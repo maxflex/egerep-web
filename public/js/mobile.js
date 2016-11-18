@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 function bindToggle()
 {
-	$('.toggle-widget__title').on('click').click(function() {
+	$('.toggle-widget__title:not(.locked)').on('click').click(function() {
 		var $parent = $(this).parent('.toggle-widget');
 		var $toggleBlock = $parent.children('.toggle-widget__inner');
 		$(this).toggleClass('active');
