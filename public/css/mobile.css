@@ -4633,7 +4633,7 @@ textarea {
   display: inline-block;
   padding: 0.4em 1.1em;
   border-radius: 8px;
-  border: 2px solid #5db05c;
+  border: 1px solid #5db05c;
   background: transparent;
   font-size: 1.1em;
   color: #5db05c;
@@ -5037,23 +5037,23 @@ textarea {
 /* Media  screen */
 @media only screen and (max-width: 680px) {
   body {
-    font-size: 20px; } }
+    font-size: 22px; } }
 
 @media only screen and (max-width: 600px) {
   body {
-    font-size: 18px; } }
+    font-size: 20px; } }
 
 @media only screen and (max-width: 650px) {
   body {
-    font-size: 16px; } }
+    font-size: 18px; } }
 
 @media only screen and (max-width: 500px) {
   body {
-    font-size: 14px; } }
+    font-size: 16px; } }
 
 @media only screen and (max-width: 400px) {
   body {
-    font-size: 12px; } }
+    font-size: 14px; } }
 
 /* ==========================================================================
    Helper classes
@@ -5909,5 +5909,8 @@ div[id^='svg'] {
 
 .display-block {
   display: block !important; }
+
+p {
+  line-height: 1.5em; }
 
 /*# sourceMappingURL=mobile.css.map */
