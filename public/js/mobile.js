@@ -12,12 +12,12 @@ $(document).ready(function() {
 		$('body, html').removeClass('body-crop')
 	})
 
-	// $('#search-tutor-button').click(function() {
-	// 	search_tutor_id = $('#search-tutor-id').val()
-	// 	if (search_tutor_id != '') {
-	// 		location.href = 'http://a-perspektiva.ru/tutors/person/' + search_tutor_id
-	// 	}
-	// })
+	$('#search-tutor-button').click(function() {
+		search_tutor_id = $('#search-tutor-id').val()
+		if (search_tutor_id != '') {
+			location.href = '/' + search_tutor_id
+		}
+	})
 })
 
 
@@ -26,9 +26,7 @@ function bindToggle()
 	$('.toggle-widget__title').on('click').click(function() {
 		var $parent = $(this).parent('.toggle-widget');
 		var $toggleBlock = $parent.children('.toggle-widget__inner');
-
 		$(this).toggleClass('active');
-
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	});
@@ -38,11 +36,5 @@ function bindToggle()
 		$(this).toggleClass('active');
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
-		// $('.svg-map-wrapper').css('height', ($('.svg-map-wrapper').width() * 0.75) + 'px')
 	});
-}
-
-function bindAccordions()
-{
-
 }

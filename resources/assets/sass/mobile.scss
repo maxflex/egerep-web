@@ -3549,8 +3549,8 @@ li.text-danger:before {
 	float: right;
     & img {
         position: absolute;
-        right: 1em;
-        top: 1em;
+        right: .4em;
+        top: .4em;
         z-index: 99;
     }
 }
@@ -3583,6 +3583,8 @@ li.text-danger:before {
 }
 .full-version-link {
     color: #00a600;
+    display: inline-block;
+    margin-top:20px;
 }
 .user-list__number span {
 	font-size: 1em;
@@ -3772,4 +3774,8 @@ div[id^='svg'] {
     border-color: $gray-light;
     color: $gray-light;
     background-color: transparent;
+}
+
+.display-block {
+    display: block !important;
 }

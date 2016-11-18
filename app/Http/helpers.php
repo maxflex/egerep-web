@@ -236,5 +236,5 @@
 
     function isMobile()
     {
-        return (new \Jenssegers\Agent\Agent)->isMobile();
+        return (((new \Jenssegers\Agent\Agent)->isMobile() && ! isset($_SESSION['force_full'])) || (isset($_SESSION['force_mobile'])));
     }

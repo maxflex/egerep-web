@@ -7,10 +7,6 @@ use App\Models\Service\Parser;
 
 class Variable extends Model
 {
-    // ID переменной SERP
-    const SERP_ID = 20;
-    const MOBILE_SERP_ID = 36;
-
     protected $attributes = [
         'name' => 'новая переменная'
     ];
@@ -29,11 +25,6 @@ class Variable extends Model
     public function scopeFindByName($query, $name)
     {
         return $query->where('name', $name);
-    }
-
-    public static function getSerp()
-    {
-        return self::whereId(isMobile() ? self::MOBILE_SERP_ID : self::SERP_ID)->first();
     }
 
     public static function display($name)
