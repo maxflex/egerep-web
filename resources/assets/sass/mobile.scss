@@ -3604,7 +3604,7 @@ li.text-danger:before {
 }
 
 .tutor-profile-index {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     display: inline-block;
     width: 100%;
     & img {
@@ -3615,6 +3615,10 @@ li.text-danger:before {
     }
     & > div {
         margin-bottom: .3em;
+    }
+    & a {
+        text-decoration: none;
+        color: black;
     }
 }
 
@@ -3649,7 +3653,7 @@ li.text-danger:before {
     & .footer-links > div {
         margin-bottom: 5px;
     }
-    padding-bottom: 3em;
+    padding-bottom: 1em;
 }
 
 .al {

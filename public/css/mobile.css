@@ -5774,7 +5774,7 @@ li.text-danger:before {
   padding-bottom: 0 !important; }
 
 .tutor-profile-index {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   display: inline-block;
   width: 100%; }
   .tutor-profile-index img {
@@ -5784,6 +5784,9 @@ li.text-danger:before {
     margin-right: 10px; }
   .tutor-profile-index > div {
     margin-bottom: .3em; }
+  .tutor-profile-index a {
+    text-decoration: none;
+    color: black; }
 
 .gray-block {
   padding: 1.458em 1.667em;
@@ -5806,7 +5809,7 @@ li.text-danger:before {
 .footer {
   margin-bottom: 0;
   text-align: center;
-  padding-bottom: 3em; }
+  padding-bottom: 1em; }
   .footer > div {
     margin-bottom: 20px; }
   .footer .footer-links > div {
