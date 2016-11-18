@@ -819,15 +819,15 @@ textarea {
 
     .header-logo img {
         padding: 10px 0;
-	    height: 3.2em;
+	    height: 2em;
         margin-left: auto;
 	}
 
     .header-logo img#main-logo {
-        height: 4.2em;
+        height: 3em;
         float: left;
         border-right: 1px solid white;
-        padding-right: .3em;
+        padding-right: 0em;
     }
 
     .header-logo img#mainpage-logo {
@@ -836,8 +836,8 @@ textarea {
 
 	.logo-link {
 		display: flex;
-	    height: 6em;
-	    width: 6em;
+	    height: 4em;
+	    width: 4em;
 	    align-items: center;
 	    background: white;
 	    border-radius: 50%;
@@ -850,12 +850,13 @@ textarea {
 	}
 
 	.header-logo > div > b {
-		font-size: 1.8em;
+		font-size: 1.3em;
         font-family: 'Glober';
 	}
 
 	.header-logo > div > span {
         // header span
+        font-size: .8em;
 	}
 
     .header-btn__phone {
