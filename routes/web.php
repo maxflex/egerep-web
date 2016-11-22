@@ -41,7 +41,7 @@
     Route::get('login/{hash}', 'PagesController@login');
 
     # Tutor profile page
-    Route::get('{id}', 'PagesController@tutor')->where('id', '[0-9]+');;
+    Route::get('{id}', 'PagesController@tutor')->where('id', '[0-9]+');
 
     # MAIN ALL PAGES ROUTE
     Route::get('{url?}', 'PagesController@index');
