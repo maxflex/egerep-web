@@ -124,6 +124,13 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angular-inview', 'angu
         $rootScope.deny = (ngModel, prop) ->
             ngModel[prop] = +(!ngModel[prop])
 
+        $rootScope.closestMetro = (markers) ->
+            closest_metro = markers[0].metros[0]
+            markers.forEach (marker) ->
+                marker.metros.forEach (metro) ->
+                    closest_metro = metro if metro.minutes < closest_metro.minutes
+            closest_metro.station.title
+
         $rootScope.formatBytes = (bytes) ->
           if bytes < 1024
             bytes + ' Bytes'

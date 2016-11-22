@@ -1,8 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .constant 'REVIEWS_PER_PAGE_MOBILE', 10
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, REVIEWS_PER_PAGE_MOBILE, Request) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -21,8 +20,6 @@ angular
                         $scope.search.subjects[subject_id] = true
 
                 SubjectService.init($scope.search.subjects)
-
-                REVIEWS_PER_PAGE = REVIEWS_PER_PAGE_MOBILE if $scope.mobile
 
                 if $scope.mobile
                     $scope.filter()

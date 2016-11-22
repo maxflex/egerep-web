@@ -88,6 +88,10 @@ a[href^="https://www.google.com/maps"] {
     margin-top: 30px;
     padding: 11px 12px; }
 
+.font-rub {
+  font-family: 'ALSRubl-Arial', Arial, sans-serif;
+  line-height: normal; }
+
 /**
 * Fonts
 **/
@@ -3821,7 +3825,9 @@ textarea {
 
 .accordions__content {
   display: none;
-  padding: 0.417em 1.042em 2.083em 1.042em; }
+  padding: 0.417em 1.042em 2.083em 1.042em;
+  overflow: hidden;
+  position: relative; }
 
 .accordions__arrow {
   position: absolute;
@@ -4826,7 +4832,7 @@ textarea {
   z-index: 1; }
 
 .toggle-widget__title span {
-  font-size: 1.300em; }
+  font-size: 1.100em; }
 
 .toggle-widget__arrow {
   position: absolute;
@@ -4876,7 +4882,7 @@ textarea {
 
 .user-list .accordions__title {
   min-height: 5.208em;
-  padding: 1.5em 0 1.042em 7.500em; }
+  padding: 1.5em 2.5em 1.042em 7.500em; }
 
 .user-list__number {
   /*         font-size: 1.1em; */
@@ -5592,8 +5598,7 @@ li.text-danger:before {
   margin-left: .3em; }
 
 .right-tutor-info {
-  position: relative;
-  top: -.9em; }
+  position: relative; }
 
 .place_mark {
   display: inline-block;
@@ -5865,20 +5870,20 @@ li.text-danger:before {
 
 div[id^='gmap'] {
   width: calc(100% + 2em);
-  height: 20em;
+  height: 15em;
   margin-left: -1em;
   margin-top: 1em; }
 
 div[id^='svg'] {
   width: calc(100% + 2em);
-  height: 20em;
+  height: 15em;
   margin-left: -1em;
   margin-top: 1em;
   overflow: scroll; }
 
 .public-price {
   margin: 1em 0;
-  font-size: 1.3em; }
+  font-size: 1.1em; }
   .public-price .price-number {
     font-weight: bold;
     color: #037500; }
@@ -5894,10 +5899,6 @@ div[id^='svg'] {
 
 .text-gray-light {
   color: #b5b5b5; }
-
-.btn-large {
-  padding: 0.4em 1.1em;
-  font-size: 1.4em; }
 
 .error-message {
   margin: 20px 0; }
@@ -5918,5 +5919,12 @@ div[id^='svg'] {
 
 p {
   line-height: 1.5em; }
+
+.toggled {
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 0;
+  border-width: 0 1px; }
 
 /*# sourceMappingURL=mobile.css.map */

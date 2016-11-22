@@ -176,6 +176,18 @@
     $rootScope.deny = function(ngModel, prop) {
       return ngModel[prop] = +(!ngModel[prop]);
     };
+    $rootScope.closestMetro = function(markers) {
+      var closest_metro;
+      closest_metro = markers[0].metros[0];
+      markers.forEach(function(marker) {
+        return marker.metros.forEach(function(metro) {
+          if (metro.minutes < closest_metro.minutes) {
+            return closest_metro = metro;
+          }
+        });
+      });
+      return closest_metro.station.title;
+    };
     return $rootScope.formatBytes = function(bytes) {
       if (bytes < 1024) {
         return bytes + ' Bytes';
@@ -329,7 +341,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).constant('REVIEWS_PER_PAGE_MOBILE', 10).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, REVIEWS_PER_PAGE_MOBILE, Request) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
     var filter_used, highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -344,9 +356,6 @@
           });
         }
         SubjectService.init($scope.search.subjects);
-        if ($scope.mobile) {
-          REVIEWS_PER_PAGE = REVIEWS_PER_PAGE_MOBILE;
-        }
         if ($scope.mobile) {
           return $scope.filter();
         } else {
@@ -912,11 +921,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1105,6 +1109,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

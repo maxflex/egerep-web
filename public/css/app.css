@@ -88,6 +88,10 @@ a[href^="https://www.google.com/maps"] {
     margin-top: 30px;
     padding: 11px 12px; }
 
+.font-rub {
+  font-family: 'ALSRubl-Arial', Arial, sans-serif;
+  line-height: normal; }
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -5030,10 +5034,6 @@ textarea {
 .button-green {
   background: #53ab53;
   color: #fff; }
-
-.font-rub {
-  font-family: 'ALSRubl-Arial', Arial, sans-serif;
-  line-height: normal; }
 
 .button-border-green {
   display: inline-block;
