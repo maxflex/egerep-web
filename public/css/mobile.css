@@ -90,7 +90,8 @@ a[href^="https://www.google.com/maps"] {
 
 .font-rub {
   font-family: 'ALSRubl-Arial', Arial, sans-serif;
-  line-height: normal; }
+  line-height: normal;
+  font-weight: bold; }
 
 .footer-search {
   display: inline-block;
@@ -5854,7 +5855,8 @@ li.text-danger:before {
     font-size: 1em; }
 
 .info-multi {
-  margin: 1em 0; }
+  margin: 1em 0;
+  line-height: 1.5em; }
   .info-multi:last-child {
     margin-bottom: 0; }
 
@@ -5888,13 +5890,13 @@ li.text-danger:before {
 
 div[id^='gmap'] {
   width: calc(100% + 2em);
-  height: 15em;
+  height: 12em;
   margin-left: -1em;
   margin-top: 1em; }
 
 div[id^='svg'] {
   width: calc(100% + 2em);
-  height: 15em;
+  height: 12em;
   margin-left: -1em;
   margin-top: 1em;
   overflow: scroll; }
@@ -5902,9 +5904,6 @@ div[id^='svg'] {
 .public-price {
   margin: 1em 0;
   font-size: 1.1em; }
-  .public-price .price-number {
-    font-weight: bold;
-    color: #037500; }
 
 .connect-buttons {
   text-align: center;

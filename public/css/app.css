@@ -90,7 +90,8 @@ a[href^="https://www.google.com/maps"] {
 
 .font-rub {
   font-family: 'ALSRubl-Arial', Arial, sans-serif;
-  line-height: normal; }
+  line-height: normal;
+  font-weight: bold; }
 
 .footer-search {
   display: inline-block;

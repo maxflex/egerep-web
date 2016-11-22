@@ -3658,6 +3658,7 @@ li.text-danger:before {
 
 .info-multi {
     margin: 1em 0;
+    line-height: 1.5em;
     &:last-child {
         margin-bottom: 0;
     }
@@ -3702,14 +3703,14 @@ li.text-danger:before {
 
 div[id^='gmap'] {
     width: calc(100% + 2em);
-    height: 15em;
+    height: 12em;
     margin-left: -1em;
     margin-top: 1em;
 }
 
 div[id^='svg'] {
     width: calc(100% + 2em);
-    height: 15em;
+    height: 12em;
     margin-left: -1em;
     margin-top: 1em;
     overflow: scroll;
@@ -3717,10 +3718,6 @@ div[id^='svg'] {
 
 .public-price {
     margin: 1em 0;
-    & .price-number {
-        font-weight: bold;
-        color: #037500;
-    }
     font-size: 1.1em;
 }
 
