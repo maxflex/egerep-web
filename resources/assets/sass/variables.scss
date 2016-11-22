@@ -128,3 +128,39 @@ a[href^="https://www.google.com/maps"]{display:none !important}
     font-family: 'ALSRubl-Arial', Arial, sans-serif;
     line-height: normal;
 }
+
+
+.footer-search {
+    display: inline-block;
+    position: relative;
+    margin-top: 7px;
+    padding: 0 35px 0 0;
+    width: 8.7em;
+}
+.footer-search-input {
+    border: 1px solid #e3e3e3;
+    background-color: #e3e3e3;
+    border-radius: 8px 0 0 8px;
+    padding: 0 0 0 16px;
+    font-size: 14px;
+    font-family: 'helveticaneuecyrlight';
+    padding: 0.4em 1.1em;
+    font-size: 1.1em;
+    width: 80%;
+}
+.footer-search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    border-radius: 0 8px 8px 0;
+    background: #e3e3e3;
+    cursor: pointer;
+    text-align: right;
+    padding-right: 12px;
+    padding: 0.45em .5em;
+    font-size: 1.1em;
+    & img {
+        height: 15px;
+    }
+}

@@ -199,7 +199,7 @@ angular
             if tutor[prop]
                 $timeout ->
                     tutor[prop] = false
-                , 400
+                , if $scope.mobile then 400 else 0
             else
                 tutor[prop] = true
                 Tutor.iteraction {id: tutor.id, type: iteraction_type}
