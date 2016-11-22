@@ -147,6 +147,11 @@ a[href^="https://www.google.com/maps"]{display:none !important}
     padding: 0.4em 1.1em;
     font-size: 1.1em;
     width: 80%;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 .footer-search-button {
     position: absolute;
