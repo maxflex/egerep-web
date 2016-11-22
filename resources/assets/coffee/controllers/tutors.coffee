@@ -200,7 +200,9 @@ angular
 
         $scope.toggleShow = (tutor, prop, iteraction_type) ->
             if tutor[prop]
-                tutor[prop] = false
+                $timeout ->
+                    tutor[prop] = false
+                , 400
             else
                 tutor[prop] = true
                 Tutor.iteraction {id: tutor.id, type: iteraction_type}
