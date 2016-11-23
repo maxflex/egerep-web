@@ -24,12 +24,10 @@ div[id^='svg'] {
     margin-top: 10px;
 }
 
-.loading {
+.serp-loading {
     text-align: center;
     padding: 200px 0;
-    & img {
-        width: 100px;
-    }
+    color: $gray-light;
 }
 
 .gmnoprint:not(.gm-bundled-control) {
@@ -383,4 +381,12 @@ h3 {
     padding: 0 0 19px 0;
     font-size: 22px;
     font-weight: normal;
+}
+
+button {
+    position: relative;
+}
+
+.loading-inside-button {
+    padding: 0;
 }

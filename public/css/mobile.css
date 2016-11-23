@@ -131,6 +131,44 @@ a[href^="https://www.google.com/maps"] {
   .footer-search-button img {
     height: 15px; }
 
+.loading.loading-inside-widget {
+  font-size: 1em !important; }
+  .loading.loading-inside-widget:after {
+    position: relative;
+    top: 1px; }
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026";
+  /* ascii code for the ellipsis character */
+  width: 0px; }
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em; } }
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em; } }
+
+.loading-inside-button {
+  position: absolute;
+  left: 31%;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
 /**
 * Fonts
 **/
@@ -4686,7 +4724,8 @@ textarea {
   font-size: 1.1em;
   color: #5db05c;
   cursor: pointer;
-  text-decoration: none !important; }
+  text-decoration: none !important;
+  position: relative; }
 
 .btn-green {
   background: #5db05c;
@@ -4862,7 +4901,7 @@ textarea {
   /*     padding: 0 0 0 0; */
   padding: 1em; }
 
-.toggle-widget__title {
+.toggle-widget__title, .widget-loadable__title {
   position: relative;
   /*     padding: 1.042em 1em 1.042em; */
   padding: 0.6em 3.333em 0.6em 1.042em;
@@ -4870,7 +4909,7 @@ textarea {
   background: white;
   z-index: 1; }
 
-.toggle-widget__title span {
+.toggle-widget__title span, .widget-loadable__title span {
   font-size: 1.100em; }
 
 .toggle-widget__arrow {
@@ -5141,12 +5180,6 @@ textarea {
   overflow: visible;
   position: static;
   width: auto; }
-
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-.invisible {
-  visibility: hidden; }
 
 /*
  * Clearfix: contain floats
@@ -5947,5 +5980,8 @@ p {
 .no-hover {
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: transparent; }
+
+.loading-inside-button {
+  padding: 0.4em 0; }
 
 /*# sourceMappingURL=mobile.css.map */

@@ -149,7 +149,7 @@ angular
                 search: $scope.search
             , (response) ->
                 search_count++
-                $scope.searching = false
+                # $scope.searching = false
                 if response.hasOwnProperty('url')
                     redirect response.url
                     # console.log response.url

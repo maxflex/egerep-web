@@ -505,7 +505,6 @@
         search: $scope.search
       }, function(response) {
         search_count++;
-        $scope.searching = false;
         if (response.hasOwnProperty('url')) {
           return redirect(response.url);
         } else {
@@ -868,11 +867,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('subjectList', function() {
     return {
       restrict: 'E',
@@ -923,7 +917,40 @@
 }).call(this);
 
 (function() {
-
+  angular.module('Egerep').directive('widgetLoadable', function($q, $timeout) {
+    return {
+      restrict: 'A',
+      scope: {
+        field: '='
+      },
+      link: function($scope, $element, $attrs) {
+        var $toggleBlock, q;
+        q = $q.defer();
+        $toggleBlock = $($element).children('.toggle-widget__inner');
+        $($element).find('.widget-loadable__title').on('click').click(function() {
+          var text;
+          text = $(this).find('span').text();
+          if (!q.promise.$$state.status) {
+            $(this).find('span').html("<span class='loading loading-inside-widget'>загрузка</span>");
+          } else {
+            $(this).find('span').text(text);
+          }
+          return q.promise.then((function(_this) {
+            return function() {
+              $(_this).toggleClass('active').find('span').text(text);
+              $toggleBlock.stop();
+              return $toggleBlock.slideToggle();
+            };
+          })(this));
+        });
+        return $scope.$watch('field', function(newVal, oldVal) {
+          if (newVal !== void 0) {
+            return q.resolve(true);
+          }
+        });
+      }
+    };
+  });
 
 }).call(this);
 
@@ -1116,6 +1143,11 @@
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

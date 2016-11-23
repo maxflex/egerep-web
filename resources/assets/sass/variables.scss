@@ -170,3 +170,50 @@ a[href^="https://www.google.com/maps"]{display:none !important}
         height: 15px;
     }
 }
+.loading.loading-inside-widget {
+    font-size: 1em !important;
+    &:after {
+        position: relative;
+        top: 1px;
+    }
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4,end) 900ms infinite;
+  // content: "..."; /* ascii code for the ellipsis character */
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+.loading-inside-button {
+    position: absolute;
+    left: 31%;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}

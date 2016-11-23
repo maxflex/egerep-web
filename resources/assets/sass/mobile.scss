@@ -2284,6 +2284,7 @@ textarea {
     color: $green-mobile-btn;
     cursor: pointer;
     text-decoration: none !important;
+    position: relative;
 }
 
 .btn-green {
@@ -2507,7 +2508,7 @@ textarea {
 	padding: 1em;
 }
 
-.toggle-widget__title {
+.toggle-widget__title, .widget-loadable__title {
     position: relative;
 /*     padding: 1.042em 1em 1.042em; */
 	padding: 0.6em 3.333em 0.6em 1.042em;
@@ -2515,7 +2516,7 @@ textarea {
     background: white;
     z-index: 1;
 }
-    .toggle-widget__title span {
+    .toggle-widget__title span, .widget-loadable__title span {
         font-size: 1.100em;
     }
 
@@ -2866,14 +2867,6 @@ textarea {
     overflow: visible;
     position: static;
     width: auto;
-}
-
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-
-.invisible {
-    visibility: hidden;
 }
 
 /*
@@ -3777,4 +3770,8 @@ p {
 .no-hover {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
+}
+
+.loading-inside-button {
+    padding: 0.4em 0;
 }

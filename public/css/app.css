@@ -131,6 +131,44 @@ a[href^="https://www.google.com/maps"] {
   .footer-search-button img {
     height: 15px; }
 
+.loading.loading-inside-widget {
+  font-size: 1em !important; }
+  .loading.loading-inside-widget:after {
+    position: relative;
+    top: 1px; }
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026";
+  /* ascii code for the ellipsis character */
+  width: 0px; }
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em; } }
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em; } }
+
+.loading-inside-button {
+  position: absolute;
+  left: 31%;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -5370,11 +5408,10 @@ div[id^='svg'] {
   margin: 0;
   margin-top: 10px; }
 
-.loading {
+.serp-loading {
   text-align: center;
-  padding: 200px 0; }
-  .loading img {
-    width: 100px; }
+  padding: 200px 0;
+  color: #b5b5b5; }
 
 .gmnoprint:not(.gm-bundled-control) {
   display: none; }
@@ -5649,5 +5686,11 @@ h3 {
   padding: 0 0 19px 0;
   font-size: 22px;
   font-weight: normal; }
+
+button {
+  position: relative; }
+
+.loading-inside-button {
+  padding: 0; }
 
 /*# sourceMappingURL=app.css.map */
