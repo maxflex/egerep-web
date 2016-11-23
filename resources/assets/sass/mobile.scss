@@ -4,6 +4,7 @@
 
 $green-mobile: #528d56;
 $green-mobile-btn: #5db05c;
+$border-radius-mobile: 7px;
 
 .logo-main-page {
     position: absolute;
@@ -35,7 +36,7 @@ iframe[id^='svg-map'] {
 	width: 100%;
 	height: auto;
 /* 	margin-bottom: 1.042em; */
-	border-radius: 5px;
+	border-radius: $border-radius-mobile;
 }
 
 .google-maps-canvas:before {
@@ -1698,7 +1699,7 @@ textarea {
     font-size: 1.000em;
     color: #0d2034;
     outline: none;
-    border-radius: 8px !important;
+    border-radius: $border-radius-mobile !important;
     box-shadow: none !important;
     -webkit-appearance: none;
     font-size: 1.1em;
@@ -1707,7 +1708,7 @@ textarea {
 .textarea {
     font-size: 1.1em !important;
     outline: none;
-    border-radius: 8px !important;
+    border-radius: $border-radius-mobile !important;
     box-shadow: none !important;
     -webkit-appearance: none;
     border: 1px solid #DFDFDF !important;
@@ -2273,7 +2274,7 @@ textarea {
 .btn-gradient {
     display: inline-block;
 	padding: 0.4em 1.1em;
-    border-radius: 8px;
+    border-radius: $border-radius-mobile;
     border: 1px solid $green-mobile-btn;
     background: transparent;
 	font-size: 1.1em;
@@ -2613,7 +2614,7 @@ textarea {
             border-radius: 46%;
             top: -0.70em;
 			position: relative;
-			border-radius: 5px;
+			border-radius: $border-radius-mobile;
         }
 
     .user-list__info {
@@ -3329,7 +3330,7 @@ b {
 			    background-image: none;
 			    border: 1px solid #DFDFDF;
 			    color: #A9A9A9;
-			    border-radius: 8px;
+			    border-radius: $border-radius-mobile;
 			    border-top-left-radius: 0;
 			    border-bottom-left-radius: 0;
 		        z-index: 2;
@@ -3793,7 +3794,7 @@ p {
 .footer-search-input {
     border: 1px solid #e3e3e3;
     background-color: #e3e3e3;
-    border-radius: 8px 0 0 8px;
+    border-radius: $border-radius-mobile 0 0 $border-radius-mobile;
     padding: 0 0 0 16px;
     font-size: 14px;
     font-family: 'helveticaneuecyrlight';
@@ -3811,7 +3812,7 @@ p {
     top: 0;
     right: 0;
     border: 0;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 $border-radius-mobile $border-radius-mobile 0;
     background: #e3e3e3;
     cursor: pointer;
     text-align: right;
