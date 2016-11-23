@@ -170,13 +170,6 @@ a[href^="https://www.google.com/maps"]{display:none !important}
         height: 15px;
     }
 }
-.loading.loading-inside-widget {
-    font-size: 1em !important;
-    &:after {
-        position: relative;
-        top: 1px;
-    }
-}
 
 .loading:after {
   overflow: hidden;

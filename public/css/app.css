@@ -131,12 +131,6 @@ a[href^="https://www.google.com/maps"] {
   .footer-search-button img {
     height: 15px; }
 
-.loading.loading-inside-widget {
-  font-size: 1em !important; }
-  .loading.loading-inside-widget:after {
-    position: relative;
-    top: 1px; }
-
 .loading:after {
   overflow: hidden;
   display: inline-block;
