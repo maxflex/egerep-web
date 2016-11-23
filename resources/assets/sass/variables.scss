@@ -188,3 +188,9 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 .color-green {
     color: $green-main;
 }
+
+.serp-loading {
+    text-align: center;
+    padding: 200px 0;
+    color: $gray-light;
+}
