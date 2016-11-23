@@ -234,7 +234,12 @@
         return date('Y') - $year;
     }
 
-    function isMobile()
+    function isMobile($raw = false)
     {
-        return (((new \Jenssegers\Agent\Agent)->isMobile() && ! isset($_SESSION['force_full'])) || (isset($_SESSION['force_mobile'])));
+        $is_mobile = (new \Jenssegers\Agent\Agent)->isMobile();
+        if ($raw) {
+            return $is_mobile;
+        } else {
+            return (($is_mobile && ! isset($_SESSION['force_full'])) || (isset($_SESSION['force_mobile'])));
+        }
     }

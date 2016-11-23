@@ -1693,32 +1693,28 @@ textarea {
 }
 .input-text {
     width: 100%;
-    /* height: 3.167em; */
-    /* height: 3.5em; */
-    padding: 0 0.75em 0;
     box-sizing: border-box;
-    /* border-radius: 0.125em; */
     border: 1px solid #DFDFDF;
-    line-height: 2.3em;
     font-size: 1.000em;
     color: #0d2034;
     outline: none;
-    border-radius: 5px !important;
+    border-radius: 8px !important;
     box-shadow: none !important;
     -webkit-appearance: none;
-    font-size: 1.4em;
+    font-size: 1.1em;
+    padding: 0.4em 1.1em;
 }
 .textarea {
-	    font-size: 1.4em !important;
+    font-size: 1.1em !important;
     outline: none;
-    border-radius: 5px !important;
+    border-radius: 8px !important;
     box-shadow: none !important;
     -webkit-appearance: none;
     border: 1px solid #DFDFDF !important;
     overflow: auto;
     width: 100%;
     height: 6.458em;
-    padding: 0.5em 0 0 0.75em;
+    padding: 0.4em 1.1em;
     box-sizing: border-box;
     border-radius: 0.125em;
     border: 1px solid #ebebeb;
@@ -3130,11 +3126,11 @@ b {
 }
 
 .overlay .align-center {
-    bottom: 2em;
+    // bottom: 2em;
 /*     position: absolute; */
     width: 98%;
     left: 1%;
-    margin-top: 2em;
+    // margin-top: 2em;
 }
 
 /* Effects */
@@ -3179,6 +3175,7 @@ b {
 	visibility: visible;
 	-webkit-transition: opacity 0.5s;
 	transition: opacity 0.5s;
+    height: 100%;
 }
 
 .overlay-hugeinc nav {
@@ -3668,9 +3665,8 @@ li.text-danger:before {
 
 .review-block {
     margin-bottom: 20px;
-    line-height: 1.4em;
+    line-height: 1.5em;
     & .review-text {
-        font-style: italic;
         margin-bottom: 20px;
     }
     & .review-signature {
@@ -3778,4 +3774,51 @@ p {
 
 .loading-inside-button {
     padding: 0.4em 0;
+}
+
+.request-sent-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.footer-search {
+    display: inline-block;
+    position: relative;
+    margin-top: 7px;
+    padding: 0 35px 0 0;
+    width: 8.8em;
+}
+.footer-search-input {
+    border: 1px solid #e3e3e3;
+    background-color: #e3e3e3;
+    border-radius: 8px 0 0 8px;
+    padding: 0 0 0 16px;
+    font-size: 14px;
+    font-family: 'helveticaneuecyrlight';
+    padding: 0.4em 1.1em;
+    font-size: 1.1em;
+    width: 80%;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.footer-search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    border-radius: 0 8px 8px 0;
+    background: #e3e3e3;
+    cursor: pointer;
+    text-align: right;
+    padding-right: 12px;
+    padding: 0.45em .5em;
+    font-size: 1.1em;
+    & img {
+        height: 15px;
+    }
 }

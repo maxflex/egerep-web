@@ -19,6 +19,8 @@ angular
             text_date.substr(3)
 
         $scope.randomReview = ->
+            $scope.loading_review = true
             $http.get 'api/reviews/random'
             .then (response) ->
                 $scope.random_review = response.data
+                $scope.loading_review = false

@@ -390,3 +390,15 @@ button {
 .loading-inside-button {
     padding: 0;
 }
+
+.review-block {
+    margin-bottom: 10px;
+    &:first-child {
+        margin-top: 10px;
+    }
+}
+
+b {
+	font-weight: normal;
+	font-family: 'helveticaneuecyrbold';
+}

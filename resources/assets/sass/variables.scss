@@ -130,47 +130,6 @@ a[href^="https://www.google.com/maps"]{display:none !important}
     font-weight: bold;
 }
 
-
-.footer-search {
-    display: inline-block;
-    position: relative;
-    margin-top: 7px;
-    padding: 0 35px 0 0;
-    width: 8.8em;
-}
-.footer-search-input {
-    border: 1px solid #e3e3e3;
-    background-color: #e3e3e3;
-    border-radius: 8px 0 0 8px;
-    padding: 0 0 0 16px;
-    font-size: 14px;
-    font-family: 'helveticaneuecyrlight';
-    padding: 0.4em 1.1em;
-    font-size: 1.1em;
-    width: 80%;
-    box-shadow: none;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-.footer-search-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    border-radius: 0 8px 8px 0;
-    background: #e3e3e3;
-    cursor: pointer;
-    text-align: right;
-    padding-right: 12px;
-    padding: 0.45em .5em;
-    font-size: 1.1em;
-    & img {
-        height: 15px;
-    }
-}
-
 .loading:after {
   overflow: hidden;
   display: inline-block;
@@ -209,4 +168,23 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 
 .invisible {
     visibility: hidden;
+}
+
+.color-gray, .text-gray {
+    color: $gray;
+}
+.color-gray-light, .text-gray-light {
+    color: $gray-light;
+}
+
+.color-red, .error, .text-red {
+    color: $red;
+}
+
+.color-gray-placeholer, .text-gray-placeholder {
+    color: $gray-placeholder;
+}
+
+.color-green {
+    color: $green-main;
 }

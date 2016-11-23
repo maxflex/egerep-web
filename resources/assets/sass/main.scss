@@ -879,24 +879,6 @@ textarea {
     width: 960px;
     margin: 0 auto;
 }
-.color-gray, .text-gray {
-    color: $gray;
-}
-.color-gray-light, .text-gray-light {
-    color: $gray-light;
-}
-
-.color-red, .error, .text-red {
-    color: $red;
-}
-
-.color-gray-placeholer, .text-gray-placeholder {
-    color: $gray-placeholder;
-}
-
-.color-green {
-    color: $green-main;
-}
 
 .button-large-green {
     border: 0;
@@ -1257,4 +1239,38 @@ span.customSelect.custom-select-small .customSelectInner {
     border-radius: $border-radius;
     color: white;
     display: inline-block;
+}
+
+.footer-search {
+    display: inline-block;
+    position: relative;
+    margin-top: 7px;
+    padding: 0 35px 0 0;
+    width: 250px;
+}
+.footer-search-input {
+    border: 1px solid #e3e3e3;
+    background-color: #e3e3e3;
+    border-radius: $border-radius 0 0 $border-radius;
+    padding: 0 0 0 16px;
+    width: 231px;
+    height: 34px;
+    font-size: 14px;
+    font-family: 'helveticaneuecyrlight';
+}
+.footer-search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 0 6px 6px 0;
+    background: #e3e3e3;
+    cursor: pointer;
+    text-align: right;
+    padding-right: 12px;
+    & img {
+        height: 15px;
+    }
 }

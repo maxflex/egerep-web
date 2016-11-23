@@ -29,7 +29,7 @@ class Variable extends Model
 
     public static function display($name)
     {
-        if (isMobile()) {
+        if (isMobile() && self::findByName($name . '-mobile')->exists()) {
             $name .= '-mobile';
         }
         return self::findByName($name)->first()->html;

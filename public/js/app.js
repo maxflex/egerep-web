@@ -290,8 +290,10 @@
       return text_date.substr(3);
     };
     return $scope.randomReview = function() {
+      $scope.loading_review = true;
       return $http.get('api/reviews/random').then(function(response) {
-        return $scope.random_review = response.data;
+        $scope.random_review = response.data;
+        return $scope.loading_review = false;
       });
     };
   });
@@ -626,11 +628,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -1022,6 +1019,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

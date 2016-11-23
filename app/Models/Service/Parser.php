@@ -46,7 +46,7 @@
                 array_shift($args);
                 switch ($function_name) {
                     case 'mobile':
-                        $replacement = isMobile();
+                        $replacement = isMobile($args[0] == 'raw');
                         break;
                     case 'factory':
                         $replacement = fact(...$args);
