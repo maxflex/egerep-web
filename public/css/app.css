@@ -140,11 +140,6 @@ a[href^="https://www.google.com/maps"] {
 .color-green {
   color: #53ab53; }
 
-.serp-loading {
-  text-align: center;
-  padding: 200px 0;
-  color: #b5b5b5; }
-
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -5689,5 +5684,10 @@ button {
 b {
   font-weight: normal;
   font-family: 'helveticaneuecyrbold'; }
+
+.serp-loading {
+  text-align: center;
+  padding: 200px 0;
+  color: #b5b5b5; }
 
 /*# sourceMappingURL=app.css.map */
