@@ -101,7 +101,8 @@ a[href^="https://www.google.com/maps"] {
   animation: ellipsis steps(4, end) 900ms infinite;
   content: "\2026";
   /* ascii code for the ellipsis character */
-  width: 0px; }
+  width: 0px;
+  position: absolute; }
 
 @keyframes ellipsis {
   to {
@@ -113,11 +114,10 @@ a[href^="https://www.google.com/maps"] {
 
 .loading-inside-button {
   position: absolute;
-  left: 31%;
   top: 0;
   bottom: 0;
-  margin-top: auto;
-  margin-bottom: auto; }
+  left: 0;
+  right: 0; }
 
 /*
  * Hide visually and from screen readers, but maintain layout
