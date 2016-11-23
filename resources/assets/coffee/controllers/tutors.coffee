@@ -142,7 +142,6 @@ angular
                     $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
 
         search = ->
-            return
             $scope.searching = true
             Tutor.search
                 filter_used: filter_used

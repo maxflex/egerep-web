@@ -500,7 +500,6 @@
       }
     };
     search = function() {
-      return;
       $scope.searching = true;
       return Tutor.search({
         filter_used: filter_used,
@@ -629,11 +628,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -1025,6 +1019,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
