@@ -77,7 +77,7 @@ angular
 
                 map.fitBounds bounds
                 map.panToBounds bounds
-                map.setZoom 12
+                map.setZoom if tutor.markers.length > 1 then 11 else 12
 
                 # bug fix – убираем квадратик в правом нижнем углу
                 google.maps.event.addListenerOnce map, 'idle', ->
