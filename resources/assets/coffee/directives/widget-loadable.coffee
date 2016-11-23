@@ -18,8 +18,8 @@ angular.module('Egerep').directive 'widgetLoadable', ($q, $timeout) ->
                 $toggleBlock.stop()
                 $toggleBlock.slideToggle()
 
-        # $scope.$watch 'field', (newVal, oldVal) -> if newVal isnt undefined then q.resolve(true)
-        $scope.$watch 'field', (newVal, oldVal) ->
-            if newVal isnt undefined then $timeout ->
-                q.resolve(true)
-            , 50000
+        $scope.$watch 'field', (newVal, oldVal) -> if newVal isnt undefined then q.resolve(true)
+        # $scope.$watch 'field', (newVal, oldVal) ->
+        #     if newVal isnt undefined then $timeout ->
+        #         q.resolve(true)
+        #     , 50000
