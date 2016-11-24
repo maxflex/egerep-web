@@ -3824,8 +3824,11 @@ p {
     color: $gray-light;
 }
 
-.seo-text {
+.h1-like:last-child {
     margin-top: 3em;
+}
+
+.seo-text {
     & li {
         margin-bottom: 1.5em;
     }
