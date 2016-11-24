@@ -236,7 +236,8 @@
 
     function isMobile($raw = false)
     {
-        $is_mobile = (new \Jenssegers\Agent\Agent)->isMobile();
+        $agent = new \Jenssegers\Agent\Agent;
+        $is_mobile = ($agent->isMobile() && ! $agent->isTablet());
         if ($raw) {
             return $is_mobile;
         } else {

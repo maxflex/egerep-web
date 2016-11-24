@@ -2,7 +2,7 @@
 .button-green, .button-border-green, .button-border-gray {
   padding: 0 12px;
   line-height: 36px;
-  border-radius: 4px; }
+  border-radius: 6px; }
 
 .logo-base, .header-logo, .footer-logo {
   height: 65px;
@@ -76,7 +76,7 @@ a[href^="https://www.google.com/maps"] {
   padding-left: 14px !important; }
 
 .error-message {
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #f20007;
   color: white;
   text-align: center;
@@ -4227,6 +4227,7 @@ textarea {
 --------------------------------*/
 .main {
   min-height: 100%;
+  min-width: 1024px;
   height: auto;
   position: relative; }
   .main.full-height {
@@ -4313,7 +4314,7 @@ textarea {
   display: inline-block;
   background: #f8f8f8;
   border: 1px solid #c0c0c0;
-  border-radius: 4px;
+  border-radius: 6px;
   height: 47px;
   padding: 0 14px;
   margin: 0 2px;
@@ -4427,7 +4428,7 @@ textarea {
 .short-tutor-list-img {
   height: 150px;
   width: 120px;
-  border-radius: 4px; }
+  border-radius: 6px; }
 
 .short-tutor-sub-text {
   font-size: 20px;
@@ -4550,7 +4551,7 @@ textarea {
   padding: 0 0 7px; }
 
 .search-result-userpic img {
-  border-radius: 4px;
+  border-radius: 6px;
   height: 150px;
   width: 120px; }
 
@@ -4647,7 +4648,7 @@ textarea {
 .search-result-reviews-wrap {
   background: #f8f8f8;
   padding: 22px 35px 22px 40px;
-  border-radius: 4px;
+  border-radius: 6px;
   margin: 0;
   margin-top: 10px; }
 
@@ -4685,7 +4686,7 @@ textarea {
   background: #f8f8f8;
   padding: 30px 30px 21px;
   margin: 20px 0 0;
-  border-radius: 4px; }
+  border-radius: 6px; }
 
 .search-result-contact-row {
   width: 296px;
@@ -4735,7 +4736,7 @@ textarea {
 .index-reviews-list li {
   display: inline-block;
   background: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 262px;
   padding: 24px 24px 18px;
   margin: 0 8px 30px 0;
@@ -4746,7 +4747,7 @@ textarea {
   color: #777777; }
 
 .index-reviews-list-user-img {
-  border-radius: 4px;
+  border-radius: 6px;
   height: 61px;
   margin: 0 9px 0 0; }
 
@@ -4993,7 +4994,7 @@ textarea {
   width: 4px;
   height: 4px;
   background: #adadad;
-  border-radius: 4px; }
+  border-radius: 6px; }
 
 .footer-copy-right li:first-child {
   margin: 0;
@@ -5061,7 +5062,7 @@ textarea {
 .input-text,
 .textarea {
   border: 1px solid #dedede;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 0 0 0 15px;
   height: 36px;
   line-height: 36px;
@@ -5095,7 +5096,7 @@ span.customSelect {
   display: inline-block;
   vertical-align: middle;
   border: 1px solid #bdbdbd;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 19px;
   color: #4c4a40;
   font-family: 'helveticaneuecyrroman';
@@ -5340,7 +5341,7 @@ span.customSelect.custom-select-small .customSelectInner {
 .review-badge {
   padding: 1px 4px;
   background-color: #75bc75;
-  border-radius: 4px;
+  border-radius: 6px;
   color: white;
   display: inline-block; }
 
@@ -5354,7 +5355,7 @@ span.customSelect.custom-select-small .customSelectInner {
 .footer-search-input {
   border: 1px solid #e3e3e3;
   background-color: #e3e3e3;
-  border-radius: 4px 0 0 4px;
+  border-radius: 6px 0 0 6px;
   padding: 0 0 0 16px;
   width: 231px;
   height: 34px;
@@ -5390,7 +5391,7 @@ div[id^='gmap'] {
   height: 403px;
   margin: 10px 0; }
   div[id^='gmap'] div {
-    border-radius: 4px; }
+    border-radius: 6px; }
 
 div[id^='svg'] {
   margin: 0;

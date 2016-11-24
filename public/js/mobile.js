@@ -23,14 +23,14 @@ $(document).ready(function() {
 
 function bindToggle()
 {
-	$('.toggle-widget__title:not(.locked)').on('click').click(function() {
+	$('.toggle-widget__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {
 		var $parent = $(this).parent('.toggle-widget');
 		var $toggleBlock = $parent.children('.toggle-widget__inner');
 		$(this).toggleClass('active');
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	});
-    $('.accordions .accordions__title:not(.locked)').on('click').click(function() {
+    $('.accordions .accordions__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$(this).toggleClass('active');

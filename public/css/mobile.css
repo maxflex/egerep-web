@@ -2,7 +2,7 @@
 .button-base {
   padding: 0 12px;
   line-height: 36px;
-  border-radius: 4px; }
+  border-radius: 6px; }
 
 .logo-base {
   height: 65px;
@@ -76,7 +76,7 @@ a[href^="https://www.google.com/maps"] {
   padding-left: 14px !important; }
 
 .error-message {
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #f20007;
   color: white;
   text-align: center;
@@ -3859,8 +3859,7 @@ textarea {
 
 .accordions__title {
   position: relative;
-  padding: 1.042em 3.333em 0.833em 1.042em;
-  /*             background: #f2f2f2; */
+  padding: 1em;
   cursor: pointer; }
 
 .accordions__title.active {
@@ -3879,10 +3878,10 @@ textarea {
 
 .accordions__arrow {
   position: absolute;
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
   top: 50%;
-  right: 1.042em;
+  right: 2.9em;
   margin-top: -0.25em;
   background: url("/img/svg/dropdown.svg") no-repeat;
   background-size: 100% 100%; }
@@ -3907,7 +3906,7 @@ textarea {
 
 /* Content */
 .content {
-  padding: 1.458em 1.667em 0 1.667em; }
+  padding: 1em 1em 0; }
   .content.only {
     padding-bottom: 1.458em; }
 
@@ -4870,21 +4869,17 @@ textarea {
 
 .toggle-widget__title, .widget-loadable__title {
   position: relative;
-  /*     padding: 1.042em 1em 1.042em; */
-  padding: 0.6em 3.333em 0.6em 1.042em;
+  padding: 0.6em 1em;
   cursor: pointer;
   background: white;
   z-index: 1; }
 
-.toggle-widget__title span, .widget-loadable__title span {
-  font-size: 1.100em; }
-
 .toggle-widget__arrow {
   position: absolute;
-  width: 2em;
-  height: 2em;
-  top: 50%;
-  right: 1.042em;
+  width: 1.5em;
+  height: 1.5em;
+  top: 56%;
+  right: 1em;
   margin-top: -0.6em;
   background: url(/img/svg/dropdown.svg) no-repeat;
   background-size: 100% 100%; }
@@ -4895,6 +4890,10 @@ textarea {
   margin-top: -1.3em; }
 
 /* User list */
+.user-list .tutor-img {
+  float: left;
+  margin-right: 1em; }
+
 .user-content__priÑe {
   padding: 0; }
 
@@ -4918,7 +4917,8 @@ textarea {
   font-size: 1.100em; }
 
 .user-list .accordions__content {
-  padding: 0.833em 1.042em 1.667em 1.042em; }
+  padding: 1em;
+  padding-top: 0; }
 
 .user-content__text {
   padding: 0 0 1.250em 0;
@@ -4926,8 +4926,8 @@ textarea {
   font-size: 1.1em; }
 
 .user-list .accordions__title {
-  min-height: 5.208em;
-  padding: 1.5em 2.5em 1.042em 7.500em; }
+  display: inline-block;
+  width: 100%; }
 
 .user-list__number {
   /*         font-size: 1.1em; */
@@ -5796,13 +5796,15 @@ li.text-danger:before {
 .npb {
   padding-bottom: 0 !important; }
 
+.tutor-img {
+  width: 6.5em;
+  border-radius: 6px; }
+
 .tutor-profile-index {
   margin-bottom: 20px;
   display: inline-block;
   width: 100%; }
   .tutor-profile-index img {
-    width: 6.5em;
-    border-radius: 4px;
     float: left;
     margin-right: 10px; }
   .tutor-profile-index > div {
@@ -5864,7 +5866,7 @@ li.text-danger:before {
 
 .search-result-wrap-more {
   text-align: center;
-  margin: 3em 0; }
+  margin: 3em 0 1em; }
 
 .review-block {
   margin-bottom: 20px;
@@ -5900,12 +5902,11 @@ div[id^='svg'] {
   overflow: scroll; }
 
 .public-price {
-  margin: 1em 0;
-  font-size: 1.1em; }
+  margin: 1em 0; }
 
 .connect-buttons {
   text-align: center;
-  margin: 2em 0; }
+  margin: 2em 0 0; }
   .connect-buttons > *:not(:last-child) {
     margin-bottom: 1em; }
 
@@ -5994,7 +5995,7 @@ p {
   cursor: pointer;
   text-align: right;
   padding-right: 12px;
-  padding: 0.47em .5em;
+  padding: 0.46em .5em;
   font-size: 1.1em; }
   .footer-search-button img {
     height: 15px; }
@@ -6003,5 +6004,10 @@ p {
   text-align: center;
   padding: 12em 0;
   color: #b5b5b5; }
+
+.seo-text {
+  margin-top: 3em; }
+  .seo-text li {
+    margin-bottom: 1.5em; }
 
 /*# sourceMappingURL=mobile.css.map */
