@@ -145,11 +145,11 @@
         public static function compileSeo($page, &$html)
         {
             if ($page->seo_desktop) {
-                static::_replace($html, 'seo_text_top', "<div class='seo-text'>" . $page->getClean('html') . "</div>");
+                static::_replace($html, 'seo_text_top', "<div class='seo-text-top'>" . $page->getClean('html') . "</div>");
                 static::_replace($html, 'seo_text_bottom', '');
             } else {
                 static::_replace($html, 'seo_text_top', '');
-                static::_replace($html, 'seo_text_bottom', "<div class='seo-text'>" . $page->getClean('html') . "</div>");
+                static::_replace($html, 'seo_text_bottom', "<div class='seo-text-bottom'>" . $page->getClean('html') . "</div>");
             }
         }
 

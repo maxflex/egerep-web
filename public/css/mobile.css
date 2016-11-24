@@ -6005,9 +6005,11 @@ p {
   padding: 12em 0;
   color: #b5b5b5; }
 
-.h1-like:last-child {
+.seo-text-bottom li, .seo-text-top li {
+  margin-bottom: 1.5em; }
+
+.h1-bottom {
+  padding: 0;
   margin-top: 3em; }
-  .h1-like:last-child li {
-    margin-bottom: 1.5em; }
 
 /*# sourceMappingURL=mobile.css.map */
