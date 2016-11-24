@@ -12,12 +12,11 @@ $(document).ready(function() {
 		$('body, html').removeClass('body-crop')
 	})
 
-	$('#search-tutor-button').click(function() {
-		search_tutor_id = $('#search-tutor-id').val()
-		if (search_tutor_id != '') {
-			location.href = '/' + search_tutor_id
-		}
-	})
+    document.documentElement.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+          }
+        }, false);
 })
 
 
