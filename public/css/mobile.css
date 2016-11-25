@@ -3166,6 +3166,9 @@ h2, .serp-page h1 {
   padding: 0 0 20px 0;
   font-size: 1.500em; }
 
+.serp-page h2 {
+  padding-bottom: 10px; }
+
 h3 {
   padding: 0 0 0 0;
   font-size: 0.833em; }
@@ -6007,7 +6010,7 @@ p {
 .breadcrumbs-inner {
   width: 960px;
   margin: 0 auto;
-  padding: 18px 0 19px;
+  padding: 18px 0 10px;
   font-size: 14px; }
 
 .breadcrumbs-inner a {
