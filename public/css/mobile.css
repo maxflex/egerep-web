@@ -6005,7 +6005,8 @@ p {
   margin-top: 1em; }
 
 .breadcrumbs {
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  line-height: 1.5em; }
 
 .breadcrumbs-inner {
   padding: 18px 0 10px; }
