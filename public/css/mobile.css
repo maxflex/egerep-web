@@ -6001,4 +6001,27 @@ p {
   padding: 0;
   margin-top: 1em; }
 
+.breadcrumbs {
+  margin-bottom: 5px; }
+
+.breadcrumbs-inner {
+  width: 960px;
+  margin: 0 auto;
+  padding: 18px 0 19px;
+  font-size: 14px; }
+
+.breadcrumbs-inner a {
+  display: inline-block;
+  vertical-align: baseline;
+  position: relative;
+  padding: 0 15px 0 0;
+  margin: 0 9px 0 0; }
+
+.breadcrumbs-inner a:after {
+  content: '/';
+  position: absolute;
+  right: 0;
+  top: 2px;
+  color: #919191; }
+
 /*# sourceMappingURL=mobile.css.map */
