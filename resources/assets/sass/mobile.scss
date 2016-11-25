@@ -3844,10 +3844,7 @@ p {
     padding: 0 15px 0 0;
     margin: 0 9px 0 0;
 }
-.breadcrumbs-inner a:after {
-    content: '/';
-    position: absolute;
-    right: 0;
-    top: 2px;
-    color: #919191;
+.breadcrumbs-separator {
+    color: $gray;
+    margin: 0 5px;
 }
