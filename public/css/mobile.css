@@ -5991,7 +5991,8 @@ p {
 
 .serp-loading {
   text-align: center;
-  padding: 12em 0;
+  padding: 4em 0;
+  font-size: 1.5em;
   color: #8a8a8a; }
 
 .seo-text-bottom li, .seo-text-top li {
