@@ -52,7 +52,7 @@ elixir(mix => {
             'angular/angular.min',
             'angular-resource/angular-resource.min',
             'angular-i18n/angular-locale_ru-ru',
-            'angular-inview/angular-inview',
+            // 'angular-inview/angular-inview',
             'underscore/underscore-min',
             'ladda/dist/spin.min',
             'ladda/dist/ladda.min',
