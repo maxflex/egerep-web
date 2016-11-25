@@ -6010,11 +6010,6 @@ p {
 .breadcrumbs-inner {
   padding: 18px 0 10px; }
 
-.breadcrumbs-inner a {
-  display: inline-block;
-  vertical-align: baseline;
-  position: relative; }
-
 .breadcrumbs-separator {
   color: #777777;
   margin: 0 5px; }
