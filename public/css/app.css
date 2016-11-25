@@ -5688,7 +5688,8 @@ b {
 
 .serp-loading {
   text-align: center;
-  padding: 200px 0;
+  padding: 160px 0 80px;
+  font-size: 28px;
   color: #b5b5b5; }
 
 /*# sourceMappingURL=app.css.map */
