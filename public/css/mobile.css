@@ -4698,8 +4698,8 @@ textarea {
   color: white; }
 
 .btn[disabled], .btn-gray {
-  color: #777777;
-  border-color: #777777; }
+  color: #8a8a8a;
+  border-color: #8a8a8a; }
 
 .full-width {
   width: 100%; }
@@ -5904,8 +5904,8 @@ div[id^='svg'] {
 .gmnoprint {
   display: none !important; }
 
-.text-gray-light {
-  color: #b5b5b5; }
+.text-gray-mobile {
+  color: #8a8a8a; }
 
 .error-message {
   margin: 20px 0; }
@@ -5989,7 +5989,7 @@ p {
 .serp-loading {
   text-align: center;
   padding: 12em 0;
-  color: #b5b5b5; }
+  color: #8a8a8a; }
 
 .seo-text-bottom li, .seo-text-top li {
   margin-bottom: 1.5em; }
