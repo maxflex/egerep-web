@@ -6008,10 +6008,7 @@ p {
   margin-bottom: 5px; }
 
 .breadcrumbs-inner {
-  width: 960px;
-  margin: 0 auto;
-  padding: 18px 0 10px;
-  font-size: 14px; }
+  padding: 18px 0 10px; }
 
 .breadcrumbs-inner a {
   display: inline-block;
