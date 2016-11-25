@@ -5893,7 +5893,7 @@ div[id^='svg'] {
   overflow: scroll; }
 
 .public-price {
-  margin: 1em 0; }
+  margin: .6em 0; }
 
 .connect-buttons {
   text-align: center;
