@@ -3814,6 +3814,12 @@ p {
     }
 }
 
+.seo-text-bottom {
+    & p:last-child {
+        padding: 0;
+    }
+}
+
 .h1-bottom {
     padding: 0;
     margin-top: 1em;
