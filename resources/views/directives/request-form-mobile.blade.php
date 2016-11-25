@@ -1,6 +1,6 @@
 <form class='contacts-form'>
     <div ng-hide='tutor.request_sent'>
-        <div class="form-row" style='margin-top: 15px'>
+        <div class="form-row">
             <input class="input-text" type="text" placeholder="ваше имя" name='name' maxlength='60'
                 ng-model='tutor.request.name'>
         </div>

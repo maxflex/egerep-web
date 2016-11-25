@@ -4219,7 +4219,7 @@ textarea {
 
 /* Form element */
 .form-row {
-  padding: 0 0 1.250em 0; }
+  padding: 0 0 1em 0; }
 
 .input-text {
   width: 100%;
@@ -4681,7 +4681,7 @@ textarea {
   background-size: 100% 100%; }
 
 /* btn gradient */
-.btn-gradient, .btn-green {
+.btn-gradient, .btn-green, .btn[disabled], .btn-gray {
   display: inline-block;
   padding: 0.4em 1.1em;
   border-radius: 7px;
@@ -4697,21 +4697,14 @@ textarea {
   background: #5db05c;
   color: white; }
 
-.btn-gray {
-  display: inline-block;
-  padding: 0.4em 1.1em;
-  border-radius: 2.083em;
-  border: 2px solid #aeafaf;
-  background: #fff;
-  font-size: 1.2em;
-  color: #aeafaf;
-  cursor: pointer;
-  outline: none; }
+.btn[disabled], .btn-gray {
+  color: #777777;
+  border-color: #777777; }
 
 .full-width {
   width: 100%; }
 
-.btn-gradient span, .btn-green span {
+.btn-gradient span, .btn-green span, .btn[disabled] span, .btn-gray span {
   /*         font-size: 1.500em; */
   line-height: normal; }
 
@@ -5255,9 +5248,6 @@ textarea {
   color: #aeafaf;
   margin-bottom: 10px;
   font-style: italic; }
-
-.text-gray {
-  color: #aeafaf; }
 
 .reviews-slider__list li:not:first-child {
   display: none; }
@@ -5866,7 +5856,7 @@ li.text-danger:before {
 
 .search-result-wrap-more {
   text-align: center;
-  margin: 3em 0 1em; }
+  margin: 1em 0; }
 
 .review-block {
   margin-bottom: 20px;
@@ -5924,11 +5914,6 @@ div[id^='svg'] {
   text-align: center; }
   .request-form-sent h2 {
     text-align: center; }
-
-.btn[disabled] {
-  border-color: #b5b5b5;
-  color: #b5b5b5;
-  background-color: transparent; }
 
 .display-block {
   display: block !important; }
@@ -6010,6 +5995,6 @@ p {
 
 .h1-bottom {
   padding: 0;
-  margin-top: 3em; }
+  margin-top: 1em; }
 
 /*# sourceMappingURL=mobile.css.map */

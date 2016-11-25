@@ -1,6 +1,6 @@
 angular
     .module 'Egerep'
-    .constant 'REVIEWS_PER_PAGE', 5
+    .constant 'REVIEWS_PER_PAGE', 2
     .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) ->
         bindArguments($scope, arguments)
 

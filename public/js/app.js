@@ -343,7 +343,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 2).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
     var filter_used, highlight, search, search_count, unselectSubjects, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -632,11 +632,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -698,6 +693,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

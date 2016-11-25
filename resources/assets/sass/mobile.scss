@@ -1682,7 +1682,7 @@ textarea {
 
 /* Form element */
 .form-row {
-    padding: 0 0 1.250em 0;
+    padding: 0 0 1em 0;
 }
 .input-text {
     width: 100%;
@@ -2282,17 +2282,10 @@ textarea {
     color: white;
 }
 
-.btn-gray {
-	display: inline-block;
-	padding: 0.4em 1.1em;
-    border-radius: 2.083em;
-    border: 2px solid #aeafaf;
-
-    background: #fff;
-	font-size: 1.2em;
-    color: #aeafaf;
-    cursor: pointer;
-    outline: none;
+.btn[disabled], .btn-gray {
+    @extend .btn-gradient;
+    color: $gray;
+    border-color: $gray;
 }
 
 .full-width {
@@ -3001,10 +2994,6 @@ textarea {
 	font-style: italic;
 }
 
-.text-gray {
-	color: #aeafaf;
-}
-
 .reviews-slider__list li:not:first-child {
   display:none;
 }
@@ -3656,7 +3645,7 @@ li.text-danger:before {
 
 .search-result-wrap-more {
     text-align: center;
-    margin: 3em 0 1em;
+    margin: 1em 0;
 }
 
 .review-block {
@@ -3734,12 +3723,6 @@ div[id^='svg'] {
     & h2 {
         text-align: center;
     }
-}
-
-.btn[disabled] {
-    border-color: $gray-light;
-    color: $gray-light;
-    background-color: transparent;
 }
 
 .display-block {
@@ -3832,5 +3815,5 @@ p {
 
 .h1-bottom {
     padding: 0;
-    margin-top: 3em;
+    margin-top: 1em;
 }
