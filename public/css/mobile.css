@@ -6082,6 +6082,16 @@ p {
     z-index: 3; }
   .modal .modal-content {
     padding: 1em; }
+  .modal .align-middle {
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center; }
+  .modal .full-height {
+    height: calc(100% - 2em); }
 
 .tutor-info-second-line {
   clear: both;

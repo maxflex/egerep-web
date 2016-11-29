@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$('.header-btn__menu__svg').click(function() {
-		$('#menu-overlay').addClass('open').removeClass('pseudo-hidden')
+		// $('#menu-overlay').addClass('open').removeClass('pseudo-hidden')
 		$('body, html').addClass('body-crop')
+        $(".modal#modal-menu").addClass('active')
+        $("body").addClass('modal-open')
 	})
 
 	$('#menu-overlay img').click(function() {
