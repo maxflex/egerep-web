@@ -189,3 +189,7 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 .color-green {
     color: $green-main;
 }
+
+.half-opacity {
+    opacity: .4;
+}

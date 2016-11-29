@@ -207,6 +207,12 @@ angular
         #
         # MOBILE
         #
+        $scope.popup = (id, tutor = null, fn = null) ->
+            $(".modal#modal-#{id}").addClass('active')
+            $("body").addClass('modal-open')
+            if tutor isnt null then $scope.popup_tutor = tutor
+            if fn isnt null then $timeout -> $scope[fn](tutor)
+
         $scope.selectParams = ->
             closeModal()
             $scope.filter()

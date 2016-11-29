@@ -24,6 +24,11 @@
         autoHideDelay: 3000
     }
 
+    function closeModal(el) {
+        $('.modal').removeClass('active')
+        $('body').removeClass('modal-open')
+    }
+
 	/**
 	 * Remove by id
 	 */

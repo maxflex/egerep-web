@@ -7,6 +7,9 @@
     text-decoration: underline;
     cursor: pointer;
     outline: none;
+    &.text-red {
+        color: $red;
+    }
 }
 
 div[id^='gmap'] {
@@ -402,4 +405,67 @@ b {
     padding: 160px 0 80px;
     font-size: 28px;
     color: $gray-light;
+}
+
+.serp-params {
+    border: 1px solid $gray-light;
+    border-radius: $border-radius;
+    padding: 10px;
+    line-height: 20px;
+}
+
+.modal {
+    position: fixed;
+    width: 60%;
+    height: 50%;
+    // height: 50%;
+    background: white;
+    z-index: 99;
+    left: 20%;
+    top: 25%;
+    // top: 25%;
+    border-radius: $border-radius;
+    display: none;
+    overflow: scroll;
+    line-height: 20px;
+    &.active {
+        display: block;
+    }
+    & .cross {
+        position: absolute;
+        right: 1em;
+        width: 1.1em;
+        height: 1.1em;
+        background: url(../img/svg/cross.svg) no-repeat;
+        cursor: pointer;
+        z-index: 3;
+    }
+    & .modal-content {
+        padding: 1em;
+        & h4 {
+            font-weight: normal;
+            font-family: 'helveticaneuecyrbold';
+        }
+        & .col {
+            width: 50%;
+            float: left;
+        }
+    }
+}
+.modal-open .main {
+    -webkit-filter: blur(5px);
+       -moz-filter: blur(5px);
+         -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+            filter: blur(5px);
+}
+body.modal-open:before {
+    content: '';
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(black, 0.5);
+    position: fixed;
+    z-index: 99;
 }

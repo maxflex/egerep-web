@@ -592,6 +592,24 @@
         });
       }
     };
+    $scope.popup = function(id, tutor, fn) {
+      if (tutor == null) {
+        tutor = null;
+      }
+      if (fn == null) {
+        fn = null;
+      }
+      $(".modal#modal-" + id).addClass('active');
+      $("body").addClass('modal-open');
+      if (tutor !== null) {
+        $scope.popup_tutor = tutor;
+      }
+      if (fn !== null) {
+        return $timeout(function() {
+          return $scope[fn](tutor);
+        });
+      }
+    };
     $scope.selectParams = function() {
       closeModal();
       return $scope.filter();
@@ -994,11 +1012,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1060,6 +1073,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

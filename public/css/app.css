@@ -140,6 +140,9 @@ a[href^="https://www.google.com/maps"] {
 .color-green {
   color: #53ab53; }
 
+.half-opacity {
+  opacity: .4; }
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
@@ -4530,7 +4533,8 @@ textarea {
 .search-result {
   margin: 0;
   padding: 0 0 28px;
-  list-style: none; }
+  list-style: none;
+  z-index: 999; }
 
 .search-result .search-result-item {
   padding: 30px 0;
@@ -5385,6 +5389,8 @@ span.customSelect.custom-select-small .customSelectInner {
   text-decoration: underline;
   cursor: pointer;
   outline: none; }
+  .link-like.text-red {
+    color: #f20007; }
 
 div[id^='gmap'] {
   width: 100%;
@@ -5691,5 +5697,59 @@ b {
   padding: 160px 0 80px;
   font-size: 28px;
   color: #b5b5b5; }
+
+.serp-params {
+  border: 1px solid #b5b5b5;
+  border-radius: 6px;
+  padding: 10px;
+  line-height: 20px; }
+
+.modal {
+  position: fixed;
+  width: 60%;
+  height: 50%;
+  background: white;
+  z-index: 99;
+  left: 20%;
+  top: 25%;
+  border-radius: 6px;
+  display: none;
+  overflow: scroll;
+  line-height: 20px; }
+  .modal.active {
+    display: block; }
+  .modal .cross {
+    position: absolute;
+    right: 1em;
+    width: 1.1em;
+    height: 1.1em;
+    background: url(../img/svg/cross.svg) no-repeat;
+    cursor: pointer;
+    z-index: 3; }
+  .modal .modal-content {
+    padding: 1em; }
+    .modal .modal-content h4 {
+      font-weight: normal;
+      font-family: 'helveticaneuecyrbold'; }
+    .modal .modal-content .col {
+      width: 50%;
+      float: left; }
+
+.modal-open .main {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); }
+
+body.modal-open:before {
+  content: '';
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 99; }
 
 /*# sourceMappingURL=app.css.map */

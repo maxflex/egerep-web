@@ -140,6 +140,9 @@ a[href^="https://www.google.com/maps"] {
 .color-green {
   color: #53ab53; }
 
+.half-opacity {
+  opacity: .4; }
+
 /**
 * Fonts
 **/
@@ -4263,7 +4266,7 @@ textarea {
   box-shadow: none !important;
   -webkit-appearance: none;
   font-size: 1.1em;
-  padding: 0.4em 1.1em; }
+  padding: 0.4em .7em; }
 
 .input-metro {
   background: white;
@@ -4279,7 +4282,7 @@ textarea {
   overflow: auto;
   width: 100%;
   height: 6.458em;
-  padding: 0.4em 1.1em;
+  padding: 0.4em .7em;
   box-sizing: border-box;
   border-radius: 0.125em;
   border: 1px solid #ebebeb;
@@ -5547,7 +5550,7 @@ b {
   font-size: 14px;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  padding: 0.4em 1.1em;
+  padding: 0.4em .7em;
   font-size: 1.1em; }
 
 .search-by-id button {
@@ -5878,7 +5881,7 @@ li.text-danger:before {
 
 .right-tutor-info {
   margin-left: 1em;
-  width: 87%; }
+  width: 88%; }
   .right-tutor-info > div {
     margin-bottom: .3em;
     font-size: 1em; }
@@ -5999,7 +6002,7 @@ p {
   padding: 0 0 0 16px;
   font-size: 14px;
   font-family: 'helveticaneuecyrlight';
-  padding: 0.4em 1.1em;
+  padding: 0.4em .7em;
   font-size: 1.1em;
   width: 80%;
   box-shadow: none;
@@ -6096,7 +6099,8 @@ p {
   #modal-params .modal-content .param-block {
     margin-bottom: 2em; }
 
-.half-opacity {
-  opacity: .5; }
+.force-hide {
+  position: relative;
+  top: .8em; }
 
 /*# sourceMappingURL=mobile.css.map */

@@ -44,8 +44,3 @@ function bindToggle()
 function hideCard(el) {
     $(el).closest('li').children().first().click()
 }
-
-function closeModal(el) {
-    $('.modal').removeClass('active')
-    $('body').removeClass('modal-open')
-}
