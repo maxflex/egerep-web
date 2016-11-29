@@ -207,6 +207,29 @@ angular
         #
         # MOBILE
         #
+        $scope.selectParams = ->
+            closeModal()
+            $scope.filter()
+
+        $scope.syncSort = ->
+            $scope.search.sort = if $scope.search.station_id then 5 else 1
+
+        $scope.showGmap = (tutor) ->
+            $(".modal#modal-map").addClass('active')
+            $("body").addClass('modal-open')
+            $scope.popup_tutor = tutor
+            $timeout -> $scope.gmap(tutor)
+
+        $scope.modalSvg = (tutor) ->
+            $(".modal#modal-svg").addClass('active')
+            $("body").addClass('modal-open')
+            $scope.popup_tutor = tutor
+            $timeout -> $scope.showSvg(tutor)
+
+        $scope.modalParams = ->
+            $(".modal#modal-params").addClass('active')
+            $("body").addClass('modal-open')
+
         $scope.overlay = {}
 
         $scope.changeFilter = (param, value = null) ->
@@ -215,8 +238,9 @@ angular
             $scope.filter()
 
         $scope.requestDialog = (tutor) ->
-            $scope.sending_tutor = tutor
-            $scope.overlay.request = true
+            $(".modal#modal-request").addClass('active')
+            $("body").addClass('modal-open')
+            $scope.popup_tutor = tutor
 
         $scope.sendRequest = ->
             $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined

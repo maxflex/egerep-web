@@ -32,4 +32,14 @@ angular.module 'Egerep'
                 ids.push(id) if enabled
             ids
 
+        this.opacityControl = (id) ->
+            return false if not this.getSelected().length
+            selected_id = parseInt(this.getSelected()[0])
+            pair = _.filter this.pairs, (p) ->
+                p.indexOf(selected_id) isnt -1
+            if not pair.length
+                selected_id != id
+            else
+                pair[0].indexOf(parseInt(id)) is -1
+
         this

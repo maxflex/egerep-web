@@ -3053,6 +3053,15 @@ html {
 body {
   margin: 0;
   -webkit-overflow-scrolling: touch !important; }
+  body.modal-open:before {
+    content: '';
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 99; }
 
 /* HTML5 display definitions
    ========================================================================== */
@@ -3111,7 +3120,7 @@ template {
 /**
  * Remove the gray background color from active links in IE 10.
  */
-a {
+a, .link-like {
   color: #528d56;
   text-decoration: underline;
   background-color: transparent; }
@@ -3857,12 +3866,31 @@ textarea {
   padding: 0 0 0 0;
   list-style: none; }
 
-.accordions > li:not(:last-child) {
+.accordions > li {
   border-bottom: 1px solid #d7d7d7; }
+  .accordions > li .arrow {
+    content: '';
+    position: absolute;
+    border: 1px solid #d7d7d7;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    /* top: -1em; */
+    margin-top: -1em;
+    /* margin: 0 auto; */
+    left: calc(50% - 1em);
+    background: url(/img/svg/dropdown.svg) no-repeat;
+    background-size: 100% 100%;
+    background-color: white;
+    background-position: center bottom;
+    background-size: 1.1em;
+    z-index: 1; }
+  .accordions > li:last-child {
+    margin-bottom: 2em; }
 
 .accordions__title {
   position: relative;
-  padding: 1em;
+  padding: 1.5em 1em;
   cursor: pointer; }
 
 .accordions__title.active {
@@ -4236,6 +4264,10 @@ textarea {
   -webkit-appearance: none;
   font-size: 1.1em;
   padding: 0.4em 1.1em; }
+
+.input-metro {
+  background: white;
+  font-size: 1em; }
 
 .textarea {
   font-size: 1.1em !important;
@@ -4856,7 +4888,8 @@ textarea {
   border-top: 1px solid #d6d7d7;
   background-color: white; }
   .toggle-widget.last-child {
-    border-bottom: 1px solid #d6d7d7; }
+    border-bottom: 1px solid #d6d7d7;
+    margin-bottom: 1.2em; }
 
 .toggle-widget__inner {
   display: none;
@@ -4880,9 +4913,11 @@ textarea {
   background: url(/img/svg/dropdown.svg) no-repeat;
   background-size: 100% 100%; }
 
-.toggle-widget__title.active .toggle-widget__arrow {
+.upside-down, .arrow-active > .arrow, .toggle-widget__title.active .toggle-widget__arrow {
   -webkit-transform: rotate(-180deg);
-  transform: rotate(-180deg);
+  transform: rotate(-180deg); }
+
+.toggle-widget__title.active .toggle-widget__arrow {
   margin-top: -1.3em; }
 
 /* User list */
@@ -5839,7 +5874,6 @@ li.text-danger:before {
 
 .serp-params {
   margin-bottom: 1em;
-  font-size: 1.2em;
   line-height: 1.5em; }
 
 .right-tutor-info {
@@ -5848,6 +5882,8 @@ li.text-danger:before {
   .right-tutor-info > div {
     margin-bottom: .3em;
     font-size: 1em; }
+    .right-tutor-info > div:first-child {
+      margin-bottom: .6em; }
 
 .info-multi {
   margin: 1em 0;
@@ -5883,16 +5919,14 @@ li.text-danger:before {
       margin-bottom: 3px; }
 
 div[id^='gmap'] {
-  width: calc(100% + 2em);
-  height: 12em;
-  margin-left: -1em;
-  margin-top: 1em; }
+  height: calc(100% - 7em); }
+  div[id^='gmap'] > div {
+    border-radius: 0 0 7px 7px; }
+    div[id^='gmap'] > div > div {
+      border-radius: 0 0 7px 7px; }
 
 div[id^='svg'] {
-  width: calc(100% + 2em);
-  height: 12em;
-  margin-left: -1em;
-  margin-top: 1em;
+  height: calc(100% - 6em);
   overflow: scroll; }
 
 .public-price {
@@ -5900,7 +5934,7 @@ div[id^='svg'] {
 
 .connect-buttons {
   text-align: center;
-  margin: 2em 0 0; }
+  margin: 2em 0 1em; }
   .connect-buttons > *:not(:last-child) {
     margin-bottom: 1em; }
 
@@ -6015,5 +6049,54 @@ p {
 .breadcrumbs-separator {
   color: #777777;
   margin: 0 5px; }
+
+.uc-first {
+  display: inline-block; }
+
+.uc-first:first-letter {
+  text-transform: uppercase; }
+
+.modal {
+  position: fixed;
+  width: 90%;
+  height: 95%;
+  background: white;
+  z-index: 99;
+  left: 5%;
+  top: 2.5%;
+  border-radius: 7px;
+  display: none;
+  overflow: scroll; }
+  .modal.active {
+    display: block; }
+  .modal .cross {
+    position: absolute;
+    right: 1em;
+    width: 1.1em;
+    height: 1.1em;
+    background: url(../img/svg/cross.svg) no-repeat;
+    cursor: pointer;
+    z-index: 3; }
+  .modal .modal-content {
+    padding: 1em; }
+
+.tutor-info-second-line {
+  clear: both;
+  padding-top: .5em; }
+
+.modal-open .container {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px); }
+
+#modal-params .modal-content {
+  overflow: scroll; }
+  #modal-params .modal-content .param-block {
+    margin-bottom: 2em; }
+
+.half-opacity {
+  opacity: .5; }
 
 /*# sourceMappingURL=mobile.css.map */

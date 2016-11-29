@@ -191,6 +191,16 @@ html {
 body {
     margin: 0;
     -webkit-overflow-scrolling: touch !important;
+    &.modal-open:before {
+        content: '';
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(black, 0.5);
+        position: fixed;
+        z-index: 99;
+    }
 }
 
 /* HTML5 display definitions
@@ -259,7 +269,7 @@ template {
  * Remove the gray background color from active links in IE 10.
  */
 
-a {
+a, .link-like {
     color: #528d56;
     text-decoration: underline;
     background-color: transparent;
@@ -1186,13 +1196,36 @@ textarea {
 
     list-style: none;
 }
-    .accordions > li:not(:last-child) {
-        border-bottom: 1px solid #d7d7d7;
+    .accordions > li {
+        & .arrow {
+            content: '';
+            position: absolute;
+            border: 1px solid #d7d7d7;
+            height: 2em;
+            width: 2em;
+            border-radius: 50%;
+            /* top: -1em; */
+            margin-top: -1em;
+            /* margin: 0 auto; */
+            left: calc(50% - 1em);
+            background: url(/img/svg/dropdown.svg) no-repeat;
+            background-size: 100% 100%;
+            background-color: white;
+            background-position: center bottom;
+            background-size: 1.1em;
+            z-index: 1;
+        }
+        &:last-child {
+            margin-bottom: 2em;
+        }
+        // &:not(:last-child) {
+            border-bottom: 1px solid #d7d7d7;
+        // }
     }
 
         .accordions__title {
             position: relative;
-            padding: 1em;
+            padding: 1.5em 1em;
             cursor: pointer;
         }
         .accordions__title.active {
@@ -1701,6 +1734,10 @@ textarea {
     -webkit-appearance: none;
     font-size: 1.1em;
     padding: 0.4em 1.1em;
+}
+.input-metro {
+    background: white;
+    font-size: 1em;
 }
 .textarea {
     font-size: 1.1em !important;
@@ -2487,6 +2524,7 @@ textarea {
     background-color: white;
     &.last-child {
         border-bottom: 1px solid #d6d7d7;
+        margin-bottom: 1.2em;
     }
 }
 .toggle-widget__inner {
@@ -2513,12 +2551,18 @@ textarea {
     background: url(/img/svg/dropdown.svg) no-repeat;
     background-size: 100% 100%;
 }
-.toggle-widget__title.active .toggle-widget__arrow {
+.upside-down {
     -webkit-transform: rotate( -180deg);
     -moz-transform: rotate( -180deg);
     -o-transform: rotate( -180deg);
     -ms-transform: rotate(90deg);
     transform: rotate( -180deg );
+}
+.arrow-active > .arrow {
+    @extend .upside-down;
+}
+.toggle-widget__title.active .toggle-widget__arrow {
+    @extend .upside-down;
     margin-top: -1.3em;
 }
 
@@ -3624,7 +3668,6 @@ li.text-danger:before {
 
 .serp-params {
     margin-bottom: 1em;
-    font-size: 1.2em;
     line-height: 1.5em;
 }
 
@@ -3634,6 +3677,9 @@ li.text-danger:before {
     & > div {
         margin-bottom: .3em;
         font-size: 1em;
+        &:first-child {
+            margin-bottom: .6em;
+        }
     }
 }
 
@@ -3682,17 +3728,17 @@ li.text-danger:before {
 }
 
 div[id^='gmap'] {
-    width: calc(100% + 2em);
-    height: 12em;
-    margin-left: -1em;
-    margin-top: 1em;
+    height: calc(100% - 7em);
+    & > div {
+        border-radius: 0 0 $border-radius-mobile $border-radius-mobile;
+        & > div {
+            border-radius: 0 0 $border-radius-mobile $border-radius-mobile;
+        }
+    }
 }
 
 div[id^='svg'] {
-    width: calc(100% + 2em);
-    height: 12em;
-    margin-left: -1em;
-    margin-top: 1em;
+    height: calc(100% - 6em);
     overflow: scroll;
 }
 
@@ -3702,7 +3748,7 @@ div[id^='svg'] {
 
 .connect-buttons {
     text-align: center;
-    margin: 2em 0 0;
+    margin: 2em 0 1em;
     & > *:not(:last-child) {
         margin-bottom: 1em;
     }
@@ -3842,4 +3888,61 @@ p {
 .breadcrumbs-separator {
     color: $gray;
     margin: 0 5px;
+}
+
+.uc-first {display:inline-block}
+.uc-first:first-letter {text-transform: uppercase}
+
+.modal {
+    position: fixed;
+    width: 90%;
+    height: 95%;
+    // height: 50%;
+    background: white;
+    z-index: 99;
+    left: 5%;
+    top: 2.5%;
+    // top: 25%;
+    border-radius: $border-radius-mobile;
+    display: none;
+    overflow: scroll;
+    &.active {
+        display: block;
+    }
+    & .cross {
+        position: absolute;
+        right: 1em;
+        width: 1.1em;
+        height: 1.1em;
+        background: url(../img/svg/cross.svg) no-repeat;
+        cursor: pointer;
+        z-index: 3;
+    }
+    & .modal-content {
+        padding: 1em;
+    }
+}
+
+.tutor-info-second-line {
+    clear: both;
+    padding-top: .5em;
+}
+
+.modal-open .container {
+    -webkit-filter: blur(5px);
+       -moz-filter: blur(5px);
+         -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+            filter: blur(5px);
+}
+
+#modal-params .modal-content {
+    overflow: scroll;
+    & .param-block {
+        margin-bottom: 2em;
+    }
+}
+
+.half-opacity {
+    opacity: .5;
 }

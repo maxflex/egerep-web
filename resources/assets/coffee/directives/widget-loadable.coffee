@@ -14,7 +14,8 @@ angular.module('Egerep').directive 'widgetLoadable', ($q, $timeout) ->
             else
                 $(@).find('span').text(text)
             q.promise.then =>
-                $(@).toggleClass('active').find('span').text(text)
+                $(@).parent().toggleClass('arrow-active')
+                $(@).find('span').text(text)
                 $toggleBlock.stop()
                 $toggleBlock.slideToggle()
 

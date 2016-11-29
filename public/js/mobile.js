@@ -22,18 +22,30 @@ $(document).ready(function() {
 
 function bindToggle()
 {
-	$('.toggle-widget__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {
-		var $parent = $(this).parent('.toggle-widget');
-		var $toggleBlock = $parent.children('.toggle-widget__inner');
-		$(this).toggleClass('active');
-		$toggleBlock.stop();
-		$toggleBlock.slideToggle();
-	});
+	// $('.toggle-widget__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {
+	// 	var $parent = $(this).parent('.toggle-widget');
+	// 	var $toggleBlock = $parent.children('.toggle-widget__inner');
+	// 	$parent.toggleClass('arrow-active');
+    //     debugger
+	// 	$toggleBlock.stop();
+	// 	$toggleBlock.slideToggle();
+	// });
     $('.accordions .accordions__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
-		$(this).toggleClass('active');
+		$parent.toggleClass('arrow-active');
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
-	});
+	}).parent('li').find('.arrow').on('click', function() {
+        $(this).parent().children().first().click()
+    });
+}
+
+function hideCard(el) {
+    $(el).closest('li').children().first().click()
+}
+
+function closeModal(el) {
+    $('.modal').removeClass('active')
+    $('body').removeClass('modal-open')
 }

@@ -131,6 +131,14 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
                     closest_metro = metro if metro.minutes < closest_metro.minutes
             closest_metro.station.title
 
+        $rootScope.closestMetros = (markers) ->
+            closest_metros = []
+            markers.forEach (marker, index) ->
+                closest_metros[index] = marker.metros[0]
+                marker.metros.forEach (metro) ->
+                    closest_metros[index] = metro if metro.minutes < closest_metros[index].minutes
+            closest_metros
+
         $rootScope.formatBytes = (bytes) ->
           if bytes < 1024
             bytes + ' Bytes'
