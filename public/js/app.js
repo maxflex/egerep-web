@@ -576,13 +576,6 @@
         map.init();
         map.deselectAll();
         map.select(tutor.svg_map);
-        if ($scope.mobile) {
-          $timeout(function() {
-            var svg;
-            svg = $("#svg-" + tutor.id);
-            return svg.scrollLeft(svg.width() / 4).scrollTop(svg.height() / 2);
-          });
-        }
       }
       return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
