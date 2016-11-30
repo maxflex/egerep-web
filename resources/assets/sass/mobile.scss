@@ -201,7 +201,7 @@ body {
     &.modal-open {
         overflow: hidden !important;
         position: fixed;
-        @include zindex(-1);
+        // @include zindex(-1);
         &:before {
             content: '';
             top: 0;
@@ -210,7 +210,8 @@ body {
             width: 100%;
             background-color: rgba(black, 0.5);
             position: fixed;
-            @include zindex(50);
+            z-index: 50;
+            // @include zindex(50);
         }
     }
 }
@@ -1225,10 +1226,11 @@ textarea {
             background-color: white;
             background-position: center bottom;
             background-size: 1.1em;
-            -webkit-transform:translateZ(1px);
-              -moz-transform:translateZ(1px);
-              -o-transform:translateZ(1px);
-              transform:translateZ(1px);
+            z-index: 1;
+            // -webkit-transform:translateZ(1px);
+            //   -moz-transform:translateZ(1px);
+            //   -o-transform:translateZ(1px);
+            //   transform:translateZ(1px);
         }
         &:last-child {
             margin-bottom: 2em;
@@ -3920,10 +3922,11 @@ p {
     border-radius: $border-radius-mobile;
     display: none;
     overflow: scroll;
-    -webkit-transform:translateZ(99px);
-      -moz-transform:translateZ(99px);
-      -o-transform:translateZ(99px);
-      transform:translateZ(99px);
+    z-index: 99;
+    // -webkit-transform:translateZ(99px);
+    //   -moz-transform:translateZ(99px);
+    //   -o-transform:translateZ(99px);
+    //   transform:translateZ(99px);
     &.active {
         display: block;
     }
@@ -3934,10 +3937,11 @@ p {
         height: 1.1em;
         background: url(../img/svg/cross.svg) no-repeat;
         cursor: pointer;
-        -webkit-transform:translateZ(3px);
-          -moz-transform:translateZ(3px);
-          -o-transform:translateZ(3px);
-          transform:translateZ(3px);
+        z-index: 3;
+        // -webkit-transform:translateZ(3px);
+        //   -moz-transform:translateZ(3px);
+        //   -o-transform:translateZ(3px);
+        //   transform:translateZ(3px);
     }
     & .modal-content {
         padding: 1em;
