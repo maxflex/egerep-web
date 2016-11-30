@@ -14358,12 +14358,14 @@ angular.module('angular-toArrayFilter', [])
 
     function closeModal() {
         $('.modal').removeClass('active')
-        $('body').removeClass('modal-open').off('touchmove');
+        $('body').removeClass('modal-open')
+        $('.container').off('touchmove');
     }
 
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
-        $("body").addClass('modal-open').on('touchmove', false)
+        $("body").addClass('modal-open')
+        $('.container').on('touchmove', false)
     }
 
 	/**
