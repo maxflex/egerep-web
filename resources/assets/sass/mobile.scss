@@ -3933,6 +3933,14 @@ p {
     & .full-height {
         height: calc(100% - 2em);
     }
+    & .loading {
+        font-size: 1.1em;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $gray;
+    }
 }
 
 .tutor-info-second-line {
