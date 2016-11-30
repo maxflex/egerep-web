@@ -3057,7 +3057,10 @@ body {
   margin: 0;
   -webkit-overflow-scrolling: touch !important; }
   body.modal-open {
-    overflow: hidden !important; }
+    overflow: hidden !important;
+    position: fixed;
+    -webkit-transform: translateZ(-1);
+    transform: translateZ(-1); }
     body.modal-open:before {
       content: '';
       top: 0;
@@ -3066,7 +3069,8 @@ body {
       width: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       position: fixed;
-      z-index: 99; }
+      -webkit-transform: translateZ(50);
+      transform: translateZ(50); }
 
 /* HTML5 display definitions
    ========================================================================== */
@@ -3889,7 +3893,8 @@ textarea {
     background-color: white;
     background-position: center bottom;
     background-size: 1.1em;
-    z-index: 1; }
+    -webkit-transform: translateZ(1px);
+    transform: translateZ(1px); }
   .accordions > li:last-child {
     margin-bottom: 2em; }
 
@@ -6065,14 +6070,13 @@ p {
   width: 90%;
   height: 95%;
   background: white;
-  z-index: 99;
   left: 5%;
   top: 2.5%;
   border-radius: 7px;
   display: none;
   overflow: scroll;
-  -webkit-transform: translateZ(1px);
-  transform: translateZ(1px); }
+  -webkit-transform: translateZ(99px);
+  transform: translateZ(99px); }
   .modal.active {
     display: block; }
   .modal .cross {
@@ -6082,7 +6086,8 @@ p {
     height: 1.1em;
     background: url(../img/svg/cross.svg) no-repeat;
     cursor: pointer;
-    z-index: 3; }
+    -webkit-transform: translateZ(3px);
+    transform: translateZ(3px); }
   .modal .modal-content {
     padding: 1em; }
   .modal .align-middle {

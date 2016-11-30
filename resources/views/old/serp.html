@@ -1,0 +1,99 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>[page.title]</title>
+    <meta name='description' content='[page.desc]'>
+    <meta name='keywords' content='[page.keywords]'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    [styles]
+    [scripts]
+</head>
+<body ng-app='Egerep' ng-controller='Tutors' ng-init='
+        search = [page.search];
+        subjects = [factory|subjects];
+        stations = [factory|stations];
+        svg = [factory|svg];
+        sent_ids = [session|sent_ids];
+        selected_subjects = [param|subjects];
+    '>
+    <div class="main">
+
+        [header]
+        [green-line]
+
+        <!--~~~~~~~~~~ Search filter ~~~~~~~~~~-->
+        <form class="search-filter">
+            <div class="global">
+                [page.h1]
+                <div class='h1-like'>[seo_text_top]</div>
+                <div class="search-filter-row" ng-repeat='chunked_subject in chunked_subjects'>
+                    <ul class="search-filter-list">
+                        <li ng-repeat='subject in chunked_subject'>
+                            <label>
+                                <input icheck type="checkbox" ng-model='search.subjects[subject.id]' ng-checked='search.subjects[subject.id]' ng-change='filter(subject.id)'> {{ subject.name }}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search-filter-row large">
+                    <ul class="search-filter-list">
+                        <li ng-repeat='place in [factory|places]'>
+                            <label>
+                                <input icheck ng-change='filter()' type='radio' ng-model='search.place' value='{{ place.id }}'> {{ place.serp }}
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input icheck ng-change='filter()' type='radio' ng-model='search.place' selected> неважно где заниматься
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="sort-by">
+                    Сортировать по:
+                    <select class="custom-select custom-select-sort custom-select-small" ng-model='search.sort' ng-change='filter()'>
+                        <option ng-repeat='s in [factory|sort]' ng-disabled="(s.id == 5 && !search.station_id )" value='{{ s.id }}'>
+                            {{ (s.id === 5) ? !search.station_id ? 'близости к метро (выберите станцию)' : 'близости к ' + stations[search.station_id].title : s.title }}
+                        </option>
+                    </select>
+                </div>
+                <div class="search-filter-metro">
+                    <div class="search-filter-metro-wrap">
+                        <div id="search-metro-bullet"></div>
+                        <input ng-disabled="search.station_id > 0" class="input-text search-metro-autocomplete" type="text" placeholder="Ближайщая к Вам станция метро">
+                        <div class="search-filter-metro-clear" ng-click='clearMetro()'></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="global">
+            <div class='loading serp-loading' ng-show='!tutors || !tutors.length'>загрузка анкет</div>
+            <ul class="search-result">
+                <li class="search-result-item" ng-repeat='tutor in tutors' in-view="countView(tutor.id)" in-view-options="{throttle: 1000}">
+                    [tutor-profile]
+                </li>
+            </ul>
+            <div class="search-result-wrap-more" ng-hide='isLastPage()'>
+                <button ng-show='tutors.length' ng-click='nextPage()' class="button-border-green button-search">
+                    <span ng-class="{'invisible': searching}">еще 10 репетиторов</span>
+                    <span ng-show='searching' class='loading loading-inside-button'>загрузка</span>
+                </button>
+            </div>
+            <div class="search-more-hint" ng-show="isLastPage()">
+                <div class='button-border-gray'>чтобы увидеть больше преподавателей, измените или расширьте критерии фильтрации анкет</div>
+            </div>
+            [page.h1_bottom]
+            <div class='h1-like'>[seo_text_bottom]</div>
+        </div>
+
+        [footer]
+
+    </div>
+</body>
+</html>

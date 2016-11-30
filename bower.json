@@ -63,7 +63,8 @@
     "angular-file-upload": "^2.3.4",
     "bootstrap-select": "^1.11.2",
     "mark.js": "^8.4.0",
-    "angular-toArrayFilter": "^1.0.1"
+    "angular-toArrayFilter": "^1.0.1",
+    "hammerjs": "^2.0.8"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"

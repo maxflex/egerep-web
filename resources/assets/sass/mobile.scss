@@ -2,6 +2,13 @@
 @import "normalize";
 @import "../bower/font-awesome/css/font-awesome";
 
+@mixin zindex($index) {
+    -webkit-transform:translateZ($index);
+      -moz-transform:translateZ($index);
+      -o-transform:translateZ($index);
+      transform:translateZ($index);
+}
+
 $green-mobile: #528d56;
 $green-mobile-btn: #5db05c;
 $border-radius-mobile: 7px;
@@ -193,6 +200,8 @@ body {
     -webkit-overflow-scrolling: touch !important;
     &.modal-open {
         overflow: hidden !important;
+        position: fixed;
+        @include zindex(-1);
         &:before {
             content: '';
             top: 0;
@@ -201,7 +210,7 @@ body {
             width: 100%;
             background-color: rgba(black, 0.5);
             position: fixed;
-            z-index: 99;
+            @include zindex(50);
         }
     }
 }
@@ -1216,7 +1225,10 @@ textarea {
             background-color: white;
             background-position: center bottom;
             background-size: 1.1em;
-            z-index: 1;
+            -webkit-transform:translateZ(1px);
+              -moz-transform:translateZ(1px);
+              -o-transform:translateZ(1px);
+              transform:translateZ(1px);
         }
         &:last-child {
             margin-bottom: 2em;
@@ -3902,17 +3914,16 @@ p {
     height: 95%;
     // height: 50%;
     background: white;
-    z-index: 99;
     left: 5%;
     top: 2.5%;
     // top: 25%;
     border-radius: $border-radius-mobile;
     display: none;
     overflow: scroll;
-    -webkit-transform:translateZ(1px);
-      -moz-transform:translateZ(1px);
-      -o-transform:translateZ(1px);
-      transform:translateZ(1px);
+    -webkit-transform:translateZ(99px);
+      -moz-transform:translateZ(99px);
+      -o-transform:translateZ(99px);
+      transform:translateZ(99px);
     &.active {
         display: block;
     }
@@ -3923,7 +3934,10 @@ p {
         height: 1.1em;
         background: url(../img/svg/cross.svg) no-repeat;
         cursor: pointer;
-        z-index: 3;
+        -webkit-transform:translateZ(3px);
+          -moz-transform:translateZ(3px);
+          -o-transform:translateZ(3px);
+          transform:translateZ(3px);
     }
     & .modal-content {
         padding: 1em;
