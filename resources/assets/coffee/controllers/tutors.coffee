@@ -177,7 +177,6 @@ angular
             $('.search-filter-metro-wrap').removeClass('active')
             $scope.search.station_id = 0
             $scope.search.sort = '1'
-            $scope.filter()
             $timeout ->
                 $('.custom-select-sort').trigger('render')
 
@@ -208,33 +207,12 @@ angular
         # MOBILE
         #
         $scope.popup = (id, tutor = null, fn = null) ->
-            $(".modal#modal-#{id}").addClass('active')
-            $("body").addClass('modal-open')
+            openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor
             if fn isnt null then $timeout -> $scope[fn](tutor)
 
-        $scope.selectParams = ->
-            closeModal()
-            $scope.filter()
-
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
-
-        $scope.showGmap = (tutor) ->
-            $(".modal#modal-map").addClass('active')
-            $("body").addClass('modal-open')
-            $scope.popup_tutor = tutor
-            $timeout -> $scope.gmap(tutor)
-
-        $scope.modalSvg = (tutor) ->
-            $(".modal#modal-svg").addClass('active')
-            $("body").addClass('modal-open')
-            $scope.popup_tutor = tutor
-            $timeout -> $scope.showSvg(tutor)
-
-        $scope.modalParams = ->
-            $(".modal#modal-params").addClass('active')
-            $("body").addClass('modal-open')
 
         $scope.overlay = {}
 
@@ -242,11 +220,6 @@ angular
             $scope.search[param] = value if value isnt null
             $scope.overlay[param] = false
             $scope.filter()
-
-        $scope.requestDialog = (tutor) ->
-            $(".modal#modal-request").addClass('active')
-            $("body").addClass('modal-open')
-            $scope.popup_tutor = tutor
 
         $scope.sendRequest = ->
             $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined

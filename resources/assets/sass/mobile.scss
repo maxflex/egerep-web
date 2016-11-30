@@ -191,15 +191,18 @@ html {
 body {
     margin: 0;
     -webkit-overflow-scrolling: touch !important;
-    &.modal-open:before {
-        content: '';
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(black, 0.5);
-        position: fixed;
-        z-index: 99;
+    &.modal-open {
+        overflow: hidden !important;
+        &:before {
+            content: '';
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(black, 0.5);
+            position: fixed;
+            z-index: 99;
+        }
     }
 }
 
@@ -1208,7 +1211,7 @@ textarea {
             margin-top: -1em;
             /* margin: 0 auto; */
             left: calc(50% - 1em);
-            background: url(/img/svg/dropdown.svg) no-repeat;
+            background: url(/img/svg/dropdown-gray.svg) no-repeat;
             background-size: 100% 100%;
             background-color: white;
             background-position: center bottom;
@@ -2620,7 +2623,7 @@ textarea {
 
     .user-list .accordions__title {
         display: inline-block;
-        width: 100%;
+        width: calc(100% - 2em);
     }
 
 
@@ -3728,7 +3731,6 @@ li.text-danger:before {
 }
 
 div[id^='gmap'] {
-    height: calc(100% - 7em);
     & > div {
         border-radius: 0 0 $border-radius-mobile $border-radius-mobile;
         & > div {
@@ -3936,6 +3938,7 @@ p {
 .tutor-info-second-line {
     clear: both;
     padding-top: .5em;
+    line-height: 1.5em;
 }
 
 .modal-open .container {
@@ -3956,4 +3959,13 @@ p {
 .force-hide {
     position: relative;
     top: .8em;
+}
+
+#modal-map > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    & > div:last-child {
+        flex: 1 1 auto;
+    }
 }

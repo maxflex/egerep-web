@@ -4488,9 +4488,7 @@ textarea {
   margin-left: 20px; }
 
 .search-filter-metro {
-  min-height: 38px;
-  padding: 0 0 0 45px;
-  background: url(../img/svg/metro.svg) no-repeat 0 7px; }
+  min-height: 38px; }
 
 .search-filter-metro-wrap {
   position: relative;
@@ -5173,7 +5171,8 @@ span.customSelect.custom-select-small .customSelectInner {
   position: absolute;
   top: 0;
   left: 0;
-  cursor: default; }
+  cursor: default;
+  z-index: 999; }
 
 .ui-autocomplete li {
   font-size: 14px;

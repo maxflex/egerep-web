@@ -14356,9 +14356,14 @@ angular.module('angular-toArrayFilter', [])
         autoHideDelay: 3000
     }
 
-    function closeModal(el) {
+    function closeModal() {
         $('.modal').removeClass('active')
-        $('body').removeClass('modal-open')
+        $('body').removeClass('modal-open').off('touchmove');
+    }
+
+    function openModal(id) {
+        $(".modal#modal-" + id).addClass('active')
+        $("body").addClass('modal-open').on('touchmove', false)
     }
 
 	/**
@@ -14677,7 +14682,6 @@ function metroAutocomplete(scope) {
 	        $('.search-filter-metro-wrap').addClass('active');
             scope.search.station_id = ui.item.id
             scope.search.sort = "5" // по метро
-            scope.filter()
             scope.$apply()
             $('.custom-select-sort').trigger('render')
 	    },
@@ -14686,7 +14690,7 @@ function metroAutocomplete(scope) {
 	    }
 	}).autocomplete( "instance" )._renderItem = function( ul, item ) {
 	    return $( '<li>' )
-	        .append( '<div> <div class="' + item.icon + '"></div>' + item.value + '</div>')
+	        .append( '<div> <div class="testy ' + item.icon + '"></div>' + item.value + '</div>')
 	        .appendTo( ul );
 	};
     selectAutocomplete(scope)

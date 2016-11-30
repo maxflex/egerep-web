@@ -560,7 +560,6 @@
       $('.search-filter-metro-wrap').removeClass('active');
       $scope.search.station_id = 0;
       $scope.search.sort = '1';
-      $scope.filter();
       return $timeout(function() {
         return $('.custom-select-sort').trigger('render');
       });
@@ -599,8 +598,7 @@
       if (fn == null) {
         fn = null;
       }
-      $(".modal#modal-" + id).addClass('active');
-      $("body").addClass('modal-open');
+      openModal(id);
       if (tutor !== null) {
         $scope.popup_tutor = tutor;
       }
@@ -610,32 +608,8 @@
         });
       }
     };
-    $scope.selectParams = function() {
-      closeModal();
-      return $scope.filter();
-    };
     $scope.syncSort = function() {
       return $scope.search.sort = $scope.search.station_id ? 5 : 1;
-    };
-    $scope.showGmap = function(tutor) {
-      $(".modal#modal-map").addClass('active');
-      $("body").addClass('modal-open');
-      $scope.popup_tutor = tutor;
-      return $timeout(function() {
-        return $scope.gmap(tutor);
-      });
-    };
-    $scope.modalSvg = function(tutor) {
-      $(".modal#modal-svg").addClass('active');
-      $("body").addClass('modal-open');
-      $scope.popup_tutor = tutor;
-      return $timeout(function() {
-        return $scope.showSvg(tutor);
-      });
-    };
-    $scope.modalParams = function() {
-      $(".modal#modal-params").addClass('active');
-      return $("body").addClass('modal-open');
     };
     $scope.overlay = {};
     $scope.changeFilter = function(param, value) {
@@ -647,11 +621,6 @@
       }
       $scope.overlay[param] = false;
       return $scope.filter();
-    };
-    $scope.requestDialog = function(tutor) {
-      $(".modal#modal-request").addClass('active');
-      $("body").addClass('modal-open');
-      return $scope.popup_tutor = tutor;
     };
     $scope.sendRequest = function() {
       if ($scope.sending_tutor.request === void 0) {
@@ -1012,6 +981,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1073,11 +1047,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
