@@ -365,21 +365,22 @@
     };
     if (!$scope.profilePage()) {
       $timeout(function() {
+        var id;
+        if ($scope.load_params) {
+          id = $scope.search.id;
+          $scope.search = JSON.parse(localStorage.getItem('search'));
+          $scope.search.id = id;
+        }
         if ($scope.selected_subjects) {
           $scope.selected_subjects.split(',').forEach(function(subject_id) {
             return $scope.search.subjects[subject_id] = true;
           });
         }
         SubjectService.init($scope.search.subjects);
-        if ($scope.mobile) {
-          return $scope.filter();
-        } else {
-          $scope.chunked_subjects = chunk(toArray($scope.subjects), 4);
+        if (!$scope.mobile) {
           metroAutocomplete($scope);
-          if (!parseInt($scope.search.station_id)) {
-            return $scope.filter();
-          }
         }
+        return $scope.filter();
       });
     }
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
@@ -484,6 +485,7 @@
       if ($scope.search.hidden_filter && search_count) {
         delete $scope.search.hidden_filter;
       }
+      localStorage.setItem('search', JSON.stringify($scope.search));
       return filter_used = true;
     };
     $scope.nextPage = function() {
@@ -522,6 +524,7 @@
         search_count++;
         $scope.searching = false;
         if (response.hasOwnProperty('url')) {
+          console.log('redirectring...');
           return redirect(response.url);
         } else {
           $scope.data = response;
@@ -649,76 +652,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
@@ -1047,6 +980,76 @@
       }
     };
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

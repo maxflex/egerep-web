@@ -8,6 +8,7 @@ use Illuminate\Pagination\Paginator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Tutor;
+use App\Models\Page;
 use DB;
 
 class TutorsController extends Controller
@@ -118,9 +119,13 @@ class TutorsController extends Controller
         // пытаемся найти serp-страницу с такими параметрами
         // если находит при пагинации страницу с похожими параметрами – не редиректить
         if ($request->filter_used && $request->page < 2) {
-            $page = \App\Models\Page::findByParams($search);
+            $page = Page::findByParams($search);
             if ($page->exists()) {
                 return ['url' => $page->inRandomOrder()->value('url')];
+            } else
+            if ($id != 10) {
+                $_SESSION['load_params'] = true;
+                return ['url' => Page::whereId(10)->value('url')];
             }
         }
 

@@ -23,12 +23,14 @@
     Route::get('/full', function() {
         unset($_SESSION['force_mobile']);
         $_SESSION['force_full'] = true;
+        $_SESSION['load_params'] = true;
         return redirect()->back();
     });
 
     Route::get('/mobile', function() {
         unset($_SESSION['force_full']);
         $_SESSION['force_mobile'] = true;
+        $_SESSION['load_params'] = true;
         return redirect()->back();
     });
 

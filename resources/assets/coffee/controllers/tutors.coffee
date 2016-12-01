@@ -14,6 +14,11 @@ angular
         if not $scope.profilePage()
         # страница поиска
             $timeout ->
+                if $scope.load_params
+                    id = $scope.search.id
+                    $scope.search = JSON.parse(localStorage.getItem('search'))
+                    $scope.search.id = id
+
                 # если есть предустановленные предметы
                 if $scope.selected_subjects
                     $scope.selected_subjects.split(',').forEach (subject_id) ->
@@ -21,12 +26,9 @@ angular
 
                 SubjectService.init($scope.search.subjects)
 
-                if $scope.mobile
-                    $scope.filter()
-                else
-                    $scope.chunked_subjects = chunk(toArray($scope.subjects), 4)
-                    metroAutocomplete($scope)
-                    $scope.filter() if not parseInt($scope.search.station_id)
+                metroAutocomplete($scope) if not $scope.mobile
+
+                $scope.filter()
 
         # пары предметов
         $scope.pairs = [
@@ -123,6 +125,7 @@ angular
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
+            localStorage.setItem('search', JSON.stringify($scope.search))
             filter_used = true
 
         $scope.nextPage = ->
@@ -151,6 +154,7 @@ angular
                 search_count++
                 $scope.searching = false
                 if response.hasOwnProperty('url')
+                    console.log 'redirectring...'
                     redirect response.url
                     # console.log response.url
                 else
