@@ -17,7 +17,7 @@ class Account extends Model
     /**
      * Сумма включая взаимозачет
      */
-    public function getFullSumAttribute($value='')
+    public function getFullSumAttribute()
     {
         $mutual_debt = $this->getMutualDebt();
         if ($mutual_debt !== null) {
