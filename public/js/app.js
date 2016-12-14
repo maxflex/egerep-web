@@ -1049,11 +1049,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1192,6 +1187,11 @@
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 

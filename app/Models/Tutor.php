@@ -22,6 +22,7 @@ class Tutor extends Model
 
     const SERVER_URL = 'https://lk.ege-repetitor.ru/img/tutors/';
     const NO_PHOTO   = 'no-profile-img.gif';
+    const USER_TYPE  = 'TEACHER';
 
     protected $commaSeparated = ['svg_map', 'subjects', 'grades', 'branches'];
 
