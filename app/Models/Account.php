@@ -12,9 +12,21 @@ class Account extends Model
 
     protected $connection = 'egerep';
 
-    protected $appends = ['mutual_debt'];
+    protected $appends = ['full_sum'];
 
-    public function getMutualDebtAttribute()
+    /**
+     * Сумма включая взаимозачет
+     */
+    public function getFullSumAttribute($value='')
+    {
+        $mutual_debt = $this->getMutualDebt();
+        if ($mutual_debt !== null) {
+            return $this->received + $mutual_debt->sum;
+        }
+        return $this->received;
+    }
+
+    public function getMutualDebt()
     {
         return DB::connection('egecrm')
                  ->table('payments')
