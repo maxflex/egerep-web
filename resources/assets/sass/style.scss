@@ -105,8 +105,9 @@ label {
 
 .metro-label {
     display: inline-block;
-    width: 135px;
+    width: 148px;
     vertical-align: top;
+    color: $gray;
 }
 
 .metro-list {
@@ -407,11 +408,32 @@ b {
     color: $gray-light;
 }
 
-.serp-params {
-    border: 1px solid $gray-light;
-    border-radius: $border-radius;
-    padding: 10px;
+.serp-wrapper {
     line-height: 20px;
+    margin-bottom: 10px;
+    & > div {
+        display: inline-block;
+    }
+    & .serp-titles {
+        position: relative;
+        overflow: hidden;
+        width: 350px;
+        & > div:after {
+            color: $gray;
+            content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+            font-weight: normal;
+            display: inline-block;
+            position: absolute;
+            white-space: nowrap;
+            margin-left: 5px;
+            z-index: -1;
+        }
+    }
+    & .serp-params {
+        vertical-align: top;
+        color: $gray;
+        margin-left: 5px;
+    }
 }
 
 .modal {

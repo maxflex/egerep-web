@@ -614,7 +614,6 @@
     $scope.syncSort = function() {
       return $scope.search.sort = $scope.search.station_id ? 5 : 1;
     };
-    $scope.overlay = {};
     $scope.changeFilter = function(param, value) {
       if (value == null) {
         value = null;
@@ -624,6 +623,12 @@
       }
       $scope.overlay[param] = false;
       return $scope.filter();
+    };
+    $scope.hasSelectedStation = function(tutor) {
+      if (!$scope.search || !$scope.search.station_id) {
+        return false;
+      }
+      return tutor.svg_map.indexOf(parseInt($scope.search.station_id)) !== -1;
     };
     $scope.sendRequest = function() {
       if ($scope.sending_tutor.request === void 0) {
@@ -984,6 +989,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1187,11 +1197,6 @@
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

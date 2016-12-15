@@ -297,8 +297,8 @@ textarea {
 * Search filter
 --------------------------------*/
 .search-filter {
-    padding: 0 0 20px;
-    border-bottom: 13px solid #f0f0f0;
+    padding: 0 0 10px;
+    // border-bottom: 13px solid #f0f0f0;
     & h1 {
         padding: 30px 0 25px;
     }
@@ -430,10 +430,17 @@ textarea {
     margin-top: -4px;
 }
 .search-result-title {
-    color: black;
-    font-family: 'helveticaneuecyrmedium';
     padding: 0 0 14px;
     line-height: 22px;
+    & b {
+        color: black;
+        font-family: 'helveticaneuecyrmedium';
+    }
+    & .tutor-id {
+        color: $gray;
+        float: right;
+
+    }
 }
 .search-result-info {
     margin: 0;

@@ -4441,8 +4441,7 @@ textarea {
 * Search filter
 --------------------------------*/
 .search-filter {
-  padding: 0 0 20px;
-  border-bottom: 13px solid #f0f0f0; }
+  padding: 0 0 10px; }
   .search-filter h1 {
     padding: 30px 0 25px; }
 
@@ -4573,10 +4572,14 @@ textarea {
   margin-top: -4px; }
 
 .search-result-title {
-  color: black;
-  font-family: 'helveticaneuecyrmedium';
   padding: 0 0 14px;
   line-height: 22px; }
+  .search-result-title b {
+    color: black;
+    font-family: 'helveticaneuecyrmedium'; }
+  .search-result-title .tutor-id {
+    color: #777777;
+    float: right; }
 
 .search-result-info {
   margin: 0;
@@ -5465,8 +5468,9 @@ label {
 
 .metro-label {
   display: inline-block;
-  width: 135px;
-  vertical-align: top; }
+  width: 148px;
+  vertical-align: top;
+  color: #777777; }
 
 .metro-list {
   display: inline-block; }
@@ -5697,11 +5701,28 @@ b {
   font-size: 28px;
   color: #b5b5b5; }
 
-.serp-params {
-  border: 1px solid #b5b5b5;
-  border-radius: 6px;
-  padding: 10px;
-  line-height: 20px; }
+.serp-wrapper {
+  line-height: 20px;
+  margin-bottom: 10px; }
+  .serp-wrapper > div {
+    display: inline-block; }
+  .serp-wrapper .serp-titles {
+    position: relative;
+    overflow: hidden;
+    width: 350px; }
+    .serp-wrapper .serp-titles > div:after {
+      color: #777777;
+      content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+      font-weight: normal;
+      display: inline-block;
+      position: absolute;
+      white-space: nowrap;
+      margin-left: 5px;
+      z-index: -1; }
+  .serp-wrapper .serp-params {
+    vertical-align: top;
+    color: #777777;
+    margin-left: 5px; }
 
 .modal {
   position: fixed;

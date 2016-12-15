@@ -3055,6 +3055,7 @@ html {
  */
 body {
   margin: 0;
+  background-color: white;
   -webkit-overflow-scrolling: touch !important; }
   body.modal-open {
     overflow: hidden !important;
@@ -5878,9 +5879,32 @@ li.text-danger:before {
 .al {
   text-align: left; }
 
-.serp-params {
+.serp-wrapper {
   margin-bottom: 1em;
-  line-height: 1.5em; }
+  line-height: 1.5em;
+  overflow: hidden;
+  position: relative; }
+  .serp-wrapper .serp-titles {
+    display: inline-block;
+    width: 30%; }
+    .serp-wrapper .serp-titles > div:after {
+      color: #777777;
+      content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+      font-weight: normal;
+      display: inline-block;
+      position: absolute;
+      white-space: nowrap;
+      margin-left: 5px;
+      z-index: -1; }
+  .serp-wrapper .serp-params {
+    max-width: 70%;
+    text-align: right;
+    display: inline-block;
+    float: right; }
+    .serp-wrapper .serp-params > div > span {
+      background: white;
+      color: #777777;
+      padding-left: .3em; }
 
 .right-tutor-info {
   margin-left: 1em;
@@ -6136,5 +6160,17 @@ p {
   #modal-map > div > div:last-child {
     -webkit-box-flex: 1;
     flex: 1 1 auto; }
+
+.metro-circle {
+  height: 8px;
+  width: 8px;
+  position: relative;
+  top: -1px; }
+
+.small {
+  font-size: .8em; }
+
+.show-hide {
+  float: right; }
 
 /*# sourceMappingURL=mobile.css.map */

@@ -17,11 +17,10 @@ function bindToggle()
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$parent.toggleClass('arrow-active');
+        $parent.find('.show-hide').text($parent.hasClass('arrow-active') ? 'свернуть' : 'показать')
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
-	}).parent('li').find('.arrow').on('click', function() {
-        $(this).parent().children().first().click()
-    });
+	})
 }
 
 function hideCard(el) {

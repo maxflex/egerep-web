@@ -218,12 +218,15 @@ angular
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
 
-        $scope.overlay = {}
-
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
             $scope.overlay[param] = false
             $scope.filter()
+
+        # выезжает на выбранную станцию
+        $scope.hasSelectedStation = (tutor) ->
+            return false if not $scope.search or not $scope.search.station_id
+            tutor.svg_map.indexOf(parseInt($scope.search.station_id)) isnt -1
 
         $scope.sendRequest = ->
             $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined
