@@ -24,8 +24,8 @@
       left: 2px; }
 
 .metro-circle {
-  height: 10px;
-  width: 10px;
+  height: 7px;
+  width: 7px;
   display: inline-block;
   border-radius: 50%; }
   .metro-circle.in-autocomplete {
@@ -126,7 +126,7 @@ a[href^="https://www.google.com/maps"] {
   visibility: hidden; }
 
 .color-gray, .text-gray {
-  color: #777777; }
+  color: #a7a7a7; }
 
 .color-gray-light, .text-gray-light, .cv-page .upload-photo .upload-percentage {
   color: #b5b5b5; }
@@ -4387,7 +4387,7 @@ textarea {
   position: relative; }
 
 .short-tutor-title-count {
-  color: #777777;
+  color: #a7a7a7;
   font-size: 16px;
   font-family: 'helveticaneuecyrroman';
   padding: 6px 0 0; }
@@ -4425,7 +4425,7 @@ textarea {
 
 .short-tutor-list-info > ul > li {
   font-size: 14px;
-  color: #777777;
+  color: #a7a7a7;
   padding: 0 0 6px; }
 
 .short-tutor-list-img {
@@ -4558,7 +4558,7 @@ textarea {
 
 .search-result-rating {
   text-align: center;
-  color: #777777;
+  color: #a7a7a7;
   font-size: 12px; }
 
 .search-result-rating-count {
@@ -4578,7 +4578,7 @@ textarea {
     color: black;
     font-family: 'helveticaneuecyrmedium'; }
   .search-result-title .tutor-id {
-    color: #777777;
+    color: #a7a7a7;
     float: right; }
 
 .search-result-info {
@@ -4749,7 +4749,7 @@ textarea {
 
 .index-reviews-list-user {
   padding: 0 0 12px;
-  color: #777777; }
+  color: #a7a7a7; }
 
 .index-reviews-list-user-img {
   border-radius: 6px;
@@ -4788,7 +4788,7 @@ textarea {
 
 .index-reviews-list-author {
   text-align: right;
-  color: #777777;
+  color: #a7a7a7;
   padding: 0 5px 0 0; }
 
 .index-reviews-list-link {
@@ -4866,7 +4866,7 @@ textarea {
   vertical-align: top;
   font-size: 14px;
   line-height: 22px;
-  color: #777777;
+  color: #a7a7a7;
   top: -3px;
   position: relative; }
 
@@ -5384,7 +5384,9 @@ span.customSelect.custom-select-small .customSelectInner {
     height: 15px; }
 
 .search-result-metro-list .metro-circle {
-  margin-right: 5px; }
+  margin-right: 1px;
+  position: relative;
+  top: -1px; }
 
 .link-like {
   color: #428942;
@@ -5470,7 +5472,7 @@ label {
   display: inline-block;
   width: 148px;
   vertical-align: top;
-  color: #777777; }
+  color: #a7a7a7; }
 
 .metro-list {
   display: inline-block; }
@@ -5711,7 +5713,7 @@ b {
     overflow: hidden;
     width: 350px; }
     .serp-wrapper .serp-titles > div:after {
-      color: #777777;
+      color: #a7a7a7;
       content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
       font-weight: normal;
       display: inline-block;
@@ -5721,7 +5723,7 @@ b {
       z-index: -1; }
   .serp-wrapper .serp-params {
     vertical-align: top;
-    color: #777777;
+    color: #a7a7a7;
     margin-left: 5px; }
 
 .modal {
@@ -5771,5 +5773,8 @@ body.modal-open:before {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   z-index: 99; }
+
+.search-result-metro-list .text-gray {
+  font-size: 12px; }
 
 /*# sourceMappingURL=app.css.map */

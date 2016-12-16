@@ -1243,7 +1243,7 @@ textarea {
 
         .accordions__title {
             position: relative;
-            padding: 1.5em 1em;
+            padding: 1em;
             cursor: pointer;
         }
         .accordions__title.active {
@@ -4029,8 +4029,8 @@ p {
 }
 
 .metro-circle {
-    height: 8px;
-    width: 8px;
+    height: 7px;
+    width: 7px;
     position: relative;
     top: -1px;
 }
@@ -4040,5 +4040,7 @@ p {
 }
 
 .show-hide {
-    float: right;
+    text-align: right;
+    display: inline-block;
+    width: 23%;
 }

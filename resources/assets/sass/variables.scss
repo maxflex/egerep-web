@@ -14,7 +14,7 @@ $main-page-block-padding: 30px;
 
 $font-awesome: normal normal normal 14px/1 FontAwesome;
 
-$gray: #777777;
+$gray: #a7a7a7;
 $gray-light: #b5b5b5;
 $gray-placeholder: #a9a9a9;
 $gray-border: #dedede;
@@ -73,8 +73,8 @@ $border-radius: 6px;
 
 
 .metro-circle {
-    height: 10px;
-    width: 10px;
+    height: 7px;
+    width: 7px;
     display: inline-block;
     border-radius: 50%;
     &.in-autocomplete {
