@@ -225,7 +225,7 @@ angular
 
         # выезжает на выбранную станцию
         $scope.hasSelectedStation = (tutor) ->
-            return false if not $scope.search or not $scope.search.station_id
+            return false if not $scope.search or $scope.search.sort != 5
             tutor.svg_map.indexOf(parseInt($scope.search.station_id)) isnt -1
 
         $scope.sendRequest = ->

@@ -625,7 +625,7 @@
       return $scope.filter();
     };
     $scope.hasSelectedStation = function(tutor) {
-      if (!$scope.search || !$scope.search.station_id) {
+      if (!$scope.search || $scope.search.sort !== 5) {
         return false;
       }
       return tutor.svg_map.indexOf(parseInt($scope.search.station_id)) !== -1;
@@ -657,11 +657,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -1055,6 +1050,11 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
