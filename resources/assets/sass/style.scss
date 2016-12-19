@@ -499,3 +499,19 @@ body.modal-open:before {
         font-size: 12px;
     }
 }
+
+#modal-params  {
+    height: 60%;
+    & .modal-content {
+        padding: 20px 40px;
+        & h4 {
+            padding-left: 25px;
+            padding-bottom: 25px;
+        }
+        & .col {
+            & div {
+                margin-bottom: 3px;
+            }
+        }
+    }
+}

@@ -17,7 +17,8 @@
         "ege-shared":"dev-master",
         "predis/predis": "^1.1",
         "znck/belongs-to-through": "^2.2",
-        "jenssegers/agent": "^2.3"
+        "jenssegers/agent": "^2.3",
+        "barryvdh/laravel-debugbar": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

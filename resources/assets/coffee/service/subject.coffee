@@ -23,6 +23,7 @@ angular.module 'Egerep'
             this.subjects isnt undefined and this.subjects[subject_id] isnt undefined and this.subjects[subject_id]
 
         this.select = (subject_id) ->
+            console.log 'here'
             this.subjects[subject_id] = if this.subjects[subject_id] then not this.subjects[subject_id] else true
             this.pairsControl(subject_id)
 

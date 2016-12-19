@@ -18,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
             $phone = preg_replace("/[^0-9]/", "", $value);
             return strlen($phone) == 11;
         });
+        // \DB::listen(function($query) {
+        //     \Log::info($query->sql);
+        // });
     }
 
     /**

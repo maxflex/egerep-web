@@ -516,7 +516,7 @@ textarea {
 .search-result-reviews-wrap {
     // display: none;
     background: #f8f8f8;
-    padding: 22px 35px 22px 40px;
+    padding: 15px 35px;
     border-radius: $border-radius;
     margin: 0;
     margin-top: 10px;
@@ -524,11 +524,15 @@ textarea {
 .search-result-reviews-list {
     margin: 0;
     padding: 0;
-}
-.search-result-reviews-list li {
-    padding: 0 0 24px;
     font-family: 'helveticaneuecyrmedium';
+    & > li > * {
+        font-family: 'helveticaneuecyrlight';
+    }
 }
+// .search-result-reviews-list li {
+//     padding: 0 0 24px;
+//
+// }
 .search-result-reviews-text {
     font-family: 'helveticaneuecyrlight';
 }
@@ -1029,7 +1033,7 @@ span.customSelect.custom-select-small .customSelectInner {
     font-size: 12px;
     content: "\f00c";
     position: relative;
-    top: -1px;
+    top: -3px;
 }
 .custom-radio.checked:before {
     content: '';
@@ -1281,4 +1285,8 @@ span.customSelect.custom-select-small .customSelectInner {
     & img {
         height: 15px;
     }
+}
+
+.small {
+    font-size: 12px;
 }

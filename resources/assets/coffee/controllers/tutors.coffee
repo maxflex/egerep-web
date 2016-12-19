@@ -118,9 +118,8 @@ angular
 
         # чтобы не редиректило в начале
         filter_used = false
-        $scope.filter = (subject_id) ->
+        $scope.filter = ->
             $scope.tutors = []
-            unselectSubjects(subject_id)
             $scope.page = 1
             search()
             # деселект hidden_filter при смене параметров
@@ -136,13 +135,12 @@ angular
             return if not $scope.data
             $scope.data.current_page >= $scope.data.last_page
 
-        unselectSubjects = (subject_id) ->
-            if subject_id
-                angular.forEach $scope.search.subjects, (enabled, id) ->
-                    pair = _.filter scope.pairs, (p) ->
-                        p.indexOf(parseInt(subject_id)) isnt -1
-                    pair.push([subject_id]) if not pair.length
-                    $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
+        $scope.unselectSubjects = (subject_id) ->
+            angular.forEach $scope.search.subjects, (enabled, id) ->
+                pair = _.filter scope.pairs, (p) ->
+                    p.indexOf(parseInt(subject_id)) isnt -1
+                pair.push([subject_id]) if not pair.length
+                $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
 
         search = ->
             $scope.searching = true

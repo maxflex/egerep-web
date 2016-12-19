@@ -357,7 +357,7 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
-    var filter_used, highlight, search, search_count, unselectSubjects, viewed_tutors;
+    var filter_used, highlight, search, search_count, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.profilePage = function() {
@@ -477,9 +477,8 @@
       }
     };
     filter_used = false;
-    $scope.filter = function(subject_id) {
+    $scope.filter = function() {
       $scope.tutors = [];
-      unselectSubjects(subject_id);
       $scope.page = 1;
       search();
       if ($scope.search.hidden_filter && search_count) {
@@ -498,21 +497,19 @@
       }
       return $scope.data.current_page >= $scope.data.last_page;
     };
-    unselectSubjects = function(subject_id) {
-      if (subject_id) {
-        return angular.forEach($scope.search.subjects, function(enabled, id) {
-          var pair;
-          pair = _.filter(scope.pairs, function(p) {
-            return p.indexOf(parseInt(subject_id)) !== -1;
-          });
-          if (!pair.length) {
-            pair.push([subject_id]);
-          }
-          if (pair[0].indexOf(parseInt(id)) === -1) {
-            return $scope.search.subjects[id] = false;
-          }
+    $scope.unselectSubjects = function(subject_id) {
+      return angular.forEach($scope.search.subjects, function(enabled, id) {
+        var pair;
+        pair = _.filter(scope.pairs, function(p) {
+          return p.indexOf(parseInt(subject_id)) !== -1;
         });
-      }
+        if (!pair.length) {
+          pair.push([subject_id]);
+        }
+        if (pair[0].indexOf(parseInt(id)) === -1) {
+          return $scope.search.subjects[id] = false;
+        }
+      });
     };
     search = function() {
       $scope.searching = true;
@@ -989,6 +986,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1050,11 +1052,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -1167,6 +1164,7 @@
       return this.subjects !== void 0 && this.subjects[subject_id] !== void 0 && this.subjects[subject_id];
     };
     this.select = function(subject_id) {
+      console.log('here');
       this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
       return this.pairsControl(subject_id);
     };

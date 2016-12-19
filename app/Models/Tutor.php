@@ -102,7 +102,7 @@ class Tutor extends Model
             ->table('reviews')
             ->join('attachments', 'attachments.id', '=', 'attachment_id')
             ->where('tutor_id', $tutor_id)
-            ->where('state', 'published')
+            ->where('reviews.state', 'published')
             ->whereBetween('score', [1, 10]);
     }
 
