@@ -513,5 +513,18 @@ body.modal-open:before {
                 margin-bottom: 3px;
             }
         }
+        & .hidden-select {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            opacity: 0;
+            z-index: 99;
+            top: -1.5em;
+            position: relative;
+            height: 1em;
+            overflow: hidden;
+            &.selected {
+                width: 55%;
+                margin-left: 30%;
+            }
+        }
     }
 }

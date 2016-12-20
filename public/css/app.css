@@ -5788,5 +5788,16 @@ body.modal-open:before {
       padding-bottom: 25px; }
     #modal-params .modal-content .col div {
       margin-bottom: 3px; }
+    #modal-params .modal-content .hidden-select {
+      -webkit-tap-highlight-color: transparent;
+      opacity: 0;
+      z-index: 99;
+      top: -1.5em;
+      position: relative;
+      height: 1em;
+      overflow: hidden; }
+      #modal-params .modal-content .hidden-select.selected {
+        width: 55%;
+        margin-left: 30%; }
 
 /*# sourceMappingURL=app.css.map */
