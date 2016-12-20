@@ -665,11 +665,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('errors', function() {
     return {
       restrict: 'E',
@@ -984,6 +979,11 @@
       }
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
