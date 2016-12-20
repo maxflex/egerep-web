@@ -4011,13 +4011,14 @@ p {
     overflow: scroll;
     & b {
         display: block;
-        margin-bottom: 1.5em;
+        margin-bottom: 1em;
         margin-left: 24px;
+        font-size: 1.1em;
     }
     & .param-block {
         margin-bottom: 1.5em;
         & > div {
-            margin-bottom: 3px;
+            margin-bottom: 9px;
         }
     }
     .hidden-select {

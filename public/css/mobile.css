@@ -6134,12 +6134,13 @@ p {
   overflow: scroll; }
   #modal-params .modal-content b {
     display: block;
-    margin-bottom: 1.5em;
-    margin-left: 24px; }
+    margin-bottom: 1em;
+    margin-left: 24px;
+    font-size: 1.1em; }
   #modal-params .modal-content .param-block {
     margin-bottom: 1.5em; }
     #modal-params .modal-content .param-block > div {
-      margin-bottom: 3px; }
+      margin-bottom: 9px; }
   #modal-params .modal-content .hidden-select {
     -webkit-tap-highlight-color: transparent;
     opacity: 0;
