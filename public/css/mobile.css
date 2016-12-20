@@ -5926,8 +5926,7 @@ li.text-danger:before {
   margin: 1em 0; }
 
 .review-block {
-  margin-bottom: 20px;
-  line-height: 1.5em; }
+  margin-bottom: 20px; }
   .review-block .review-text {
     margin-bottom: 20px; }
   .review-block .review-signature {

@@ -127,6 +127,7 @@ class TutorsController extends Controller
                 return ['url' => $page->inRandomOrder()->value('url')];
             } else
             if ($id != 10) {
+                unset($_COOKIE['search']);
                 return ['url' => Page::whereId(10)->value('url')];
             }
         }
