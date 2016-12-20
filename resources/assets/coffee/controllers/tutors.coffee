@@ -14,9 +14,9 @@ angular
         if not $scope.profilePage()
         # страница поиска
             $timeout ->
-                if $scope.load_params
+                if $.cookie('search') isnt undefined
                     id = $scope.search.id
-                    $scope.search = JSON.parse(localStorage.getItem('search'))
+                    $scope.search = JSON.parse($.cookie('search'))
                     $scope.search.id = id
 
                 # если есть предустановленные предметы
@@ -25,9 +25,6 @@ angular
                         $scope.search.subjects[subject_id] = true
 
                 SubjectService.init($scope.search.subjects)
-
-                metroAutocomplete($scope) if not $scope.mobile
-
                 $scope.filter()
 
         # пары предметов
@@ -124,7 +121,7 @@ angular
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
-            localStorage.setItem('search', JSON.stringify($scope.search))
+            $.cookie('search', JSON.stringify($scope.search))
             filter_used = true
 
         $scope.nextPage = ->

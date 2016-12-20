@@ -13,7 +13,7 @@ use App\Models\Service\Parser;
 class PagesController extends Controller
 {
     /**
-     * Все страницы
+     * Все страницы (на самом деле это теперь только серп)
      */
     public function index($url = '')
     {

@@ -114,12 +114,6 @@
                     static::_replace($html, $var, $page->{$field});
                 }
             }
-            if (isset($_SESSION['load_params'])) {
-                unset($_SESSION['load_params']);
-                static::_replace($html, 'load_params', 1);
-            } else {
-                static::_replace($html, 'load_params', 0);
-            }
             static::_replace($html, 'useful', view('blocks.useful', compact('page')));
             return $html;
         }

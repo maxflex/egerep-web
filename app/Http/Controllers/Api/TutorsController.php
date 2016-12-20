@@ -92,7 +92,6 @@ class TutorsController extends Controller
     public function reviews($id)
     {
         return Tutor::reviews($id)
-        ->join('archives', 'archives.attachment_id', '=', 'attachments.id')
         ->select(
             'reviews.created_at',
             'reviews.score',
@@ -128,7 +127,6 @@ class TutorsController extends Controller
                 return ['url' => $page->inRandomOrder()->value('url')];
             } else
             if ($id != 10) {
-                $_SESSION['load_params'] = true;
                 return ['url' => Page::whereId(10)->value('url')];
             }
         }

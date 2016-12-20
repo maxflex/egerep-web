@@ -23,14 +23,12 @@
     Route::get('/full', function() {
         unset($_SESSION['force_mobile']);
         $_SESSION['force_full'] = true;
-        $_SESSION['load_params'] = true;
         return redirect()->back();
     });
 
     Route::get('/mobile', function() {
         unset($_SESSION['force_full']);
         $_SESSION['force_mobile'] = true;
-        $_SESSION['load_params'] = true;
         return redirect()->back();
     });
 
@@ -45,5 +43,5 @@
     # Tutor profile page
     Route::get('{id}', 'PagesController@tutor')->where('id', '[0-9]+');
 
-    # MAIN ALL PAGES ROUTE
+    # All serp pages
     Route::get('{url?}', 'PagesController@index');

@@ -70,5 +70,6 @@ elixir(mix => {
             'jquery.inputmask/dist/jquery.inputmask.bundle',
             'mark.js/dist/jquery.mark.min',
             'angular-toArrayFilter/toArrayFilter',
+            'jquery.cookie/jquery.cookie',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });

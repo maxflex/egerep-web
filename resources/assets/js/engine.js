@@ -330,52 +330,6 @@ function chunk(arr, size) {
   return newArr;
 }
 
-/**
- * Generate metros autocomplete
- * @dependency $scope.stations
- */
-function metroAutocomplete(scope) {
-	source = []
-	$.each(scope.stations, function(index, station) {
-		source.push({
-			icon: 'metro-circle in-autocomplete line-' + station.line_id,
-            id: station.id,
-            value: station.title
-		})
-	})
-	$('.search-metro-autocomplete').autocomplete({
-	    source: source,
-	    select: function( event, ui ) {
-	        $('#search-metro-bullet')
-	            .removeClass()
-	            .addClass(ui.item.icon);
-	        $('.search-filter-metro-wrap').addClass('active');
-            scope.search.station_id = ui.item.id
-            scope.search.sort = "5" // по метро
-            scope.$apply()
-            $('.custom-select-sort').trigger('render')
-	    },
-	    search: function( event, ui ) {
-	        $('.search-filter-metro-wrap').removeClass('active');
-	    }
-	}).autocomplete( "instance" )._renderItem = function( ul, item ) {
-	    return $( '<li>' )
-	        .append( '<div> <div class="testy ' + item.icon + '"></div>' + item.value + '</div>')
-	        .appendTo( ul );
-	};
-    selectAutocomplete(scope)
-}
-
-function selectAutocomplete(scope) {
-    station = _.findWhere(scope.stations, {id: parseInt(scope.search.station_id)})
-    if (station !== undefined) {
-        $('.search-metro-autocomplete').autocomplete('search', station.title)
-        menu = $('.search-metro-autocomplete').autocomplete('widget')
-        $(menu[0].children[0]).click()
-        $('.search-metro-autocomplete').blur()
-    }
-}
-
 function toArray(object) {
     arr = []
     $.each(object, function(i, v) {
