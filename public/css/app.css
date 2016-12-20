@@ -4660,6 +4660,7 @@ textarea {
 .search-result-reviews-list {
   margin: 0;
   padding: 0;
+  line-height: 20px;
   font-family: 'helveticaneuecyrmedium'; }
   .search-result-reviews-list > li > * {
     font-family: 'helveticaneuecyrlight'; }
@@ -5692,8 +5693,6 @@ button {
 
 .review-block {
   margin-bottom: 10px; }
-  .review-block:first-child {
-    margin-top: 10px; }
 
 b {
   font-weight: normal;
