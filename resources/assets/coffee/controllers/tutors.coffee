@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, Stream) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
