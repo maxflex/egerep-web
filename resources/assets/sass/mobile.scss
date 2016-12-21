@@ -3722,7 +3722,7 @@ li.text-danger:before {
     & > div {
         margin-bottom: .3em;
         font-size: 1em;
-        &:first-child {
+        &.name {
             margin-bottom: .6em;
         }
     }

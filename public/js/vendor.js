@@ -14460,6 +14460,12 @@ angular.module('angular-toArrayFilter', [])
         $('div:has(>a[href^="https://www.google.com/maps"])').remove()
     })
 
+    $(document).on('keyup', function(event) {
+        if (event.keyCode == 27) {
+            closeModal()
+        }
+    })
+
     angular.element(document).ready(function() {
 		setTimeout(function() {
 			setScope()
@@ -14478,13 +14484,24 @@ angular.module('angular-toArrayFilter', [])
         $('.modal').removeClass('active')
         $('body').removeClass('modal-open')
         $('.container').off('touchmove');
+        if(window.location.hash == "#modal") {
+            window.history.back()
+        }
     }
 
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
         $("body").addClass('modal-open')
         $('.container').on('touchmove', false)
+        window.location.hash = '#modal'
     }
+
+    // close modal on «back» button
+    $(window).on('hashchange', function() {
+        if(window.location.hash != "#modal") {
+            closeModal()
+        }
+    });
 
 	/**
 	 * Remove by id

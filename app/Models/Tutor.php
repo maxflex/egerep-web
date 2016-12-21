@@ -43,8 +43,9 @@ class Tutor extends Model
 
     public function getPhotoUrlAttribute()
     {
-        if ($this->photo_extension) {
-            return self::SERVER_URL . $this->id . '.' . $this->photo_extension;
+        $filename = self::SERVER_URL . $this->id . '.' . $this->photo_extension;
+        if ($this->photo_extension && fileExists($filename)) {
+            return $filename;
         } else {
             return self::SERVER_URL . self::NO_PHOTO;
         }

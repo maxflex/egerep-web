@@ -5909,7 +5909,7 @@ li.text-danger:before {
 .right-tutor-info > div {
   margin-bottom: .3em;
   font-size: 1em; }
-  .right-tutor-info > div:first-child {
+  .right-tutor-info > div.name {
     margin-bottom: .6em; }
 
 .info-multi {

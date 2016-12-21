@@ -114,6 +114,10 @@
                     static::_replace($html, $var, $page->{$field});
                 }
             }
+            // detect page refresh
+            static::_replace($html, 'page_was_refreshed', (int)(isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0')));
+            unset($_SESSION['page_was_refreshed']);
+            
             static::_replace($html, 'useful', view('blocks.useful', compact('page')));
             return $html;
         }

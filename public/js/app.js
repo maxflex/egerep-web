@@ -366,7 +366,7 @@
     if (!$scope.profilePage()) {
       $timeout(function() {
         var id;
-        if ($.cookie('search') !== void 0) {
+        if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
           $scope.search = JSON.parse($.cookie('search'));
           $scope.search.id = id;

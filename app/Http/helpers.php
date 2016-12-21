@@ -244,3 +244,13 @@
             return (($is_mobile && ! isset($_SESSION['force_full'])) || (isset($_SESSION['force_mobile'])));
         }
     }
+
+    function fileExists($url)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if( $httpCode == 200 ){return true;}
+    }

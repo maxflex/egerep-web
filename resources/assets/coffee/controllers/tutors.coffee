@@ -14,7 +14,7 @@ angular
         if not $scope.profilePage()
         # страница поиска
             $timeout ->
-                if $.cookie('search') isnt undefined
+                if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
                     $scope.search.id = id
