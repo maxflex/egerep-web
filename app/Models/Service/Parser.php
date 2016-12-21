@@ -14,9 +14,6 @@
         const START_VAR = '[';
         const END_VAR   = ']';
 
-        /**
-         * $compile_functions – компилировать не только переменные, но и функции
-         */
         public static function compileVars($html)
         {
             preg_match_all('#\\' . static::interpolate('[\S]+\\') . '#', $html, $matches);
@@ -27,7 +24,7 @@
                 $query = Variable::findByName($var);
                 if ($query->exists()) {
                     $variable = $query->first();
-                    static::_replace($html, $var, $variable->html);
+                    static::replace($html, $var, $variable->html);
                 }
             }
             return $html;
@@ -95,7 +92,7 @@
                         }
                     break;
                 }
-                static::_replace($html, $var, $replacement);
+                static::replace($html, $var, $replacement);
             }
         }
 
@@ -111,14 +108,9 @@
                 $var = trim($var, static::interpolate());
                 $field = explode('.', $var)[1];
                 if ($page->{$field}) {
-                    static::_replace($html, $var, $page->{$field});
+                    static::replace($html, $var, $page->{$field});
                 }
             }
-            // detect page refresh
-            static::_replace($html, 'page_was_refreshed', (int)(isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0')));
-            unset($_SESSION['page_was_refreshed']);
-            
-            static::_replace($html, 'useful', view('blocks.useful', compact('page')));
             return $html;
         }
 
@@ -133,13 +125,13 @@
             // Ссылка «все репетиторы по ...»
             $subjects_url = Page::getUrl(@Page::$subject_page_id[implode(',', $tutor->subjects)]);
 
-            static::_replace($html, 'current_tutor', $tutor->toJson());
-            static::_replace($html, 'similar_tutors', $similar_tutors->toJson());
-            static::_replace($html, 'subjects_url', $subjects_url);
+            static::replace($html, 'current_tutor', $tutor->toJson());
+            static::replace($html, 'similar_tutors', $similar_tutors->toJson());
+            static::replace($html, 'subjects_url', $subjects_url);
 
             // h1 и desc
-            static::_replace($html, 'title', view('tutor.title', compact('tutor')));
-            static::_replace($html, 'desc', self::_cleanString(view('tutor.desc', compact('tutor'))));
+            static::replace($html, 'title', view('tutor.title', compact('tutor')));
+            static::replace($html, 'desc', self::_cleanString(view('tutor.desc', compact('tutor'))));
         }
 
         /**
@@ -149,12 +141,16 @@
         public static function compileSeo($page, &$html)
         {
             if ($page->seo_desktop) {
-                static::_replace($html, 'seo_text_top', "<div class='seo-text-top'>" . $page->getClean('html') . "</div>");
-                static::_replace($html, 'seo_text_bottom', '');
+                static::replace($html, 'seo_text_top', "<div class='seo-text-top'>" . $page->getClean('html') . "</div>");
+                static::replace($html, 'seo_text_bottom', '');
             } else {
-                static::_replace($html, 'seo_text_top', '');
-                static::_replace($html, 'seo_text_bottom', "<div class='seo-text-bottom'>" . $page->getClean('html') . "</div>");
+                static::replace($html, 'seo_text_top', '');
+                static::replace($html, 'seo_text_bottom', "<div class='seo-text-bottom'>" . $page->getClean('html') . "</div>");
             }
+            static::replace($html, 'useful', view('blocks.useful', compact('page')));
+            // detect page refresh
+            static::replace($html, 'page_was_refreshed', (int)(isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0')));
+            unset($_SESSION['page_was_refreshed']);
         }
 
         public static function interpolate($text = '')
@@ -165,7 +161,7 @@
         /**
          * Произвести замену переменной в html
          */
-        private static function _replace(&$html, $var, $replacement)
+        public static function replace(&$html, $var, $replacement)
         {
             $html = str_replace(static::interpolate($var), $replacement, $html);
         }

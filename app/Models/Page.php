@@ -65,7 +65,7 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        $value = Variable::display('serp');
+        $value = Variable::display('serp', true);
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }
