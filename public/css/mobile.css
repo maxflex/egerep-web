@@ -3873,27 +3873,29 @@ textarea {
   padding: 0 0 0 0;
   list-style: none; }
 
-.accordions > li {
+.accordions > li .arrow {
+  content: '';
+  position: absolute;
+  border: 1px solid #d7d7d7;
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  /* top: -1em; */
+  margin-top: -1em;
+  /* margin: 0 auto; */
+  left: calc(50% - 1em);
+  background: url(/img/svg/dropdown-gray.svg) no-repeat;
+  background-size: 100% 100%;
+  background-color: white;
+  background-position: center bottom;
+  background-size: 1.1em;
+  z-index: 1; }
+
+.accordions > li:last-child {
+  margin-bottom: 2em; }
+
+.accordions > li:not(:last-child) {
   border-bottom: 1px solid #d7d7d7; }
-  .accordions > li .arrow {
-    content: '';
-    position: absolute;
-    border: 1px solid #d7d7d7;
-    height: 2em;
-    width: 2em;
-    border-radius: 50%;
-    /* top: -1em; */
-    margin-top: -1em;
-    /* margin: 0 auto; */
-    left: calc(50% - 1em);
-    background: url(/img/svg/dropdown-gray.svg) no-repeat;
-    background-size: 100% 100%;
-    background-color: white;
-    background-position: center bottom;
-    background-size: 1.1em;
-    z-index: 1; }
-  .accordions > li:last-child {
-    margin-bottom: 2em; }
 
 .accordions__title {
   position: relative;
