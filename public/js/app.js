@@ -414,14 +414,14 @@
             return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
           });
           if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.02, bounds.getNorthEast().lng() + 0.02);
-            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.02, bounds.getNorthEast().lng() - 0.02);
+            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
+            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005);
             bounds.extend(extendPoint1);
             bounds.extend(extendPoint2);
           }
           map.fitBounds(bounds);
           map.panToBounds(bounds);
-          map.setZoom(tutor.markers.length > 1 ? 11 : 12);
+          map.setZoom(tutor.markers.length > 1 ? 11 : 16);
           return google.maps.event.addListenerOnce(map, 'idle', function() {
             return $('div:has(>a[href^="https://www.google.com/maps"])').remove();
           });
@@ -651,6 +651,11 @@
       }
     });
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -979,11 +984,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 

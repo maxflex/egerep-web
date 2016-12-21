@@ -69,14 +69,14 @@ angular
 
                 # one marker bug fix
                 if bounds.getNorthEast().equals(bounds.getSouthWest())
-                    extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.02, bounds.getNorthEast().lng() + 0.02)
-                    extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.02, bounds.getNorthEast().lng() - 0.02)
+                    extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005)
+                    extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005)
                     bounds.extend(extendPoint1)
                     bounds.extend(extendPoint2)
 
                 map.fitBounds bounds
                 map.panToBounds bounds
-                map.setZoom if tutor.markers.length > 1 then 11 else 12
+                map.setZoom if tutor.markers.length > 1 then 11 else 16
 
                 # bug fix – убираем квадратик в правом нижнем углу
                 google.maps.event.addListenerOnce map, 'idle', ->
