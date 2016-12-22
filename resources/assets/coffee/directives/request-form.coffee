@@ -4,8 +4,9 @@ angular.module('Egerep')
         scope:
             tutor: '='
             sentIds: '='
+            index: '='
         templateUrl: 'directives/request-form'
-        controller: ($scope, $element, $timeout, Request) ->
+        controller: ($scope, $element, $timeout, Request, Sources) ->
             # отправить заявку
             $scope.request = ->
                 $scope.tutor.request = {} if $scope.tutor.request is undefined
@@ -13,6 +14,10 @@ angular.module('Egerep')
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
                     trackDataLayer()
+                    $scope.$parent.StreamService.run(
+                        identifySource(),
+                        if $scope.index then ($scope.index + 1) else null
+                    )
                 , (response) ->
                     if response.status is 422
                         angular.forEach response.data, (errors, field) ->
@@ -20,6 +25,13 @@ angular.module('Egerep')
                             $($element).find("input#{selector}, textarea#{selector}").focus().notify errors[0], notify_options
                     else
                         $scope.tutor.request_error = true
+
+            identifySource = ->
+                if $scope.tutor.id
+                    if $scope.index then Sources.SERP_REQUEST else Sources.PROFILE_REQUEST
+                else
+                    Sources.HELP_REQUEST
+
 
             trackDataLayer = ->
                 window.dataLayer = window.dataLayer || []

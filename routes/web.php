@@ -5,19 +5,27 @@
 
     # Статические страницы
     Route::get('/', function() {
-        return Variable::display('page-index');
+        $html = Variable::display('page-index');
+        $_SESSION['action'] = 'main';
+        return $html;
     });
 
     Route::get('/request', function() {
-        return Variable::display('page-tutor-request');
+        $html = Variable::display('page-tutor-request');
+        $_SESSION['action'] = 'request';
+        return $html;
     });
 
     Route::get('/cv', function() {
-        return Variable::display('page-cv');
+        $html = Variable::display('page-cv');
+        $_SESSION['action'] = 'cv';
+        return $html;
     });
 
     Route::get('/login', function() {
-        return Variable::display('page-login');
+        $html = Variable::display('page-login');
+        $_SESSION['action'] = 'login';
+        return $html;
     });
 
     Route::get('/full', function() {

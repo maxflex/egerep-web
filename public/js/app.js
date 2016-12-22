@@ -356,16 +356,16 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
     var filter_used, highlight, search, search_count, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
     };
-    if (!$scope.profilePage()) {
-      $timeout(function() {
-        var id;
+    $timeout(function() {
+      var id;
+      if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
           $scope.search = JSON.parse($.cookie('search'));
@@ -378,8 +378,10 @@
         }
         SubjectService.init($scope.search.subjects);
         return $scope.filter();
-      });
-    }
+      } else {
+        return StreamService.init($scope.last_action === 'serp' ? JSON.parse($.cookie('search')) : void 0, $scope.subjects, false);
+      }
+    });
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
     $scope.dateToText = function(date) {
@@ -477,6 +479,16 @@
     $scope.filter = function() {
       $scope.tutors = [];
       $scope.page = 1;
+      if (filter_used) {
+        StreamService.updateCookie({
+          search: StreamService.cookie.search + 1
+        });
+        StreamService.run(Sources.FILTER);
+      } else {
+        if (!filter_used) {
+          StreamService.init($scope.search, $scope.subjects);
+        }
+      }
       search();
       if ($scope.search.hidden_filter && search_count) {
         delete $scope.search.hidden_filter;
@@ -486,8 +498,14 @@
     };
     $scope.nextPage = function() {
       $scope.page++;
+      StreamService.run(Sources.FILTER);
       return search();
     };
+    $scope.$watch('page', function(newVal, oldVal) {
+      if (newVal !== void 0) {
+        return $.cookie('page', $scope.page);
+      }
+    });
     $scope.isLastPage = function() {
       if (!$scope.data) {
         return;
@@ -588,21 +606,27 @@
         });
       }
     };
-    $scope.popup = function(id, tutor, fn) {
+    $scope.popup = function(id, tutor, fn, index) {
       if (tutor == null) {
         tutor = null;
       }
       if (fn == null) {
         fn = null;
       }
+      if (index == null) {
+        index = null;
+      }
       openModal(id);
       if (tutor !== null) {
         $scope.popup_tutor = tutor;
       }
       if (fn !== null) {
-        return $timeout(function() {
+        $timeout(function() {
           return $scope[fn](tutor);
         });
+      }
+      if (index !== null) {
+        return $scope.index = index;
       }
     };
     $scope.syncSort = function() {
@@ -651,11 +675,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -818,12 +837,13 @@
       replace: true,
       scope: {
         tutor: '=',
-        sentIds: '='
+        sentIds: '=',
+        index: '='
       },
       templateUrl: 'directives/request-form-mobile',
-      controller: function($scope, $element, $timeout, Request, RequestService) {
+      controller: function($scope, $element, $timeout, RequestService) {
         return $scope.request = function() {
-          return RequestService.request($scope.tutor, $element);
+          return RequestService.request($scope.tutor, $element, $scope.index, $scope.$parent.StreamService);
         };
       }
     };
@@ -837,11 +857,12 @@
       replace: true,
       scope: {
         tutor: '=',
-        sentIds: '='
+        sentIds: '=',
+        index: '='
       },
       templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request) {
-        var trackDataLayer;
+      controller: function($scope, $element, $timeout, Request, Sources) {
+        var identifySource, trackDataLayer;
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
@@ -849,7 +870,8 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            return trackDataLayer();
+            trackDataLayer();
+            return $scope.$parent.StreamService.run(identifySource(), $scope.index ? $scope.index + 1 : null);
           }, function(response) {
             if (response.status === 422) {
               return angular.forEach(response.data, function(errors, field) {
@@ -861,6 +883,17 @@
               return $scope.tutor.request_error = true;
             }
           });
+        };
+        identifySource = function() {
+          if ($scope.tutor.id) {
+            if ($scope.index) {
+              return Sources.SERP_REQUEST;
+            } else {
+              return Sources.PROFILE_REQUEST;
+            }
+          } else {
+            return Sources.HELP_REQUEST;
+          }
         };
         return trackDataLayer = function() {
           window.dataLayer = window.dataLayer || [];
@@ -1025,6 +1058,10 @@
     return $resource(apiPath('cv'), {
       id: '@id'
     });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
   });
 
   apiPath = function(entity, additional) {
@@ -1049,6 +1086,17 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest'
+  });
 
 }).call(this);
 
@@ -1081,15 +1129,19 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('RequestService', function(Request) {
-    var trackDataLayer;
-    this.request = function(tutor, element) {
+  angular.module('Egerep').service('RequestService', function(Request, Sources) {
+    var identifySource, trackDataLayer;
+    this.request = function(tutor, element, index, StreamService) {
+      if (index == null) {
+        index = null;
+      }
       if (tutor.request === void 0) {
         tutor.request = {};
       }
       tutor.request.tutor_id = tutor.id;
       return Request.save(tutor.request, function() {
         tutor.request_sent = true;
+        StreamService.run(identifySource(tutor, index), index ? index + 1 : null);
         return trackDataLayer();
       }, function(response) {
         if (response.status === 422) {
@@ -1102,6 +1154,17 @@
           return tutor.request_error = true;
         }
       });
+    };
+    identifySource = function(tutor, index) {
+      if (tutor.id) {
+        if (index) {
+          return Sources.SERP_REQUEST;
+        } else {
+          return Sources.PROFILE_REQUEST;
+        }
+      } else {
+        return Sources.HELP_REQUEST;
+      }
     };
     trackDataLayer = function(tutor) {
       window.dataLayer = window.dataLayer || [];
@@ -1127,6 +1190,139 @@
           }
         }
       });
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
+    var clientId;
+    clientId = function() {
+      return ga.getAll()[0].get('clientId');
+    };
+    this.generateEventString = function(params) {
+      var metro, page, position, sort, subjects, where;
+      if (this.search === void 0) {
+        return 'empty_';
+      }
+      if (this.subjects !== null && params.subjects !== '') {
+        subjects = [];
+        SubjectService.getSelected().forEach((function(_this) {
+          return function(subject_id) {
+            return subjects.push(_this.subjects[subject_id].eng);
+          };
+        })(this));
+        subjects = subjects.join('+');
+      } else {
+        subjects = '';
+      }
+      if (params.place) {
+        switch (parseInt(params.place)) {
+          case 1:
+            where = 'client';
+            break;
+          case 2:
+            where = 'tutor';
+        }
+      } else {
+        where = 'anywhere';
+      }
+      switch (parseInt(params.sort)) {
+        case 2:
+          sort = 'minprice';
+          break;
+        case 3:
+          sort = 'maxprice';
+          break;
+        case 4:
+          sort = 'rating';
+          break;
+        case 5:
+          sort = 'bymetro';
+          break;
+        default:
+          sort = 'pop';
+      }
+      metro = params.station_id || '';
+      position = params.position || '';
+      page = params.page || '';
+      return ("search=" + params.search + "_subj=" + subjects + "_where=" + where + "_sort=" + sort + "_metro=" + metro + "_page=" + page + "_step=" + params.step + "_") + (params.position ? "position=" + position + "_" : "");
+    };
+    this.updateCookie = function(params) {
+      if (this.cookie === void 0) {
+        this.cookie = {};
+      }
+      $.each(params, (function(_this) {
+        return function(key, value) {
+          return _this.cookie[key] = value;
+        };
+      })(this));
+      return $.cookie('stream', JSON.stringify(this.cookie), {
+        expires: 365,
+        path: '/'
+      });
+    };
+    this.init = function(search, subjects, landing) {
+      if (subjects == null) {
+        subjects = null;
+      }
+      if (landing == null) {
+        landing = true;
+      }
+      return $timeout((function(_this) {
+        return function() {
+          if (search !== void 0) {
+            SubjectService.init(search.subjects);
+            _this.search = search;
+          }
+          _this.subjects = subjects;
+          if ($.cookie('stream') !== void 0) {
+            _this.cookie = JSON.parse($.cookie('stream'));
+          } else {
+            _this.updateCookie({
+              step: 0,
+              search: 0
+            });
+          }
+          if (landing) {
+            return _this.run(Sources.LANDING);
+          }
+        };
+      })(this), 500);
+    };
+    this.run = function(source, position) {
+      if (position == null) {
+        position = null;
+      }
+      return $timeout((function(_this) {
+        return function() {
+          var params;
+          _this.updateCookie({
+            step: _this.cookie.step + 1
+          });
+          params = {
+            source: source,
+            search: _this.cookie.search,
+            step: _this.cookie.step,
+            client_id: clientId()
+          };
+          if (_this.search !== void 0) {
+            params.place = _this.search.place;
+            params.station_id = _this.search.station_id;
+            params.sort = _this.search.sort;
+            params.subjects = SubjectService.getSelected().join(',');
+            params.page = $.cookie('page') || 1;
+          }
+          if (position !== null) {
+            params.position = position;
+          }
+          Stream.save(params);
+          ga('send', 'event', source, _this.generateEventString(params));
+          return console.log(source, _this.generateEventString(params));
+        };
+      })(this), 500);
     };
     return this;
   });

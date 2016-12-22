@@ -4,6 +4,7 @@ angular.module('Egerep')
         scope:
             tutor: '='
             sentIds: '='
+            index: '='
         templateUrl: 'directives/request-form-mobile'
-        controller: ($scope, $element, $timeout, Request, RequestService) ->
-            $scope.request = -> RequestService.request($scope.tutor, $element)
+        controller: ($scope, $element, $timeout, RequestService) ->
+            $scope.request = -> RequestService.request($scope.tutor, $element, $scope.index, $scope.$parent.StreamService)

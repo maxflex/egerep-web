@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, Stream) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -11,9 +11,9 @@ angular
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
 
-        if not $scope.profilePage()
         # страница поиска
-            $timeout ->
+        $timeout ->
+            if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
@@ -26,6 +26,12 @@ angular
 
                 SubjectService.init($scope.search.subjects)
                 $scope.filter()
+            else
+                StreamService.init(
+                    if $scope.last_action is 'serp' then JSON.parse($.cookie('search')) else undefined,
+                    $scope.subjects,
+                    false
+                )
 
         # пары предметов
         $scope.pairs = [
@@ -118,6 +124,11 @@ angular
         $scope.filter = ->
             $scope.tutors = []
             $scope.page = 1
+            if filter_used
+                StreamService.updateCookie({search: StreamService.cookie.search + 1})
+                StreamService.run(Sources.FILTER)
+            else
+                StreamService.init($scope.search, $scope.subjects) if not filter_used
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
@@ -126,7 +137,10 @@ angular
 
         $scope.nextPage = ->
             $scope.page++
+            StreamService.run(Sources.FILTER)
             search()
+
+        $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
 
         $scope.isLastPage = ->
             return if not $scope.data
@@ -205,10 +219,11 @@ angular
         #
         # MOBILE
         #
-        $scope.popup = (id, tutor = null, fn = null) ->
+        $scope.popup = (id, tutor = null, fn = null, index = null) ->
             openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor
             if fn isnt null then $timeout -> $scope[fn](tutor)
+            if index isnt null then $scope.index = index
 
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
