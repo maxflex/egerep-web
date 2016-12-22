@@ -1,4 +1,4 @@
-angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter'])
+angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap'])
     .config [
         '$compileProvider'
         ($compileProvider) ->

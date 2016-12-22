@@ -180,17 +180,6 @@ angular
                 $('.custom-select-sort').trigger('render')
 
         $scope.showSvg = (tutor) ->
-            if tutor.show_svg is undefined
-                map = new SVGMap
-                    iframeId: 'svg-iframe-'+tutor.id
-                    clicable: false
-                    places: $scope.svg
-                map.init()
-                map.deselectAll()
-                map.select(tutor.svg_map)
-                # if $scope.mobile then $timeout ->
-                #     svg = $("#svg-#{tutor.id}")
-                #     svg.scrollLeft(svg.width() / 4).scrollTop(svg.height() / 2)
             $scope.toggleShow(tutor, 'show_svg', 'svg_map')
 
         $scope.toggleShow = (tutor, prop, iteraction_type) ->

@@ -52,7 +52,6 @@ elixir(mix => {
             'angular/angular.min',
             'angular-resource/angular-resource.min',
             'angular-i18n/angular-locale_ru-ru',
-            // 'angular-inview/angular-inview',
             'underscore/underscore-min',
             'ladda/dist/spin.min',
             'ladda/dist/ladda.min',
@@ -71,5 +70,7 @@ elixir(mix => {
             'mark.js/dist/jquery.mark.min',
             'angular-toArrayFilter/toArrayFilter',
             'jquery.cookie/jquery.cookie',
+            'egerep-svg-metro/scripts/svg',
+            'jquery.panzoom/dist/jquery.panzoom'
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });
