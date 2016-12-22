@@ -1091,7 +1091,7 @@
 
 (function() {
   angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
+    OPENPAGE: 'openpage',
     FILTER: 'filter',
     PROFILE_REQUEST: 'profilerequest',
     SERP_REQUEST: 'serprequest',

@@ -65,7 +65,7 @@
                         $replacement = Factory::constant($args[0]);
                         break;
                     case 'session':
-                        $replacement = json_encode($_SESSION[$args[0]]);
+                        $replacement = json_encode(@$_SESSION[$args[0]]);
                         break;
                     case 'param':
                         $replacement = json_encode(@$_GET[$args[0]]);
