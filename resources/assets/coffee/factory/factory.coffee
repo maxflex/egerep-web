@@ -5,3 +5,4 @@ angular.module('Egerep')
         PROFILE_REQUEST: 'profilerequest'
         SERP_REQUEST: 'serprequest'
         HELP_REQUEST: 'helprequest'
+        MORE_TUTORS: 'more_tutors'

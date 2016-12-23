@@ -10,7 +10,7 @@ angular.module 'Egerep'
                     identifySource(tutor, index),
                     if index then (index + 1) else null
                 )
-                trackDataLayer()
+                # trackDataLayer()
             , (response) ->
                 if response.status is 422
                     angular.forEach response.data, (errors, field) ->

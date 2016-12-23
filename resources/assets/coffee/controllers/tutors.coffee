@@ -137,7 +137,7 @@ angular
 
         $scope.nextPage = ->
             $scope.page++
-            StreamService.run(Sources.FILTER)
+            StreamService.run(Sources.MORE_TUTORS)
             search()
 
         $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
