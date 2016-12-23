@@ -3,6 +3,8 @@
 
     URL::forceSchema('https');
 
+    Route::get('sitemap.xml', 'SitemapController@index');
+
     # Статические страницы
     Route::get('/', function() {
         $html = Variable::display('page-index');

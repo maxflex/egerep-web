@@ -311,7 +311,7 @@ dfn {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-h1 {
+h1, .h1-top {
   font-size: 30px;
   font-weight: normal;
   margin: 0;
@@ -3165,7 +3165,7 @@ dfn {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari, and Chrome.
  */
-h1, h2, h3, h4 {
+h1, .h1-top, h2, h3, h4 {
   padding: 0;
   margin: 0;
   color: #0d2034;
@@ -3173,11 +3173,11 @@ h1, h2, h3, h4 {
   line-height: normal;
   font-weight: normal; }
 
-h1 {
+h1, .h1-top {
   padding: 0 0 20px 0;
   font-size: 1.6em; }
 
-h2, .serp-page h1 {
+h2, .serp-page h1, .serp-page .h1-top {
   text-align: left;
   padding: 0 0 20px 0;
   font-size: 1.500em; }
@@ -3738,7 +3738,7 @@ textarea {
   padding: 0 0 0.5em 0;
   font-size: 1.500em; }
 
-.index-text h1 {
+.index-text h1, .index-text .h1-top {
   font-size: 3.000em; }
 
 .index-text__button {
@@ -4250,7 +4250,7 @@ textarea {
   padding: 0 0 1.4em 0;
   color: #aeafaf; }
 
-.form-question h1 {
+.form-question h1, .form-question .h1-top {
   text-align: left; }
 
 /* Search metro */

@@ -73,7 +73,7 @@ class Page extends Model
     public function getH1Attribute($value)
     {
         if ($value) {
-            return "<h1 class='h1-top'>{$value}</h1>";
+            return "<div class='h1-top'>{$value}</div>";
         }
         return ' ';
     }
