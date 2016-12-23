@@ -30,6 +30,6 @@ class SitemapController extends Controller
 
     private static function _url($url = '')
     {
-        return config('app.url') . '/' . $url;
+        return config('app.url') . $url;
     }
 }

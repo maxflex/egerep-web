@@ -33,3 +33,8 @@
     cd /home/egerep-web
     git stash
 @endtask
+
+@task('composer')
+    cd /home/egerep-web
+    composer update
+@endtask
