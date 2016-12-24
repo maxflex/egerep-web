@@ -5,6 +5,11 @@
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
+    # 301 редирект старых преподов
+    Route::get('/tutors/person/{id}', function($id) {
+        return redirect(\App\Models\Tutor::where('id_a_pers', $id)->value('id'), 301);
+    });
+
     # Статические страницы
     Route::get('/', function() {
         $html = Variable::display('page-index');
