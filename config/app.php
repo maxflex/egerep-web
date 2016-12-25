@@ -183,6 +183,7 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
         Watson\Sitemap\SitemapServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*
