@@ -31,9 +31,11 @@ angular.module('Egerep')
                     else
                         $scope.tutor.request_error = true
 
+            profilePage = -> RegExp(/^\/[\d]+$/).test(window.location.pathname)
+
             identifySource = ->
                 if $scope.tutor.id
-                    if $scope.index then Sources.SERP_REQUEST else Sources.PROFILE_REQUEST
+                    if profilePage() then Sources.PROFILE_REQUEST else Sources.SERP_REQUEST
                 else
                     Sources.HELP_REQUEST
 
