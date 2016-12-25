@@ -17,8 +17,8 @@ angular.module 'Egerep'
                 where = 'anywhere'
 
             switch parseInt(params.sort)
-                when 2 then sort = 'minprice'
-                when 3 then sort = 'maxprice'
+                when 2 then sort = 'maxprice'
+                when 3 then sort = 'minprice'
                 when 4 then sort = 'rating'
                 when 5 then sort = 'bymetro'
                 else sort = 'pop'
