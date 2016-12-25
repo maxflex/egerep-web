@@ -679,18 +679,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -844,33 +832,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').directive('requestFormMobile', function() {
-    return {
-      replace: true,
-      scope: {
-        tutor: '=',
-        sentIds: '=',
-        index: '='
-      },
-      templateUrl: 'directives/request-form-mobile',
-      controller: function($scope, $element, $timeout, RequestService) {
-        $timeout(function() {
-          if ($scope.index !== void 0) {
-            return $scope.index++;
-          } else {
-            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
-          }
-        }, 500);
-        return $scope.request = function() {
-          return RequestService.request($scope.tutor, $element, $scope.index, $scope.$parent.StreamService);
-        };
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('requestForm', function() {
     return {
       replace: true,
@@ -879,7 +840,13 @@
         sentIds: '=',
         index: '='
       },
-      templateUrl: 'directives/request-form',
+      templateUrl: function(elem, attrs) {
+        if (attrs.hasOwnProperty('mobile')) {
+          return 'directives/request-form-mobile';
+        } else {
+          return 'directives/request-form';
+        }
+      },
       controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
         var identifySource, trackDataLayer;
         $timeout(function() {
@@ -1047,6 +1014,18 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1137,74 +1116,6 @@
         return false;
       }
       return !number.match(/_/);
-    };
-    return this;
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('RequestService', function(Request, Sources, $rootScope) {
-    var identifySource, trackDataLayer;
-    this.request = function(tutor, element, index, StreamService) {
-      if (index == null) {
-        index = null;
-      }
-      if (tutor.request === void 0) {
-        tutor.request = {};
-      }
-      tutor.request.tutor_id = tutor.id;
-      return Request.save(tutor.request, function() {
-        tutor.request_sent = true;
-        StreamService.run(identifySource(tutor, index), index);
-        return trackDataLayer(tutor);
-      }, function(response) {
-        if (response.status === 422) {
-          return angular.forEach(response.data, function(errors, field) {
-            var selector;
-            selector = "[ng-model$='" + field + "']";
-            return $(element).find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
-          });
-        } else {
-          return tutor.request_error = true;
-        }
-      });
-    };
-    identifySource = function(tutor, index) {
-      if (tutor.id) {
-        if (index) {
-          return Sources.SERP_REQUEST;
-        } else {
-          return Sources.PROFILE_REQUEST;
-        }
-      } else {
-        return Sources.HELP_REQUEST;
-      }
-    };
-    trackDataLayer = function(tutor) {
-      window.dataLayer = window.dataLayer || [];
-      return window.dataLayer.push({
-        event: 'purchase',
-        ecommerce: {
-          currencyCode: 'RUR',
-          purchase: {
-            actionField: {
-              id: googleClientId(),
-              affiliation: 'serp',
-              revenue: tutor.public_price
-            },
-            products: [
-              {
-                id: tutor.id,
-                price: tutor.public_price,
-                brand: tutor.subjects,
-                category: tutor.gender + '_' + $rootScope.yearsPassed(tutor.birth_year),
-                quantity: 1
-              }
-            ]
-          }
-        }
-      });
     };
     return this;
   });

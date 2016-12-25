@@ -5,7 +5,8 @@ angular.module('Egerep')
             tutor: '='
             sentIds: '='
             index: '='
-        templateUrl: 'directives/request-form'
+        templateUrl: (elem, attrs) ->
+            if attrs.hasOwnProperty('mobile') then 'directives/request-form-mobile' else 'directives/request-form'
         controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
             $timeout ->
                 if $scope.index isnt undefined
@@ -35,7 +36,6 @@ angular.module('Egerep')
                     if $scope.index then Sources.SERP_REQUEST else Sources.PROFILE_REQUEST
                 else
                     Sources.HELP_REQUEST
-
 
             trackDataLayer = ->
                 window.dataLayer = window.dataLayer || []
