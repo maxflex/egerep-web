@@ -870,7 +870,8 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            return $scope.$parent.StreamService.run(identifySource(), $scope.index ? $scope.index + 1 : null);
+            $scope.$parent.StreamService.run(identifySource(), $scope.index ? $scope.index + 1 : null);
+            return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
               return angular.forEach(response.data, function(errors, field) {
@@ -1141,7 +1142,8 @@
       tutor.request.tutor_id = tutor.id;
       return Request.save(tutor.request, function() {
         tutor.request_sent = true;
-        return StreamService.run(identifySource(tutor, index), index ? index + 1 : null);
+        StreamService.run(identifySource(tutor, index), index ? index + 1 : null);
+        return trackDataLayer();
       }, function(response) {
         if (response.status === 422) {
           return angular.forEach(response.data, function(errors, field) {
@@ -1318,6 +1320,7 @@
             params.position = position;
           }
           Stream.save(params);
+          ga('send', 'event', source, _this.generateEventString(params));
           return console.log(source, _this.generateEventString(params));
         };
       })(this), 500);
