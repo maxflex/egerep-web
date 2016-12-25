@@ -70,7 +70,7 @@ angular.module 'Egerep'
                 Stream.save(params)
                 window.dataLayer = window.dataLayer || []
                 window.dataLayer.push
-                    event: source
+                    event: 'configuration'
                     eventCategory: source
                     eventAction: this.generateEventString(params)
                 # ga('send', 'event', source, this.generateEventString(params))

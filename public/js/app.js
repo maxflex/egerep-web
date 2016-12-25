@@ -679,18 +679,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -1029,6 +1017,18 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1246,7 +1246,7 @@
           Stream.save(params);
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({
-            event: source,
+            event: 'configuration',
             eventCategory: source,
             eventAction: _this.generateEventString(params)
           });
