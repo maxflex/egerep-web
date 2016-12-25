@@ -679,6 +679,18 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
@@ -868,7 +880,7 @@
         index: '='
       },
       templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request, Sources) {
+      controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
         var identifySource, trackDataLayer;
         $timeout(function() {
           if ($scope.index !== void 0) {
@@ -917,8 +929,8 @@
               currencyCode: 'RUR',
               purchase: {
                 actionField: {
-                  id: $scope.tutor.id,
-                  affilaction: 'serp',
+                  id: googleClientId(),
+                  affiliation: 'serp',
                   revenue: $scope.tutor.public_price
                 },
                 products: [
@@ -926,7 +938,7 @@
                     id: $scope.tutor.id,
                     price: $scope.tutor.public_price,
                     brand: $scope.tutor.subjects,
-                    category: $scope.tutor.markers,
+                    category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year),
                     quantity: 1
                   }
                 ]
@@ -1035,18 +1047,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1144,7 +1144,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('RequestService', function(Request, Sources) {
+  angular.module('Egerep').service('RequestService', function(Request, Sources, $rootScope) {
     var identifySource, trackDataLayer;
     this.request = function(tutor, element, index, StreamService) {
       if (index == null) {
@@ -1157,7 +1157,7 @@
       return Request.save(tutor.request, function() {
         tutor.request_sent = true;
         StreamService.run(identifySource(tutor, index), index);
-        return trackDataLayer();
+        return trackDataLayer(tutor);
       }, function(response) {
         if (response.status === 422) {
           return angular.forEach(response.data, function(errors, field) {
@@ -1189,8 +1189,8 @@
           currencyCode: 'RUR',
           purchase: {
             actionField: {
-              id: tutor.id,
-              affilaction: 'serp',
+              id: googleClientId(),
+              affiliation: 'serp',
               revenue: tutor.public_price
             },
             products: [
@@ -1198,7 +1198,7 @@
                 id: tutor.id,
                 price: tutor.public_price,
                 brand: tutor.subjects,
-                category: tutor.markers,
+                category: tutor.gender + '_' + $rootScope.yearsPassed(tutor.birth_year),
                 quantity: 1
               }
             ]
@@ -1213,10 +1213,6 @@
 
 (function() {
   angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
-    var clientId;
-    clientId = function() {
-      return ga.getAll()[0].get('clientId');
-    };
     this.generateEventString = function(params) {
       var metro, page, position, sort, subjects, where;
       if (this.search === void 0) {
@@ -1321,7 +1317,7 @@
             source: source,
             search: _this.cookie.search,
             step: _this.cookie.step,
-            client_id: clientId()
+            client_id: googleClientId()
           };
           if (_this.search !== void 0) {
             params.place = _this.search.place;

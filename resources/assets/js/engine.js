@@ -362,3 +362,7 @@ function goTutor() {
         window.location = '/' + tutor_id
     }
 }
+
+function googleClientId() {
+    return ga.getAll()[0].get('clientId')
+}

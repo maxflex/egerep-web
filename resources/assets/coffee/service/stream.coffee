@@ -1,7 +1,5 @@
 angular.module 'Egerep'
     .service 'StreamService', ($http, $timeout, Stream, SubjectService, Sources) ->
-        clientId = -> ga.getAll()[0].get('clientId')
-
         this.generateEventString = (params) ->
             return 'empty_' if this.search is undefined
             if this.subjects isnt null and params.subjects isnt ''
@@ -58,7 +56,7 @@ angular.module 'Egerep'
                     source:     source
                     search:     this.cookie.search
                     step:       this.cookie.step
-                    client_id:  clientId()
+                    client_id:  googleClientId()
 
                 if this.search isnt undefined
                     params.place      = this.search.place

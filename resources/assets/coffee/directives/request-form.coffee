@@ -6,7 +6,7 @@ angular.module('Egerep')
             sentIds: '='
             index: '='
         templateUrl: 'directives/request-form'
-        controller: ($scope, $element, $timeout, Request, Sources) ->
+        controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
             $timeout ->
                 if $scope.index isnt undefined
                     $scope.index++
@@ -45,13 +45,13 @@ angular.module('Egerep')
                         currencyCode: 'RUR'
                         purchase:
                             actionField:
-                                id: $scope.tutor.id
-                                affilaction: 'serp' # @todo: profile|request
+                                id: googleClientId()
+                                affiliation: 'serp' # @todo: profile|request
                                 revenue: $scope.tutor.public_price
                             products: [
                                 id: $scope.tutor.id
                                 price: $scope.tutor.public_price
                                 brand: $scope.tutor.subjects
-                                category: $scope.tutor.markers
+                                category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year) # пол_возраст
                                 quantity: 1
                             ]

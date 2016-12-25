@@ -1,5 +1,5 @@
 angular.module 'Egerep'
-    .service 'RequestService', (Request, Sources) ->
+    .service 'RequestService', (Request, Sources, $rootScope) ->
         # отправить заявку
         this.request = (tutor, element, index = null, StreamService) ->
             tutor.request = {} if tutor.request is undefined
@@ -7,7 +7,7 @@ angular.module 'Egerep'
             Request.save tutor.request, ->
                 tutor.request_sent = true
                 StreamService.run(identifySource(tutor, index), index)
-                trackDataLayer()
+                trackDataLayer(tutor)
             , (response) ->
                 if response.status is 422
                     angular.forEach response.data, (errors, field) ->
@@ -30,14 +30,14 @@ angular.module 'Egerep'
                     currencyCode: 'RUR'
                     purchase:
                         actionField:
-                            id: tutor.id
-                            affilaction: 'serp' # @todo: profile|request
+                            id: googleClientId()
+                            affiliation: 'serp' # @todo: profile|request
                             revenue: tutor.public_price
                         products: [
                             id: tutor.id
                             price: tutor.public_price
                             brand: tutor.subjects
-                            category: tutor.markers
+                            category: tutor.gender + '_' + $rootScope.yearsPassed(tutor.birth_year) # пол_возраст
                             quantity: 1
                         ]
 
