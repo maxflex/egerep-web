@@ -68,7 +68,7 @@ angular.module 'Egerep'
                 params.position = position if position isnt null
 
                 Stream.save(params)
-                ga('send', 'event', source, this.generateEventString(params))
+                # ga('send', 'event', source, this.generateEventString(params))
                 console.log(source, this.generateEventString(params))
             , 500
 
