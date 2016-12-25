@@ -6,10 +6,7 @@ angular.module 'Egerep'
             tutor.request.tutor_id = tutor.id
             Request.save tutor.request, ->
                 tutor.request_sent = true
-                StreamService.run(
-                    identifySource(tutor, index),
-                    if index then (index + 1) else null
-                )
+                StreamService.run(identifySource(tutor, index), index)
                 trackDataLayer()
             , (response) ->
                 if response.status is 422

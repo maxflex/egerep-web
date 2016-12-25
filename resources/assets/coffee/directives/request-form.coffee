@@ -7,16 +7,20 @@ angular.module('Egerep')
             index: '='
         templateUrl: 'directives/request-form'
         controller: ($scope, $element, $timeout, Request, Sources) ->
+            $timeout ->
+                if $scope.index isnt undefined
+                    $scope.index++
+                else
+                    $scope.index = if window.location.hash then window.location.hash.substring(1) else null
+            , 500
+
             # отправить заявку
             $scope.request = ->
                 $scope.tutor.request = {} if $scope.tutor.request is undefined
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
-                    $scope.$parent.StreamService.run(
-                        identifySource(),
-                        if $scope.index then ($scope.index + 1) else null
-                    )
+                    $scope.$parent.StreamService.run(identifySource(), $scope.index)
                     trackDataLayer()
                 , (response) ->
                     if response.status is 422

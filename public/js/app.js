@@ -842,6 +842,13 @@
       },
       templateUrl: 'directives/request-form-mobile',
       controller: function($scope, $element, $timeout, RequestService) {
+        $timeout(function() {
+          if ($scope.index !== void 0) {
+            return $scope.index++;
+          } else {
+            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
+          }
+        }, 500);
         return $scope.request = function() {
           return RequestService.request($scope.tutor, $element, $scope.index, $scope.$parent.StreamService);
         };
@@ -863,6 +870,13 @@
       templateUrl: 'directives/request-form',
       controller: function($scope, $element, $timeout, Request, Sources) {
         var identifySource, trackDataLayer;
+        $timeout(function() {
+          if ($scope.index !== void 0) {
+            return $scope.index++;
+          } else {
+            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
+          }
+        }, 500);
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
@@ -870,7 +884,7 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            $scope.$parent.StreamService.run(identifySource(), $scope.index ? $scope.index + 1 : null);
+            $scope.$parent.StreamService.run(identifySource(), $scope.index);
             return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
@@ -1142,7 +1156,7 @@
       tutor.request.tutor_id = tutor.id;
       return Request.save(tutor.request, function() {
         tutor.request_sent = true;
-        StreamService.run(identifySource(tutor, index), index ? index + 1 : null);
+        StreamService.run(identifySource(tutor, index), index);
         return trackDataLayer();
       }, function(response) {
         if (response.status === 422) {
