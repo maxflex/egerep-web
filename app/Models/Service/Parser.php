@@ -151,7 +151,7 @@
             // detect page refresh
 
             static::replace($html, 'page_was_refreshed', (int)(
-                (isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0') && ! $page->isMainSerp())
+                (isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0') || $page->isMainSerp())
             ));
             unset($_SESSION['page_was_refreshed']);
         }
