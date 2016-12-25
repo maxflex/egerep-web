@@ -21,8 +21,8 @@ angular.module('Egerep')
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
-                    $scope.$parent.StreamService.run(identifySource(), $scope.index)
-                    trackDataLayer()
+                    # $scope.$parent.StreamService.run(identifySource(), $scope.index)
+                    # trackDataLayer()
                 , (response) ->
                     if response.status is 422
                         angular.forEach response.data, (errors, field) ->
