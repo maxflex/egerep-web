@@ -28,7 +28,7 @@ angular
                 $scope.filter()
             else
                 StreamService.init(
-                    if $scope.last_action is 'serp' then JSON.parse($.cookie('search')) else undefined,
+                    JSON.parse($.cookie('search')),
                     $scope.subjects,
                     false
                 )
