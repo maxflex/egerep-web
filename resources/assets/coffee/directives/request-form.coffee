@@ -48,7 +48,7 @@ angular.module('Egerep')
                         purchase:
                             actionField:
                                 id: googleClientId()
-                                affiliation: 'serp' # @todo: profile|request
+                                affiliation: identifySource()
                                 revenue: $scope.tutor.public_price
                             products: [
                                 id: $scope.tutor.id
