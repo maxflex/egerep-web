@@ -1244,7 +1244,12 @@
             params.position = position;
           }
           Stream.save(params);
-          ga('send', 'event', source, _this.generateEventString(params));
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'event',
+            source: source,
+            value: _this.generateEventString(params)
+          });
           return console.log(source, _this.generateEventString(params));
         };
       })(this), 500);
