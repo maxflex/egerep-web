@@ -130,4 +130,12 @@ class Page extends Model
         }
         return $subject_routes;
     }
+
+    /**
+     * Главная страница серпа
+     */
+    public function isMainSerp()
+    {
+        return $this->id == 10;
+    }
 }
