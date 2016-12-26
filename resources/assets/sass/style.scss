@@ -540,3 +540,19 @@ body.modal-open:before {
     z-index: 99;
     display: none;
 }
+
+#for-tutors {
+    width: 100%;
+    & > div {
+        width: 400px;
+        height: 200px;
+        display: inline-block;
+        font-size: 42px;
+        & span {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

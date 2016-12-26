@@ -17,6 +17,12 @@
         return $html;
     });
 
+    Route::get('/for-tutors', function() {
+        $html = Variable::display('for-tutors');
+        $_SESSION['action'] = 'for-tutors';
+        return $html;
+    });
+
     Route::get('/request', function() {
         $html = Variable::display('page-tutor-request');
         $_SESSION['action'] = 'request';
