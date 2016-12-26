@@ -15,6 +15,8 @@ angular
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
 
+        $scope.request = (tutor, index) -> iteraction(tutor.id, 'request_form', index)
+
         # страница поиска
         $timeout ->
             if not $scope.profilePage() and window.location.pathname isnt '/request'
@@ -106,7 +108,7 @@ angular
             $scope.toggleShow(tutor, 'show_reviews', 'reviews')
 
         $scope.showMoreReviews = (tutor, index) ->
-            iteraction(tutor.id, 'reviews_more', index, {depth: tutor.reviews_page * REVIEWS_PER_PAGE}) if tutor.reviews_page
+            iteraction(tutor.id, 'reviews_more', index, {depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE}) if tutor.reviews_page
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE

@@ -376,6 +376,9 @@
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
     };
+    $scope.request = function(tutor, index) {
+      return iteraction(tutor.id, 'request_form', index);
+    };
     $timeout(function() {
       var id;
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
@@ -462,7 +465,7 @@
       var from, to;
       if (tutor.reviews_page) {
         iteraction(tutor.id, 'reviews_more', index, {
-          depth: tutor.reviews_page * REVIEWS_PER_PAGE
+          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
         });
       }
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
@@ -695,20 +698,6 @@
         });
       }
     });
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1046,6 +1035,20 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
