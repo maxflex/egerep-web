@@ -18,7 +18,7 @@
     });
 
     Route::get('/for-tutors', function() {
-        $html = Variable::display('for-tutors');
+        $html = Variable::display('page-for-tutors');
         $_SESSION['action'] = 'for-tutors';
         return $html;
     });
