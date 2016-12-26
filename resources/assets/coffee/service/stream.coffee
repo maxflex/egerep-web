@@ -1,6 +1,11 @@
 angular.module 'Egerep'
     .service 'StreamService', ($http, $timeout, Stream, SubjectService, Sources) ->
-        this.generateEventString = (params) ->
+        identifySource = ->
+            return Sources.LANDING_PROFILE if RegExp(/^\/[\d]+$/).test(window.location.pathname)
+            return Sources.LANDING_HELP if window.location.pathname is '/request'
+            return Sources.LANDING
+
+        this.generateEventString = (params, additional) ->
             return 'empty_' if this.search is undefined
             if this.subjects isnt null and params.subjects isnt ''
                 subjects = []
@@ -27,7 +32,11 @@ angular.module 'Egerep'
             position = params.position or ''
             page = params.page or ''
 
-            "search=#{params.search}_subj=#{subjects}_where=#{where}_sort=#{sort}_metro=#{metro}_page=#{page}_step=#{params.step}_" + (if params.position then "position=#{position}_" else "")
+            string = "search=#{params.search}_subj=#{subjects}_where=#{where}_sort=#{sort}_metro=#{metro}_page=#{page}_step=#{params.step}_"
+            string += "position=#{position}_" if params.position
+            $.each additional, (key, param) ->
+                string += "#{key}=#{param}_"
+            return string
 
         this.updateCookie = (params) ->
             this.cookie = {} if this.cookie is undefined
@@ -35,7 +44,7 @@ angular.module 'Egerep'
                 this.cookie[key] = value
             $.cookie('stream', JSON.stringify(this.cookie), { expires: 365, path: '/' })
 
-        this.init = (search, subjects = null, landing = true) ->
+        this.init = (search, subjects = null) ->
             $timeout =>
                 if search isnt undefined
                     SubjectService.init(search.subjects)
@@ -45,10 +54,10 @@ angular.module 'Egerep'
                     this.cookie = JSON.parse($.cookie('stream'))
                 else
                     this.updateCookie({step: 0, search: 0})
-                this.run(Sources.LANDING) if landing
+                this.run(identifySource())
             , 500
 
-        this.run = (source, position = null) ->
+        this.run = (source, position = null, additional = {}) ->
             $timeout =>
                 this.updateCookie({step: this.cookie.step + 1})
 
@@ -68,13 +77,12 @@ angular.module 'Egerep'
                 params.position = position if position isnt null
 
                 Stream.save(params)
-                window.dataLayer = window.dataLayer || []
-                window.dataLayer.push
+
+                dataLayerPush
                     event: 'configuration'
                     eventCategory: source
-                    eventAction: this.generateEventString(params)
-                # ga('send', 'event', source, this.generateEventString(params))
-                console.log(source, this.generateEventString(params))
+                    eventAction: this.generateEventString(params, additional)
+                console.log(source, this.generateEventString(params, additional))
             , 500
 
         this

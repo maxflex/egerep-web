@@ -366,3 +366,8 @@ function goTutor() {
 function googleClientId() {
     return ga.getAll()[0].get('clientId')
 }
+
+function dataLayerPush(object) {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push(object)
+}

@@ -40,8 +40,7 @@ angular.module('Egerep')
                     Sources.HELP_REQUEST
 
             trackDataLayer = ->
-                window.dataLayer = window.dataLayer || []
-                window.dataLayer.push
+                dataLayerPush
                     event: 'purchase'
                     ecommerce:
                         currencyCode: 'RUR'

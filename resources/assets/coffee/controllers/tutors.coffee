@@ -7,6 +7,10 @@ angular
         # сколько загрузок преподавателей было
         search_count = 0
 
+        iteraction = (tutor_id, iteraction_type, index = null, additional = {}) ->
+            Tutor.iteraction {id: tutor_id, type: iteraction_type}
+            StreamService.run(iteraction_type, index, additional)
+
         # личная страница преподавателя?
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
@@ -29,8 +33,7 @@ angular
             else
                 StreamService.init(
                     JSON.parse($.cookie('search')),
-                    $scope.subjects,
-                    false
+                    $scope.subjects
                 )
 
         # пары предметов
@@ -54,7 +57,7 @@ angular
         $scope.requestSent = (tutor) ->
             tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
 
-        $scope.gmap = (tutor) ->
+        $scope.gmap = (tutor, index) ->
             if tutor.map_shown is undefined then $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),
                     center: MAP_CENTER
@@ -88,12 +91,13 @@ angular
                 google.maps.event.addListenerOnce map, 'idle', ->
                     $('div:has(>a[href^="https://www.google.com/maps"])').remove()
 
-            $scope.toggleShow(tutor, 'map_shown', 'gmap')
+            $scope.toggleShow(tutor, 'map_shown', 'gmap', index)
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
-        $scope.reviews = (tutor) ->
+        $scope.reviews = (tutor, index) ->
+            iteraction(tutor.id, 'reviews', index)
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id
@@ -101,8 +105,8 @@ angular
                     $scope.showMoreReviews(tutor)
             $scope.toggleShow(tutor, 'show_reviews', 'reviews')
 
-        $scope.showMoreReviews = (tutor) ->
-            Tutor.iteraction {id: tutor.id, type: 'reviews_more'} if tutor.reviews_page
+        $scope.showMoreReviews = (tutor, index) ->
+            iteraction(tutor.id, 'reviews_more', index, {depth: tutor.reviews_page * REVIEWS_PER_PAGE}) if tutor.reviews_page
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
@@ -193,7 +197,7 @@ angular
             $timeout ->
                 $('.custom-select-sort').trigger('render')
 
-        $scope.showSvg = (tutor) ->
+        $scope.showSvg = (tutor, index) ->
             if tutor.show_svg is undefined
                 map = new SVGMap
                     iframeId: 'svg-iframe-'+tutor.id
@@ -205,16 +209,18 @@ angular
                 # if $scope.mobile then $timeout ->
                 #     svg = $("#svg-#{tutor.id}")
                 #     svg.scrollLeft(svg.width() / 4).scrollTop(svg.height() / 2)
-            $scope.toggleShow(tutor, 'show_svg', 'svg_map')
+            $scope.toggleShow(tutor, 'show_svg', 'svg_map', index)
 
-        $scope.toggleShow = (tutor, prop, iteraction_type) ->
+        # stream if index isnt null
+        $scope.toggleShow = (tutor, prop, iteraction_type, index = null) ->
             if tutor[prop]
                 $timeout ->
                     tutor[prop] = false
                 , if $scope.mobile then 400 else 0
             else
                 tutor[prop] = true
-                Tutor.iteraction {id: tutor.id, type: iteraction_type}
+                Tutor.iteraction {id: tutor.id, type: iteraction_type} if index is null
+                iteraction(tutor.id, iteraction_type, index) if index isnt null
 
         #
         # MOBILE
@@ -222,7 +228,7 @@ angular
         $scope.popup = (id, tutor = null, fn = null, index = null) ->
             openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor
-            if fn isnt null then $timeout -> $scope[fn](tutor)
+            if fn isnt null then $timeout -> $scope[fn](tutor, index)
             if index isnt null then $scope.index = index
 
         $scope.syncSort = ->
