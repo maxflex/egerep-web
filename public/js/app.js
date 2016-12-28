@@ -356,16 +356,32 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request) {
-    var filter_used, highlight, search, search_count, viewed_tutors;
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
+    var filter_used, highlight, iteraction, search, search_count, viewed_tutors;
     bindArguments($scope, arguments);
     search_count = 0;
+    iteraction = function(tutor_id, iteraction_type, index, additional) {
+      if (index == null) {
+        index = null;
+      }
+      if (additional == null) {
+        additional = {};
+      }
+      Tutor.iteraction({
+        id: tutor_id,
+        type: iteraction_type
+      });
+      return StreamService.run(iteraction_type, index, additional);
+    };
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
     };
-    if (!$scope.profilePage()) {
-      $timeout(function() {
-        var id;
+    $scope.request = function(tutor, index) {
+      return iteraction(tutor.id, 'request_form', index);
+    };
+    $timeout(function() {
+      var id;
+      if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
           $scope.search = JSON.parse($.cookie('search'));
@@ -378,8 +394,10 @@
         }
         SubjectService.init($scope.search.subjects);
         return $scope.filter();
-      });
-    }
+      } else {
+        return StreamService.init(JSON.parse($.cookie('search')), $scope.subjects);
+      }
+    });
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
     viewed_tutors = [];
     $scope.dateToText = function(date) {
@@ -390,7 +408,7 @@
     $scope.requestSent = function(tutor) {
       return tutor.request_sent || $scope.sent_ids.indexOf(tutor.id) !== -1;
     };
-    $scope.gmap = function(tutor) {
+    $scope.gmap = function(tutor, index) {
       if (tutor.map_shown === void 0) {
         $timeout(function() {
           var bounds, extendPoint1, extendPoint2, map;
@@ -427,12 +445,13 @@
           });
         });
       }
-      return $scope.toggleShow(tutor, 'map_shown', 'gmap');
+      return $scope.toggleShow(tutor, 'map_shown', 'gmap', index);
     };
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
     };
-    $scope.reviews = function(tutor) {
+    $scope.reviews = function(tutor, index) {
+      iteraction(tutor.id, 'reviews', index);
       if (tutor.all_reviews === void 0) {
         tutor.all_reviews = Tutor.reviews({
           id: tutor.id
@@ -442,12 +461,11 @@
       }
       return $scope.toggleShow(tutor, 'show_reviews', 'reviews');
     };
-    $scope.showMoreReviews = function(tutor) {
+    $scope.showMoreReviews = function(tutor, index) {
       var from, to;
       if (tutor.reviews_page) {
-        Tutor.iteraction({
-          id: tutor.id,
-          type: 'reviews_more'
+        iteraction(tutor.id, 'reviews_more', index, {
+          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
         });
       }
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
@@ -477,6 +495,16 @@
     $scope.filter = function() {
       $scope.tutors = [];
       $scope.page = 1;
+      if (filter_used) {
+        StreamService.updateCookie({
+          search: StreamService.cookie.search + 1
+        });
+        StreamService.run(Sources.FILTER);
+      } else {
+        if (!filter_used) {
+          StreamService.init($scope.search, $scope.subjects);
+        }
+      }
       search();
       if ($scope.search.hidden_filter && search_count) {
         delete $scope.search.hidden_filter;
@@ -486,8 +514,14 @@
     };
     $scope.nextPage = function() {
       $scope.page++;
+      StreamService.run(Sources.MORE_TUTORS);
       return search();
     };
+    $scope.$watch('page', function(newVal, oldVal) {
+      if (newVal !== void 0) {
+        return $.cookie('page', $scope.page);
+      }
+    });
     $scope.isLastPage = function() {
       if (!$scope.data) {
         return;
@@ -561,7 +595,7 @@
         return $('.custom-select-sort').trigger('render');
       });
     };
-    $scope.showSvg = function(tutor) {
+    $scope.showSvg = function(tutor, index) {
       var map;
       if (tutor.show_svg === void 0) {
         map = new SVGMap({
@@ -573,36 +607,50 @@
         map.deselectAll();
         map.select(tutor.svg_map);
       }
-      return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
+      return $scope.toggleShow(tutor, 'show_svg', 'svg_map', index);
     };
-    $scope.toggleShow = function(tutor, prop, iteraction_type) {
+    $scope.toggleShow = function(tutor, prop, iteraction_type, index) {
+      if (index == null) {
+        index = null;
+      }
       if (tutor[prop]) {
         return $timeout(function() {
           return tutor[prop] = false;
         }, $scope.mobile ? 400 : 0);
       } else {
         tutor[prop] = true;
-        return Tutor.iteraction({
-          id: tutor.id,
-          type: iteraction_type
-        });
+        if (index === null) {
+          Tutor.iteraction({
+            id: tutor.id,
+            type: iteraction_type
+          });
+        }
+        if (index !== null) {
+          return iteraction(tutor.id, iteraction_type, index);
+        }
       }
     };
-    $scope.popup = function(id, tutor, fn) {
+    $scope.popup = function(id, tutor, fn, index) {
       if (tutor == null) {
         tutor = null;
       }
       if (fn == null) {
         fn = null;
       }
+      if (index == null) {
+        index = null;
+      }
       openModal(id);
       if (tutor !== null) {
         $scope.popup_tutor = tutor;
       }
       if (fn !== null) {
-        return $timeout(function() {
-          return $scope[fn](tutor);
+        $timeout(function() {
+          return $scope[fn](tutor, index);
         });
+      }
+      if (index !== null) {
+        return $scope.index = index;
       }
     };
     $scope.syncSort = function() {
@@ -651,11 +699,6 @@
       }
     });
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -813,35 +856,30 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').directive('requestFormMobile', function() {
-    return {
-      replace: true,
-      scope: {
-        tutor: '=',
-        sentIds: '='
-      },
-      templateUrl: 'directives/request-form-mobile',
-      controller: function($scope, $element, $timeout, Request, RequestService) {
-        return $scope.request = function() {
-          return RequestService.request($scope.tutor, $element);
-        };
-      }
-    };
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('requestForm', function() {
     return {
       replace: true,
       scope: {
         tutor: '=',
-        sentIds: '='
+        sentIds: '=',
+        index: '='
       },
-      templateUrl: 'directives/request-form',
-      controller: function($scope, $element, $timeout, Request) {
-        var trackDataLayer;
+      templateUrl: function(elem, attrs) {
+        if (attrs.hasOwnProperty('mobile')) {
+          return 'directives/request-form-mobile';
+        } else {
+          return 'directives/request-form';
+        }
+      },
+      controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
+        var identifySource, profilePage, trackDataLayer;
+        $timeout(function() {
+          if ($scope.index !== void 0) {
+            return $scope.index++;
+          } else {
+            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
+          }
+        }, 500);
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
@@ -849,6 +887,7 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
+            $scope.$parent.StreamService.run(identifySource(), $scope.index);
             return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
@@ -862,16 +901,29 @@
             }
           });
         };
+        profilePage = function() {
+          return RegExp(/^\/[\d]+$/).test(window.location.pathname);
+        };
+        identifySource = function() {
+          if ($scope.tutor.id) {
+            if (profilePage()) {
+              return Sources.PROFILE_REQUEST;
+            } else {
+              return Sources.SERP_REQUEST;
+            }
+          } else {
+            return Sources.HELP_REQUEST;
+          }
+        };
         return trackDataLayer = function() {
-          window.dataLayer = window.dataLayer || [];
-          return window.dataLayer.push({
+          return dataLayerPush({
             event: 'purchase',
             ecommerce: {
               currencyCode: 'RUR',
               purchase: {
                 actionField: {
-                  id: $scope.tutor.id,
-                  affilaction: 'serp',
+                  id: googleClientId(),
+                  affiliation: identifySource(),
                   revenue: $scope.tutor.public_price
                 },
                 products: [
@@ -879,7 +931,7 @@
                     id: $scope.tutor.id,
                     price: $scope.tutor.public_price,
                     brand: $scope.tutor.subjects,
-                    category: $scope.tutor.markers,
+                    category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year),
                     quantity: 1
                   }
                 ]
@@ -988,6 +1040,20 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1023,6 +1089,10 @@
     }, updatable());
   }).factory('Cv', function($resource) {
     return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
       id: '@id'
     });
   });
@@ -1081,52 +1151,147 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('RequestService', function(Request) {
-    var trackDataLayer;
-    this.request = function(tutor, element) {
-      if (tutor.request === void 0) {
-        tutor.request = {};
+  angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
+    var identifySource;
+    identifySource = function() {
+      if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
+        return Sources.LANDING_PROFILE;
       }
-      tutor.request.tutor_id = tutor.id;
-      return Request.save(tutor.request, function() {
-        tutor.request_sent = true;
-        return trackDataLayer();
-      }, function(response) {
-        if (response.status === 422) {
-          return angular.forEach(response.data, function(errors, field) {
-            var selector;
-            selector = "[ng-model$='" + field + "']";
-            return $(element).find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
-          });
-        } else {
-          return tutor.request_error = true;
+      if (window.location.pathname === '/request') {
+        return Sources.LANDING_HELP;
+      }
+      return Sources.LANDING;
+    };
+    this.generateEventString = function(params, additional) {
+      var metro, page, position, sort, string, subjects, where;
+      if (this.search === void 0) {
+        return 'empty_';
+      }
+      if (this.subjects !== null && params.subjects !== '') {
+        subjects = [];
+        SubjectService.getSelected().forEach((function(_this) {
+          return function(subject_id) {
+            return subjects.push(_this.subjects[subject_id].eng);
+          };
+        })(this));
+        subjects = subjects.join('+');
+      } else {
+        subjects = '';
+      }
+      if (params.place) {
+        switch (parseInt(params.place)) {
+          case 1:
+            where = 'client';
+            break;
+          case 2:
+            where = 'tutor';
         }
+      } else {
+        where = 'anywhere';
+      }
+      switch (parseInt(params.sort)) {
+        case 2:
+          sort = 'maxprice';
+          break;
+        case 3:
+          sort = 'minprice';
+          break;
+        case 4:
+          sort = 'rating';
+          break;
+        case 5:
+          sort = 'bymetro';
+          break;
+        default:
+          sort = 'pop';
+      }
+      metro = params.station_id || '';
+      position = params.position || '';
+      page = params.page || '';
+      string = "search=" + params.search + "_subj=" + subjects + "_where=" + where + "_sort=" + sort + "_metro=" + metro + "_page=" + page + "_step=" + params.step + "_";
+      if (params.position) {
+        string += "position=" + position + "_";
+      }
+      $.each(additional, function(key, param) {
+        return string += key + "=" + param + "_";
+      });
+      return string;
+    };
+    this.updateCookie = function(params) {
+      if (this.cookie === void 0) {
+        this.cookie = {};
+      }
+      $.each(params, (function(_this) {
+        return function(key, value) {
+          return _this.cookie[key] = value;
+        };
+      })(this));
+      return $.cookie('stream', JSON.stringify(this.cookie), {
+        expires: 365,
+        path: '/'
       });
     };
-    trackDataLayer = function(tutor) {
-      window.dataLayer = window.dataLayer || [];
-      return window.dataLayer.push({
-        event: 'purchase',
-        ecommerce: {
-          currencyCode: 'RUR',
-          purchase: {
-            actionField: {
-              id: tutor.id,
-              affilaction: 'serp',
-              revenue: tutor.public_price
-            },
-            products: [
-              {
-                id: tutor.id,
-                price: tutor.public_price,
-                brand: tutor.subjects,
-                category: tutor.markers,
-                quantity: 1
-              }
-            ]
+    this.init = function(search, subjects) {
+      if (subjects == null) {
+        subjects = null;
+      }
+      return $timeout((function(_this) {
+        return function() {
+          if (search !== void 0) {
+            SubjectService.init(search.subjects);
+            _this.search = search;
           }
-        }
-      });
+          _this.subjects = subjects;
+          if ($.cookie('stream') !== void 0) {
+            _this.cookie = JSON.parse($.cookie('stream'));
+          } else {
+            _this.updateCookie({
+              step: 0,
+              search: 0
+            });
+          }
+          return _this.run(identifySource());
+        };
+      })(this), 500);
+    };
+    this.run = function(source, position, additional) {
+      if (position == null) {
+        position = null;
+      }
+      if (additional == null) {
+        additional = {};
+      }
+      return $timeout((function(_this) {
+        return function() {
+          var params;
+          _this.updateCookie({
+            step: _this.cookie.step + 1
+          });
+          params = {
+            source: source,
+            search: _this.cookie.search,
+            step: _this.cookie.step,
+            client_id: googleClientId()
+          };
+          if (_this.search !== void 0) {
+            params.place = _this.search.place;
+            params.station_id = _this.search.station_id;
+            params.sort = _this.search.sort;
+            params.subjects = SubjectService.getSelected().join(',');
+            params.page = $.cookie('page') || 1;
+          }
+          if (position !== null) {
+            params.position = position;
+          }
+          Stream.save(params);
+          dataLayerPush({
+            event: 'configuration',
+            eventCategory: source,
+            eventAction: _this.generateEventString(params, additional)
+          });
+          return console.log(source, _this.generateEventString(params, additional));
+        };
+      })(this), 500);
     };
     return this;
   });

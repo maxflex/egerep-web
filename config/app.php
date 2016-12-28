@@ -182,6 +182,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Watson\Sitemap\SitemapServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
     ],
 
     /*
@@ -231,6 +233,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Agent' => 'Jenssegers\Agent\Facades\Agent',
+        'Sitemap' => Watson\Sitemap\Facades\Sitemap::class
     ],
 
 ];

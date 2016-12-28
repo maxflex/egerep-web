@@ -4,14 +4,24 @@ angular.module('Egerep')
         scope:
             tutor: '='
             sentIds: '='
-        templateUrl: 'directives/request-form'
-        controller: ($scope, $element, $timeout, Request) ->
+            index: '='
+        templateUrl: (elem, attrs) ->
+            if attrs.hasOwnProperty('mobile') then 'directives/request-form-mobile' else 'directives/request-form'
+        controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
+            $timeout ->
+                if $scope.index isnt undefined
+                    $scope.index++
+                else
+                    $scope.index = if window.location.hash then window.location.hash.substring(1) else null
+            , 500
+
             # отправить заявку
             $scope.request = ->
                 $scope.tutor.request = {} if $scope.tutor.request is undefined
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
+                    $scope.$parent.StreamService.run(identifySource(), $scope.index)
                     trackDataLayer()
                 , (response) ->
                     if response.status is 422
@@ -21,21 +31,28 @@ angular.module('Egerep')
                     else
                         $scope.tutor.request_error = true
 
+            profilePage = -> RegExp(/^\/[\d]+$/).test(window.location.pathname)
+
+            identifySource = ->
+                if $scope.tutor.id
+                    if profilePage() then Sources.PROFILE_REQUEST else Sources.SERP_REQUEST
+                else
+                    Sources.HELP_REQUEST
+
             trackDataLayer = ->
-                window.dataLayer = window.dataLayer || []
-                window.dataLayer.push
+                dataLayerPush
                     event: 'purchase'
                     ecommerce:
                         currencyCode: 'RUR'
                         purchase:
                             actionField:
-                                id: $scope.tutor.id
-                                affilaction: 'serp' # @todo: profile|request
+                                id: googleClientId()
+                                affiliation: identifySource()
                                 revenue: $scope.tutor.public_price
                             products: [
                                 id: $scope.tutor.id
                                 price: $scope.tutor.public_price
                                 brand: $scope.tutor.subjects
-                                category: $scope.tutor.markers
+                                category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year) # пол_возраст
                                 quantity: 1
                             ]

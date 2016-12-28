@@ -3,21 +3,42 @@
 
     URL::forceSchema('https');
 
+    Route::get('sitemap.xml', 'SitemapController@index');
+
+    # 301 редирект старых преподов
+    Route::get('/tutors/person/{id}', function($id) {
+        return redirect(\App\Models\Tutor::where('id_a_pers', $id)->value('id'), 301);
+    });
+
     # Статические страницы
     Route::get('/', function() {
-        return Variable::display('page-index');
+        $html = Variable::display('page-index');
+        $_SESSION['action'] = 'main';
+        return $html;
+    });
+
+    Route::get('/for-tutors', function() {
+        $html = Variable::display('page-for-tutors');
+        $_SESSION['action'] = 'for-tutors';
+        return $html;
     });
 
     Route::get('/request', function() {
-        return Variable::display('page-tutor-request');
+        $html = Variable::display('page-tutor-request');
+        $_SESSION['action'] = 'request';
+        return $html;
     });
 
     Route::get('/cv', function() {
-        return Variable::display('page-cv');
+        $html = Variable::display('page-cv');
+        $_SESSION['action'] = 'cv';
+        return $html;
     });
 
     Route::get('/login', function() {
-        return Variable::display('page-login');
+        $html = Variable::display('page-login');
+        $_SESSION['action'] = 'login';
+        return $html;
     });
 
     Route::get('/full', function() {

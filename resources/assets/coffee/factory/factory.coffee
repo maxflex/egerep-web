@@ -1,7 +1,10 @@
-# angular.module('Egerep')
-#     .value 'Sort', [
-#         {id: 1, title: 'по цене – сначала дороже'}
-#         {id: 2, title: 'по цене – сначала дешевле'}
-#         {id: 3, title: 'по популярности'}
-#         {id: 4, title: 'по близости к метро'}
-#     ]
+angular.module('Egerep')
+    .value 'Sources',
+        LANDING: 'landing'
+        LANDING_PROFILE: 'landing_profile'
+        LANDING_HELP: 'landing_help'
+        FILTER: 'filter'
+        PROFILE_REQUEST: 'profilerequest'
+        SERP_REQUEST: 'serprequest'
+        HELP_REQUEST: 'helprequest'
+        MORE_TUTORS: 'more_tutors'

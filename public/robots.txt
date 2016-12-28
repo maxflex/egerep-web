@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: ege-repetitor.ru/sitemap.xml
+
+Host: ege-repetitor.ru

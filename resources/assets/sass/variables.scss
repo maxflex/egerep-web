@@ -193,3 +193,7 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 .half-opacity {
     opacity: .4;
 }
+
+.h1-top {
+    @extend h1;
+}

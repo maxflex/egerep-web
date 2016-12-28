@@ -1,19 +1,25 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, Stream) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
         search_count = 0
 
+        iteraction = (tutor_id, iteraction_type, index = null, additional = {}) ->
+            Tutor.iteraction {id: tutor_id, type: iteraction_type}
+            StreamService.run(iteraction_type, index, additional)
+
         # личная страница преподавателя?
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
 
-        if not $scope.profilePage()
+        $scope.request = (tutor, index) -> iteraction(tutor.id, 'request_form', index)
+
         # страница поиска
-            $timeout ->
+        $timeout ->
+            if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
@@ -26,6 +32,11 @@ angular
 
                 SubjectService.init($scope.search.subjects)
                 $scope.filter()
+            else
+                StreamService.init(
+                    JSON.parse($.cookie('search')),
+                    $scope.subjects
+                )
 
         # пары предметов
         $scope.pairs = [
@@ -48,7 +59,7 @@ angular
         $scope.requestSent = (tutor) ->
             tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
 
-        $scope.gmap = (tutor) ->
+        $scope.gmap = (tutor, index) ->
             if tutor.map_shown is undefined then $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),
                     center: MAP_CENTER
@@ -82,12 +93,13 @@ angular
                 google.maps.event.addListenerOnce map, 'idle', ->
                     $('div:has(>a[href^="https://www.google.com/maps"])').remove()
 
-            $scope.toggleShow(tutor, 'map_shown', 'gmap')
+            $scope.toggleShow(tutor, 'map_shown', 'gmap', index)
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
-        $scope.reviews = (tutor) ->
+        $scope.reviews = (tutor, index) ->
+            iteraction(tutor.id, 'reviews', index)
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id
@@ -95,8 +107,8 @@ angular
                     $scope.showMoreReviews(tutor)
             $scope.toggleShow(tutor, 'show_reviews', 'reviews')
 
-        $scope.showMoreReviews = (tutor) ->
-            Tutor.iteraction {id: tutor.id, type: 'reviews_more'} if tutor.reviews_page
+        $scope.showMoreReviews = (tutor, index) ->
+            iteraction(tutor.id, 'reviews_more', index, {depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE}) if tutor.reviews_page
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
@@ -118,6 +130,11 @@ angular
         $scope.filter = ->
             $scope.tutors = []
             $scope.page = 1
+            if filter_used
+                StreamService.updateCookie({search: StreamService.cookie.search + 1})
+                StreamService.run(Sources.FILTER)
+            else
+                StreamService.init($scope.search, $scope.subjects) if not filter_used
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
@@ -126,7 +143,10 @@ angular
 
         $scope.nextPage = ->
             $scope.page++
+            StreamService.run(Sources.MORE_TUTORS)
             search()
+
+        $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
 
         $scope.isLastPage = ->
             return if not $scope.data
@@ -182,22 +202,25 @@ angular
         $scope.showSvg = (tutor) ->
             $scope.toggleShow(tutor, 'show_svg', 'svg_map')
 
-        $scope.toggleShow = (tutor, prop, iteraction_type) ->
+        # stream if index isnt null
+        $scope.toggleShow = (tutor, prop, iteraction_type, index = null) ->
             if tutor[prop]
                 $timeout ->
                     tutor[prop] = false
                 , if $scope.mobile then 400 else 0
             else
                 tutor[prop] = true
-                Tutor.iteraction {id: tutor.id, type: iteraction_type}
+                Tutor.iteraction {id: tutor.id, type: iteraction_type} if index is null
+                iteraction(tutor.id, iteraction_type, index) if index isnt null
 
         #
         # MOBILE
         #
-        $scope.popup = (id, tutor = null, fn = null) ->
+        $scope.popup = (id, tutor = null, fn = null, index = null) ->
             openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor
-            if fn isnt null then $timeout -> $scope[fn](tutor)
+            if fn isnt null then $timeout -> $scope[fn](tutor, index)
+            if index isnt null then $scope.index = index
 
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1

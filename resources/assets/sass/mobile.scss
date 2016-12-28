@@ -1,5 +1,6 @@
 @import "variables";
 @import "normalize";
+@import "flaticon";
 @import "../bower/font-awesome/css/font-awesome";
 
 @mixin zindex($index) {
@@ -4141,4 +4142,27 @@ span.customSelect.custom-select-small .customSelectInner {
     height: 9px;
     border-radius: 13px;
     border: 2px solid #fff;
+}
+
+#for-tutors {
+    margin: 5em 0;
+    text-align: center;
+    line-height: 1.6em;
+    & a {
+        text-decoration: none;
+        padding: 3em;
+        display: block;
+        // &:first-child {
+        //     margin-bottom: 1.5em;
+        // }
+        & > div {
+            margin-bottom: 0.25em;
+        }
+    }
+    & i[class^='flaticon-'] {
+        &:before {
+            font-size: 3em;
+            margin: 0;
+        }
+    }
 }

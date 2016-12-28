@@ -23,6 +23,7 @@ class PagesController extends Controller
         } else {
             $html = $page->first()->html;
         }
+        $_SESSION['action'] = 'serp';
         return view('pages.index')->with(compact('html'));
     }
 
@@ -37,6 +38,7 @@ class PagesController extends Controller
         } else {
             $html = Variable::display('page-404');
         }
+        $_SESSION['action'] = 'profile';
         return view('pages.index')->with(compact('html'));
     }
 

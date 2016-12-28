@@ -65,7 +65,7 @@
                         $replacement = Factory::constant($args[0]);
                         break;
                     case 'session':
-                        $replacement = json_encode($_SESSION[$args[0]]);
+                        $replacement = json_encode(@$_SESSION[$args[0]]);
                         break;
                     case 'param':
                         $replacement = json_encode(@$_GET[$args[0]]);
@@ -149,7 +149,10 @@
             }
             static::replace($html, 'useful', view('blocks.useful', compact('page')));
             // detect page refresh
-            static::replace($html, 'page_was_refreshed', (int)(isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0')));
+
+            static::replace($html, 'page_was_refreshed', (int)(
+                (isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0') || $page->isMainSerp())
+            ));
             unset($_SESSION['page_was_refreshed']);
         }
 

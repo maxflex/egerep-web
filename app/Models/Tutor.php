@@ -132,6 +132,7 @@ class Tutor extends Model
             'public_price',
             'departure_price',
             'comment_extended',
+            'gender',
             'lk',
             'tb',
             'js',
