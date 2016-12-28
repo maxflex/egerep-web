@@ -26,6 +26,11 @@ class Tutor extends Model
 
     protected $commaSeparated = ['subjects', 'grades', 'branches'];
 
+    public function departure()
+    {
+        return $this->hasMany(TutorDeparture::class);
+    }
+
     public function markers()
     {
         return $this->morphMany(Marker::class, 'markerable')->where('type', 'green');
@@ -222,11 +227,7 @@ class Tutor extends Model
                 $query->has('markers');
             } else {
                 # если "строго у себя дома", то только репетиторы с картой выезда
-                $query->whereExists(function ($query) {
-                    $query->selectRaw('1')
-                        ->from('tutor_departures as td')
-                        ->whereRaw('td.tutor_id = tutors.id');
-                });
+                $query->has('departure');
             }
         }
 

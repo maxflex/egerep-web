@@ -12,7 +12,7 @@
             "IFNULL(
                 (
                     select min(distance) from distances
-                    where exists (select 1 from tutor_departures td where td.station_id = `from`) and `to` = {$station_id}
+                    where exists (select 1 from tutor_departures td where td.tutor_id = tutors.id and td.station_id = `from`) and `to` = {$station_id}
                 ),
                 999999
             )";
