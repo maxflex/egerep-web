@@ -5563,42 +5563,6 @@ body.modal-open:before {
       /* Opera */
       transform: scale(1.1); }
 
-.half-div {
-  font-size: 24px;
-  width: 30%;
-  margin: 0 6%;
-  display: inline-block;
-  text-align: center;
-  padding: 80px 0;
-  border: 3px dashed transparent;
-  cursor: pointer;
-  border-radius: 10px;
-  -webkit-transition: all .1s ease;
-  transition: all .1s ease; }
-
-.half-div:hover {
-  border: 3px dashed #377045;
-  background-color: rgba(52, 107, 65, 0.05);
-  color: #338747;
-  -webkit-transform: scale(1.1);
-  /* Safari and Chrome */
-  /* Firefox */
-  /* IE 9 */
-  /* Opera */
-  transform: scale(1.1); }
-
-span[class^='flaticon-'] {
-  display: block;
-  margin-bottom: 10px; }
-
-span[class^='flaticon-']:before {
-  font-size: 50px;
-  margin: 0; }
-
-a {
-  color: #4d4d4d;
-  text-decoration: none; }
-
 @font-face {
   font-family: "Flaticon";
   src: url("../fonts/flaticon.eot");
