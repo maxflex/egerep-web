@@ -5,6 +5,7 @@
     use App\Models\Client;
     use App\Models\Review;
     use App\Models\Page;
+    use App\Service\CacheService;
 
     /**
      * Parser
@@ -13,6 +14,8 @@
     {
         const START_VAR = '[';
         const END_VAR   = ']';
+
+
 
         public static function compileVars($html)
         {
@@ -36,64 +39,93 @@
          */
         public static function compileFunctions(&$html, $var)
         {
+            # подключаем сервис кеширования
+            $cache = new CacheService;
+
             $replacement = '';
             $args = explode('|', $var);
             if (count($args) > 1) {
+
                 $function_name = $args[0];
                 array_shift($args);
-                switch ($function_name) {
-                    case 'mobile':
-                        $replacement = isMobile($args[0] == 'raw');
-                        break;
-                    case 'factory':
-                        $replacement = fact(...$args);
-                        break;
-                    case 'tutor':
-                        $replacement = Tutor::find($args[0])->toJson();
-                        break;
-                    case 'tutors':
-                        $replacement = Tutor::bySubject(...$args)->toJson();
-                        break;
-                    case 'reviews':
-                        if ($args[0] === 'random') {
-                            $replacement = Review::get(1, true)->toJson();
-                        } else {
-                            $replacement = Review::get(...$args)->toJson();
-                        }
-                        break;
-                    case 'const':
-                        $replacement = Factory::constant($args[0]);
-                        break;
-                    case 'session':
-                        $replacement = json_encode(@$_SESSION[$args[0]]);
-                        break;
-                    case 'param':
-                        $replacement = json_encode(@$_GET[$args[0]]);
-                        break;
-                    case 'subject':
-                        $replacement = json_encode(Page::getSubjectRoutes());
-                        break;
-                    case 'link':
-                        // получить ссылку либо по [link|id_раздела] или по [link|math]
-                        $replacement = is_numeric($args[0]) ? Page::getUrl($args[0]) : Page::getSubjectUrl($args[0]);
-                        break;
-                    case 'count':
-                        $type = array_shift($args);
-                        switch($type) {
-                            case 'tutors':
-                                $replacement = Tutor::count(...$args);
-                                break;
-                            case 'clients':
-                                $replacement = Client::count();
-                                break;
-                            case 'reviews':
-                                $replacement = Review::count();
-                                break;
-                        }
-                    break;
+
+                # проверяем доступно ли кеширование для данной функции
+                if ($cache->isAllow($function_name)) {
+                    $replacement = $cache->get($function_name, $args);
+                    if (is_null($replacement)) { # если результат равен NULL
+                        $replacement = self::getReplacement($function_name, $args);
+
+                        # сохраняем кеш
+                        $cache->put($function_name, $args, $replacement);
+                    }
+                } else {
+                    $replacement = self::getReplacement($function_name, $args);
                 }
                 static::replace($html, $var, $replacement);
             }
+        }
+
+        /**
+         * получаем данные для замены
+         * @param string $function_name
+         * @param array $arg
+         * @return
+         */
+        public static function getReplacement($function_name = "", $args = []){
+            $replacement = '';
+            switch ($function_name) {
+                case 'mobile':
+                    $replacement = isMobile($args[0] == 'raw');
+                    break;
+                case 'factory':
+                    $replacement = fact(...$args);
+                    break;
+                case 'tutor':
+                    $replacement = Tutor::find($args[0])->toJson();
+                    break;
+                case 'tutors':
+                    $replacement = Tutor::bySubject(...$args)->toJson();
+                    break;
+                case 'reviews':
+                    if ($args[0] === 'random') {
+                        $replacement = Review::get(1, true)->toJson();
+                    } else {
+                        $replacement = Review::get(...$args)->toJson();
+                    }
+                    break;
+                case 'const':
+                    $replacement = Factory::constant($args[0]);
+                    break;
+                case 'session':
+                    $replacement = json_encode(@$_SESSION[$args[0]]);
+                    break;
+                case 'param':
+                    $replacement = json_encode(@$_GET[$args[0]]);
+                    break;
+                case 'subject':
+                    $replacement = json_encode(Page::getSubjectRoutes());
+                    break;
+                case 'link':
+                    // получить ссылку либо по [link|id_раздела] или по [link|math]
+                    $replacement = is_numeric($args[0]) ? Page::getUrl($args[0]) : Page::getSubjectUrl($args[0]);
+                    break;
+                case 'count':
+                    $type = array_shift($args);
+                    switch($type) {
+                        case 'tutors':
+                            $replacement = Tutor::count(...$args);
+                            break;
+                        case 'clients':
+                            $replacement = Client::count();
+                            break;
+                        case 'reviews':
+                            $replacement = Review::count();
+                            break;
+                    }
+                    break;
+            }
+
+            return $replacement;
         }
 
         /**
