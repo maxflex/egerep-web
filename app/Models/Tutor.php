@@ -24,7 +24,7 @@ class Tutor extends Model
     const NO_PHOTO   = 'no-profile-img.gif';
     const USER_TYPE  = 'TEACHER';
 
-    protected $commaSeparated = ['svg_map', 'subjects', 'grades', 'branches'];
+    protected $commaSeparated = ['subjects', 'grades', 'branches'];
 
     public function markers()
     {
@@ -127,7 +127,6 @@ class Tutor extends Model
             'photo_extension',
             'start_career_year',
             'birth_year',
-            'svg_map',
             'lesson_duration',
             'public_price',
             'departure_price',
@@ -136,6 +135,7 @@ class Tutor extends Model
             'lk',
             'tb',
             'js',
+            \DB::raw('(select group_concat(station_id) FROM tutor_departures td WHERE td.tutor_id = tutors.id) as svg_map'),
             \DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'),
             \DB::raw('(SELECT MIN(date) FROM attachments WHERE attachments.tutor_id = tutors.id) as first_attachment_date')
         ]);
@@ -222,7 +222,11 @@ class Tutor extends Model
                 $query->has('markers');
             } else {
                 # если "строго у себя дома", то только репетиторы с картой выезда
-                $query->where('svg_map', '<>', '');
+                $query->whereExists(function ($query) {
+                    $query->selectRaw('1')
+                        ->from('tutor_departures as td')
+                        ->whereRaw('td.tutor_id = tutors.id');
+                });
             }
         }
 
