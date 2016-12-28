@@ -1,7 +1,7 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter']).config([
+  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
@@ -595,19 +595,8 @@
         return $('.custom-select-sort').trigger('render');
       });
     };
-    $scope.showSvg = function(tutor, index) {
-      var map;
-      if (tutor.show_svg === void 0) {
-        map = new SVGMap({
-          iframeId: 'svg-iframe-' + tutor.id,
-          clicable: false,
-          places: $scope.svg
-        });
-        map.init();
-        map.deselectAll();
-        map.select(tutor.svg_map);
-      }
-      return $scope.toggleShow(tutor, 'show_svg', 'svg_map', index);
+    $scope.showSvg = function(tutor) {
+      return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
     };
     $scope.toggleShow = function(tutor, prop, iteraction_type, index) {
       if (index == null) {
@@ -1040,20 +1029,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1119,6 +1094,20 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 

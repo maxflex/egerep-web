@@ -7,7 +7,14 @@
 
     # 301 редирект старых преподов
     Route::get('/tutors/person/{id}', function($id) {
-        return redirect(\App\Models\Tutor::where('id_a_pers', $id)->value('id'), 301);
+        $new_tutor_id = \App\Models\Tutor::where('id_a_pers', $id)->value('id');
+        if ($new_tutor_id) {
+            return redirect(\App\Models\Tutor::where('id_a_pers', $id)->value('id'), 301);
+        } else {
+            return view('pages.index')->with([
+                'html' => Variable::display('page-404')
+            ]);
+        }
     });
 
     # Статические страницы
