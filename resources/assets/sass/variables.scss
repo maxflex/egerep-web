@@ -37,6 +37,7 @@ $line-9: #838382;
 $line-10: #79b872;
 $line-11: #4c7ea9;
 $line-12: #b0cccb;
+$line-13: #E2A6A6;
 
 $logo-black: black;
 
@@ -93,6 +94,7 @@ $border-radius: 6px;
     &.line-10 {background-color: $line-10}
     &.line-11 {background-color: $line-11}
     &.line-12 {background-color: $line-12}
+    &.line-13 {background-color: $line-13}
 }
 
 a[href^="http://maps.google.com/maps"]{display:none !important}

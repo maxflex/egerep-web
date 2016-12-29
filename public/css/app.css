@@ -55,6 +55,8 @@
     background-color: #4c7ea9; }
   .metro-circle.line-12 {
     background-color: #b0cccb; }
+  .metro-circle.line-13 {
+    background-color: #E2A6A6; }
 
 a[href^="http://maps.google.com/maps"] {
   display: none !important; }
