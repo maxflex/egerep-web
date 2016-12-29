@@ -47,6 +47,7 @@ elixir(mix => {
         .sass('mobile.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
+        .copy(fileFromBower('egerep-svg-metro/views/map.svg'), 'public/img/svg/map.svg')
         .scripts(jsFromBower([
             'jquery/dist/jquery',
             'angular/angular.min',
