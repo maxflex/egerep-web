@@ -5343,6 +5343,8 @@ textarea {
 
 .footer-search-tutor {
   position: relative; }
+  .footer-search-tutor span.customSelect {
+    border-color: white; }
 
 .footer-lightbox {
   position: absolute;
@@ -5503,7 +5505,9 @@ body.modal-open:before {
   font-size: 12px; }
 
 #modal-params {
-  height: 60%; }
+  height: 60%;
+  min-width: 855px;
+  min-height: 462px; }
   #modal-params .modal-content {
     padding: 20px 40px; }
     #modal-params .modal-content h4 {

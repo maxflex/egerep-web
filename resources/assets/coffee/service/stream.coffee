@@ -16,8 +16,8 @@ angular.module 'Egerep'
                 subjects = ''
             if params.place
                 switch parseInt(params.place)
-                    when 1 then where = 'client'
-                    when 2 then where = 'tutor'
+                    when 1 then where = 'tutor'
+                    when 2 then where = 'client'
             else
                 where = 'anywhere'
 
