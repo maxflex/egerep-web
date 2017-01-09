@@ -2,6 +2,7 @@
 @import "normalize";
 @import "flaticon";
 @import "../bower/font-awesome/css/font-awesome";
+@import "../bower/egerep-svg-metro/styles/svg-metro";
 
 @mixin zindex($index) {
     -webkit-transform:translateZ($index);
