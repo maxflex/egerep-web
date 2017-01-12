@@ -47,6 +47,8 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 |
 */
 session_start();
+header("Access-Control-Allow-Origin: http://www.ege-centr.ru");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 if (! isset($_SESSION['sent_ids'])) {
     $_SESSION['sent_ids'] = [];
 }

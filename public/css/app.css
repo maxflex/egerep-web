@@ -157,23 +157,24 @@ a[href^="https://www.google.com/maps"] {
   background: #FFFFFF; }
 
 #svg-quick-selects #svg-qs-pink {
-  background: #E2A6A6;
-  opacity: 0.2; }
+  cursor: pointer;
+  background: #F9EDED; }
   #svg-quick-selects #svg-qs-pink:hover {
-    cursor: pointer;
-    opacity: 1; }
+    background: #E2A6A6; }
+  #svg-quick-selects #svg-qs-pink > div.svg-space {
+    height: 48px; }
 
 #svg-quick-selects #svg-qs-brown {
   position: absolute;
   top: 36px;
-  left: 36px; }
+  left: 36px;
+  height: 48px; }
   #svg-quick-selects #svg-qs-brown > div {
-    background: #9B6144;
-    padding: 12px;
-    opacity: 0.2; }
+    cursor: pointer;
+    background: #EBDFD9;
+    padding: 12px; }
     #svg-quick-selects #svg-qs-brown > div:hover {
-      cursor: pointer;
-      opacity: 1; }
+      background: #9B6144; }
 
 #svg-quick-selects .svg-rotator {
   position: absolute;
@@ -185,151 +186,121 @@ a[href^="https://www.google.com/maps"] {
     transform: rotate(-15deg); }
     #svg-quick-selects .svg-rotator#svg-qs-red-top > div {
       cursor: pointer;
-      background-color: #CA5948;
-      opacity: 0.2; }
+      background: #F5DEDA; }
       #svg-quick-selects .svg-rotator#svg-qs-red-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #CA5948; }
   #svg-quick-selects .svg-rotator#svg-qs-red-bottom {
     -webkit-transform: rotate(177deg);
     transform: rotate(177deg); }
     #svg-quick-selects .svg-rotator#svg-qs-red-bottom > div {
       cursor: pointer;
-      background-color: #CA5948;
-      opacity: 0.2; }
+      background: #F5DEDA; }
       #svg-quick-selects .svg-rotator#svg-qs-red-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #CA5948; }
   #svg-quick-selects .svg-rotator#svg-qs-green-top {
     -webkit-transform: rotate(105deg);
     transform: rotate(105deg); }
     #svg-quick-selects .svg-rotator#svg-qs-green-top > div {
       cursor: pointer;
-      background-color: #528C5D;
-      opacity: 0.2; }
+      background: #DCE8DF; }
       #svg-quick-selects .svg-rotator#svg-qs-green-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #528C5D; }
   #svg-quick-selects .svg-rotator#svg-qs-green-bottom {
     -webkit-transform: rotate(273deg);
     transform: rotate(273deg); }
     #svg-quick-selects .svg-rotator#svg-qs-green-bottom > div {
       cursor: pointer;
-      background-color: #528C5D;
-      opacity: 0.2; }
+      background: #DCE8DF; }
       #svg-quick-selects .svg-rotator#svg-qs-green-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #528C5D; }
   #svg-quick-selects .svg-rotator#svg-qs-blue-top {
     -webkit-transform: rotate(9deg);
     transform: rotate(9deg); }
     #svg-quick-selects .svg-rotator#svg-qs-blue-top > div {
       cursor: pointer;
-      background-color: #5A68A0;
-      opacity: 0.2; }
+      background: #DEE1EC; }
       #svg-quick-selects .svg-rotator#svg-qs-blue-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #5A68A0; }
   #svg-quick-selects .svg-rotator#svg-qs-blue-bottom {
     -webkit-transform: rotate(201deg);
     transform: rotate(201deg); }
     #svg-quick-selects .svg-rotator#svg-qs-blue-bottom > div {
       cursor: pointer;
-      background-color: #5A68A0;
-      opacity: 0.2; }
+      background: #DEE1EC; }
       #svg-quick-selects .svg-rotator#svg-qs-blue-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #5A68A0; }
   #svg-quick-selects .svg-rotator#svg-qs-light-blue-bottom {
     -webkit-transform: rotate(225deg);
     transform: rotate(225deg); }
     #svg-quick-selects .svg-rotator#svg-qs-light-blue-bottom > div {
       cursor: pointer;
-      background-color: #4BABD8;
-      opacity: 0.2; }
+      background: #DBEEF7; }
       #svg-quick-selects .svg-rotator#svg-qs-light-blue-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #4BABD8; }
   #svg-quick-selects .svg-rotator#svg-qs-orange-top {
     -webkit-transform: rotate(-39deg);
     transform: rotate(-39deg); }
     #svg-quick-selects .svg-rotator#svg-qs-orange-top > div {
       cursor: pointer;
-      background-color: #D78A4B;
-      opacity: 0.2; }
+      background: #F7E8DB; }
       #svg-quick-selects .svg-rotator#svg-qs-orange-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #D78A4B; }
   #svg-quick-selects .svg-rotator#svg-qs-orange-bottom {
     -webkit-transform: rotate(153deg);
     transform: rotate(153deg); }
     #svg-quick-selects .svg-rotator#svg-qs-orange-bottom > div {
       cursor: pointer;
-      background-color: #D78A4B;
-      opacity: 0.2; }
+      background: #F7E8DB; }
       #svg-quick-selects .svg-rotator#svg-qs-orange-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #D78A4B; }
   #svg-quick-selects .svg-rotator#svg-qs-purple-top {
     -webkit-transform: rotate(57deg);
     transform: rotate(57deg); }
     #svg-quick-selects .svg-rotator#svg-qs-purple-top > div {
       cursor: pointer;
-      background-color: #A25980;
-      opacity: 0.2; }
+      background: #ECDEE6; }
       #svg-quick-selects .svg-rotator#svg-qs-purple-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #A25980; }
   #svg-quick-selects .svg-rotator#svg-qs-purple-bottom {
     -webkit-transform: rotate(249deg);
     transform: rotate(249deg); }
     #svg-quick-selects .svg-rotator#svg-qs-purple-bottom > div {
       cursor: pointer;
-      background-color: #A25980;
-      opacity: 0.2; }
+      background: #ECDEE6; }
       #svg-quick-selects .svg-rotator#svg-qs-purple-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #A25980; }
   #svg-quick-selects .svg-rotator#svg-qs-yellow-top {
     -webkit-transform: rotate(33deg);
     transform: rotate(33deg); }
     #svg-quick-selects .svg-rotator#svg-qs-yellow-top > div {
       cursor: pointer;
-      background-color: #EBE457;
-      opacity: 0.2; }
+      background: #FBFADD; }
       #svg-quick-selects .svg-rotator#svg-qs-yellow-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #EBE457; }
   #svg-quick-selects .svg-rotator#svg-qs-gray-top {
     -webkit-transform: rotate(-63deg);
     transform: rotate(-63deg); }
     #svg-quick-selects .svg-rotator#svg-qs-gray-top > div {
       cursor: pointer;
-      background-color: #838382;
-      opacity: 0.2; }
+      background: #E6E6E6; }
       #svg-quick-selects .svg-rotator#svg-qs-gray-top > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #838382; }
   #svg-quick-selects .svg-rotator#svg-qs-gray-bottom {
     -webkit-transform: rotate(129deg);
     transform: rotate(129deg); }
     #svg-quick-selects .svg-rotator#svg-qs-gray-bottom > div {
       cursor: pointer;
-      background-color: #838382;
-      opacity: 0.2; }
+      background: #E6E6E6; }
       #svg-quick-selects .svg-rotator#svg-qs-gray-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #838382; }
   #svg-quick-selects .svg-rotator#svg-qs-lime-bottom {
     -webkit-transform: rotate(81deg);
     transform: rotate(81deg); }
     #svg-quick-selects .svg-rotator#svg-qs-lime-bottom > div {
       cursor: pointer;
-      background-color: #79B872;
-      opacity: 0.2; }
+      background: #E4F1E3; }
       #svg-quick-selects .svg-rotator#svg-qs-lime-bottom > div:hover {
-        cursor: pointer;
-        opacity: 1; }
+        background: #79B872; }
   #svg-quick-selects .svg-rotator > div {
     position: absolute;
     padding: 6px;
@@ -339,153 +310,220 @@ a[href^="https://www.google.com/maps"] {
 #svg-select-all {
   margin: 10px auto; }
 
-.map-shown {
-  opacity: 1; }
-
-.map-hidden {
-  opacity: 0.2; }
-
 #neutrals > path {
   fill: #FFFFFF; }
 
 #elements > path {
-  fill: none;
   stroke: #595959;
+  fill: none;
   stroke-miterlimit: 10; }
+  #elements > path.map-hidden {
+    stroke: #E2E2E2; }
 
 #stations > g > g {
   cursor: pointer; }
 
 #stations > g > g > rect {
-  opacity: 0.8;
-  fill: #FFFFFF; }
+  fill: #FFFFFF;
+  opacity: 0.8; }
+
+#stations > g > g.map-hidden > rect {
+  fill: #FFFFFF;
+  opacity: 0.2; }
 
 #stations > g > g > text {
+  fill: #000;
   font-family: Arial;
   font-weight: bold;
   font-size: 0.5em; }
+  .map-hidden #stations > g > g > text {
+    fill: #CCC; }
+
+#stations > g > g.map-hidden > text {
+  fill: #CCC; }
 
 .st2 {
-  fill: none;
   stroke: #E2A6A6;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st2.map-hidden {
+    stroke: #F9EDED; }
 
 .st41 {
   fill: #E2A6A6; }
+  .map-hidden .st41 {
+    fill: #F9EDED; }
 
 .st0 {
-  fill: none;
   stroke: #EBE457;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st0.map-hidden {
+    stroke: #FBFADD; }
 
 .st35 {
   fill: #EBE457; }
+  .map-hidden .st35 {
+    fill: #FBFADD; }
 
 .st3 {
-  fill: none;
   stroke: #4C7EA9;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st3.map-hidden {
+    stroke: #DBE5EE; }
 
 .st37 {
   fill: #4C7EA9; }
+  .map-hidden .st37 {
+    fill: #DBE5EE; }
 
 .st5 {
-  fill: none;
   stroke: #5A68A0;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st5.map-hidden {
+    stroke: #DEE1EC; }
 
 .st25 {
   fill: #5A68A0; }
+  .map-hidden .st25 {
+    fill: #DEE1EC; }
 
 .st6 {
-  fill: none;
   stroke: #CA5948;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st6.map-hidden {
+    stroke: #F5DEDA; }
 
 .st22 {
   fill: #CA5948; }
+  .map-hidden .st22 {
+    fill: #F5DEDA; }
 
 .st7 {
-  fill: none;
   stroke: #4BABD8;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st7.map-hidden {
+    stroke: #DBEEF7; }
 
 .st32 {
-  fill: #40B3E7; }
+  fill: #4BABD8; }
+  .map-hidden .st32 {
+    fill: #DBEEF7; }
 
 .st9 {
-  fill: none;
   stroke: #838382;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st9.map-hidden {
+    stroke: #E6E6E6; }
 
 .st20 {
   fill: #838382; }
+  .map-hidden .st20 {
+    fill: #E6E6E6; }
 
 .st10 {
-  fill: none;
   stroke: #79B872;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st10.map-hidden {
+    stroke: #E4F1E3; }
 
 .st24 {
   fill: #79B872; }
+  .map-hidden .st24 {
+    fill: #E4F1E3; }
 
 .st11 {
-  fill: none;
   stroke: #D78A4B;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st11.map-hidden {
+    stroke: #F7E8DB; }
 
 .st23 {
   fill: #D78A4B; }
+  .map-hidden .st23 {
+    fill: #F7E8DB; }
 
 .st15 {
-  fill: none;
   stroke: #A25980;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st15.map-hidden {
+    stroke: #ECDEE6; }
 
 .st21 {
   fill: #A25980; }
+  .map-hidden .st21 {
+    fill: #ECDEE6; }
 
 .st12 {
-  fill: none;
   stroke: #528C5D;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st12.map-hidden {
+    stroke: #DCE8DF; }
 
 .st18 {
   fill: #528C5D; }
+  .map-hidden .st18 {
+    fill: #DCE8DF; }
 
 .st16 {
-  fill: none;
   stroke: #9B6144;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st16.map-hidden {
+    stroke: #EBDFD9; }
 
 .st19 {
   fill: #9B6144; }
+  .map-hidden .st19 {
+    fill: #EBDFD9; }
 
 .st13 {
   fill: #FFFFFF;
   stroke: #FFFFFF;
+  fill: none;
   stroke-miterlimit: 10; }
 
 .st8 {
-  fill: none;
   stroke: #B0CCCB;
+  fill: none;
   stroke-width: 7;
   stroke-miterlimit: 10; }
+  .st8.map-hidden {
+    stroke: #EFF5F5; }
 
 .st40 {
   fill: #B0CCCB; }
+  .map-hidden .st40 {
+    fill: #EFF5F5; }
+
+.scalable-map {
+  display: inline-block; }
+  .scalable-map > div {
+    display: inline-block;
+    height: 100%; }
+    .scalable-map > div svg {
+      width: auto !important; }
 
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
