@@ -5509,7 +5509,7 @@ div[id^='gmap'] {
 
 div[id^='svg'] {
   margin: 0;
-  margin-top: 10px; }
+  margin-top: 15px; }
 
 .gmnoprint:not(.gm-bundled-control) {
   display: none; }
