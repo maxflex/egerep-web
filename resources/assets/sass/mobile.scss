@@ -3,6 +3,7 @@
 @import "flaticon";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/font-awesome/css/font-awesome";
+@import "../bower/egerep-svg-metro/styles/svg-metro";
 
 @mixin zindex($index) {
     -webkit-transform:translateZ($index);
@@ -3784,7 +3785,7 @@ div[id^='gmap'] {
 }
 
 div[id^='svg'] {
-    height: calc(100% - 6em);
+    height: calc(100% - 4em);
     overflow: scroll;
 }
 
