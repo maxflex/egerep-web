@@ -367,11 +367,10 @@
       if (additional == null) {
         additional = {};
       }
-      Tutor.iteraction({
+      return Tutor.iteraction({
         id: tutor_id,
         type: iteraction_type
       });
-      return StreamService.run(iteraction_type, index, additional);
     };
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
@@ -393,9 +392,12 @@
           });
         }
         SubjectService.init($scope.search.subjects);
+        StreamService.run('landing', 'serp');
         return $scope.filter();
       } else {
-        return StreamService.init(JSON.parse($.cookie('search')), $scope.subjects);
+        return StreamService.run('landing', StreamService.identifyLanding(), $scope.profilePage() ? {
+          tutor_id: $scope.tutor.id
+        } : {});
       }
     });
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
@@ -499,11 +501,9 @@
         StreamService.updateCookie({
           search: StreamService.cookie.search + 1
         });
-        StreamService.run(Sources.FILTER);
-      } else {
-        if (!filter_used) {
-          StreamService.init($scope.search, $scope.subjects);
-        }
+        StreamService.run('filter', null, {
+          search: StreamService.cookie.search
+        });
       }
       search();
       if ($scope.search.hidden_filter && search_count) {
@@ -1043,75 +1043,6 @@
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1141,15 +1072,17 @@
 
 (function() {
   angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
-    var identifySource;
-    identifySource = function() {
+    this.identifyLanding = function() {
       if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
-        return Sources.LANDING_PROFILE;
+        return 'tutor';
       }
       if (window.location.pathname === '/request') {
-        return Sources.LANDING_HELP;
+        return 'help';
       }
-      return Sources.LANDING;
+      if (window.location.pathname === '/') {
+        return 'main';
+      }
+      return 'serp';
     };
     this.generateEventString = function(params, additional) {
       var metro, page, position, sort, string, subjects, where;
@@ -1220,35 +1153,22 @@
         path: '/'
       });
     };
-    this.init = function(search, subjects) {
-      if (subjects == null) {
-        subjects = null;
+    this.initCookie = function() {
+      if ($.cookie('stream') !== void 0) {
+        return this.cookie = JSON.parse($.cookie('stream'));
+      } else {
+        return this.updateCookie({
+          step: 0,
+          search: 0
+        });
       }
-      return $timeout((function(_this) {
-        return function() {
-          if (search !== void 0) {
-            SubjectService.init(search.subjects);
-            _this.search = search;
-          }
-          _this.subjects = subjects;
-          if ($.cookie('stream') !== void 0) {
-            _this.cookie = JSON.parse($.cookie('stream'));
-          } else {
-            _this.updateCookie({
-              step: 0,
-              search: 0
-            });
-          }
-          return _this.run(identifySource());
-        };
-      })(this), 500);
     };
-    this.run = function(source, position, additional) {
-      if (position == null) {
-        position = null;
-      }
+    this.run = function(action, type, additional) {
       if (additional == null) {
         additional = {};
+      }
+      if (this.cookie === void 0) {
+        this.initCookie();
       }
       return $timeout((function(_this) {
         return function() {
@@ -1257,28 +1177,17 @@
             step: _this.cookie.step + 1
           });
           params = {
-            source: source,
-            search: _this.cookie.search,
+            action: action,
+            type: type,
             step: _this.cookie.step,
-            client_id: googleClientId()
+            google_id: googleClientId(),
+            yandex_id: yaCounter1411783.getClientID()
           };
-          if (_this.search !== void 0) {
-            params.place = _this.search.place;
-            params.station_id = _this.search.station_id;
-            params.sort = _this.search.sort;
-            params.subjects = SubjectService.getSelected().join(',');
-            params.page = $.cookie('page') || 1;
-          }
-          if (position !== null) {
-            params.position = position;
-          }
-          Stream.save(params);
-          dataLayerPush({
-            event: 'configuration',
-            eventCategory: source,
-            eventAction: _this.generateEventString(params, additional)
+          $.each(additional, function(key, value) {
+            return params[key] = value;
           });
-          return console.log(source, _this.generateEventString(params, additional));
+          Stream.save(params);
+          return console.log(action, type, params);
         };
       })(this), 500);
     };
@@ -1345,6 +1254,75 @@
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      iteraction: {
+        method: 'GET',
+        url: "/api/tutors/iteraction/:id/:type"
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 

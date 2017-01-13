@@ -1,9 +1,10 @@
 angular.module 'Egerep'
     .service 'StreamService', ($http, $timeout, Stream, SubjectService, Sources) ->
-        identifySource = ->
-            return Sources.LANDING_PROFILE if RegExp(/^\/[\d]+$/).test(window.location.pathname)
-            return Sources.LANDING_HELP if window.location.pathname is '/request'
-            return Sources.LANDING
+        this.identifyLanding = ->
+            return 'tutor' if RegExp(/^\/[\d]+$/).test(window.location.pathname)
+            return 'help' if window.location.pathname is '/request'
+            return 'main' if window.location.pathname is '/'
+            return 'serp'
 
         this.generateEventString = (params, additional) ->
             return 'empty_' if this.search is undefined
@@ -44,45 +45,43 @@ angular.module 'Egerep'
                 this.cookie[key] = value
             $.cookie('stream', JSON.stringify(this.cookie), { expires: 365, path: '/' })
 
-        this.init = (search, subjects = null) ->
-            $timeout =>
-                if search isnt undefined
-                    SubjectService.init(search.subjects)
-                    this.search = search
-                this.subjects = subjects
-                if $.cookie('stream') isnt undefined
-                    this.cookie = JSON.parse($.cookie('stream'))
-                else
-                    this.updateCookie({step: 0, search: 0})
-                this.run(identifySource())
-            , 500
+        this.initCookie = ->
+            if $.cookie('stream') isnt undefined
+                this.cookie = JSON.parse($.cookie('stream'))
+            else
+                this.updateCookie({step: 0, search: 0})
 
-        this.run = (source, position = null, additional = {}) ->
+        this.run = (action, type, additional = {}) ->
+            this.initCookie() if this.cookie is undefined
             $timeout =>
                 this.updateCookie({step: this.cookie.step + 1})
 
                 params =
-                    source:     source
-                    search:     this.cookie.search
-                    step:       this.cookie.step
-                    client_id:  googleClientId()
+                    action: action
+                    type: type
+                    step: this.cookie.step
+                    google_id: googleClientId()
+                    yandex_id: yaCounter1411783.getClientID()
 
-                if this.search isnt undefined
-                    params.place      = this.search.place
-                    params.station_id = this.search.station_id
-                    params.sort       = this.search.sort
-                    params.subjects   = SubjectService.getSelected().join(',')
-                    params.page       = $.cookie('page') or 1
+                $.each additional, (key, value) =>
+                    params[key] = value
 
-                params.position = position if position isnt null
+                # if this.search isnt undefined
+                #     params.place      = this.search.place
+                #     params.station_id = this.search.station_id
+                #     params.sort       = this.search.sort
+                #     params.subjects   = SubjectService.getSelected().join(',')
+                #     params.page       = $.cookie('page') or 1
+
+                # params.position = position if position isnt null
 
                 Stream.save(params)
-
-                dataLayerPush
-                    event: 'configuration'
-                    eventCategory: source
-                    eventAction: this.generateEventString(params, additional)
-                console.log(source, this.generateEventString(params, additional))
+                console.log(action, type, params)
+                # dataLayerPush
+                #     event: 'configuration'
+                #     eventCategory: source
+                #     eventAction: this.generateEventString(params, additional)
+                # console.log(source, this.generateEventString(params, additional))
             , 500
 
         this

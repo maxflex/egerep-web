@@ -9,7 +9,7 @@ angular
 
         iteraction = (tutor_id, iteraction_type, index = null, additional = {}) ->
             Tutor.iteraction {id: tutor_id, type: iteraction_type}
-            StreamService.run(iteraction_type, index, additional)
+            # StreamService.run(iteraction_type, index, additional)
 
         # личная страница преподавателя?
         $scope.profilePage = ->
@@ -31,12 +31,11 @@ angular
                         $scope.search.subjects[subject_id] = true
 
                 SubjectService.init($scope.search.subjects)
+                StreamService.run('landing', 'serp')
                 $scope.filter()
             else
-                StreamService.init(
-                    JSON.parse($.cookie('search')),
-                    $scope.subjects
-                )
+                StreamService.run 'landing', StreamService.identifyLanding(),
+                    if $scope.profilePage() then {tutor_id: $scope.tutor.id} else {}
 
         # пары предметов
         $scope.pairs = [
@@ -132,9 +131,7 @@ angular
             $scope.page = 1
             if filter_used
                 StreamService.updateCookie({search: StreamService.cookie.search + 1})
-                StreamService.run(Sources.FILTER)
-            else
-                StreamService.init($scope.search, $scope.subjects) if not filter_used
+                StreamService.run('filter', null, {search: StreamService.cookie.search})
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
