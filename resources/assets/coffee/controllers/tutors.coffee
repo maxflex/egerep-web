@@ -115,7 +115,7 @@ angular
 
         $scope.showMoreReviews = (tutor, index) ->
             if tutor.reviews_page then StreamService.run 'reviews_more', StreamService.identifySource(tutor),
-                position: index
+                position: $scope.getIndex(index)
                 tutor_id: tutor.id
                 depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
