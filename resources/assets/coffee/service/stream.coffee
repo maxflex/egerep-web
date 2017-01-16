@@ -11,7 +11,6 @@ angular.module 'Egerep'
             search = $.cookie('search')
             if search isnt undefined then $.each JSON.parse(search), (key, value) ->
                 params[key] = value
-
             parts = []
             $.each params, (key, value) ->
                 switch key
@@ -22,42 +21,15 @@ angular.module 'Egerep'
                             when 4 then value = 'rating'
                             when 5 then value = 'bymetro'
                             else value = 'pop'
+                    when 'place'
+                        switch parseInt(params.place)
+                            when 1 then where = 'tutor'
+                            when 2 then where = 'client'
+                            else where = 'any'
                     when 'subjects' then value = SubjectService.getSelected(value).join(',')
-                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id'] or not value
+                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id', 'hidden_filter'] or not value
                 parts.push(key + '=' + value)
-
             return parts.join('_')
-            return 'empty_' if this.search is undefined
-            if this.subjects isnt null and params.subjects isnt ''
-                subjects = []
-                SubjectService.getSelected().forEach (subject_id) =>
-                    subjects.push(this.subjects[subject_id].eng)
-                subjects = subjects.join('+')
-            else
-                subjects = ''
-            if params.place
-                switch parseInt(params.place)
-                    when 1 then where = 'tutor'
-                    when 2 then where = 'client'
-            else
-                where = 'anywhere'
-
-            switch parseInt(params.sort)
-                when 2 then sort = 'maxprice'
-                when 3 then sort = 'minprice'
-                when 4 then sort = 'rating'
-                when 5 then sort = 'bymetro'
-                else sort = 'pop'
-
-            metro = params.station_id or ''
-            position = params.position or ''
-            page = params.page or ''
-
-            string = "search=#{params.search}_subj=#{subjects}_where=#{where}_sort=#{sort}_metro=#{metro}_page=#{page}_step=#{params.step}_"
-            string += "position=#{position}_" if params.position
-            $.each additional, (key, param) ->
-                string += "#{key}=#{param}_"
-            return string
 
         this.updateCookie = (params) ->
             this.cookie = {} if this.cookie is undefined
@@ -94,15 +66,6 @@ angular.module 'Egerep'
             $.each additional, (key, value) =>
                 params[key] = value
 
-            # if this.search isnt undefined
-            #     params.place      = this.search.place
-            #     params.station_id = this.search.station_id
-            #     params.sort       = this.search.sort
-            #     params.subjects   = SubjectService.getSelected().join(',')
-            #     params.page       = $.cookie('page') or 1
-
-            # params.position = position if position isnt null
-
             console.log(action, type, params)
             if action isnt 'view' then console.log(this.generateEventString(angular.copy(params)))
             if action isnt 'view' then dataLayerPush
@@ -110,6 +73,5 @@ angular.module 'Egerep'
                 eventCategory: "action=#{action}" + (if type then "_type=#{type}" else "")
                 eventAction: this.generateEventString(angular.copy(params))
             Stream.save(params).$promise
-            # console.log(source, this.generateEventString(params))
 
         this

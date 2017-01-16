@@ -712,20 +712,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -1070,6 +1056,20 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1183,7 +1183,7 @@
       return 'serp';
     };
     this.generateEventString = function(params) {
-      var metro, page, parts, position, search, sort, string, subjects, where;
+      var parts, search;
       search = $.cookie('search');
       if (search !== void 0) {
         $.each(JSON.parse(search), function(key, value) {
@@ -1192,6 +1192,7 @@
       }
       parts = [];
       $.each(params, function(key, value) {
+        var where;
         switch (key) {
           case 'sort':
             switch (parseInt(value)) {
@@ -1211,67 +1212,27 @@
                 value = 'pop';
             }
             break;
+          case 'place':
+            switch (parseInt(params.place)) {
+              case 1:
+                where = 'tutor';
+                break;
+              case 2:
+                where = 'client';
+                break;
+              default:
+                where = 'any';
+            }
+            break;
           case 'subjects':
             value = SubjectService.getSelected(value).join(',');
         }
-        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id') || !value) {
+        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id' || key === 'hidden_filter') || !value) {
           return;
         }
         return parts.push(key + '=' + value);
       });
       return parts.join('_');
-      if (this.search === void 0) {
-        return 'empty_';
-      }
-      if (this.subjects !== null && params.subjects !== '') {
-        subjects = [];
-        SubjectService.getSelected().forEach((function(_this) {
-          return function(subject_id) {
-            return subjects.push(_this.subjects[subject_id].eng);
-          };
-        })(this));
-        subjects = subjects.join('+');
-      } else {
-        subjects = '';
-      }
-      if (params.place) {
-        switch (parseInt(params.place)) {
-          case 1:
-            where = 'tutor';
-            break;
-          case 2:
-            where = 'client';
-        }
-      } else {
-        where = 'anywhere';
-      }
-      switch (parseInt(params.sort)) {
-        case 2:
-          sort = 'maxprice';
-          break;
-        case 3:
-          sort = 'minprice';
-          break;
-        case 4:
-          sort = 'rating';
-          break;
-        case 5:
-          sort = 'bymetro';
-          break;
-        default:
-          sort = 'pop';
-      }
-      metro = params.station_id || '';
-      position = params.position || '';
-      page = params.page || '';
-      string = "search=" + params.search + "_subj=" + subjects + "_where=" + where + "_sort=" + sort + "_metro=" + metro + "_page=" + page + "_step=" + params.step + "_";
-      if (params.position) {
-        string += "position=" + position + "_";
-      }
-      $.each(additional, function(key, param) {
-        return string += key + "=" + param + "_";
-      });
-      return string;
     };
     this.updateCookie = function(params) {
       if (this.cookie === void 0) {
