@@ -14,7 +14,6 @@ angular.module 'Egerep'
 
             parts = []
             $.each params, (key, value) ->
-                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id'] or not value
                 switch key
                     when 'sort'
                         switch parseInt(value)
@@ -24,6 +23,7 @@ angular.module 'Egerep'
                             when 5 then value = 'bymetro'
                             else value = 'pop'
                     when 'subjects' then value = SubjectService.getSelected(value).join(',')
+                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id'] or not value
                 parts.push(key + '=' + value)
 
             return parts.join('_')
