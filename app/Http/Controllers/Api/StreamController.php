@@ -14,7 +14,7 @@ class StreamController extends Controller
     {
         // если первая запись, добавляем referer и referer_url
         if (! egerep('stream')->where('google_id', $request->google_id)->exists()) {
-            $request->merge(['referer' => $request->headers->get('referer')]);
+            $request->merge(['referer' => $_SERVER['HTTP_REFERER']]);
         }
         $request->merge(['mobile' => isMobile()]);
         egerep('stream')->insert($request->all());
