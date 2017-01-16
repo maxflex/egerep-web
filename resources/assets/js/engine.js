@@ -379,10 +379,13 @@ function streamLink(url, action, type, additional) {
     if (url[0] != '/') {
         url = '/' + url
     }
-    console.log('Redirecting to ' + url)
+    // обходим popup blocked
+    if (action == 'tutor_profile') {
+        var newTab = window.open('', '_blank');
+    }
     scope.StreamService.run('go_' + action, type, additional).then(function() {
         if (action == 'tutor_profile') {
-            window.open(url, '_blank')
+            newTab.location = url
         } else {
             window.location = url
         }
