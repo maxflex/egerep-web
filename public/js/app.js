@@ -286,7 +286,10 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor) {
+  angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor, StreamService) {
+    $timeout(function() {
+      return StreamService.run('landing', 'main');
+    });
     bindArguments($scope, arguments);
     $scope.selected_subject = '1';
     $scope.refreshSelect = function() {
@@ -294,8 +297,8 @@
         return $('.custom-select-sort').trigger('render');
       });
     };
-    $scope.goSubject = function() {
-      return window.location = $scope.subject_routes[$scope.selected_subject];
+    $scope.goSubject = function(type) {
+      return streamLink($scope.subject_routes[$scope.selected_subject], 'serp', type);
     };
     $scope.dateToText = function(date) {
       var text_date;
@@ -357,26 +360,27 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
-    var filter_used, highlight, iteraction, search, search_count, viewed_tutors;
+    var filter_used, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
-    iteraction = function(tutor_id, iteraction_type, index, additional) {
+    $scope.getIndex = function(index) {
       if (index == null) {
         index = null;
       }
-      if (additional == null) {
-        additional = {};
+      if (index !== null) {
+        return parseInt(index) + 1;
       }
-      return Tutor.iteraction({
-        id: tutor_id,
-        type: iteraction_type
+      return $scope.index_from_hash || null;
+    };
+    $scope.streamLink = streamLink;
+    $scope.profileLink = function(tutor, index) {
+      index = $scope.getIndex(index);
+      return streamLink(tutor.id + "#" + index, 'tutor_profile', StreamService.identifySource(tutor), {
+        position: index
       });
     };
     $scope.profilePage = function() {
       return RegExp(/^\/[\d]+$/).test(window.location.pathname);
-    };
-    $scope.request = function(tutor, index) {
-      return iteraction(tutor.id, 'request_form', index);
     };
     $timeout(function() {
       var id;
@@ -395,13 +399,15 @@
         StreamService.run('landing', 'serp');
         return $scope.filter();
       } else {
-        return StreamService.run('landing', StreamService.identifyLanding(), $scope.profilePage() ? {
-          tutor_id: $scope.tutor.id
+        $scope.index_from_hash = window.location.hash.substring(1);
+        return StreamService.run('landing', StreamService.identifySource(), $scope.profilePage() ? {
+          tutor_id: $scope.tutor.id,
+          position: $scope.getIndex()
         } : {});
       }
     });
     $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
-    viewed_tutors = [];
+    $scope.viewed_tutors = [];
     $scope.dateToText = function(date) {
       var text_date;
       text_date = moment(date).format('DD MMMM YYYY');
@@ -447,13 +453,16 @@
           });
         });
       }
-      return $scope.toggleShow(tutor, 'map_shown', 'gmap', index);
+      return $scope.toggleShow(tutor, 'map_shown', 'google_map', index);
     };
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
     };
     $scope.reviews = function(tutor, index) {
-      iteraction(tutor.id, 'reviews', index);
+      StreamService.run('reviews', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
       if (tutor.all_reviews === void 0) {
         tutor.all_reviews = Tutor.reviews({
           id: tutor.id
@@ -461,12 +470,14 @@
           return $scope.showMoreReviews(tutor);
         });
       }
-      return $scope.toggleShow(tutor, 'show_reviews', 'reviews');
+      return $scope.toggleShow(tutor, 'show_reviews', 'reviews', false);
     };
     $scope.showMoreReviews = function(tutor, index) {
       var from, to;
       if (tutor.reviews_page) {
-        iteraction(tutor.id, 'reviews_more', index, {
+        StreamService.run('reviews_more', StreamService.identifySource(tutor), {
+          position: index,
+          tutor_id: tutor.id,
           depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
         });
       }
@@ -488,11 +499,6 @@
         return reviews_left;
       }
     };
-    $scope.countView = function(tutor_id) {
-      if (viewed_tutors.indexOf(tutor_id) === -1) {
-        return viewed_tutors.push(tutor_id);
-      }
-    };
     filter_used = false;
     $scope.filter = function() {
       $scope.tutors = [];
@@ -502,7 +508,11 @@
           search: StreamService.cookie.search + 1
         });
         StreamService.run('filter', null, {
-          search: StreamService.cookie.search
+          search: StreamService.cookie.search,
+          subjects: $scope.SubjectService.getSelected().join(','),
+          sort: $scope.search.sort,
+          station_id: $scope.search.station_id,
+          place: $scope.search.place
         });
       }
       search();
@@ -514,7 +524,9 @@
     };
     $scope.nextPage = function() {
       $scope.page++;
-      StreamService.run(Sources.MORE_TUTORS);
+      StreamService.run('load_more_tutors', null, {
+        page: $scope.page
+      });
       return search();
     };
     $scope.$watch('page', function(newVal, oldVal) {
@@ -595,8 +607,8 @@
         return $('.custom-select-sort').trigger('render');
       });
     };
-    $scope.showSvg = function(tutor) {
-      return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
+    $scope.showSvg = function(tutor, index) {
+      return $scope.toggleShow(tutor, 'show_svg', 'metro_map', index);
     };
     $scope.toggleShow = function(tutor, prop, iteraction_type, index) {
       if (index == null) {
@@ -608,14 +620,11 @@
         }, $scope.mobile ? 400 : 0);
       } else {
         tutor[prop] = true;
-        if (index === null) {
-          Tutor.iteraction({
-            id: tutor.id,
-            type: iteraction_type
+        if (index !== false) {
+          return StreamService.run(iteraction_type, StreamService.identifySource(tutor), {
+            position: $scope.getIndex(index),
+            tutor_id: tutor.id
           });
-        }
-        if (index !== null) {
-          return iteraction(tutor.id, iteraction_type, index);
         }
       }
     };
@@ -638,9 +647,19 @@
           return $scope[fn](tutor, index);
         });
       }
-      if (index !== null) {
-        return $scope.index = index;
-      }
+      return $scope.index = $scope.getIndex(index);
+    };
+    $scope.request = function(tutor, index) {
+      return StreamService.run('contact_tutor_button', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
+    };
+    $scope.expand = function(tutor, index) {
+      return StreamService.run('expand_tutor_info', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
     };
     $scope.syncSort = function() {
       return $scope.search.sort = $scope.search.station_id ? 5 : 1;
@@ -766,6 +785,31 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').directive('inView', function() {
+    return {
+      restrict: 'A',
+      scope: {
+        tutor: '=tutor',
+        index: '=index'
+      },
+      link: function($scope, $element, $attrs) {
+        return $($element).on('inview', function(event, isInView) {
+          if (isInView && $scope.$parent.viewed_tutors.indexOf($scope.tutor.id) === -1) {
+            $scope.$parent.viewed_tutors.push($scope.tutor.id);
+            $scope.$parent.StreamService.run('view', $scope.$parent.StreamService.identifySource($scope.tutor), {
+              tutor_id: $scope.tutor.id,
+              position: $scope.index || null
+            });
+            return $($element).off('inview');
+          }
+        });
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
@@ -861,14 +905,7 @@
         }
       },
       controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
-        var identifySource, profilePage, trackDataLayer;
-        $timeout(function() {
-          if ($scope.index !== void 0) {
-            return $scope.index++;
-          } else {
-            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
-          }
-        }, 500);
+        var trackDataLayer;
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
@@ -876,7 +913,10 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            $scope.$parent.StreamService.run(identifySource(), $scope.index);
+            $scope.$parent.StreamService.run('request', $scope.$parent.StreamService.identifySource($scope.tutor), {
+              position: $scope.$parent.index,
+              tutor_id: $scope.tutor.id
+            });
             return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
@@ -890,20 +930,6 @@
             }
           });
         };
-        profilePage = function() {
-          return RegExp(/^\/[\d]+$/).test(window.location.pathname);
-        };
-        identifySource = function() {
-          if ($scope.tutor.id) {
-            if (profilePage()) {
-              return Sources.PROFILE_REQUEST;
-            } else {
-              return Sources.SERP_REQUEST;
-            }
-          } else {
-            return Sources.HELP_REQUEST;
-          }
-        };
         return trackDataLayer = function() {
           return dataLayerPush({
             event: 'purchase',
@@ -912,7 +938,7 @@
               purchase: {
                 actionField: {
                   id: googleClientId(),
-                  affiliation: identifySource(),
+                  affiliation: $scope.$parent.StreamService.identifySource(),
                   revenue: $scope.tutor.public_price
                 },
                 products: [
@@ -1072,7 +1098,13 @@
 
 (function() {
   angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
-    this.identifyLanding = function() {
+    this.identifySource = function(tutor) {
+      if (tutor == null) {
+        tutor = void 0;
+      }
+      if (tutor !== void 0 && tutor.is_similar) {
+        return 'similar';
+      }
       if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
         return 'tutor';
       }
@@ -1084,8 +1116,44 @@
       }
       return 'serp';
     };
-    this.generateEventString = function(params, additional) {
-      var metro, page, position, sort, string, subjects, where;
+    this.generateEventString = function(params) {
+      var metro, page, parts, position, search, sort, string, subjects, where;
+      search = $.cookie('search');
+      if (search !== void 0) {
+        $.each(JSON.parse(search), function(key, value) {
+          return params[key] = value;
+        });
+      }
+      parts = [];
+      $.each(params, function(key, value) {
+        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id') || !value) {
+          return;
+        }
+        switch (key) {
+          case 'sort':
+            switch (parseInt(value)) {
+              case 2:
+                value = 'maxprice';
+                break;
+              case 3:
+                value = 'minprice';
+                break;
+              case 4:
+                value = 'rating';
+                break;
+              case 5:
+                value = 'bymetro';
+                break;
+              default:
+                value = 'pop';
+            }
+            break;
+          case 'subjects':
+            value = SubjectService.getSelected(value).join(',');
+        }
+        return parts.push(key + '=' + value);
+      });
+      return parts.join('_');
       if (this.search === void 0) {
         return 'empty_';
       }
@@ -1170,26 +1238,49 @@
       if (this.cookie === void 0) {
         this.initCookie();
       }
-      return $timeout((function(_this) {
-        return function() {
-          var params;
-          _this.updateCookie({
-            step: _this.cookie.step + 1
-          });
-          params = {
-            action: action,
-            type: type,
-            step: _this.cookie.step,
-            google_id: googleClientId(),
-            yandex_id: yaCounter1411783.getClientID()
+      if (!this.initialized) {
+        return $timeout((function(_this) {
+          return function() {
+            return _this._run(action, type, additional);
           };
-          $.each(additional, function(key, value) {
-            return params[key] = value;
-          });
-          Stream.save(params);
-          return console.log(action, type, params);
+        })(this), 500);
+      } else {
+        return this._run(action, type, additional);
+      }
+    };
+    this._run = function(action, type, additional) {
+      var params;
+      if (additional == null) {
+        additional = {};
+      }
+      this.updateCookie({
+        step: this.cookie.step + 1
+      });
+      params = {
+        action: action,
+        type: type,
+        step: this.cookie.step,
+        google_id: googleClientId(),
+        yandex_id: yaCounter1411783.getClientID(),
+        mobile: typeof isMobile === 'undefined' ? '0' : '1'
+      };
+      $.each(additional, (function(_this) {
+        return function(key, value) {
+          return params[key] = value;
         };
-      })(this), 500);
+      })(this));
+      console.log(action, type, params);
+      if (action !== 'view') {
+        console.log(this.generateEventString(angular.copy(params)));
+      }
+      if (action !== 'view') {
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: ("action=" + action) + (type ? "_type=" + type : ""),
+          eventAction: this.generateEventString(angular.copy(params))
+        });
+      }
+      return Stream.save(params).$promise;
     };
     return this;
   });
@@ -1227,10 +1318,13 @@
       this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
       return this.pairsControl(subject_id);
     };
-    this.getSelected = function() {
+    this.getSelected = function(subjects) {
       var ids;
+      if (subjects == null) {
+        subjects = null;
+      }
       ids = [];
-      angular.forEach(this.subjects, function(enabled, id) {
+      angular.forEach(subjects || this.subjects, function(enabled, id) {
         if (enabled) {
           return ids.push(id);
         }
@@ -1273,10 +1367,6 @@
         method: 'GET',
         isArray: true,
         url: apiPath('tutors', 'reviews')
-      },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
       },
       login: {
         method: 'GET',

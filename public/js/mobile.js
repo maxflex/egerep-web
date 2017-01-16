@@ -1,3 +1,5 @@
+var isMobile = true
+
 $(document).ready(function() {
 	$('.header-btn__menu__svg').click(function() {
         openModal('menu')

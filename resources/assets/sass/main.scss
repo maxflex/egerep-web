@@ -129,7 +129,13 @@ textarea {
     float: right;
     border: 1px solid $green-main;
     margin: 7px 0 0;
+    cursor: pointer;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
 /*
 * Header search tutor
 --------------------------------*/
@@ -212,6 +218,8 @@ textarea {
     position: relative;
     padding: 0 15px 0 0;
     margin: 0 9px 0 0;
+    text-decoration: underline;
+    cursor: pointer;
 }
 .breadcrumbs-inner a:after {
     content: '/';

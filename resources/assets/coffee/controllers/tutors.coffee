@@ -7,15 +7,19 @@ angular
         # сколько загрузок преподавателей было
         search_count = 0
 
-        iteraction = (tutor_id, iteraction_type, index = null, additional = {}) ->
-            Tutor.iteraction {id: tutor_id, type: iteraction_type}
-            # StreamService.run(iteraction_type, index, additional)
+        # получить индекс преподавателя. если не указан, береш из хэша
+        $scope.getIndex = (index = null) ->
+            return (parseInt(index) + 1) if index isnt null
+            $scope.index_from_hash or null
+
+        $scope.streamLink = streamLink
+        $scope.profileLink = (tutor, index) ->
+            index = $scope.getIndex(index)
+            streamLink("#{tutor.id}##{index}", 'tutor_profile', StreamService.identifySource(tutor), {position: index})
 
         # личная страница преподавателя?
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
-
-        $scope.request = (tutor, index) -> iteraction(tutor.id, 'request_form', index)
 
         # страница поиска
         $timeout ->
@@ -34,8 +38,9 @@ angular
                 StreamService.run('landing', 'serp')
                 $scope.filter()
             else
-                StreamService.run 'landing', StreamService.identifyLanding(),
-                    if $scope.profilePage() then {tutor_id: $scope.tutor.id} else {}
+                $scope.index_from_hash = window.location.hash.substring(1)
+                StreamService.run 'landing', StreamService.identifySource(),
+                    if $scope.profilePage() then {tutor_id: $scope.tutor.id, position: $scope.getIndex()} else {}
 
         # пары предметов
         $scope.pairs = [
@@ -46,7 +51,7 @@ angular
         ]
 
         # просмотренные преподаватели (чтобы не засчитывались просмотры несколько раз)
-        viewed_tutors = []
+        $scope.viewed_tutors = []
 
         # сотрудничает с 12 сентября 2000 года
         $scope.dateToText = (date) ->
@@ -92,22 +97,27 @@ angular
                 google.maps.event.addListenerOnce map, 'idle', ->
                     $('div:has(>a[href^="https://www.google.com/maps"])').remove()
 
-            $scope.toggleShow(tutor, 'map_shown', 'gmap', index)
+            $scope.toggleShow(tutor, 'map_shown', 'google_map', index)
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
         $scope.reviews = (tutor, index) ->
-            iteraction(tutor.id, 'reviews', index)
+            StreamService.run 'reviews', StreamService.identifySource(tutor),
+                position: $scope.getIndex(index)
+                tutor_id: tutor.id
             if tutor.all_reviews is undefined
                 tutor.all_reviews = Tutor.reviews
                     id: tutor.id
                 , (response) ->
                     $scope.showMoreReviews(tutor)
-            $scope.toggleShow(tutor, 'show_reviews', 'reviews')
+            $scope.toggleShow(tutor, 'show_reviews', 'reviews', false)
 
         $scope.showMoreReviews = (tutor, index) ->
-            iteraction(tutor.id, 'reviews_more', index, {depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE}) if tutor.reviews_page
+            if tutor.reviews_page then StreamService.run 'reviews_more', StreamService.identifySource(tutor),
+                position: index
+                tutor_id: tutor.id
+                depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
             from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
             to = from + REVIEWS_PER_PAGE
@@ -119,11 +129,6 @@ angular
             reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
 
-        $scope.countView = (tutor_id) ->
-            if viewed_tutors.indexOf(tutor_id) is -1
-                # Tutor.iteraction {id: tutor_id, type: 'views'}
-                viewed_tutors.push tutor_id
-
         # чтобы не редиректило в начале
         filter_used = false
         $scope.filter = ->
@@ -131,7 +136,12 @@ angular
             $scope.page = 1
             if filter_used
                 StreamService.updateCookie({search: StreamService.cookie.search + 1})
-                StreamService.run('filter', null, {search: StreamService.cookie.search})
+                StreamService.run 'filter', null,
+                    search: StreamService.cookie.search
+                    subjects: $scope.SubjectService.getSelected().join(',')
+                    sort: $scope.search.sort
+                    station_id: $scope.search.station_id
+                    place: $scope.search.place
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
@@ -140,7 +150,7 @@ angular
 
         $scope.nextPage = ->
             $scope.page++
-            StreamService.run(Sources.MORE_TUTORS)
+            StreamService.run('load_more_tutors', null, {page: $scope.page})
             search()
 
         $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
@@ -196,8 +206,8 @@ angular
             $timeout ->
                 $('.custom-select-sort').trigger('render')
 
-        $scope.showSvg = (tutor) ->
-            $scope.toggleShow(tutor, 'show_svg', 'svg_map')
+        $scope.showSvg = (tutor, index) ->
+            $scope.toggleShow(tutor, 'show_svg', 'metro_map', index)
 
         # stream if index isnt null
         $scope.toggleShow = (tutor, prop, iteraction_type, index = null) ->
@@ -207,8 +217,9 @@ angular
                 , if $scope.mobile then 400 else 0
             else
                 tutor[prop] = true
-                Tutor.iteraction {id: tutor.id, type: iteraction_type} if index is null
-                iteraction(tutor.id, iteraction_type, index) if index isnt null
+                if index isnt false then StreamService.run iteraction_type, StreamService.identifySource(tutor),
+                    position: $scope.getIndex(index)
+                    tutor_id: tutor.id
 
         #
         # MOBILE
@@ -217,7 +228,17 @@ angular
             openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor
             if fn isnt null then $timeout -> $scope[fn](tutor, index)
-            if index isnt null then $scope.index = index
+            $scope.index = $scope.getIndex(index)
+
+        $scope.request = (tutor, index) ->
+            StreamService.run 'contact_tutor_button', StreamService.identifySource(tutor),
+                position: $scope.getIndex(index)
+                tutor_id: tutor.id
+
+        $scope.expand = (tutor, index) ->
+            StreamService.run 'expand_tutor_info', StreamService.identifySource(tutor),
+                position: $scope.getIndex(index)
+                tutor_id: tutor.id
 
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
