@@ -4,6 +4,8 @@ angular.module('Egerep').directive 'inView', ->
         tutor: '=tutor'
         index: '=index'
     link: ($scope, $element, $attrs) ->
+        # offset, чтобы было только при 100% видимости засчитывало
+        # elementOffset.top += elementSize.height - 10
         $($element).on 'inview', (event, isInView) ->
             if isInView and $scope.$parent.viewed_tutors.indexOf($scope.tutor.id) is -1
                 $scope.$parent.viewed_tutors.push($scope.tutor.id)

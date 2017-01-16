@@ -73,6 +73,6 @@ elixir(mix => {
             'jquery.cookie/jquery.cookie',
             'egerep-svg-metro/scripts/svg',
             'jquery.panzoom/dist/jquery.panzoom',
-            'protonet/jquery.inview/jquery.inview.min',
+            'protonet/jquery.inview/jquery.inview',
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });
