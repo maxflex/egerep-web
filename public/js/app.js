@@ -376,7 +376,8 @@
     $scope.profileLink = function(tutor, index) {
       index = $scope.getIndex(index);
       return streamLink(tutor.id + "#" + index, 'tutor_profile', StreamService.identifySource(tutor), {
-        position: index
+        position: index,
+        tutor_id: tutor.id
       });
     };
     $scope.profilePage = function() {
@@ -706,6 +707,20 @@
         });
       }
     });
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1116,20 +1131,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
 
 }).call(this);
 

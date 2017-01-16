@@ -15,7 +15,9 @@ angular
         $scope.streamLink = streamLink
         $scope.profileLink = (tutor, index) ->
             index = $scope.getIndex(index)
-            streamLink("#{tutor.id}##{index}", 'tutor_profile', StreamService.identifySource(tutor), {position: index})
+            streamLink "#{tutor.id}##{index}", 'tutor_profile', StreamService.identifySource(tutor),
+                position: index
+                tutor_id: tutor.id
 
         # личная страница преподавателя?
         $scope.profilePage = ->
