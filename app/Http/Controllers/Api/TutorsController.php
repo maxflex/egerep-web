@@ -79,14 +79,6 @@ class TutorsController extends Controller
     }
 
     /**
-     * Count view
-     */
-    public function iteraction($id, $type)
-    {
-        Tutor::iteraction($id)->increment($type);
-    }
-
-    /**
      * Получить отзывы
      */
     public function reviews($id)

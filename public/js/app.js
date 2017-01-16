@@ -222,6 +222,500 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
+    bindArguments($scope, arguments);
+    $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
+    $timeout(function() {
+      return console.log(1);
+    }, 1000);
+    $scope.application = {
+      agree_to_publish: 1
+    };
+    FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
+      return true;
+    };
+    $scope.uploader = new FileUploader({
+      url: 'api/cv/uploadPhoto',
+      alias: 'photo',
+      autoUpload: true,
+      method: 'post',
+      removeAfterUpload: true,
+      onProgressItem: function(i, progress) {
+        return $scope.percentage = progress;
+      },
+      onCompleteItem: function(i, response, status) {
+        $scope.percentage = void 0;
+        if (status === 200) {
+          $scope.application.filename = response.filename;
+          return $scope.application.filesize = response.size;
+        } else {
+          $scope.upload_error = true;
+          return $scope.application.filename = void 0;
+        }
+      }
+    });
+    $scope.clearFile = function() {
+      $scope.upload_error = false;
+      return $scope.application.filename = void 0;
+    };
+    $scope.upload = function(e) {
+      e.preventDefault();
+      $scope.upload_error = false;
+      $('#upload-button').trigger('click');
+      return false;
+    };
+    return $scope.sendApplication = function() {
+      return Cv.save($scope.application, function() {
+        return $scope.application.sent = true;
+      }, function(response) {
+        if (response.status === 422) {
+          $scope.errors = {};
+          return angular.forEach(response.data, function(errors, field) {
+            var selector;
+            $scope.errors[field] = errors;
+            selector = "[ng-model$='" + field + "']";
+            return $("input" + selector + ", textarea" + selector).focus();
+          });
+        } else {
+          return $scope.application.error = true;
+        }
+      });
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor, StreamService) {
+    $timeout(function() {
+      return StreamService.run('landing', 'main');
+    });
+    bindArguments($scope, arguments);
+    $scope.selected_subject = '1';
+    $scope.refreshSelect = function() {
+      return $timeout(function() {
+        return $('.custom-select-sort').trigger('render');
+      });
+    };
+    $scope.goSubject = function(type) {
+      return streamLink($scope.subject_routes[$scope.selected_subject], 'serp', type);
+    };
+    $scope.dateToText = function(date) {
+      var text_date;
+      text_date = moment(date).format('DD MMMM YYYY');
+      return text_date.substr(3);
+    };
+    return $scope.randomReview = function() {
+      $scope.loading_review = true;
+      return $http.get('api/reviews/random').then(function(response) {
+        $scope.random_review = response.data;
+        return $scope.loading_review = false;
+      });
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor) {
+    var login;
+    bindArguments($scope, arguments);
+    login = function() {
+      return Tutor.login({}, function(response) {
+        return $scope.tutor = response;
+      }, function() {
+        return $scope.tutor = null;
+      });
+    };
+    login();
+    $scope.sendCode = function() {
+      $scope.error_message = false;
+      return Sms.save({
+        phone: $scope.phone
+      }, function() {
+        $scope.code_sent = true;
+        return $timeout(function() {
+          return $('#code-input').focus();
+        });
+      }, function() {
+        return $scope.error_message = 'неверный номер телефона';
+      });
+    };
+    return $scope.checkCode = function() {
+      $scope.error_message = false;
+      return Sms.get({
+        code: $scope.code
+      }, function() {
+        return login();
+      }, function(response) {
+        if (response.status === 403) {
+          redirect('/');
+        }
+        return $scope.error_message = 'код введен неверно';
+      });
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
+    var filter_used, highlight, search, search_count;
+    bindArguments($scope, arguments);
+    search_count = 0;
+    $scope.getIndex = function(index) {
+      if (index == null) {
+        index = null;
+      }
+      if (index !== null) {
+        return parseInt(index) + 1;
+      }
+      return $scope.index_from_hash || null;
+    };
+    $scope.streamLink = streamLink;
+    $scope.profileLink = function(tutor, index) {
+      index = $scope.getIndex(index);
+      return streamLink(tutor.id + "#" + index, 'tutor_profile', StreamService.identifySource(tutor), {
+        position: index
+      });
+    };
+    $scope.profilePage = function() {
+      return RegExp(/^\/[\d]+$/).test(window.location.pathname);
+    };
+    $timeout(function() {
+      var id;
+      if (!$scope.profilePage() && window.location.pathname !== '/request') {
+        if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
+          id = $scope.search.id;
+          $scope.search = JSON.parse($.cookie('search'));
+          $scope.search.id = id;
+        }
+        if ($scope.selected_subjects) {
+          $scope.selected_subjects.split(',').forEach(function(subject_id) {
+            return $scope.search.subjects[subject_id] = true;
+          });
+        }
+        SubjectService.init($scope.search.subjects);
+        StreamService.run('landing', 'serp');
+        return $scope.filter();
+      } else {
+        $scope.index_from_hash = window.location.hash.substring(1);
+        return StreamService.run('landing', StreamService.identifySource(), $scope.profilePage() ? {
+          tutor_id: $scope.tutor.id,
+          position: $scope.getIndex()
+        } : {});
+      }
+    });
+    $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
+    $scope.viewed_tutors = [];
+    $scope.dateToText = function(date) {
+      var text_date;
+      text_date = moment(date).format('DD MMMM YYYY');
+      return text_date.substr(3);
+    };
+    $scope.requestSent = function(tutor) {
+      return tutor.request_sent || $scope.sent_ids.indexOf(tutor.id) !== -1;
+    };
+    $scope.gmap = function(tutor, index) {
+      if (tutor.map_shown === void 0) {
+        $timeout(function() {
+          var bounds, extendPoint1, extendPoint2, map;
+          map = new google.maps.Map(document.getElementById("gmap-" + tutor.id), {
+            center: MAP_CENTER,
+            scrollwheel: false,
+            zoom: 8,
+            disableDefaultUI: true,
+            clickableLabels: false,
+            clickableIcons: false,
+            zoomControl: true,
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_BOTTOM
+            },
+            scaleControl: true
+          });
+          bounds = new google.maps.LatLngBounds;
+          tutor.markers.forEach(function(marker) {
+            var new_marker;
+            bounds.extend(new google.maps.LatLng(marker.lat, marker.lng));
+            return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
+          });
+          if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
+            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
+            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005);
+            bounds.extend(extendPoint1);
+            bounds.extend(extendPoint2);
+          }
+          map.fitBounds(bounds);
+          map.panToBounds(bounds);
+          map.setZoom(tutor.markers.length > 1 ? 11 : 16);
+          return google.maps.event.addListenerOnce(map, 'idle', function() {
+            return $('div:has(>a[href^="https://www.google.com/maps"])').remove();
+          });
+        });
+      }
+      return $scope.toggleShow(tutor, 'map_shown', 'google_map', index);
+    };
+    $scope.getMetros = function(tutor) {
+      return _.chain(tutor.markers).pluck('metros').flatten().value();
+    };
+    $scope.reviews = function(tutor, index) {
+      StreamService.run('reviews', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
+      if (tutor.all_reviews === void 0) {
+        tutor.all_reviews = Tutor.reviews({
+          id: tutor.id
+        }, function(response) {
+          return $scope.showMoreReviews(tutor);
+        });
+      }
+      return $scope.toggleShow(tutor, 'show_reviews', 'reviews', false);
+    };
+    $scope.showMoreReviews = function(tutor, index) {
+      var from, to;
+      if (tutor.reviews_page) {
+        StreamService.run('reviews_more', StreamService.identifySource(tutor), {
+          position: index,
+          tutor_id: tutor.id,
+          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
+        });
+      }
+      tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
+      from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
+      to = from + REVIEWS_PER_PAGE;
+      tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
+      return highlight('search-result-reviews-text');
+    };
+    $scope.reviewsLeft = function(tutor) {
+      var reviews_left;
+      if (!tutor.all_reviews || !tutor.displayed_reviews) {
+        return;
+      }
+      reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
+      if (reviews_left > REVIEWS_PER_PAGE) {
+        return REVIEWS_PER_PAGE;
+      } else {
+        return reviews_left;
+      }
+    };
+    filter_used = false;
+    $scope.filter = function() {
+      $scope.tutors = [];
+      $scope.page = 1;
+      if (filter_used) {
+        StreamService.updateCookie({
+          search: StreamService.cookie.search + 1
+        });
+        StreamService.run('filter', null, {
+          search: StreamService.cookie.search,
+          subjects: $scope.SubjectService.getSelected().join(','),
+          sort: $scope.search.sort,
+          station_id: $scope.search.station_id,
+          place: $scope.search.place
+        });
+      }
+      search();
+      if ($scope.search.hidden_filter && search_count) {
+        delete $scope.search.hidden_filter;
+      }
+      $.cookie('search', JSON.stringify($scope.search));
+      return filter_used = true;
+    };
+    $scope.nextPage = function() {
+      $scope.page++;
+      StreamService.run('load_more_tutors', null, {
+        page: $scope.page
+      });
+      return search();
+    };
+    $scope.$watch('page', function(newVal, oldVal) {
+      if (newVal !== void 0) {
+        return $.cookie('page', $scope.page);
+      }
+    });
+    $scope.isLastPage = function() {
+      if (!$scope.data) {
+        return;
+      }
+      return $scope.data.current_page >= $scope.data.last_page;
+    };
+    $scope.unselectSubjects = function(subject_id) {
+      return angular.forEach($scope.search.subjects, function(enabled, id) {
+        var pair;
+        pair = _.filter(scope.pairs, function(p) {
+          return p.indexOf(parseInt(subject_id)) !== -1;
+        });
+        if (!pair.length) {
+          pair.push([subject_id]);
+        }
+        if (pair[0].indexOf(parseInt(id)) === -1) {
+          return $scope.search.subjects[id] = false;
+        }
+      });
+    };
+    search = function() {
+      $scope.searching = true;
+      return Tutor.search({
+        filter_used: filter_used,
+        page: $scope.page,
+        search: $scope.search
+      }, function(response) {
+        search_count++;
+        $scope.searching = false;
+        if (response.hasOwnProperty('url')) {
+          console.log('redirectring...');
+          return redirect(response.url);
+        } else {
+          $scope.data = response;
+          $scope.tutors = $scope.tutors.concat(response.data);
+          angular.forEach($scope.tutors, function(tutor) {
+            if ('string' === typeof tutor.svg_map) {
+              return tutor.svg_map = _.filter(tutor.svg_map.split(','));
+            }
+          });
+          highlight('search-result-text');
+          if ($scope.mobile) {
+            return $timeout(function() {
+              return bindToggle();
+            });
+          }
+        }
+      });
+    };
+    highlight = function(className) {
+      if ($scope.search && $scope.search.hidden_filter) {
+        return $timeout(function() {
+          return $.each($scope.search.hidden_filter, function(index, phrase) {
+            return $("." + className).mark(phrase, {
+              separateWordSearch: true,
+              accuracy: {
+                value: 'exactly',
+                limiters: ['!', '@', '#', '&', '*', '(', ')', '-', '–', '—', '+', '=', '[', ']', '{', '}', '|', ':', ';', '\'', '\"', '‘', '’', '“', '”', ',', '.', '<', '>', '/', '?']
+              }
+            });
+          });
+        });
+      }
+    };
+    $scope.clearMetro = function() {
+      $('.search-metro-autocomplete').val('');
+      $('.search-filter-metro-wrap').removeClass('active');
+      $scope.search.station_id = 0;
+      $scope.search.sort = '1';
+      return $timeout(function() {
+        return $('.custom-select-sort').trigger('render');
+      });
+    };
+    $scope.showSvg = function(tutor, index) {
+      return $scope.toggleShow(tutor, 'show_svg', 'metro_map', index);
+    };
+    $scope.toggleShow = function(tutor, prop, iteraction_type, index) {
+      if (index == null) {
+        index = null;
+      }
+      if (tutor[prop]) {
+        return $timeout(function() {
+          return tutor[prop] = false;
+        }, $scope.mobile ? 400 : 0);
+      } else {
+        tutor[prop] = true;
+        if (index !== false) {
+          return StreamService.run(iteraction_type, StreamService.identifySource(tutor), {
+            position: $scope.getIndex(index),
+            tutor_id: tutor.id
+          });
+        }
+      }
+    };
+    $scope.popup = function(id, tutor, fn, index) {
+      if (tutor == null) {
+        tutor = null;
+      }
+      if (fn == null) {
+        fn = null;
+      }
+      if (index == null) {
+        index = null;
+      }
+      openModal(id);
+      if (tutor !== null) {
+        $scope.popup_tutor = tutor;
+      }
+      if (fn !== null) {
+        $timeout(function() {
+          return $scope[fn](tutor, index);
+        });
+      }
+      return $scope.index = $scope.getIndex(index);
+    };
+    $scope.request = function(tutor, index) {
+      return StreamService.run('contact_tutor_button', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
+    };
+    $scope.expand = function(tutor, index) {
+      return StreamService.run('expand_tutor_info', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
+    };
+    $scope.syncSort = function() {
+      return $scope.search.sort = $scope.search.station_id ? 5 : 1;
+    };
+    $scope.changeFilter = function(param, value) {
+      if (value == null) {
+        value = null;
+      }
+      if (value !== null) {
+        $scope.search[param] = value;
+      }
+      $scope.overlay[param] = false;
+      return $scope.filter();
+    };
+    $scope.hasSelectedStation = function(tutor) {
+      if (!$scope.search || $scope.search.sort !== 5) {
+        return false;
+      }
+      return tutor.svg_map.indexOf(parseInt($scope.search.station_id)) !== -1;
+    };
+    $scope.sendRequest = function() {
+      if ($scope.sending_tutor.request === void 0) {
+        $scope.sending_tutor.request = {};
+      }
+      $scope.sending_tutor.request.tutor_id = $scope.sending_tutor.id;
+      return Request.save($scope.sending_tutor.request, function() {
+        return $scope.sending_tutor.request_sent = true;
+      }, function(response) {
+        if (response.status === 422) {
+          return angular.forEach(response.data, function(errors, field) {
+            var selector;
+            selector = "[ng-model$='" + field + "']";
+            return $('.request-overlay').find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
+          });
+        } else {
+          return $scope.sending_tutor.request_error = true;
+        }
+      });
+    };
+    return angular.element(document).ready(function() {
+      if ($scope.mobile) {
+        return $timeout(function() {
+          return bindToggle();
+        });
+      }
+    });
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
@@ -283,6 +777,31 @@
               });
             }
           });
+        });
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('inView', function() {
+    return {
+      restrict: 'A',
+      scope: {
+        tutor: '=tutor',
+        index: '=index'
+      },
+      link: function($scope, $element, $attrs) {
+        return $($element).on('inview', function(event, isInView) {
+          if (isInView && $scope.$parent.viewed_tutors.indexOf($scope.tutor.id) === -1) {
+            $scope.$parent.viewed_tutors.push($scope.tutor.id);
+            $scope.$parent.StreamService.run('view', $scope.$parent.StreamService.identifySource($scope.tutor), {
+              tutor_id: $scope.tutor.id,
+              position: $scope.index || null
+            });
+            return $($element).off('inview');
+          }
         });
       }
     };
@@ -386,14 +905,7 @@
         }
       },
       controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
-        var identifySource, profilePage, trackDataLayer;
-        $timeout(function() {
-          if ($scope.index !== void 0) {
-            return $scope.index++;
-          } else {
-            return $scope.index = window.location.hash ? window.location.hash.substring(1) : null;
-          }
-        }, 500);
+        var trackDataLayer;
         $scope.request = function() {
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
@@ -401,7 +913,10 @@
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            $scope.$parent.StreamService.run(identifySource(), $scope.index);
+            $scope.$parent.StreamService.run('request', $scope.$parent.StreamService.identifySource($scope.tutor), {
+              position: $scope.$parent.index,
+              tutor_id: $scope.tutor.id
+            });
             return trackDataLayer();
           }, function(response) {
             if (response.status === 422) {
@@ -415,20 +930,6 @@
             }
           });
         };
-        profilePage = function() {
-          return RegExp(/^\/[\d]+$/).test(window.location.pathname);
-        };
-        identifySource = function() {
-          if ($scope.tutor.id) {
-            if (profilePage()) {
-              return Sources.PROFILE_REQUEST;
-            } else {
-              return Sources.SERP_REQUEST;
-            }
-          } else {
-            return Sources.HELP_REQUEST;
-          }
-        };
         return trackDataLayer = function() {
           return dataLayerPush({
             event: 'purchase',
@@ -437,7 +938,7 @@
               purchase: {
                 actionField: {
                   id: googleClientId(),
-                  affiliation: identifySource(),
+                  affiliation: $scope.$parent.StreamService.identifySource(),
                   revenue: $scope.tutor.public_price
                 },
                 products: [
@@ -584,10 +1085,6 @@
         isArray: true,
         url: apiPath('tutors', 'reviews')
       },
-      iteraction: {
-        method: 'GET',
-        url: "/api/tutors/iteraction/:id/:type"
-      },
       login: {
         method: 'GET',
         url: apiPath('tutors', 'login')
@@ -637,481 +1134,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
-    bindArguments($scope, arguments);
-    $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
-    $timeout(function() {
-      return console.log(1);
-    }, 1000);
-    $scope.application = {
-      agree_to_publish: 1
-    };
-    FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
-      return true;
-    };
-    $scope.uploader = new FileUploader({
-      url: 'api/cv/uploadPhoto',
-      alias: 'photo',
-      autoUpload: true,
-      method: 'post',
-      removeAfterUpload: true,
-      onProgressItem: function(i, progress) {
-        return $scope.percentage = progress;
-      },
-      onCompleteItem: function(i, response, status) {
-        $scope.percentage = void 0;
-        if (status === 200) {
-          $scope.application.filename = response.filename;
-          return $scope.application.filesize = response.size;
-        } else {
-          $scope.upload_error = true;
-          return $scope.application.filename = void 0;
-        }
-      }
-    });
-    $scope.clearFile = function() {
-      $scope.upload_error = false;
-      return $scope.application.filename = void 0;
-    };
-    $scope.upload = function(e) {
-      e.preventDefault();
-      $scope.upload_error = false;
-      $('#upload-button').trigger('click');
-      return false;
-    };
-    return $scope.sendApplication = function() {
-      return Cv.save($scope.application, function() {
-        return $scope.application.sent = true;
-      }, function(response) {
-        if (response.status === 422) {
-          $scope.errors = {};
-          return angular.forEach(response.data, function(errors, field) {
-            var selector;
-            $scope.errors[field] = errors;
-            selector = "[ng-model$='" + field + "']";
-            return $("input" + selector + ", textarea" + selector).focus();
-          });
-        } else {
-          return $scope.application.error = true;
-        }
-      });
-    };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor) {
-    bindArguments($scope, arguments);
-    $scope.selected_subject = '1';
-    $scope.refreshSelect = function() {
-      return $timeout(function() {
-        return $('.custom-select-sort').trigger('render');
-      });
-    };
-    $scope.goSubject = function() {
-      return window.location = $scope.subject_routes[$scope.selected_subject];
-    };
-    $scope.dateToText = function(date) {
-      var text_date;
-      text_date = moment(date).format('DD MMMM YYYY');
-      return text_date.substr(3);
-    };
-    return $scope.randomReview = function() {
-      $scope.loading_review = true;
-      return $http.get('api/reviews/random').then(function(response) {
-        $scope.random_review = response.data;
-        return $scope.loading_review = false;
-      });
-    };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor) {
-    var login;
-    bindArguments($scope, arguments);
-    login = function() {
-      return Tutor.login({}, function(response) {
-        return $scope.tutor = response;
-      }, function() {
-        return $scope.tutor = null;
-      });
-    };
-    login();
-    $scope.sendCode = function() {
-      $scope.error_message = false;
-      return Sms.save({
-        phone: $scope.phone
-      }, function() {
-        $scope.code_sent = true;
-        return $timeout(function() {
-          return $('#code-input').focus();
-        });
-      }, function() {
-        return $scope.error_message = 'неверный номер телефона';
-      });
-    };
-    return $scope.checkCode = function() {
-      $scope.error_message = false;
-      return Sms.get({
-        code: $scope.code
-      }, function() {
-        return login();
-      }, function(response) {
-        if (response.status === 403) {
-          redirect('/');
-        }
-        return $scope.error_message = 'код введен неверно';
-      });
-    };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
-    var filter_used, highlight, iteraction, search, search_count, viewed_tutors;
-    bindArguments($scope, arguments);
-    search_count = 0;
-    iteraction = function(tutor_id, iteraction_type, index, additional) {
-      if (index == null) {
-        index = null;
-      }
-      if (additional == null) {
-        additional = {};
-      }
-      Tutor.iteraction({
-        id: tutor_id,
-        type: iteraction_type
-      });
-      return StreamService.run(iteraction_type, index, additional);
-    };
-    $scope.profilePage = function() {
-      return RegExp(/^\/[\d]+$/).test(window.location.pathname);
-    };
-    $scope.request = function(tutor, index) {
-      return iteraction(tutor.id, 'request_form', index);
-    };
-    $timeout(function() {
-      var id;
-      if (!$scope.profilePage() && window.location.pathname !== '/request') {
-        if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
-          id = $scope.search.id;
-          $scope.search = JSON.parse($.cookie('search'));
-          $scope.search.id = id;
-        }
-        if ($scope.selected_subjects) {
-          $scope.selected_subjects.split(',').forEach(function(subject_id) {
-            return $scope.search.subjects[subject_id] = true;
-          });
-        }
-        SubjectService.init($scope.search.subjects);
-        return $scope.filter();
-      } else {
-        return StreamService.init(JSON.parse($.cookie('search')), $scope.subjects);
-      }
-    });
-    $scope.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
-    viewed_tutors = [];
-    $scope.dateToText = function(date) {
-      var text_date;
-      text_date = moment(date).format('DD MMMM YYYY');
-      return text_date.substr(3);
-    };
-    $scope.requestSent = function(tutor) {
-      return tutor.request_sent || $scope.sent_ids.indexOf(tutor.id) !== -1;
-    };
-    $scope.gmap = function(tutor, index) {
-      if (tutor.map_shown === void 0) {
-        $timeout(function() {
-          var bounds, extendPoint1, extendPoint2, map;
-          map = new google.maps.Map(document.getElementById("gmap-" + tutor.id), {
-            center: MAP_CENTER,
-            scrollwheel: false,
-            zoom: 8,
-            disableDefaultUI: true,
-            clickableLabels: false,
-            clickableIcons: false,
-            zoomControl: true,
-            zoomControlOptions: {
-              position: google.maps.ControlPosition.LEFT_BOTTOM
-            },
-            scaleControl: true
-          });
-          bounds = new google.maps.LatLngBounds;
-          tutor.markers.forEach(function(marker) {
-            var new_marker;
-            bounds.extend(new google.maps.LatLng(marker.lat, marker.lng));
-            return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
-          });
-          if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
-            extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
-            extendPoint2 = new google.maps.LatLng(bounds.getNorthEast().lat() - 0.005, bounds.getNorthEast().lng() - 0.005);
-            bounds.extend(extendPoint1);
-            bounds.extend(extendPoint2);
-          }
-          map.fitBounds(bounds);
-          map.panToBounds(bounds);
-          map.setZoom(tutor.markers.length > 1 ? 11 : 16);
-          return google.maps.event.addListenerOnce(map, 'idle', function() {
-            return $('div:has(>a[href^="https://www.google.com/maps"])').remove();
-          });
-        });
-      }
-      return $scope.toggleShow(tutor, 'map_shown', 'gmap', index);
-    };
-    $scope.getMetros = function(tutor) {
-      return _.chain(tutor.markers).pluck('metros').flatten().value();
-    };
-    $scope.reviews = function(tutor, index) {
-      iteraction(tutor.id, 'reviews', index);
-      if (tutor.all_reviews === void 0) {
-        tutor.all_reviews = Tutor.reviews({
-          id: tutor.id
-        }, function(response) {
-          return $scope.showMoreReviews(tutor);
-        });
-      }
-      return $scope.toggleShow(tutor, 'show_reviews', 'reviews');
-    };
-    $scope.showMoreReviews = function(tutor, index) {
-      var from, to;
-      if (tutor.reviews_page) {
-        iteraction(tutor.id, 'reviews_more', index, {
-          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
-        });
-      }
-      tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
-      from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
-      to = from + REVIEWS_PER_PAGE;
-      tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
-      return highlight('search-result-reviews-text');
-    };
-    $scope.reviewsLeft = function(tutor) {
-      var reviews_left;
-      if (!tutor.all_reviews || !tutor.displayed_reviews) {
-        return;
-      }
-      reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
-      if (reviews_left > REVIEWS_PER_PAGE) {
-        return REVIEWS_PER_PAGE;
-      } else {
-        return reviews_left;
-      }
-    };
-    $scope.countView = function(tutor_id) {
-      if (viewed_tutors.indexOf(tutor_id) === -1) {
-        return viewed_tutors.push(tutor_id);
-      }
-    };
-    filter_used = false;
-    $scope.filter = function() {
-      $scope.tutors = [];
-      $scope.page = 1;
-      if (filter_used) {
-        StreamService.updateCookie({
-          search: StreamService.cookie.search + 1
-        });
-        StreamService.run(Sources.FILTER);
-      } else {
-        if (!filter_used) {
-          StreamService.init($scope.search, $scope.subjects);
-        }
-      }
-      search();
-      if ($scope.search.hidden_filter && search_count) {
-        delete $scope.search.hidden_filter;
-      }
-      $.cookie('search', JSON.stringify($scope.search));
-      return filter_used = true;
-    };
-    $scope.nextPage = function() {
-      $scope.page++;
-      StreamService.run(Sources.MORE_TUTORS);
-      return search();
-    };
-    $scope.$watch('page', function(newVal, oldVal) {
-      if (newVal !== void 0) {
-        return $.cookie('page', $scope.page);
-      }
-    });
-    $scope.isLastPage = function() {
-      if (!$scope.data) {
-        return;
-      }
-      return $scope.data.current_page >= $scope.data.last_page;
-    };
-    $scope.unselectSubjects = function(subject_id) {
-      return angular.forEach($scope.search.subjects, function(enabled, id) {
-        var pair;
-        pair = _.filter(scope.pairs, function(p) {
-          return p.indexOf(parseInt(subject_id)) !== -1;
-        });
-        if (!pair.length) {
-          pair.push([subject_id]);
-        }
-        if (pair[0].indexOf(parseInt(id)) === -1) {
-          return $scope.search.subjects[id] = false;
-        }
-      });
-    };
-    search = function() {
-      $scope.searching = true;
-      return Tutor.search({
-        filter_used: filter_used,
-        page: $scope.page,
-        search: $scope.search
-      }, function(response) {
-        search_count++;
-        $scope.searching = false;
-        if (response.hasOwnProperty('url')) {
-          console.log('redirectring...');
-          return redirect(response.url);
-        } else {
-          $scope.data = response;
-          $scope.tutors = $scope.tutors.concat(response.data);
-          angular.forEach($scope.tutors, function(tutor) {
-            if ('string' === typeof tutor.svg_map) {
-              return tutor.svg_map = _.filter(tutor.svg_map.split(','));
-            }
-          });
-          highlight('search-result-text');
-          if ($scope.mobile) {
-            return $timeout(function() {
-              return bindToggle();
-            });
-          }
-        }
-      });
-    };
-    highlight = function(className) {
-      if ($scope.search && $scope.search.hidden_filter) {
-        return $timeout(function() {
-          return $.each($scope.search.hidden_filter, function(index, phrase) {
-            return $("." + className).mark(phrase, {
-              separateWordSearch: true,
-              accuracy: {
-                value: 'exactly',
-                limiters: ['!', '@', '#', '&', '*', '(', ')', '-', '–', '—', '+', '=', '[', ']', '{', '}', '|', ':', ';', '\'', '\"', '‘', '’', '“', '”', ',', '.', '<', '>', '/', '?']
-              }
-            });
-          });
-        });
-      }
-    };
-    $scope.clearMetro = function() {
-      $('.search-metro-autocomplete').val('');
-      $('.search-filter-metro-wrap').removeClass('active');
-      $scope.search.station_id = 0;
-      $scope.search.sort = '1';
-      return $timeout(function() {
-        return $('.custom-select-sort').trigger('render');
-      });
-    };
-    $scope.showSvg = function(tutor) {
-      return $scope.toggleShow(tutor, 'show_svg', 'svg_map');
-    };
-    $scope.toggleShow = function(tutor, prop, iteraction_type, index) {
-      if (index == null) {
-        index = null;
-      }
-      if (tutor[prop]) {
-        return $timeout(function() {
-          return tutor[prop] = false;
-        }, $scope.mobile ? 400 : 0);
-      } else {
-        tutor[prop] = true;
-        if (index === null) {
-          Tutor.iteraction({
-            id: tutor.id,
-            type: iteraction_type
-          });
-        }
-        if (index !== null) {
-          return iteraction(tutor.id, iteraction_type, index);
-        }
-      }
-    };
-    $scope.popup = function(id, tutor, fn, index) {
-      if (tutor == null) {
-        tutor = null;
-      }
-      if (fn == null) {
-        fn = null;
-      }
-      if (index == null) {
-        index = null;
-      }
-      openModal(id);
-      if (tutor !== null) {
-        $scope.popup_tutor = tutor;
-      }
-      if (fn !== null) {
-        $timeout(function() {
-          return $scope[fn](tutor, index);
-        });
-      }
-      if (index !== null) {
-        return $scope.index = index;
-      }
-    };
-    $scope.syncSort = function() {
-      return $scope.search.sort = $scope.search.station_id ? 5 : 1;
-    };
-    $scope.changeFilter = function(param, value) {
-      if (value == null) {
-        value = null;
-      }
-      if (value !== null) {
-        $scope.search[param] = value;
-      }
-      $scope.overlay[param] = false;
-      return $scope.filter();
-    };
-    $scope.hasSelectedStation = function(tutor) {
-      if (!$scope.search || $scope.search.sort !== 5) {
-        return false;
-      }
-      return tutor.svg_map.indexOf(parseInt($scope.search.station_id)) !== -1;
-    };
-    $scope.sendRequest = function() {
-      if ($scope.sending_tutor.request === void 0) {
-        $scope.sending_tutor.request = {};
-      }
-      $scope.sending_tutor.request.tutor_id = $scope.sending_tutor.id;
-      return Request.save($scope.sending_tutor.request, function() {
-        return $scope.sending_tutor.request_sent = true;
-      }, function(response) {
-        if (response.status === 422) {
-          return angular.forEach(response.data, function(errors, field) {
-            var selector;
-            selector = "[ng-model$='" + field + "']";
-            return $('.request-overlay').find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
-          });
-        } else {
-          return $scope.sending_tutor.request_error = true;
-        }
-      });
-    };
-    return angular.element(document).ready(function() {
-      if ($scope.mobile) {
-        return $timeout(function() {
-          return bindToggle();
-        });
-      }
-    });
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1141,18 +1163,62 @@
 
 (function() {
   angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
-    var identifySource;
-    identifySource = function() {
+    this.identifySource = function(tutor) {
+      if (tutor == null) {
+        tutor = void 0;
+      }
+      if (tutor !== void 0 && tutor.is_similar) {
+        return 'similar';
+      }
       if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
-        return Sources.LANDING_PROFILE;
+        return 'tutor';
       }
       if (window.location.pathname === '/request') {
-        return Sources.LANDING_HELP;
+        return 'help';
       }
-      return Sources.LANDING;
+      if (window.location.pathname === '/') {
+        return 'main';
+      }
+      return 'serp';
     };
-    this.generateEventString = function(params, additional) {
-      var metro, page, position, sort, string, subjects, where;
+    this.generateEventString = function(params) {
+      var metro, page, parts, position, search, sort, string, subjects, where;
+      search = $.cookie('search');
+      if (search !== void 0) {
+        $.each(JSON.parse(search), function(key, value) {
+          return params[key] = value;
+        });
+      }
+      parts = [];
+      $.each(params, function(key, value) {
+        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id') || !value) {
+          return;
+        }
+        switch (key) {
+          case 'sort':
+            switch (parseInt(value)) {
+              case 2:
+                value = 'maxprice';
+                break;
+              case 3:
+                value = 'minprice';
+                break;
+              case 4:
+                value = 'rating';
+                break;
+              case 5:
+                value = 'bymetro';
+                break;
+              default:
+                value = 'pop';
+            }
+            break;
+          case 'subjects':
+            value = SubjectService.getSelected(value).join(',');
+        }
+        return parts.push(key + '=' + value);
+      });
+      return parts.join('_');
       if (this.search === void 0) {
         return 'empty_';
       }
@@ -1220,67 +1286,66 @@
         path: '/'
       });
     };
-    this.init = function(search, subjects) {
-      if (subjects == null) {
-        subjects = null;
+    this.initCookie = function() {
+      if ($.cookie('stream') !== void 0) {
+        return this.cookie = JSON.parse($.cookie('stream'));
+      } else {
+        return this.updateCookie({
+          step: 0,
+          search: 0
+        });
       }
-      return $timeout((function(_this) {
-        return function() {
-          if (search !== void 0) {
-            SubjectService.init(search.subjects);
-            _this.search = search;
-          }
-          _this.subjects = subjects;
-          if ($.cookie('stream') !== void 0) {
-            _this.cookie = JSON.parse($.cookie('stream'));
-          } else {
-            _this.updateCookie({
-              step: 0,
-              search: 0
-            });
-          }
-          return _this.run(identifySource());
-        };
-      })(this), 500);
     };
-    this.run = function(source, position, additional) {
-      if (position == null) {
-        position = null;
-      }
+    this.run = function(action, type, additional) {
       if (additional == null) {
         additional = {};
       }
-      return $timeout((function(_this) {
-        return function() {
-          var params;
-          _this.updateCookie({
-            step: _this.cookie.step + 1
-          });
-          params = {
-            source: source,
-            search: _this.cookie.search,
-            step: _this.cookie.step,
-            client_id: googleClientId()
+      if (this.cookie === void 0) {
+        this.initCookie();
+      }
+      if (!this.initialized) {
+        return $timeout((function(_this) {
+          return function() {
+            return _this._run(action, type, additional);
           };
-          if (_this.search !== void 0) {
-            params.place = _this.search.place;
-            params.station_id = _this.search.station_id;
-            params.sort = _this.search.sort;
-            params.subjects = SubjectService.getSelected().join(',');
-            params.page = $.cookie('page') || 1;
-          }
-          if (position !== null) {
-            params.position = position;
-          }
-          Stream.save(params);
-          dataLayerPush({
-            event: 'configuration',
-            eventCategory: source,
-            eventAction: _this.generateEventString(params, additional)
-          });
-          return console.log(source, _this.generateEventString(params, additional));
+        })(this), 500);
+      } else {
+        return this._run(action, type, additional);
+      }
+    };
+    this._run = function(action, type, additional) {
+      var params;
+      if (additional == null) {
+        additional = {};
+      }
+      this.updateCookie({
+        step: this.cookie.step + 1
+      });
+      params = {
+        action: action,
+        type: type,
+        step: this.cookie.step,
+        google_id: googleClientId(),
+        yandex_id: yaCounter1411783.getClientID(),
+        mobile: typeof isMobile === 'undefined' ? '0' : '1'
+      };
+      $.each(additional, (function(_this) {
+        return function(key, value) {
+          return params[key] = value;
         };
-      })(this), 500);
+      })(this));
+      console.log(action, type, params);
+      if (action !== 'view') {
+        console.log(this.generateEventString(angular.copy(params)));
+      }
+      if (action !== 'view') {
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: ("action=" + action) + (type ? "_type=" + type : ""),
+          eventAction: this.generateEventString(angular.copy(params))
+        });
+      }
+      return Stream.save(params).$promise;
     };
     return this;
   });
@@ -1318,10 +1383,13 @@
       this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
       return this.pairsControl(subject_id);
     };
-    this.getSelected = function() {
+    this.getSelected = function(subjects) {
       var ids;
+      if (subjects == null) {
+        subjects = null;
+      }
       ids = [];
-      angular.forEach(this.subjects, function(enabled, id) {
+      angular.forEach(subjects || this.subjects, function(enabled, id) {
         if (enabled) {
           return ids.push(id);
         }

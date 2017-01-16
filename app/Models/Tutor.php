@@ -147,19 +147,6 @@ class Tutor extends Model
     }
 
     /**
-     * Iteraction – create row if not exists
-     */
-    public static function iteraction($id)
-    {
-        if (! egerep('tutor_iteractions')->where('tutor_id', $id)->exists()) {
-            egerep('tutor_iteractions')->insert([
-                'tutor_id' => $id
-            ]);
-        }
-        return egerep('tutor_iteractions')->where('tutor_id', $id);
-    }
-
-    /**
      * Count tutors
      * @string $type – published | ....
      */
@@ -299,7 +286,7 @@ class Tutor extends Model
     public static function getSimilar(Tutor $tutor)
     {
         // пока только по предметам похожих находим
-        $query = Tutor::selectDefault()
+        $query = Tutor::selectDefault()->addSelect(DB::raw('TRUE as is_similar'))
             ->where('subjects', $tutor->getClean('subjects'))
             ->where('tutors.id', '!=', $tutor->id)
             ->take(3);

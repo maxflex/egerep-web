@@ -26,9 +26,9 @@ angular.module 'Egerep'
             this.subjects[subject_id] = if this.subjects[subject_id] then not this.subjects[subject_id] else true
             this.pairsControl(subject_id)
 
-        this.getSelected = ->
+        this.getSelected = (subjects = null)->
             ids = []
-            angular.forEach this.subjects, (enabled, id) ->
+            angular.forEach (subjects or this.subjects), (enabled, id) ->
                 ids.push(id) if enabled
             ids
 

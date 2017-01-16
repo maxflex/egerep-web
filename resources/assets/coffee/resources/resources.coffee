@@ -8,9 +8,6 @@ angular.module('Egerep')
                 method: 'GET'
                 isArray: true
                 url: apiPath('tutors', 'reviews')
-            iteraction:
-                method: 'GET'
-                url: "/api/tutors/iteraction/:id/:type"
             login:
                 method: 'GET'
                 url: apiPath('tutors', 'login')
@@ -23,7 +20,7 @@ angular.module('Egerep')
 
     .factory 'Cv', ($resource) ->
         $resource apiPath('cv'), {id: '@id'}
-        
+
     .factory 'Stream', ($resource) ->
         $resource apiPath('stream'), {id: '@id'}
 

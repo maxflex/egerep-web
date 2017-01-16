@@ -1,6 +1,8 @@
 angular
     .module 'Egerep'
-    .controller 'Index', ($scope, $timeout, $http, Tutor) ->
+    .controller 'Index', ($scope, $timeout, $http, Tutor, StreamService) ->
+        $timeout ->
+            StreamService.run('landing', 'main')
         bindArguments($scope, arguments)
         $scope.selected_subject = '1'
 
@@ -8,8 +10,8 @@ angular
             $timeout ->
                 $('.custom-select-sort').trigger('render')
 
-        $scope.goSubject = ->
-            window.location = $scope.subject_routes[$scope.selected_subject]
+        $scope.goSubject = (type) ->
+            streamLink($scope.subject_routes[$scope.selected_subject], 'serp', type)
 
         # сотрудничает с 12 сентября 2000 года
         $scope.dateToText = (date) ->

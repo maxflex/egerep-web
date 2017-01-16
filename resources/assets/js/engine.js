@@ -371,3 +371,20 @@ function dataLayerPush(object) {
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(object)
 }
+
+function streamLink(url, action, type, additional) {
+    if (additional === undefined) {
+        additional = {}
+    }
+    if (url[0] != '/') {
+        url = '/' + url
+    }
+    console.log('Redirecting to ' + url)
+    scope.StreamService.run('go_' + action, type, additional).then(function() {
+        if (action == 'tutor_profile') {
+            window.open(url, '_blank')
+        } else {
+            window.location = url
+        }
+    })
+}
