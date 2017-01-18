@@ -16568,7 +16568,7 @@ function streamLink(url, action, type, additional) {
         if (action == 'tutor_profile') {
             newTab.location = url
         } else {
-            window.location = url
+            window.location.href = url
         }
     })
 }
