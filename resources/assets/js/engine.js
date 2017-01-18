@@ -368,6 +368,9 @@ function googleClientId() {
 }
 
 function dataLayerPush(object) {
+    if ($.cookie('admin')) {
+        return;
+    }
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(object)
 }

@@ -27,6 +27,7 @@ angular.module('Egerep')
                         $scope.tutor.request_error = true
 
             trackDataLayer = ->
+                return if $.cookie('admin')
                 dataLayerPush
                     event: 'purchase'
                     ecommerce:
