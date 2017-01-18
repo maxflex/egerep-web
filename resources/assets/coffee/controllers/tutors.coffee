@@ -144,11 +144,16 @@ angular
                     sort: $scope.search.sort
                     station_id: $scope.search.station_id
                     place: $scope.search.place
+                .then -> filter()
+            else
+                filter()
+                filter_used = true
+
+        filter = ->
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
             $.cookie('search', JSON.stringify($scope.search))
-            filter_used = true
 
         $scope.nextPage = ->
             $scope.page++
