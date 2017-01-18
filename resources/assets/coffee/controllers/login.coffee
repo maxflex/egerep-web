@@ -1,5 +1,5 @@
 angular.module('Egerep')
-    .controller 'LoginCtrl', ($scope, $timeout, Sms, Tutor) ->
+    .controller 'LoginCtrl', ($scope, $timeout, Sms, Tutor, StreamService) ->
         bindArguments($scope, arguments)
 
         login = ->

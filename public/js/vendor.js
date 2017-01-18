@@ -16149,7 +16149,6 @@ angular.module('svgmap', []).directive('svgMap', function() {
       if (!viewportOffset || !viewportSize) {
         return;
       }
-    //   console.log(elementSize.height)
       // offset, чтобы было только при 100% видимости засчитывало
       elementOffset.top += elementSize.height - 10
       if (elementOffset.top + elementSize.height > viewportOffset.top &&
