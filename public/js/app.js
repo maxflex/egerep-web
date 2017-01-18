@@ -928,7 +928,7 @@
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
             $scope.$parent.StreamService.run('request', $scope.$parent.StreamService.identifySource($scope.tutor), {
-              position: $scope.$parent.index,
+              position: $scope.index || $scope.$parent.index,
               tutor_id: $scope.tutor.id
             });
             return trackDataLayer();

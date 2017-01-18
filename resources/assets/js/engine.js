@@ -371,7 +371,6 @@ function dataLayerPush(object) {
     if ($.cookie('admin')) {
         return;
     }
-    console.log('pushing to data layer', object)
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(object)
 }
