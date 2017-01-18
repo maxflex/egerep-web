@@ -379,7 +379,8 @@ function streamLink(url, action, type, additional) {
     if (additional === undefined) {
         additional = {}
     }
-    if (url[0] != '/') {
+    // в tel: тоже не подставлять
+    if (url[0] != '/' && url[0] != 't') {
         url = '/' + url
     }
     // обходим popup blocked
@@ -390,7 +391,7 @@ function streamLink(url, action, type, additional) {
         if (action == 'tutor_profile') {
             newTab.location = url
         } else {
-            window.location.href = url
+            window.location = url
         }
     })
 }
