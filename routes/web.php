@@ -6,11 +6,12 @@
     Route::get('sitemap.xml', 'SitemapController@index');
 
     Route::get('enable-cookie', function() {
-        setcookie('admin', 1, time() + (3600 * 24));
+        setcookie('admin', 1, time() + (3600 * 24), '/');
         return 'Cookie включена';
     });
     Route::get('disable-cookie', function() {
         unset($_COOKIE['admin']);
+        setcookie('admin', null, -1, '/');
         return 'Cookie выключена';
     });
 
