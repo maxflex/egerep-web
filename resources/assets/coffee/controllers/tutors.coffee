@@ -13,9 +13,11 @@ angular
             $scope.index_from_hash or null
 
         $scope.streamLink = streamLink
+
         $scope.profileLink = (tutor, index) ->
             index = $scope.getIndex(index)
-            streamLink "#{tutor.id}##{index}", 'tutor_profile', StreamService.identifySource(tutor),
+            window.open("#{tutor.id}##{index}", '_blank')
+            StreamService.run 'tutor_profile', StreamService.identifySource(tutor),
                 position: index
                 tutor_id: tutor.id
 
