@@ -17,7 +17,7 @@ angular
         $scope.profileLink = (tutor, index) ->
             index = $scope.getIndex(index)
             window.open("#{tutor.id}##{index}", '_blank')
-            StreamService.run 'tutor_profile', StreamService.identifySource(tutor),
+            StreamService.run 'go_tutor_profile', StreamService.identifySource(tutor),
                 position: index
                 tutor_id: tutor.id
 
