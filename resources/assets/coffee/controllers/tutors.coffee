@@ -14,12 +14,15 @@ angular
 
         $scope.streamLink = streamLink
 
-        $scope.profileLink = (tutor, index) ->
+        $scope.profileLink = (tutor, index, async = true) ->
             index = $scope.getIndex(index)
-            window.open("#{tutor.id}##{index}", '_blank')
+            link = "#{tutor.id}##{index}"
+            window.open(link, '_blank') if async
             StreamService.run 'go_tutor_profile', StreamService.identifySource(tutor),
                 position: index
                 tutor_id: tutor.id
+            .then ->
+                window.location = link if not async
 
         # личная страница преподавателя?
         $scope.profilePage = ->

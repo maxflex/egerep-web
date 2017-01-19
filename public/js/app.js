@@ -380,12 +380,23 @@
       return $scope.index_from_hash || null;
     };
     $scope.streamLink = streamLink;
-    $scope.profileLink = function(tutor, index) {
+    $scope.profileLink = function(tutor, index, async) {
+      var link;
+      if (async == null) {
+        async = true;
+      }
       index = $scope.getIndex(index);
-      window.open(tutor.id + "#" + index, '_blank');
+      link = tutor.id + "#" + index;
+      if (async) {
+        window.open(link, '_blank');
+      }
       return StreamService.run('go_tutor_profile', StreamService.identifySource(tutor), {
         position: index,
         tutor_id: tutor.id
+      }).then(function() {
+        if (!async) {
+          return window.location = link;
+        }
       });
     };
     $scope.profilePage = function() {
@@ -721,20 +732,6 @@
         });
       }
     });
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1145,6 +1142,20 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 
