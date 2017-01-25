@@ -376,7 +376,7 @@ function streamLink(url, action, type, additional) {
     if (additional === undefined) {
         additional = {}
     }
-    if (url[0] != '/') {
+    if (url[0] != '/' && action != 'call') { // iphone4 call protocol is tel:[0-9], without slash
         url = '/' + url
     }
     // обходим popup blocked
