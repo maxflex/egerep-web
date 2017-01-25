@@ -1,7 +1,7 @@
 <?php
     use App\Models\Variable;
 
-    URL::forceSchema('https');
+//    URL::forceSchema('https');
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
@@ -31,6 +31,7 @@
     });
 
     Route::get('/request', function() {
+        $html = Variable::display('page-tutor-request');
         $html = Variable::display('page-tutor-request');
         $_SESSION['action'] = 'request';
         return $html;

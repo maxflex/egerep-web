@@ -525,9 +525,9 @@ body.modal-open:before {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             opacity: 0;
             z-index: 99;
-            top: -1.5em;
+            top: -1.6em;
             position: relative;
-            height: 1em;
+            height: 1.2em;
             overflow: hidden;
             &.selected {
                 width: 55%;
@@ -584,3 +584,12 @@ body.modal-open:before {
         }
     }
 }
+
+
+//@media all and (max-width: 900px) {
+//    .modal#modal-params {
+//        min-width: initial;
+//        width: 80%;
+//        left: 10%;
+//    }
+//}

@@ -37,11 +37,7 @@ filesFromBowerFolder = (folder, files) => {
 elixir(mix => {
     mix
         .browserSync({
-            port: 8085,
-            open: 'external',
-            host: 'egerep.app',
-            proxy: 'https://egecms.app:8084',
-            https: true
+            proxy: 'http://egerep.app'
         })
         .sass('app.scss')
         .sass('mobile.scss')

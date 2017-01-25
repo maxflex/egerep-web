@@ -861,6 +861,7 @@ textarea {
         float: left;
         border-right: 1px solid white;
         padding-right: 0.3em;
+        width: 100%;
     }
 
     .header-logo img#mainpage-logo {
@@ -868,7 +869,7 @@ textarea {
     }
 
 	.logo-link {
-		display: flex;
+		display: inline-block;
 	    height: 4em;
 	    width: 4em;
 	    align-items: center;
@@ -3307,6 +3308,9 @@ b {
 .header-btn__menu__svg {
 	height: 2.5em;
     margin-left: auto;
+    position:absolute;
+    right: 1em;
+    padding: 1em 0!important;
 }
 
 .circle-checkbox-wrapper {
@@ -3866,6 +3870,7 @@ p {
     margin-top: 7px;
     padding: 0 35px 0 0;
     width: 8.8em;
+    overflow: hidden;
 }
 .footer-search-input {
     border: 1px solid #e3e3e3;
@@ -4028,9 +4033,9 @@ p {
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         opacity: 0;
         z-index: 99;
-        top: -1.5em;
+        top: -1.1em;
         position: relative;
-        height: 1em;
+        height: 1.1em;
         overflow: hidden;
         &.selected {
             width: 55%;
@@ -4165,6 +4170,22 @@ span.customSelect.custom-select-small .customSelectInner {
         &:before {
             font-size: 3em;
             margin: 0;
+        }
+    }
+}
+
+@media all and (orientation: landscape) {
+    #modal-menu.modal {
+        & .align-middle {
+            display: block!important;
+            > div {
+                padding-bottom: 1em;
+            }
+        }
+        & .cross {
+            position: fixed;
+            right: calc(1em + 5%);
+            top: calc(1em + 2.5%);
         }
     }
 }
