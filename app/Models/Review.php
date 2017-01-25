@@ -17,7 +17,6 @@ class Review extends Model
         'attachment_id',
         'state',
         'updated_at',
-        'created_at',
         'errors',
         'user_id',
     ];
