@@ -32,7 +32,6 @@
 
     Route::get('/request', function() {
         $html = Variable::display('page-tutor-request');
-        $html = Variable::display('page-tutor-request');
         $_SESSION['action'] = 'request';
         return $html;
     });

@@ -131,7 +131,6 @@
 
             // h1 и desc
             static::replace($html, 'title', view('tutor.title', compact('tutor')));
-            static::replace($html, 'page.title', view('tutor.title', compact('tutor')));
             static::replace($html, 'desc', self::_cleanString(view('tutor.desc', compact('tutor'))));
         }
 
