@@ -488,15 +488,23 @@ b {
         display: block;
     }
 }
-body.modal-open:before {
-    content: '';
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(black, 0.5);
-    position: fixed;
-    z-index: 99;
+body.modal-open {
+    &:before {
+        content: '';
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(black, 0.5);
+        position: fixed;
+        z-index: 99;
+    }
+}
+
+select {
+   -webkit-appearance:menu-item; // or menulist-button
+   -moz-appearance:menu-item;
+   height:2.4em;   // this must be calculated to match other input types
 }
 
 .search-result-metro-list {
