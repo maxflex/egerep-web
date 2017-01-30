@@ -7,6 +7,9 @@
                     goTutor()
                 }
             })
+            .on('focusout', function(){
+                this.blur();
+            })
         $('div:has(>a[href^="https://www.google.com/maps"])').remove()
     })
 
@@ -42,7 +45,7 @@
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
         $("body").addClass('modal-open')
-        $('.container').on('touchmove', false)
+        $('.container').on('touchmove', function(e){e.preventDefault();});
         window.location.hash = '#modal'
     }
 
@@ -382,10 +385,12 @@ function streamLink(url, action, type, additional) {
     // обходим popup blocked
     if (action == 'tutor_profile') {
         var newTab = window.open('', '_blank');
+        window.focus();
     }
     scope.StreamService.run('go_' + action, type, additional).then(function() {
         if (action == 'tutor_profile') {
             newTab.location = url
+            newTab.focus();
         } else {
             window.location = url
         }

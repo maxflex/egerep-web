@@ -488,15 +488,22 @@ b {
         display: block;
     }
 }
-body.modal-open:before {
-    content: '';
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(black, 0.5);
-    position: fixed;
-    z-index: 99;
+body {
+    -webkit-overflow-scrolling: touch;
+    &.modal-open {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        &:before {
+            content: '';
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(black, 0.5);
+            position: fixed;
+            z-index: 99;
+        }
+    }
 }
 
 .search-result-metro-list {
@@ -506,10 +513,28 @@ body.modal-open:before {
 }
 
 #modal-params  {
+    position: absolute;
     height: 60%;
     min-width: 855px;
     min-height: 462px;
     overflow: hidden;
+
+    @media screen and (max-width: 855px) {
+        left: calc((855px - 100%) / 2);
+    }
+
+    @media screen and (min-width: 855px) and (max-width: 1420px) { // 1420 = 855 * (0.6)^-1
+        left: calc((100% - 855px) / 2);
+    }
+
+    @media screen and (min-width: 1420px) {
+        left: 20%;
+    }
+
+    //@media screen and (min-width: 855px) {
+    //    left: calc((100% - 855px) / 2);
+    //}
+
     & .modal-content {
         padding: 20px 40px;
         & h4 {

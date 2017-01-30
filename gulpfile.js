@@ -70,5 +70,6 @@ elixir(mix => {
             'egerep-svg-metro/scripts/svg',
             'jquery.panzoom/dist/jquery.panzoom',
             'protonet/jquery.inview/jquery.inview',
+            'jquery.actual/jquery.actual.min'
         ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
 });
