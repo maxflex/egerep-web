@@ -991,6 +991,17 @@ th {
     .scalable-map > div svg {
       width: auto !important; }
 
+@media only screen and (min-width: 600px) {
+  .scalable-map {
+    display: inline-block;
+    width: 100%;
+    height: auto !important; }
+    .scalable-map > div {
+      display: inline-block;
+      width: 100%; }
+      .scalable-map > div svg {
+        height: auto !important; } }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -3699,6 +3710,17 @@ th {
     height: 100%; }
     .scalable-map > div svg {
       width: auto !important; }
+
+@media only screen and (min-width: 600px) {
+  .scalable-map {
+    display: inline-block;
+    width: 100%;
+    height: auto !important; }
+    .scalable-map > div {
+      display: inline-block;
+      width: 100%; }
+      .scalable-map > div svg {
+        height: auto !important; } }
 
 .logo-main-page {
   position: absolute;

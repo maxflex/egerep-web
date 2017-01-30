@@ -148,12 +148,24 @@
                 static::replace($html, 'seo_text_bottom', "<div class='seo-text-bottom'>" . $page->getClean('html') . "</div>");
             }
             static::replace($html, 'useful', view('blocks.useful', compact('page')));
+            static::compileLinks($html);
             // detect page refresh
-
             static::replace($html, 'page_was_refreshed', (int)(
                 (isset($_SESSION['page_was_refreshed']) || (isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0') || $page->isMainSerp())
             ));
+
             unset($_SESSION['page_was_refreshed']);
+        }
+
+        public static function compileLinks(&$html)
+        {
+            preg_match_all('#\\' . static::interpolate('link\|[\d]+\\') . '#', $html, $matches);
+            $vars = $matches[0];
+            foreach ($vars as $var) {
+                $var = trim($var, static::interpolate());
+                $page_id = explode('|', $var)[1];
+                static::replace($html, $var, Page::getUrl($page_id));
+            }
         }
 
         public static function interpolate($text = '')

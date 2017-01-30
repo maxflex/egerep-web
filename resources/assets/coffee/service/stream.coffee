@@ -48,7 +48,7 @@ angular.module 'Egerep'
             if not this.initialized
                 $timeout =>
                     this._run(action, type, additional)
-                , 500
+                , 1000
             else
                 this._run(action, type, additional)
 

@@ -13,11 +13,16 @@ angular
             $scope.index_from_hash or null
 
         $scope.streamLink = streamLink
-        $scope.profileLink = (tutor, index) ->
+
+        $scope.profileLink = (tutor, index, async = true) ->
             index = $scope.getIndex(index)
-            streamLink "#{tutor.id}##{index}", 'tutor_profile', StreamService.identifySource(tutor),
+            link = "#{tutor.id}##{index}"
+            window.open(link, '_blank') if async
+            StreamService.run 'go_tutor_profile', StreamService.identifySource(tutor),
                 position: index
                 tutor_id: tutor.id
+            .then ->
+                window.location = link if not async
 
         # личная страница преподавателя?
         $scope.profilePage = ->
@@ -144,11 +149,16 @@ angular
                     sort: $scope.search.sort
                     station_id: $scope.search.station_id
                     place: $scope.search.place
+                .then -> filter()
+            else
+                filter()
+                filter_used = true
+
+        filter = ->
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
             $.cookie('search', JSON.stringify($scope.search))
-            filter_used = true
 
         $scope.nextPage = ->
             $scope.page++

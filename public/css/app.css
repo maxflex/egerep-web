@@ -525,6 +525,17 @@ a[href^="https://www.google.com/maps"] {
     .scalable-map > div svg {
       width: auto !important; }
 
+@media only screen and (min-width: 600px) {
+  .scalable-map {
+    display: inline-block;
+    width: 100%;
+    height: auto !important; }
+    .scalable-map > div {
+      display: inline-block;
+      width: 100%; }
+      .scalable-map > div svg {
+        height: auto !important; } }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -4254,7 +4265,8 @@ th {
 html {
   font-family: 'helveticaneuecyrlight';
   color: black;
-  font-size: 14px; }
+  font-size: 14px;
+  min-width: 1250px; }
 
 /*
  * Remove text-shadow in selection highlight:
@@ -5886,6 +5898,11 @@ body.modal-open:before {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   z-index: 99; }
+
+select {
+  -webkit-appearance: menu-item;
+  -moz-appearance: menu-item;
+  height: 2.4em; }
 
 .search-result-metro-list .text-gray {
   font-size: 12px; }

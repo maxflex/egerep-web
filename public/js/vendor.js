@@ -16149,7 +16149,6 @@ angular.module('svgmap', []).directive('svgMap', function() {
       if (!viewportOffset || !viewportSize) {
         return;
       }
-    //   console.log(elementSize.height)
       // offset, чтобы было только при 100% видимости засчитывало
       elementOffset.top += elementSize.height - 10
       if (elementOffset.top + elementSize.height > viewportOffset.top &&
@@ -16547,6 +16546,9 @@ function googleClientId() {
 }
 
 function dataLayerPush(object) {
+    if ($.cookie('admin')) {
+        return;
+    }
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(object)
 }
@@ -16555,19 +16557,12 @@ function streamLink(url, action, type, additional) {
     if (additional === undefined) {
         additional = {}
     }
-    if (url[0] != '/') {
+    // в tel: тоже не подставлять
+    if (url[0] != '/' && url[0] != 't') {
         url = '/' + url
     }
-    // обходим popup blocked
-    if (action == 'tutor_profile') {
-        var newTab = window.open('', '_blank');
-    }
     scope.StreamService.run('go_' + action, type, additional).then(function() {
-        if (action == 'tutor_profile') {
-            newTab.location = url
-        } else {
-            window.location = url
-        }
+        window.location = url
     })
 }
 

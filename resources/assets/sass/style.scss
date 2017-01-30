@@ -506,6 +506,12 @@ body {
     }
 }
 
+select {
+   -webkit-appearance:menu-item; // or menulist-button
+   -moz-appearance:menu-item;
+   height:2.4em;   // this must be calculated to match other input types
+}
+
 .search-result-metro-list {
     & .text-gray {
         font-size: 12px;
@@ -609,12 +615,3 @@ body {
         }
     }
 }
-
-
-//@media all and (max-width: 900px) {
-//    .modal#modal-params {
-//        min-width: initial;
-//        width: 80%;
-//        left: 10%;
-//    }
-//}

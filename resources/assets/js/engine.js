@@ -371,6 +371,9 @@ function googleClientId() {
 }
 
 function dataLayerPush(object) {
+    if ($.cookie('admin')) {
+        return;
+    }
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push(object)
 }
@@ -379,20 +382,11 @@ function streamLink(url, action, type, additional) {
     if (additional === undefined) {
         additional = {}
     }
-    if (url[0] != '/' && action != 'call') { // iphone4 call protocol is tel:[0-9], without slash
+    // в tel: тоже не подставлять
+    if (url[0] != '/' && url[0] != 't') {
         url = '/' + url
     }
-    // обходим popup blocked
-    if (action == 'tutor_profile') {
-        var newTab = window.open('', '_blank');
-        window.focus();
-    }
     scope.StreamService.run('go_' + action, type, additional).then(function() {
-        if (action == 'tutor_profile') {
-            newTab.location = url
-            newTab.focus();
-        } else {
-            window.location = url
-        }
+        window.location = url
     })
 }

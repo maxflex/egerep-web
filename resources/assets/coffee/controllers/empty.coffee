@@ -1,4 +1,4 @@
 angular
-.module 'Egerep'
-.controller 'Empty', ($scope, $timeout, $http, Tutor, StreamService) ->
-	bindArguments $scope, arguments
+    .module 'Egerep'
+    .controller 'Empty', ($scope, StreamService) ->
+        bindArguments($scope, arguments)

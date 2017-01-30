@@ -222,7 +222,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService) {
+  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService, StreamService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
     $timeout(function() {
@@ -286,6 +286,13 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').controller('Empty', function($scope, StreamService) {
+    return bindArguments($scope, arguments);
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor, StreamService) {
     $timeout(function() {
       return StreamService.run('landing', 'main');
@@ -297,8 +304,8 @@
         return $('.custom-select-sort').trigger('render');
       });
     };
-    $scope.goSubject = function(type) {
-      return streamLink($scope.subject_routes[$scope.selected_subject], 'serp', type);
+    $scope.goSubject = function(where) {
+      return streamLink($scope.subject_routes[$scope.selected_subject], 'serp_' + where, $scope.findById($scope.subjects, $scope.selected_subject).eng);
     };
     $scope.dateToText = function(date) {
       var text_date;
@@ -317,7 +324,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor) {
+  angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor, StreamService) {
     var login;
     bindArguments($scope, arguments);
     login = function() {
@@ -360,7 +367,7 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
-    var filter_used, highlight, search, search_count;
+    var filter, filter_used, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.getIndex = function(index) {
@@ -373,11 +380,23 @@
       return $scope.index_from_hash || null;
     };
     $scope.streamLink = streamLink;
-    $scope.profileLink = function(tutor, index) {
+    $scope.profileLink = function(tutor, index, async) {
+      var link;
+      if (async == null) {
+        async = true;
+      }
       index = $scope.getIndex(index);
-      return streamLink(tutor.id + "#" + index, 'tutor_profile', StreamService.identifySource(tutor), {
+      link = tutor.id + "#" + index;
+      if (async) {
+        window.open(link, '_blank');
+      }
+      return StreamService.run('go_tutor_profile', StreamService.identifySource(tutor), {
         position: index,
         tutor_id: tutor.id
+      }).then(function() {
+        if (!async) {
+          return window.location = link;
+        }
       });
     };
     $scope.profilePage = function() {
@@ -508,20 +527,26 @@
         StreamService.updateCookie({
           search: StreamService.cookie.search + 1
         });
-        StreamService.run('filter', null, {
+        return StreamService.run('filter', null, {
           search: StreamService.cookie.search,
           subjects: $scope.SubjectService.getSelected().join(','),
           sort: $scope.search.sort,
           station_id: $scope.search.station_id,
           place: $scope.search.place
+        }).then(function() {
+          return filter();
         });
+      } else {
+        filter();
+        return filter_used = true;
       }
+    };
+    filter = function() {
       search();
       if ($scope.search.hidden_filter && search_count) {
         delete $scope.search.hidden_filter;
       }
-      $.cookie('search', JSON.stringify($scope.search));
-      return filter_used = true;
+      return $.cookie('search', JSON.stringify($scope.search));
     };
     $scope.nextPage = function() {
       $scope.page++;
@@ -915,7 +940,7 @@
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
             $scope.$parent.StreamService.run('request', $scope.$parent.StreamService.identifySource($scope.tutor), {
-              position: $scope.$parent.index,
+              position: $scope.index || $scope.$parent.index,
               tutor_id: $scope.tutor.id
             });
             return trackDataLayer();
@@ -1270,7 +1295,7 @@
           return function() {
             return _this._run(action, type, additional);
           };
-        })(this), 500);
+        })(this), 1000);
       } else {
         return this._run(action, type, additional);
       }
