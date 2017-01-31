@@ -1,5 +1,5 @@
 <?php
-//URL::forceSchema('https');
+URL::forceSchema('https');
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('tutors/search', 'TutorsController@search');
     Route::get('tutors/login', 'TutorsController@login');
