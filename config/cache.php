@@ -86,6 +86,6 @@ return [
     |
     */
 
-    'prefix' => 'egeweb',
+    'prefix' => 'egerep-web',
 
 ];

@@ -9,19 +9,19 @@ class ParserCache
 {
     public static function get($key)
     {
-        if (in_array(static::parseKey($key), Parser::$cached_functions)) {
+        if (in_array(static::getFunctionName($key), Parser::$cached_functions)) {
             return \Cache::get($key, false);
         }
     }
 
-    public static function set($key, $value, $ignore_cache = false)
+    public static function set($key, $value)
     {
-        if (in_array(self::parseKey($key), Parser::$cached_functions) && !$ignore_cache) {
+        if (in_array(self::getFunctionName($key), Parser::$cached_functions)) {
             \Cache::put($key, $value, Carbon::now()->addMinutes(30));
         }
     }
 
-    private static function parseKey($key)
+    private static function getFunctionName($key)
     {
         $args = explode('|', $key);
         return $args[0];

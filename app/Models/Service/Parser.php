@@ -108,7 +108,9 @@
                             break;
                     }
 
-                    ParserCache::set($var, $replacement, $ignore_cache);
+                    if (! $ignore_cache) {
+                        ParserCache::set($var, $replacement);
+                    }
                 }
                 static::replace($html, $var, $replacement);
             }
