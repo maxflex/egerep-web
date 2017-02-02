@@ -14,6 +14,17 @@
         const START_VAR = '[';
         const END_VAR   = ']';
 
+        static $cached_functions = [
+            'factory',
+            'tutor',
+            'tutors',
+            'reviews',
+            'const',
+            'subject',
+            'link',
+            'count'
+        ];
+
         public static function compileVars($html)
         {
             preg_match_all('#\\' . static::interpolate('[\S]+\\') . '#', $html, $matches);
@@ -41,56 +52,63 @@
             if (count($args) > 1) {
                 $function_name = $args[0];
                 array_shift($args);
-                switch ($function_name) {
-                    case 'mobile':
-                        $replacement = isMobile($args[0] == 'raw');
-                        break;
-                    case 'factory':
-                        $replacement = fact(...$args);
-                        break;
-                    case 'tutor':
-                        $replacement = Tutor::find($args[0])->toJson();
-                        break;
-                    case 'tutors':
-                        $replacement = Tutor::bySubject(...$args)->toJson();
-                        break;
-                    case 'reviews':
-                        if ($args[0] === 'random') {
-                            $replacement = Review::get(1, true)->toJson();
-                        } else {
-                            $replacement = Review::get(...$args)->toJson();
-                        }
-                        break;
-                    case 'const':
-                        $replacement = Factory::constant($args[0]);
-                        break;
-                    case 'session':
-                        $replacement = json_encode(@$_SESSION[$args[0]]);
-                        break;
-                    case 'param':
-                        $replacement = json_encode(@$_GET[$args[0]]);
-                        break;
-                    case 'subject':
-                        $replacement = json_encode(Page::getSubjectRoutes());
-                        break;
-                    case 'link':
-                        // получить ссылку либо по [link|id_раздела] или по [link|math]
-                        $replacement = is_numeric($args[0]) ? Page::getUrl($args[0]) : Page::getSubjectUrl($args[0]);
-                        break;
-                    case 'count':
-                        $type = array_shift($args);
-                        switch($type) {
-                            case 'tutors':
-                                $replacement = Tutor::count(...$args);
-                                break;
-                            case 'clients':
-                                $replacement = Client::count();
-                                break;
-                            case 'reviews':
-                                $replacement = Review::count();
-                                break;
-                        }
-                    break;
+
+                if (! ($replacement = ParserCache::get($var))) {
+                    $ignore_cache = false;
+                    switch ($function_name) {
+                        case 'mobile':
+                            $replacement = isMobile($args[0] == 'raw');
+                            break;
+                        case 'factory':
+                            $replacement = fact(...$args);
+                            break;
+                        case 'tutor':
+                            $replacement = Tutor::find($args[0])->toJson();
+                            break;
+                        case 'tutors':
+                            $replacement = Tutor::bySubject(...$args)->toJson();
+                            break;
+                        case 'reviews':
+                            if ($args[0] === 'random') {
+                                $ignore_cache = true;
+                                $replacement = Review::get(1, true)->toJson();
+                            } else {
+                                $replacement = Review::get(...$args)->toJson();
+                            }
+                            break;
+                        case 'const':
+                            $replacement = Factory::constant($args[0]);
+                            break;
+                        case 'session':
+                            $replacement = json_encode(@$_SESSION[$args[0]]);
+                            break;
+                        case 'param':
+                            $replacement = json_encode(@$_GET[$args[0]]);
+                            break;
+                        case 'subject':
+                            $replacement = json_encode(Page::getSubjectRoutes());
+                            break;
+                        case 'link':
+                            // получить ссылку либо по [link|id_раздела] или по [link|math]
+                            $replacement = is_numeric($args[0]) ? Page::getUrl($args[0]) : Page::getSubjectUrl($args[0]);
+                            break;
+                        case 'count':
+                            $type = array_shift($args);
+                            switch($type) {
+                                case 'tutors':
+                                    $replacement = Tutor::count(...$args);
+                                    break;
+                                case 'clients':
+                                    $replacement = Client::count();
+                                    break;
+                                case 'reviews':
+                                    $replacement = Review::count();
+                                    break;
+                            }
+                            break;
+                    }
+
+                    ParserCache::set($var, $replacement, $ignore_cache);
                 }
                 static::replace($html, $var, $replacement);
             }
