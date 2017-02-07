@@ -334,8 +334,7 @@ a[href^="https://www.google.com/maps"] {
 #stations > g > g > text {
   fill: #000;
   font-family: Arial;
-  font-weight: bold;
-  font-size: 0.5em; }
+  font-weight: bold; }
   .map-hidden #stations > g > g > text {
     fill: #CCC; }
 
@@ -517,7 +516,11 @@ a[href^="https://www.google.com/maps"] {
   .map-hidden .st40 {
     fill: #EFF5F5; }
 
+.svg-map {
+  font-size: 0.5em; }
+
 .scalable-map {
+  font-size: 0.5em;
   display: inline-block; }
   .scalable-map > div {
     display: inline-block;
@@ -532,8 +535,11 @@ a[href^="https://www.google.com/maps"] {
     height: auto !important; }
     .scalable-map > div {
       display: inline-block;
-      width: 100%; }
+      width: 100%;
+      height: auto !important; }
       .scalable-map > div svg {
+        width: 100%;
+        font-size: 0.7em;
         height: auto !important; } }
 
 /*!
@@ -5226,7 +5232,8 @@ span.customSelect {
   font-family: 'helveticaneuecyrroman';
   text-align: left;
   height: 45px;
-  background: #fff url(../img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
+  background: #fff url(../img/svg/dropdown.svg) no-repeat;
+  background-position: calc(100% - 13px) 70%;
   background-size: 14px; }
 
 span.customSelect .customSelectInner {
@@ -5461,7 +5468,7 @@ span.customSelect.custom-select-small .customSelectInner {
   background-color: rgba(181, 181, 181, 0.5); }
 
 .other-tutor-list-right > div {
-  height: 20px; }
+  line-height: 20px; }
 
 .review-badge {
   padding: 1px 4px;
@@ -5889,15 +5896,20 @@ b {
 .modal-open .lightbox-background {
   display: block; }
 
-body.modal-open:before {
-  content: '';
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  z-index: 99; }
+body {
+  -webkit-overflow-scrolling: touch; }
+  body.modal-open {
+    overflow-x: scroll;
+    overflow-y: hidden; }
+    body.modal-open:before {
+      content: '';
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      z-index: 99; }
 
 select {
   -webkit-appearance: menu-item;
@@ -5908,10 +5920,20 @@ select {
   font-size: 12px; }
 
 #modal-params {
+  position: absolute;
   height: 60%;
   min-width: 855px;
   min-height: 462px;
   overflow: hidden; }
+  @media screen and (max-width: 855px) {
+    #modal-params {
+      left: calc((855px - 100%) / 2); } }
+  @media screen and (min-width: 855px) and (max-width: 1420px) {
+    #modal-params {
+      left: calc((100% - 855px) / 2); } }
+  @media screen and (min-width: 1420px) {
+    #modal-params {
+      left: 20%; } }
   #modal-params .modal-content {
     padding: 20px 40px; }
     #modal-params .modal-content h4 {
@@ -5923,9 +5945,9 @@ select {
       -webkit-tap-highlight-color: transparent;
       opacity: 0;
       z-index: 99;
-      top: -1.5em;
+      top: -1.6em;
       position: relative;
-      height: 1em;
+      height: 1.2em;
       overflow: hidden; }
       #modal-params .modal-content .hidden-select.selected {
         width: 55%;
