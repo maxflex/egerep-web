@@ -65,7 +65,8 @@
     "mark.js": "^8.4.0",
     "angular-toArrayFilter": "^1.0.1",
     "egerep-svg-metro": "*",
-    "jquery.actual": "^1.0.19"
+    "jquery.actual": "^1.0.19",
+    "angular-nl2br": "^1.0.3"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4",

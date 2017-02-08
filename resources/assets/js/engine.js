@@ -44,6 +44,7 @@
 
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
+        $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
         $("body").addClass('modal-open')
         $('.container').on('touchmove', function(e){e.preventDefault();});
         window.location.hash = '#modal'
