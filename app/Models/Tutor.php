@@ -137,6 +137,7 @@ class Tutor extends Model
             'departure_price',
             'comment_extended',
             'education',
+            'achievements',
             'gender',
             'lk',
             'tb',
