@@ -15,15 +15,15 @@ class SitemapController extends Controller
     {
         $pages = Page::all();
         Sitemap::addTag(self::_url(), now(), 'daily', '1');
-        Sitemap::addTag(self::_url('request'), now(), 'daily', '0.8');
-        Sitemap::addTag(self::_url('cv'), now(), 'daily', '0.8');
-        Sitemap::addTag(self::_url('login'), now(), 'daily', '0.7');
+        Sitemap::addTag(self::_url('request'), now(), 'weekly', '0.8');
+        Sitemap::addTag(self::_url('cv'), now(), 'weekly', '0.8');
+        Sitemap::addTag(self::_url('login'), now(), 'weekly', '0.7');
 
         foreach ($pages as $page) {
-            Sitemap::addTag(self::_url($page->url), $page->updated_at, 'daily', '0.8');
+            Sitemap::addTag(self::_url($page->url), $page->updated_at, 'weekly', '0.8');
         }
         foreach (Tutor::pluck('id') as $tutor_id) {
-            Sitemap::addTag(self::_url($tutor_id), $page->updated_at, 'daily', '0.9');
+            Sitemap::addTag(self::_url($tutor_id), $page->updated_at, 'monthly', '0.6');
         }
         return Sitemap::render();
     }
