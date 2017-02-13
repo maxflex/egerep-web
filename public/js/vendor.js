@@ -14468,7 +14468,7 @@ angular.module('svgmap', []).directive('svgMap', function() {
           bindClick() && ($scope.show_quick_selects = true);
         }
         if ($attrs.hasOwnProperty('scalable')) {
-          return bindPinch() && ($scope.is_scalable = true);
+          bindPinch() && ($scope.is_scalable = true);
         }
       };
       selectAll = function() {
@@ -14606,6 +14606,7 @@ angular.module('svgmap', []).directive('svgMap', function() {
         });
       };
       bindPinch = function() {
+        $element.panzoom('reset');
         $element.panzoom('destroy');
         alignMap();
         return $element.panzoom({
@@ -14720,20 +14721,25 @@ angular.module('svgmap', []).directive('svgMap', function() {
         });
         if ($scope.orientation === 'landscape') {
           margin_top = ($element.parent().actual('height') - $element.actual('height')) / 2;
-          return $element.css({
-            marginTop: margin_top + 'px'
+          $element.css({
+            marginTop: margin_top + 'px',
           });
         } else {
           $element.css({
             marginTop: ''
           });
-          return $('> div', $element).css({
-            minWidth: $('> div > svg', $element).css('width')
-          });
         }
+        $('> div', $element).css({
+          minWidth: $('> div > svg', $element).css({width:''}).actual('width')
+        });
       };
+      rerender = function () {
+        // alert('r');
+        render()
+        console.log($('> div > svg', $element).actual('width'));
+      }
       watchOrientationChange = function() {
-        return $element.off('resize').on('resize', render);
+        $element.add(window).off('resize').on('resize', rerender);
       };
       watchOrientationChange();
       return render();
@@ -16164,8 +16170,7 @@ angular.module('svgmap', []).directive('svgMap', function() {
       if (!viewportOffset || !viewportSize) {
         return;
       }
-      // offset, чтобы было только при 100% видимости засчитывало
-      elementOffset.top += elementSize.height - 10
+
       if (elementOffset.top + elementSize.height > viewportOffset.top &&
           elementOffset.top < viewportOffset.top + viewportSize.height &&
           elementOffset.left + elementSize.width > viewportOffset.left &&
