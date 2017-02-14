@@ -23,6 +23,9 @@ class Page extends Model
         '9'   => 200,
         '10'  => 202,
         '1,2' => 247,
+        '3,4' => 984,
+        '6,7' => 603,
+        '8,9' => 250,
     ];
 
     // also serp fields
@@ -111,7 +114,7 @@ class Page extends Model
 
     public static function getUrl($id)
     {
-        return self::whereId($id)->value('url');
+        return '/' . self::whereId($id)->value('url');
     }
 
     public static function getSubjectUrl($subject_eng)
