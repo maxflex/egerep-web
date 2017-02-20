@@ -11612,6 +11612,530 @@ this._delay(function(){n===this.counter&&this.refreshPositions(!s)})},_clear:fun
  * @license http://www.gnu.org/licenses/gpl.html GPL2 License 
  */
 (function(a){a.fn.extend({customSelect:function(c){if(typeof document.body.style.maxHeight==="undefined"){return this}var e={customClass:"customSelect",mapClass:true,mapStyle:true},c=a.extend(e,c),d=c.customClass,f=function(h,k){var g=h.find(":selected"),j=k.children(":first"),i=g.html()||"&nbsp;";j.html(i);if(g.attr("disabled")){k.addClass(b("DisabledOption"))}else{k.removeClass(b("DisabledOption"))}setTimeout(function(){k.removeClass(b("Open"));a(document).off("mouseup.customSelect")},60)},b=function(g){return d+g};return this.each(function(){var g=a(this),i=a("<span />").addClass(b("Inner")),h=a("<span />");g.after(h.append(i));h.addClass(d);if(c.mapClass){h.addClass(g.attr("class"))}if(c.mapStyle){h.attr("style",g.attr("style"))}g.addClass("hasCustomSelect").on("render.customSelect",function(){f(g,h);g.css("width","");var k=parseInt(g.outerWidth(),10)-(parseInt(h.outerWidth(),10)-parseInt(h.width(),10));h.css({display:"inline-block"});var j=h.outerHeight();if(g.attr("disabled")){h.addClass(b("Disabled"))}else{h.removeClass(b("Disabled"))}i.css({width:k,display:"inline-block"});g.css({"-webkit-appearance":"menulist-button",width:h.outerWidth(),position:"absolute",opacity:0,height:j,fontSize:h.css("font-size")})}).on("change.customSelect",function(){h.addClass(b("Changed"));f(g,h)}).on("keyup.customSelect",function(j){if(!h.hasClass(b("Open"))){g.trigger("blur.customSelect");g.trigger("focus.customSelect")}else{if(j.which==13||j.which==27){f(g,h)}}}).on("mousedown.customSelect",function(){h.removeClass(b("Changed"))}).on("mouseup.customSelect",function(j){if(!h.hasClass(b("Open"))){if(a("."+b("Open")).not(h).length>0&&typeof InstallTrigger!=="undefined"){g.trigger("focus.customSelect")}else{h.addClass(b("Open"));j.stopPropagation();a(document).one("mouseup.customSelect",function(k){if(k.target!=g.get(0)&&a.inArray(k.target,g.find("*").get())<0){g.trigger("blur.customSelect")}else{f(g,h)}})}}}).on("focus.customSelect",function(){h.removeClass(b("Changed")).addClass(b("Focus"))}).on("blur.customSelect",function(){h.removeClass(b("Focus")+" "+b("Open"))}).on("mouseenter.customSelect",function(){h.addClass(b("Hover"))}).on("mouseleave.customSelect",function(){h.removeClass(b("Hover"))}).trigger("render.customSelect")})}})})(jQuery);
+/*!
+ * iCheck v1.0.2, http://git.io/arlzeA
+ * ===================================
+ * Powerful jQuery and Zepto plugin for checkboxes and radio buttons customization
+ *
+ * (c) 2013 Damir Sultanov, http://fronteed.com
+ * MIT Licensed
+ */
+
+(function($) {
+
+  // Cached vars
+  var _iCheck = 'iCheck',
+      _iCheckHelper = _iCheck + '-helper',
+      _checkbox = 'checkbox',
+      _radio = 'radio',
+      _checked = 'checked',
+      _unchecked = 'un' + _checked,
+      _disabled = 'disabled',a
+  _determinate = 'determinate',
+      _indeterminate = 'in' + _determinate,
+      _update = 'update',
+      _type = 'type',
+      _click = 'click',
+      _touch = 'touchbegin.i touchend.i',
+      _add = 'addClass',
+      _remove = 'removeClass',
+      _callback = 'trigger',
+      _label = 'label',
+      _cursor = 'cursor',
+      _mobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent);
+
+  // Plugin init
+  $.fn[_iCheck] = function(options, fire) {
+
+    // Walker
+    var handle = 'input[type="' + _checkbox + '"], input[type="' + _radio + '"]',
+        stack = $(),
+        walker = function(object) {
+          object.each(function() {
+            var self = $(this);
+
+            if (self.is(handle)) {
+              stack = stack.add(self);
+            } else {
+              stack = stack.add(self.find(handle));
+            }
+          });
+        };
+
+    // Check if we should operate with some method
+    if (/^(check|uncheck|toggle|indeterminate|determinate|disable|enable|update|destroy)$/i.test(options)) {
+
+      // Normalize method's name
+      options = options.toLowerCase();
+
+      // Find checkboxes and radio buttons
+      walker(this);
+
+      return stack.each(function() {
+        var self = $(this);
+
+        if (options == 'destroy') {
+          tidy(self, 'ifDestroyed');
+        } else {
+          operate(self, true, options);
+        }
+
+        // Fire method's callback
+        if ($.isFunction(fire)) {
+          fire();
+        }
+      });
+
+      // Customization
+    } else if (typeof options == 'object' || !options) {
+
+      // Check if any options were passed
+      var settings = $.extend({
+            checkedClass: _checked,
+            disabledClass: _disabled,
+            indeterminateClass: _indeterminate,
+            labelHover: true
+          }, options),
+
+          selector = settings.handle,
+          hoverClass = settings.hoverClass || 'hover',
+          focusClass = settings.focusClass || 'focus',
+          activeClass = settings.activeClass || 'active',
+          labelHover = !!settings.labelHover,
+          labelHoverClass = settings.labelHoverClass || 'hover',
+
+          // Setup clickable area
+          area = ('' + settings.increaseArea).replace('%', '') | 0;
+
+      // Selector limit
+      if (selector == _checkbox || selector == _radio) {
+        handle = 'input[type="' + selector + '"]';
+      }
+
+      // Clickable area limit
+      if (area < -50) {
+        area = -50;
+      }
+
+      // Walk around the selector
+      walker(this);
+
+      return stack.each(function() {
+        var self = $(this);
+
+        // If already customized
+        tidy(self);
+
+        var node = this,
+            id = node.id,
+
+            // Layer styles
+            offset = -area + '%',
+            size = 100 + (area * 2) + '%',
+            layer = {
+              position: 'absolute',
+              top: offset,
+              left: offset,
+              display: 'block',
+              width: size,
+              height: size,
+              margin: 0,
+              padding: 0,
+              background: '#fff',
+              border: 0,
+              opacity: 0
+            },
+
+            // Choose how to hide input
+            hide = _mobile ? {
+              position: 'absolute',
+              visibility: 'hidden'
+            } : area ? layer : {
+              position: 'absolute',
+              opacity: 0
+            },
+
+            // Get proper class
+            className = node[_type] == _checkbox ? settings.checkboxClass || 'i' + _checkbox : settings.radioClass || 'i' + _radio,
+
+            // Find assigned labels
+            label = $(_label + '[for="' + id + '"]').add(self.closest(_label)),
+
+            // Check ARIA option
+            aria = !!settings.aria,
+
+            // Set ARIA placeholder
+            ariaID = _iCheck + '-' + Math.random().toString(36).substr(2,6),
+
+            // Parent & helper
+            parent = '<div class="' + className + '" ' + (aria ? 'role="' + node[_type] + '" ' : ''),
+            helper;
+
+        // Set ARIA "labelledby"
+        if (aria) {
+          label.each(function() {
+            parent += 'aria-labelledby="';
+
+            if (this.id) {
+              parent += this.id;
+            } else {
+              this.id = ariaID;
+              parent += ariaID;
+            }
+
+            parent += '"';
+          });
+        }
+
+        // Wrap input
+        parent = self.wrap(parent + '/>')[_callback]('ifCreated').parent().append(settings.insert);
+
+        // Layer addition
+        helper = $('<ins class="' + _iCheckHelper + '"/>').css(layer).appendTo(parent);
+
+        // Finalize customization
+        self.data(_iCheck, {o: settings, s: self.attr('style')}).css(hide);
+        !!settings.inheritClass && parent[_add](node.className || '');
+        !!settings.inheritID && id && parent.attr('id', _iCheck + '-' + id);
+        parent.css('position') == 'static' && parent.css('position', 'relative');
+        operate(self, true, _update);
+
+        // Label events
+        if (label.length) {
+          label.on(_click + '.i mouseover.i mouseout.i ' + _touch, function(event) {
+            var type = event[_type],
+                item = $(this);
+
+            // Do nothing if input is disabled
+            if (!node[_disabled]) {
+
+              // Click
+              if (type == _click) {
+                if (
+                    (/ipad|ipod/i.test(navigator.userAgent))
+                    ||
+                    (/(Android)/i.test(navigator.userAgent)) && !(/(Mobile)/i.test(navigator.userAgent))
+                ) {
+                  event.stopPropagation(); event.preventDefault();
+                }
+
+                if ($(event.target).is('a')) {
+                  return;
+                }
+                operate(self, false, true);
+
+                // Hover state
+              } else if (labelHover) {
+
+                // mouseout|touchend
+                if (/ut|nd/.test(type)) {
+                  parent[_remove](hoverClass);
+                  item[_remove](labelHoverClass);
+                } else {
+                  parent[_add](hoverClass);
+                  item[_add](labelHoverClass);
+                }
+              }
+
+              if (_mobile) {
+                event.stopPropagation();
+              } else {
+                return false;
+              }
+            }
+          });
+        }
+
+        // Input events
+        self.on(_click + '.i focus.i blur.i keyup.i keydown.i keypress.i', function(event) {
+          var type = event[_type],
+              key = event.keyCode;
+
+          // Click
+          if (type == _click) {
+            return false;
+
+            // Keydown
+          } else if (type == 'keydown' && key == 32) {
+            if (!(node[_type] == _radio && node[_checked])) {
+              if (node[_checked]) {
+                off(self, _checked);
+              } else {
+                on(self, _checked);
+              }
+            }
+
+            return false;
+
+            // Keyup
+          } else if (type == 'keyup' && node[_type] == _radio) {
+            !node[_checked] && on(self, _checked);
+
+            // Focus/blur
+          } else if (/us|ur/.test(type)) {
+            parent[type == 'blur' ? _remove : _add](focusClass);
+          }
+        });
+
+        // Helper events
+        helper.on(_click + ' mousedown mouseup mouseover mouseout ' + _touch, function(event) {
+          var type = event[_type],
+
+              // mousedown|mouseup
+              toggle = /wn|up/.test(type) ? activeClass : hoverClass;
+
+          // Do nothing if input is disabled
+          if (!node[_disabled]) {
+
+            // Click
+            if (type == _click) {
+              operate(self, false, true);
+              if (
+                  (/ipad|ipod/i.test(navigator.userAgent))
+                  ||
+                  (/(Android)/i.test(navigator.userAgent)) && !(/(Mobile)/i.test(navigator.userAgent))
+              ) {
+                event.stopPropagation(); event.preventDefault();
+              }
+              // Active and hover states
+            } else {
+
+              // State is on
+              if (/wn|er|in/.test(type)) {
+
+                // mousedown|mouseover|touchbegin
+                parent[_add](toggle);
+
+                // State is off
+              } else {
+                parent[_remove](toggle + ' ' + activeClass);
+              }
+
+              // Label hover
+              if (label.length && labelHover && toggle == hoverClass) {
+
+                // mouseout|touchend
+                label[/ut|nd/.test(type) ? _remove : _add](labelHoverClass);
+              }
+            }
+
+            if (_mobile) {
+              event.stopPropagation();
+            } else {
+              return false;
+            }
+          }
+        });
+      });
+    } else {
+      return this;
+    }
+  };
+
+  // Do something with inputs
+  function operate(input, direct, method) {
+    var node = input[0],
+        state = /er/.test(method) ? _indeterminate : /bl/.test(method) ? _disabled : _checked,
+        active = method == _update ? {
+          checked: node[_checked],
+          disabled: node[_disabled],
+          indeterminate: input.attr(_indeterminate) == 'true' || input.attr(_determinate) == 'false'
+        } : node[state];
+
+    // Check, disable or indeterminate
+    if (/^(ch|di|in)/.test(method) && !active) {
+      on(input, state);
+
+      // Uncheck, enable or determinate
+    } else if (/^(un|en|de)/.test(method) && active) {
+      off(input, state);
+
+      // Update
+    } else if (method == _update) {
+
+      // Handle states
+      for (var each in active) {
+        if (active[each]) {
+          on(input, each, true);
+        } else {
+          off(input, each, true);
+        }
+      }
+
+    } else if (!direct || method == 'toggle') {
+
+      // Helper or label was clicked
+      if (!direct) {
+        input[_callback]('ifClicked');
+      }
+
+      // Toggle checked state
+      if (active) {
+        if (node[_type] !== _radio) {
+          off(input, state);
+        }
+      } else {
+        on(input, state);
+      }
+    }
+  }
+
+  // Add checked, disabled or indeterminate state
+  function on(input, state, keep) {
+    var node = input[0],
+        parent = input.parent(),
+        checked = state == _checked,
+        indeterminate = state == _indeterminate,
+        disabled = state == _disabled,
+        callback = indeterminate ? _determinate : checked ? _unchecked : 'enabled',
+        regular = option(input, callback + capitalize(node[_type])),
+        specific = option(input, state + capitalize(node[_type]));
+
+    // Prevent unnecessary actions
+    if (node[state] !== true) {
+
+      // Toggle assigned radio buttons
+      if (!keep && state == _checked && node[_type] == _radio && node.name) {
+        var form = input.closest('form'),
+            inputs = 'input[name="' + node.name + '"]';
+
+        inputs = form.length ? form.find(inputs) : $(inputs);
+
+        inputs.each(function() {
+          if (this !== node && $(this).data(_iCheck)) {
+            off($(this), state);
+          }
+        });
+      }
+
+      // Indeterminate state
+      if (indeterminate) {
+
+        // Add indeterminate state
+        node[state] = true;
+
+        // Remove checked state
+        if (node[_checked]) {
+          off(input, _checked, 'force');
+        }
+
+        // Checked or disabled state
+      } else {
+
+        // Add checked or disabled state
+        if (!keep) {
+          node[state] = true;
+        }
+
+        // Remove indeterminate state
+        if (checked && node[_indeterminate]) {
+          off(input, _indeterminate, false);
+        }
+      }
+
+      // Trigger callbacks
+      callbacks(input, checked, state, keep);
+    }
+
+    // Add proper cursor
+    if (node[_disabled] && !!option(input, _cursor, true)) {
+      parent.find('.' + _iCheckHelper).css(_cursor, 'default');
+    }
+
+    // Add state class
+    parent[_add](specific || option(input, state) || '');
+
+    // Set ARIA attribute
+    if (!!parent.attr('role') && !indeterminate) {
+      parent.attr('aria-' + (disabled ? _disabled : _checked), 'true');
+    }
+
+    // Remove regular state class
+    parent[_remove](regular || option(input, callback) || '');
+  }
+
+  // Remove checked, disabled or indeterminate state
+  function off(input, state, keep) {
+    var node = input[0],
+        parent = input.parent(),
+        checked = state == _checked,
+        indeterminate = state == _indeterminate,
+        disabled = state == _disabled,
+        callback = indeterminate ? _determinate : checked ? _unchecked : 'enabled',
+        regular = option(input, callback + capitalize(node[_type])),
+        specific = option(input, state + capitalize(node[_type]));
+
+    // Prevent unnecessary actions
+    if (node[state] !== false) {
+
+      // Toggle state
+      if (indeterminate || !keep || keep == 'force') {
+        node[state] = false;
+      }
+
+      // Trigger callbacks
+      callbacks(input, checked, callback, keep);
+    }
+
+    // Add proper cursor
+    if (!node[_disabled] && !!option(input, _cursor, true)) {
+      parent.find('.' + _iCheckHelper).css(_cursor, 'pointer');
+    }
+
+    // Remove state class
+    parent[_remove](specific || option(input, state) || '');
+
+    // Set ARIA attribute
+    if (!!parent.attr('role') && !indeterminate) {
+      parent.attr('aria-' + (disabled ? _disabled : _checked), 'false');
+    }
+
+    // Add regular state class
+    parent[_add](regular || option(input, callback) || '');
+  }
+
+  // Remove all traces
+  function tidy(input, callback) {
+    if (input.data(_iCheck)) {
+
+      // Remove everything except input
+      input.parent().html(input.attr('style', input.data(_iCheck).s || ''));
+
+      // Callback
+      if (callback) {
+        input[_callback](callback);
+      }
+
+      // Unbind events
+      input.off('.i').unwrap();
+      $(_label + '[for="' + input[0].id + '"]').add(input.closest(_label)).off('.i');
+    }
+  }
+
+  // Get some option
+  function option(input, state, regular) {
+    if (input.data(_iCheck)) {
+      return input.data(_iCheck).o[state + (regular ? '' : 'Class')];
+    }
+  }
+
+  // Capitalize some string
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  // Executable handlers
+  function callbacks(input, checked, callback, keep) {
+    if (!keep) {
+      if (checked) {
+        input[_callback]('ifToggled');
+      }
+
+      input[_callback]('ifChanged')[_callback]('if' + capitalize(callback));
+    }
+  }
+})(window.jQuery || window.Zepto);
+
 /*
  angular-file-upload v2.3.4
  https://github.com/nervgh/angular-file-upload
@@ -14729,6 +15253,8 @@ angular.module('svgmap', []).directive('svgMap', function() {
   };
 });
 
+/* jquery.panzoom.min.js 3.2.3 (c) Timmy Willison - MIT License */
+!function(a,b){"function"==typeof define&&define.amd?define(["jquery"],function(c){return b(a,c)}):"object"==typeof exports?b(a,require("jquery")):b(a,a.jQuery)}("undefined"!=typeof window?window:this,function(a,b){"use strict";function c(a,b){for(var c=a.length;--c;)if(Math.round(+a[c])!==Math.round(+b[c]))return!1;return!0}function d(a){var c={range:!0,animate:!0};return"boolean"==typeof a?c.animate=a:b.extend(c,a),c}function e(a,c,d,e,f,g,h,i,j){"array"===b.type(a)?this.elements=[+a[0],+a[2],+a[4],+a[1],+a[3],+a[5],0,0,1]:this.elements=[a,c,d,e,f,g,h||0,i||0,j||1]}function f(a,b,c){this.elements=[a,b,c]}function g(a,c){if(!(this instanceof g))return new g(a,c);1!==a.nodeType&&b.error("Panzoom called on non-Element node"),b.contains(h,a)||b.error("Panzoom element must be attached to the document");var d=b.data(a,i);if(d)return d;this.options=c=b.extend({},g.defaults,c),this.elem=a;var e=this.$elem=b(a);this.$set=c.$set&&c.$set.length?c.$set:e,this.$doc=b(a.ownerDocument||h),this.$parent=e.parent(),this.parent=this.$parent[0],this.isSVG=n.test(a.namespaceURI)&&"svg"!==a.nodeName.toLowerCase(),this.panning=!1,this._buildTransform(),this._transform=b.cssProps.transform.replace(m,"-$1").toLowerCase(),this._buildTransition(),this.resetDimensions();var f=b(),j=this;b.each(["$zoomIn","$zoomOut","$zoomRange","$reset"],function(a,b){j[b]=c[b]||f}),this.enable(),this.scale=this.getMatrix()[0],this._checkPanWhenZoomed(),b.data(a,i,this)}var h=a.document,i="__pz__",j=Array.prototype.slice,k=/trident\/7./i,l=function(){if(k.test(navigator.userAgent))return!1;var a=h.createElement("input");return a.setAttribute("oninput","return"),"function"==typeof a.oninput}(),m=/([A-Z])/g,n=/^http:[\w\.\/]+svg$/,o="(\\-?\\d[\\d\\.e-]*)",p="\\,?\\s*",q=new RegExp("^matrix\\("+o+p+o+p+o+p+o+p+o+p+o+"\\)$");return e.prototype={x:function(a){var b=a instanceof f,c=this.elements,d=a.elements;return b&&3===d.length?new f(c[0]*d[0]+c[1]*d[1]+c[2]*d[2],c[3]*d[0]+c[4]*d[1]+c[5]*d[2],c[6]*d[0]+c[7]*d[1]+c[8]*d[2]):d.length===c.length&&new e(c[0]*d[0]+c[1]*d[3]+c[2]*d[6],c[0]*d[1]+c[1]*d[4]+c[2]*d[7],c[0]*d[2]+c[1]*d[5]+c[2]*d[8],c[3]*d[0]+c[4]*d[3]+c[5]*d[6],c[3]*d[1]+c[4]*d[4]+c[5]*d[7],c[3]*d[2]+c[4]*d[5]+c[5]*d[8],c[6]*d[0]+c[7]*d[3]+c[8]*d[6],c[6]*d[1]+c[7]*d[4]+c[8]*d[7],c[6]*d[2]+c[7]*d[5]+c[8]*d[8])},inverse:function(){var a=1/this.determinant(),b=this.elements;return new e(a*(b[8]*b[4]-b[7]*b[5]),a*-(b[8]*b[1]-b[7]*b[2]),a*(b[5]*b[1]-b[4]*b[2]),a*-(b[8]*b[3]-b[6]*b[5]),a*(b[8]*b[0]-b[6]*b[2]),a*-(b[5]*b[0]-b[3]*b[2]),a*(b[7]*b[3]-b[6]*b[4]),a*-(b[7]*b[0]-b[6]*b[1]),a*(b[4]*b[0]-b[3]*b[1]))},determinant:function(){var a=this.elements;return a[0]*(a[8]*a[4]-a[7]*a[5])-a[3]*(a[8]*a[1]-a[7]*a[2])+a[6]*(a[5]*a[1]-a[4]*a[2])}},f.prototype.e=e.prototype.e=function(a){return this.elements[a]},g.rmatrix=q,g.defaults={eventNamespace:".panzoom",transition:!0,cursor:"move",disablePan:!1,disableZoom:!1,disableXAxis:!1,disableYAxis:!1,which:1,increment:.3,linearZoom:!1,panOnlyWhenZoomed:!1,minScale:.3,maxScale:6,rangeStep:.05,duration:200,easing:"ease-in-out",contain:!1},g.prototype={constructor:g,instance:function(){return this},enable:function(){this._initStyle(),this._bind(),this.disabled=!1},disable:function(){this.disabled=!0,this._resetStyle(),this._unbind()},isDisabled:function(){return this.disabled},destroy:function(){this.disable(),b.removeData(this.elem,i)},resetDimensions:function(){this.container=this.parent.getBoundingClientRect();var a=this.elem,c=a.getBoundingClientRect(),d=Math.abs(this.scale);this.dimensions={width:c.width,height:c.height,left:b.css(a,"left",!0)||0,top:b.css(a,"top",!0)||0,border:{top:b.css(a,"borderTopWidth",!0)*d||0,bottom:b.css(a,"borderBottomWidth",!0)*d||0,left:b.css(a,"borderLeftWidth",!0)*d||0,right:b.css(a,"borderRightWidth",!0)*d||0},margin:{top:b.css(a,"marginTop",!0)*d||0,left:b.css(a,"marginLeft",!0)*d||0}}},reset:function(a){a=d(a);var b=this.setMatrix(this._origTransform,a);a.silent||this._trigger("reset",b)},resetZoom:function(a){a=d(a);var b=this.getMatrix(this._origTransform);a.dValue=b[3],this.zoom(b[0],a)},resetPan:function(a){var b=this.getMatrix(this._origTransform);this.pan(b[4],b[5],d(a))},setTransform:function(a){for(var c=this.$set,d=c.length;d--;)b.style(c[d],"transform",a),this.isSVG&&c[d].setAttribute("transform",a)},getTransform:function(a){var c=this.$set,d=c[0];return a?this.setTransform(a):(a=b.style(d,"transform"),!this.isSVG||a&&"none"!==a||(a=b.attr(d,"transform")||"none")),"none"===a||q.test(a)||this.setTransform(a=b.css(d,"transform")),a||"none"},getMatrix:function(a){var b=q.exec(a||this.getTransform());return b&&b.shift(),b||[1,0,0,1,0,0]},setMatrix:function(a,c){if(!this.disabled){c||(c={}),"string"==typeof a&&(a=this.getMatrix(a));var d=+a[0],e="undefined"!=typeof c.contain?c.contain:this.options.contain;if(e){var f=c.dims;f||(this.resetDimensions(),f=this.dimensions);var g,h,i,j=this.container,k=f.width,l=f.height,m=j.width,n=j.height,o=m/k,p=n/l;"center"!==this.$parent.css("textAlign")||"inline"!==b.css(this.elem,"display")?(i=(k-this.elem.offsetWidth)/2,g=i-f.border.left,h=k-m-i+f.border.right):g=h=(k-m)/2;var q=(l-n)/2+f.border.top,r=(l-n)/2-f.border.top-f.border.bottom;"invert"===e||"automatic"===e&&o<1.01?a[4]=Math.max(Math.min(a[4],g-f.border.left),-h):a[4]=Math.min(Math.max(a[4],g),-h),"invert"===e||"automatic"===e&&p<1.01?a[5]=Math.max(Math.min(a[5],q-f.border.top),-r):a[5]=Math.min(Math.max(a[5],q),-r)}if("skip"!==c.animate&&this.transition(!c.animate),c.range&&this.$zoomRange.val(d),this.options.disableXAxis||this.options.disableYAxis){var s=this.getMatrix();this.options.disableXAxis&&(a[4]=s[4]),this.options.disableYAxis&&(a[5]=s[5])}return this.setTransform("matrix("+a.join(",")+")"),this.scale=d,this._checkPanWhenZoomed(d),c.silent||this._trigger("change",a),a}},isPanning:function(){return this.panning},transition:function(a){if(this._transition)for(var c=a||!this.options.transition?"none":this._transition,d=this.$set,e=d.length;e--;)b.style(d[e],"transition")!==c&&b.style(d[e],"transition",c)},pan:function(a,b,c){if(!this.options.disablePan){c||(c={});var d=c.matrix;d||(d=this.getMatrix()),c.relative&&(a+=+d[4],b+=+d[5]),d[4]=a,d[5]=b,this.setMatrix(d,c),c.silent||this._trigger("pan",d[4],d[5])}},zoom:function(a,c){"object"==typeof a?(c=a,a=null):c||(c={});var d=b.extend({},this.options,c);if(!d.disableZoom){var g=!1,h=d.matrix||this.getMatrix(),i=+h[0];"number"!=typeof a&&(a=d.linearZoom?i+d.increment*(a?-1:1):a?i/(1+d.increment):i*(1+d.increment),g=!0),a=Math.max(Math.min(a,d.maxScale),d.minScale);var j=d.focal;if(j&&!d.disablePan){this.resetDimensions();var k=d.dims=this.dimensions,l=j.clientX,m=j.clientY;this.isSVG||(l-=k.width/i/2,m-=k.height/i/2);var n=new f(l,m,1),o=new e(h),p=this.parentOffset||this.$parent.offset(),q=new e(1,0,p.left-this.$doc.scrollLeft(),0,1,p.top-this.$doc.scrollTop()),r=o.inverse().x(q.inverse().x(n)),s=a/h[0];o=o.x(new e([s,0,0,s,0,0])),n=q.x(o.x(r)),h[4]=+h[4]+(l-n.e(0)),h[5]=+h[5]+(m-n.e(1))}h[0]=a,h[3]="number"==typeof d.dValue?d.dValue:a,this.setMatrix(h,{animate:"undefined"!=typeof d.animate?d.animate:g,range:!d.noSetRange}),d.silent||this._trigger("zoom",h[0],d)}},option:function(a,c){var d;if(!a)return b.extend({},this.options);if("string"==typeof a){if(1===arguments.length)return void 0!==this.options[a]?this.options[a]:null;d={},d[a]=c}else d=a;this._setOptions(d)},_setOptions:function(a){b.each(a,b.proxy(function(a,c){switch(a){case"disablePan":this._resetStyle();case"$zoomIn":case"$zoomOut":case"$zoomRange":case"$reset":case"disableZoom":case"onStart":case"onChange":case"onZoom":case"onPan":case"onEnd":case"onReset":case"eventNamespace":this._unbind()}switch(this.options[a]=c,a){case"disablePan":this._initStyle();case"$zoomIn":case"$zoomOut":case"$zoomRange":case"$reset":this[a]=c;case"disableZoom":case"onStart":case"onChange":case"onZoom":case"onPan":case"onEnd":case"onReset":case"eventNamespace":this._bind();break;case"cursor":b.style(this.elem,"cursor",c);break;case"minScale":this.$zoomRange.attr("min",c);break;case"maxScale":this.$zoomRange.attr("max",c);break;case"rangeStep":this.$zoomRange.attr("step",c);break;case"startTransform":this._buildTransform();break;case"duration":case"easing":this._buildTransition();case"transition":this.transition();break;case"panOnlyWhenZoomed":this._checkPanWhenZoomed();break;case"$set":c instanceof b&&c.length&&(this.$set=c,this._initStyle(),this._buildTransform())}},this))},_checkPanWhenZoomed:function(a){var b=this.options;if(b.panOnlyWhenZoomed){a||(a=this.getMatrix()[0]);var c=a<=b.minScale;b.disablePan!==c&&this.option("disablePan",c)}},_initStyle:function(){var a={"transform-origin":this.isSVG?"0 0":"50% 50%"};this.options.disablePan||(a.cursor=this.options.cursor),this.$set.css(a);var c=this.$parent;c.length&&!b.nodeName(this.parent,"body")&&(a={overflow:"hidden"},"static"===c.css("position")&&(a.position="relative"),c.css(a))},_resetStyle:function(){this.$elem.css({cursor:"",transition:""}),this.$parent.css({overflow:"",position:""})},_bind:function(){var a=this,c=this.options,d=c.eventNamespace,e="mousedown"+d+" pointerdown"+d+" MSPointerDown"+d,f="touchstart"+d+" "+e,h="touchend"+d+" click"+d+" pointerup"+d+" MSPointerUp"+d,i={},j=this.$reset,k=this.$zoomRange;if(b.each(["Start","Change","Zoom","Pan","End","Reset"],function(){var a=c["on"+this];b.isFunction(a)&&(i["panzoom"+this.toLowerCase()+d]=a)}),c.disablePan&&c.disableZoom||(i[f]=function(b){var d;("touchstart"===b.type?!(d=b.touches||b.originalEvent.touches)||(1!==d.length||c.disablePan)&&2!==d.length:c.disablePan||(b.which||b.originalEvent.which)!==c.which)||(b.preventDefault(),b.stopPropagation(),a._startMove(b,d))},3===c.which&&(i.contextmenu=!1)),this.$elem.on(i),j.length&&j.on(h,function(b){b.preventDefault(),a.reset()}),k.length&&k.attr({step:c.rangeStep===g.defaults.rangeStep&&k.attr("step")||c.rangeStep,min:c.minScale,max:c.maxScale}).prop({value:this.getMatrix()[0]}),!c.disableZoom){var m=this.$zoomIn,n=this.$zoomOut;m.length&&n.length&&(m.on(h,function(b){b.preventDefault(),a.zoom()}),n.on(h,function(b){b.preventDefault(),a.zoom(!0)})),k.length&&(i={},i[e]=function(){a.transition(!0)},i[(l?"input":"change")+d]=function(){a.zoom(+this.value,{noSetRange:!0})},k.on(i))}},_unbind:function(){this.$elem.add(this.$zoomIn).add(this.$zoomOut).add(this.$reset).off(this.options.eventNamespace)},_buildTransform:function(){return this._origTransform=this.getTransform(this.options.startTransform)},_buildTransition:function(){if(this._transform){var a=this.options;this._transition=this._transform+" "+a.duration+"ms "+a.easing}},_getDistance:function(a){var b=a[0],c=a[1];return Math.sqrt(Math.pow(Math.abs(c.clientX-b.clientX),2)+Math.pow(Math.abs(c.clientY-b.clientY),2))},_getMiddle:function(a){var b=a[0],c=a[1];return{clientX:(c.clientX-b.clientX)/2+b.clientX,clientY:(c.clientY-b.clientY)/2+b.clientY}},_trigger:function(a){"string"==typeof a&&(a="panzoom"+a),this.$elem.triggerHandler(a,[this].concat(j.call(arguments,1)))},_startMove:function(a,d){if(!this.panning){var e,f,g,i,j,k,l,m,n=this,o=this.options,p=o.eventNamespace,q=this.getMatrix(),r=q.slice(0),s=+r[4],t=+r[5],u={matrix:q,animate:"skip"},v=a.type;"pointerdown"===v?(e="pointermove",f="pointerup"):"touchstart"===v?(e="touchmove",f="touchend"):"MSPointerDown"===v?(e="MSPointerMove",f="MSPointerUp"):(e="mousemove",f="mouseup"),e+=p,f+=p,this.transition(!0),this._trigger("start",a,d);var w=function(a,b){if(b){if(2===b.length){if(null!=g)return;return g=n._getDistance(b),i=+q[0],void(j=n._getMiddle(b))}if(null!=k)return;(m=b[0])&&(k=m.pageX,l=m.pageY)}null==k&&(k=a.pageX,l=a.pageY)};w(a,d);var x=function(a){var b;if(a.preventDefault(),d=a.touches||a.originalEvent.touches,w(a,d),d){if(2===d.length){var c=n._getMiddle(d),e=n._getDistance(d)-g;return n.zoom(e*(o.increment/100)+i,{focal:c,matrix:q,animate:"skip"}),n.pan(+q[4]+c.clientX-j.clientX,+q[5]+c.clientY-j.clientY,u),void(j=c)}b=d[0]||{pageX:0,pageY:0}}b||(b=a),n.pan(s+b.pageX-k,t+b.pageY-l,u)};b(h).off(p).on(e,x).on(f,function(a){a.preventDefault(),b(this).off(p),n.panning=!1,a.type="panzoomend",n._trigger(a,q,!c(q,r))})}}},b.Panzoom=g,b.fn.panzoom=function(a){var c,d,e,f;return"string"==typeof a?(f=[],d=j.call(arguments,1),this.each(function(){c=b.data(this,i),c?"_"!==a.charAt(0)&&"function"==typeof(e=c[a])&&void 0!==(e=e.apply(c,d))&&f.push(e):f.push(void 0)}),f.length?1===f.length?f[0]:f:this):this.each(function(){new g(this,a)})},g});
 /**
  * author Christopher Blum
  *    - based on the idea of Remy Sharp, http://remysharp.com/2009/01/26/element-in-view-event-plugin/
