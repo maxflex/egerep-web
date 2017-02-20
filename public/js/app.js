@@ -573,9 +573,6 @@
       return $scope.data.current_page >= $scope.data.last_page;
     };
     $scope.unselectSubjects = function(subject_id) {
-      if (typeof event !== 'undefined') {
-        event.stopPropagation() && event.preventDefault();
-      }
       return angular.forEach($scope.search.subjects, function(enabled, id) {
         var pair;
         pair = _.filter(scope.pairs, function(p) {
@@ -741,20 +738,6 @@
         });
       }
     });
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -956,6 +939,9 @@
       controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
         var trackDataLayer;
         $scope.request = function() {
+          if (!$scope.tutor) {
+            $scope.tutor = {};
+          }
           if ($scope.tutor.request === void 0) {
             $scope.tutor.request = {};
           }
@@ -1099,6 +1085,20 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

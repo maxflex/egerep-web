@@ -205,7 +205,7 @@ body {
     &.modal-open {
         overflow: hidden !important;
         position: fixed;
-        // @include zindex(-1);
+        width: 100%;
         &:before {
             content: '';
             top: 0;
@@ -4193,5 +4193,16 @@ span.customSelect.custom-select-small .customSelectInner {
 #modal-svg {
     & div[id^='svg-map'] {
         text-align: center;
+    }
+}
+.iphone4fix {
+    &#modal-open-menu {
+        position: absolute!important;
+        &:before {
+            position: absolute!important;
+        }
+        & .modal#modal-menu {
+            position: absolute!important;
+        }
     }
 }

@@ -172,8 +172,6 @@ angular
             $scope.data.current_page >= $scope.data.last_page
 
         $scope.unselectSubjects = (subject_id) ->
-            event.stopPropagation() and event.preventDefault() if typeof event != 'undefined'
-
             angular.forEach $scope.search.subjects, (enabled, id) ->
                 pair = _.filter scope.pairs, (p) ->
                     p.indexOf(parseInt(subject_id)) isnt -1

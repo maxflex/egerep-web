@@ -3896,7 +3896,8 @@ body {
   -webkit-overflow-scrolling: touch !important; }
   body.modal-open {
     overflow: hidden !important;
-    position: fixed; }
+    position: fixed;
+    width: 100%; }
     body.modal-open:before {
       content: '';
       top: 0;
@@ -7125,5 +7126,12 @@ span.customSelect.custom-select-small .customSelectInner {
 
 #modal-svg div[id^='svg-map'] {
   text-align: center; }
+
+.iphone4fix#modal-open-menu {
+  position: absolute !important; }
+  .iphone4fix#modal-open-menu:before {
+    position: absolute !important; }
+  .iphone4fix#modal-open-menu .modal#modal-menu {
+    position: absolute !important; }
 
 /*# sourceMappingURL=mobile.css.map */

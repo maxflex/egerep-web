@@ -59,17 +59,17 @@
     "angularjs-google-maps": "^0.5.0",
     "google-maps": "^3.2.1",
     "normalize-strings": "normalize#^1.1.0",
-    "iCheck": "icheck#^1.0.2",
     "angular-file-upload": "^2.3.4",
     "bootstrap-select": "^1.11.2",
     "mark.js": "^8.4.0",
     "angular-toArrayFilter": "^1.0.1",
     "egerep-svg-metro": "*",
     "jquery.actual": "^1.0.19",
-    "angular-nl2br": "^1.0.3"
+    "angular-nl2br": "^1.0.3",
+    "egerep-panzoom": "egerep-panzoom#^3.2.3",
+    "egerep-icheck": "1.0.3"
   },
   "devDependencies": {
-    "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4",
-    "jquery.panzoom": "^3.2.2"
+    "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"
   }
 }
