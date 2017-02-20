@@ -72,7 +72,7 @@ elixir(mix => {
             'angular-toArrayFilter/toArrayFilter',
             'jquery.cookie/jquery.cookie',
             'egerep-svg-metro/scripts/svg',
-            'jquery.panzoom/dist/jquery.panzoom',
+            'egerep-panzoom/dist/jquery.panzoom.min',
             'protonet/jquery.inview/jquery.inview',
             'jquery.actual/jquery.actual.min',
             'angular-sanitize/angular-sanitize.min',

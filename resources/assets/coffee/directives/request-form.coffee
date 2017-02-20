@@ -10,6 +10,7 @@ angular.module('Egerep')
         controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
             # отправить заявку
             $scope.request = ->
+                $scope.tutor = {} if not $scope.tutor
                 $scope.tutor.request = {} if $scope.tutor.request is undefined
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->

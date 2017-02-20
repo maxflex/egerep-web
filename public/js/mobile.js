@@ -1,10 +1,11 @@
 var isMobile = true
+var isIphone4 = window.screen && (window.screen.height == (960 / 2));
 
 $(document).ready(function() {
 	$('.header-btn__menu__svg').click(function() {
         openModal('menu')
 	})
-
+	if (isMobile && isIphone4) $('body').addClass('iphone4fix');
     // document.documentElement.addEventListener('touchstart', function (event) {
     //     if (event.touches.length > 1) {
     //         event.preventDefault();
