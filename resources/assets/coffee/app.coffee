@@ -7,6 +7,10 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
     .config (laddaProvider) ->
         laddaProvider.setOption
             spinnerColor: '#83b060'
+    .filter 'linebreaks', ->
+        (input) ->
+            if input != undefined
+                input.replace(/\n/g, ', ')
     .filter 'cut', ->
       (value, wordwise, max, nothing = '', tail) ->
         if !value
