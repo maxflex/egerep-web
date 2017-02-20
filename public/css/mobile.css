@@ -985,6 +985,12 @@ th {
 .svg-map {
   font-size: 0.5em; }
 
+@media screen and (min-width: 0\0) {
+  .svg-map svg {
+    width: 800px !important;
+    height: 670px !important;
+    background: blue; } }
+
 .scalable-map {
   font-size: 0.5em;
   display: inline-block; }
@@ -992,9 +998,10 @@ th {
     display: inline-block;
     height: 100%; }
     .scalable-map > div svg {
-      width: auto !important; }
+      width: auto !important;
+      min-width: 100%; }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 550px) {
   .scalable-map {
     display: inline-block;
     width: 100%;
@@ -1007,6 +1014,27 @@ th {
         width: 100%;
         font-size: 0.7em;
         height: auto !important; } }
+
+@media only screen and (max-device-width: 320px) and (max-device-height: 480px) {
+  .svg-map {
+    width: 100%;
+    height: 100%;
+    text-align: center; } }
+
+@media only screen and (max-device-width: 320px) and (max-device-height: 480px) and (orientation: portrait) {
+  .svg-map > div {
+    width: 100% !important; } }
+
+@media only screen and (max-device-height: 320px) and (max-device-width: 480px) {
+  .svg-map {
+    width: 100%;
+    height: 100%;
+    text-align: center; } }
+
+@media only screen and (max-device-height: 320px) and (max-device-width: 480px) and (orientation: landscape) {
+  .svg-map > div {
+    width: 100%;
+    height: 100% !important; } }
 
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -3711,6 +3739,12 @@ th {
 .svg-map {
   font-size: 0.5em; }
 
+@media screen and (min-width: 0\0) {
+  .svg-map svg {
+    width: 800px !important;
+    height: 670px !important;
+    background: blue; } }
+
 .scalable-map {
   font-size: 0.5em;
   display: inline-block; }
@@ -3718,9 +3752,10 @@ th {
     display: inline-block;
     height: 100%; }
     .scalable-map > div svg {
-      width: auto !important; }
+      width: auto !important;
+      min-width: 100%; }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 550px) {
   .scalable-map {
     display: inline-block;
     width: 100%;
@@ -3733,6 +3768,27 @@ th {
         width: 100%;
         font-size: 0.7em;
         height: auto !important; } }
+
+@media only screen and (max-device-width: 320px) and (max-device-height: 480px) {
+  .svg-map {
+    width: 100%;
+    height: 100%;
+    text-align: center; } }
+
+@media only screen and (max-device-width: 320px) and (max-device-height: 480px) and (orientation: portrait) {
+  .svg-map > div {
+    width: 100% !important; } }
+
+@media only screen and (max-device-height: 320px) and (max-device-width: 480px) {
+  .svg-map {
+    width: 100%;
+    height: 100%;
+    text-align: center; } }
+
+@media only screen and (max-device-height: 320px) and (max-device-width: 480px) and (orientation: landscape) {
+  .svg-map > div {
+    width: 100%;
+    height: 100% !important; } }
 
 .logo-main-page {
   position: absolute;
@@ -3896,7 +3952,8 @@ body {
   -webkit-overflow-scrolling: touch !important; }
   body.modal-open {
     overflow: hidden !important;
-    position: fixed; }
+    position: fixed;
+    width: 100%; }
     body.modal-open:before {
       content: '';
       top: 0;
@@ -4444,7 +4501,6 @@ textarea {
   height: 4em;
   width: 4em;
   -webkit-box-align: center;
-  -ms-grid-row-align: center;
   align-items: center;
   background: white;
   border-radius: 50%;
@@ -5210,12 +5266,10 @@ textarea {
 
 .side-menu__wrap > div:nth-of-type(1) {
   -webkit-box-align: start;
-  -ms-grid-row-align: flex-start;
   align-items: flex-start; }
 
 .side-menu__wrap > div:nth-of-type(2) {
   -webkit-box-align: center;
-  -ms-grid-row-align: center;
   align-items: center;
   -webkit-box-flex: 1;
   flex: 1; }
@@ -5226,7 +5280,6 @@ textarea {
 
 .side-menu__wrap > div:nth-of-type(3) {
   -webkit-box-align: end;
-  -ms-grid-row-align: flex-end;
   align-items: flex-end; }
 
 .side-menu__list {
@@ -7125,5 +7178,12 @@ span.customSelect.custom-select-small .customSelectInner {
 
 #modal-svg div[id^='svg-map'] {
   text-align: center; }
+
+.iphone4fix#modal-open-menu {
+  position: absolute !important; }
+  .iphone4fix#modal-open-menu:before {
+    position: absolute !important; }
+  .iphone4fix#modal-open-menu .modal#modal-menu {
+    position: absolute !important; }
 
 /*# sourceMappingURL=mobile.css.map */
