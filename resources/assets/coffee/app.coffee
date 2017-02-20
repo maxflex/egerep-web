@@ -10,7 +10,7 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
     .filter 'linebreaks', ->
         (input) ->
             if input != undefined
-                input.replace(/\n/g, ', ')
+                input.replace(/\n/g, "<span class='remove-space'>,</span> ")
     .filter 'cut', ->
       (value, wordwise, max, nothing = '', tail) ->
         if !value
