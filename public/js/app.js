@@ -573,8 +573,9 @@
       return $scope.data.current_page >= $scope.data.last_page;
     };
     $scope.unselectSubjects = function(subject_id) {
-      event.stopPropagation();
-      event.preventDefault();
+      if (typeof event !== 'undefined') {
+        event.stopPropagation() && event.preventDefault();
+      }
       return angular.forEach($scope.search.subjects, function(enabled, id) {
         var pair;
         pair = _.filter(scope.pairs, function(p) {

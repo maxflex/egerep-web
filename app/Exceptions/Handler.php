@@ -44,6 +44,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return response()->view('pages.index', [
+                'html' => \App\Models\Variable::display('page-404')
+            ]);
+        }
         return parent::render($request, $exception);
     }
 
