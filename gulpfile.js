@@ -63,7 +63,7 @@ elixir(mix => {
             'notifyjs/dist/notify',
             'jquery-ui/jquery-ui.min',
             'jquery.customSelect/jquery.customSelect.min',
-            'iCheck/icheck.min',
+            'egerep-icheck/icheck',
             'angular-file-upload/dist/angular-file-upload.min',
             'bootstrap-select/dist/js/bootstrap-select.min',
             'bootstrap/js/bootstrap.min',

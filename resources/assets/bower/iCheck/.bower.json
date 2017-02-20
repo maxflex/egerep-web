@@ -1,6 +1,6 @@
 {
-  "name": "iCheck",
-  "version": "1.0.2",
+  "name": "egerep-icheck",
+  "version": "1.0.3",
   "description": "Highly customizable checkboxes and radio buttons (jQuery & Zepto)",
   "keywords": [
     "icheck",
@@ -39,14 +39,13 @@
     }
   ],
   "homepage": "http://fronteed.com/iCheck/",
-  "_release": "1.0.2",
+  "_release": "1.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.2",
-    "commit": "8a6eb37bd7dab1e843c1b630c91c6398ff409d05"
+    "tag": "v1.0.3",
+    "commit": "62922a5915a9e42cfe670a49859386617bee8485"
   },
-  "_source": "https://github.com/fronteed/iCheck.git",
+  "_source": "https://github.com/shamego/icheck.git",
   "_target": "^1.0.2",
-  "_originalSource": "icheck",
-  "_direct": true
+  "_originalSource": "egerep-icheck"
 }
