@@ -4196,11 +4196,13 @@ span.customSelect.custom-select-small .customSelectInner {
     }
 }
 .iphone4fix {
-    position: absolute!important;
-    &:before {
+    &#modal-open-menu {
         position: absolute!important;
-    }
-    & .modal {
-        position: absolute!important;
+        &:before {
+            position: absolute!important;
+        }
+        & .modal#modal-menu {
+            position: absolute!important;
+        }
     }
 }

@@ -7175,11 +7175,11 @@ span.customSelect.custom-select-small .customSelectInner {
 #modal-svg div[id^='svg-map'] {
   text-align: center; }
 
-.iphone4fix {
+.iphone4fix#modal-open-menu {
   position: absolute !important; }
-  .iphone4fix:before {
+  .iphone4fix#modal-open-menu:before {
     position: absolute !important; }
-  .iphone4fix .modal {
+  .iphone4fix#modal-open-menu .modal#modal-menu {
     position: absolute !important; }
 
 /*# sourceMappingURL=mobile.css.map */

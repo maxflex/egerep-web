@@ -15432,6 +15432,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 //# sourceMappingURL=angular-sanitize.min.js.map
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){var m;m=angular.module("nl2br",[]);m.filter("nl2br",function(){return function(input){if(input!==void 0){return input.replace(/\n/g,"<br>")}}})},{}]},{},[1]);
+active_modal = false
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
@@ -15470,6 +15471,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     function closeModal() {
         $('.modal').removeClass('active')
         $('body').removeClass('modal-open')
+		$("body").addClass('open-modal-' + active_modal); active_modal = false
         $('.container').off('touchmove');
         if(window.location.hash == "#modal") {
             window.history.back()
@@ -15479,7 +15481,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
         $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
-        $("body").addClass('modal-open')
+        $("body").addClass('modal-open open-modal-' + id); active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
         window.location.hash = '#modal'
     }

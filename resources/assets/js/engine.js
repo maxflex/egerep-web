@@ -1,3 +1,4 @@
+    active_modal = false
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
@@ -36,6 +37,7 @@
     function closeModal() {
         $('.modal').removeClass('active')
         $('body').removeClass('modal-open')
+		$("body").addClass('open-modal-' + active_modal); active_modal = false
         $('.container').off('touchmove');
         if(window.location.hash == "#modal") {
             window.history.back()
@@ -45,7 +47,7 @@
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
         $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
-        $("body").addClass('modal-open')
+        $("body").addClass('modal-open open-modal-' + id); active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
         window.location.hash = '#modal'
     }
