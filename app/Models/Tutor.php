@@ -138,6 +138,8 @@ class Tutor extends Model
             'comment_extended',
             'education',
             'achievements',
+            'preferences',
+            'experience',
             'gender',
             'lk',
             'tb',
