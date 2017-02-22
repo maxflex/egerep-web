@@ -12992,7 +12992,6 @@ __input = false;
         }
         function isComplete(buffer) {
             if ($.isFunction(opts.isComplete)) return opts.isComplete(buffer, opts);
-
             __pos = __input.value.search('_');
             if (__pos != -1) {
                 setTimeout(function() {
@@ -15381,8 +15380,7 @@ angular.module('svgmap', []).directive('svgMap', function() {
       if (!viewportOffset || !viewportSize) {
         return;
       }
-      // offset, чтобы было только при 100% видимости засчитывало
-      elementOffset.top += elementSize.height - 10
+
       if (elementOffset.top + elementSize.height > viewportOffset.top &&
           elementOffset.top < viewportOffset.top + viewportSize.height &&
           elementOffset.left + elementSize.width > viewportOffset.left &&

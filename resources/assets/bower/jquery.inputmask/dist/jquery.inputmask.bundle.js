@@ -826,7 +826,6 @@ __input = false;
         }
         function isComplete(buffer) {
             if ($.isFunction(opts.isComplete)) return opts.isComplete(buffer, opts);
-g
             __pos = __input.value.search('_');
             if (__pos != -1) {
                 setTimeout(function() {
