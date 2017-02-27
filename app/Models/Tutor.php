@@ -218,22 +218,8 @@ class Tutor extends Model
                     $query->orderBy('public_price', 'asc');
                     break;
                 case 4:
-                    $query->leftJoin(DB::raw('(
-                        SELECT tt.id, count(DISTINCT r.id) as cnt, sum(r.score) as sm FROM tutors tt
-                        join attachments a on a.tutor_id = tt.id
-                        join reviews r on r.attachment_id = a.id
-                        where r.score between 1 and 10
-                        GROUP BY tt.id
-                    ) revs'), 'revs.id', '=', 'tutors.id');
-                    $query->orderBy(DB::raw('((4 * ((lk + tb +
-                        CASE js
-                            WHEN 6 THEN 8
-                            WHEN 10 THEN 8
-                            WHEN 8 THEN 10
-                            WHEN 7 THEN 9
-                            ELSE js
-                        END
-                    ) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
+                    $query->orderBy('review_avg', 'desc');
+                    break;
                 case 5:
                     if ($station_id) {
                         if ($place == 1) {

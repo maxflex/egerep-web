@@ -101,7 +101,10 @@ class Page extends Model
         $query->where('subjects', implode(',', $subjects));
         $query->where('place', setOrNull(@$place));
         $query->where('sort', setOrNull(@$sort));
-        $query->where('station_id', setOrNull(@$station_id));
+        // учитываем метро только в том случае, если указана соответствующая сортировка
+        if (isset($sort) && $sort == 5) {
+            $query->where('station_id', setOrNull(@$station_id));
+        }
         $query->where('id', '!=', $id);
 
         return $query;
