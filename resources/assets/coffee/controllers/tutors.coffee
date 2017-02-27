@@ -41,6 +41,9 @@ angular
                     $scope.selected_subjects.split(',').forEach (subject_id) ->
                         $scope.search.subjects[subject_id] = true
 
+                # place по умолчанию
+                $scope.search.place = 1 if not $scope.search.place
+
                 SubjectService.init($scope.search.subjects)
                 StreamService.run('landing', 'serp')
                 $scope.filter()

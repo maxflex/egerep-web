@@ -53,6 +53,7 @@ angular.module 'Egerep'
                 this._run(action, type, additional)
 
         this._run = (action, type, additional = {}) ->
+            return if $.cookie('admin')
             this.updateCookie({step: this.cookie.step + 1})
 
             params =

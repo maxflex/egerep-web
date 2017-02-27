@@ -129,7 +129,9 @@ class TutorsController extends Controller
             return $request->page;
         });
 
-        return Tutor::search($search)->paginate(10);
+        $tutors = Tutor::search($search)->paginate(10);
+
+        return $tutors;
     }
 
     public function login()

@@ -7,6 +7,7 @@ use App\Scopes\TutorScope;
 use App\Scopes\ReviewScope;
 use DB;
 use App\Models\Queries\TutorQuery;
+use App\Service\Cacher;
 
 class Tutor extends Model
 {
@@ -91,14 +92,14 @@ class Tutor extends Model
     public function getSubjectsStringAttribute()
     {
         return implode(', ', array_map(function($subject_id) {
-            return dbFactory('subjects')->whereId($subject_id)->value('dative');
+            return Cacher::getSubjectName($subject_id, 'dative');
         }, $this->subjects));
     }
 
     public function getSubjectsStringCommonAttribute()
     {
         return implode(', ', array_map(function($subject_id) {
-            return dbFactory('subjects')->whereId($subject_id)->value('name');
+            return Cacher::getSubjectName($subject_id, 'name');
         }, $this->subjects));
     }
 
@@ -196,6 +197,8 @@ class Tutor extends Model
     {
         @extract($search);
 
+        // \DB::statement('set session query_cache_type=0');
+
         // очищаем deselect-значения  {7: false}
         if (isAssoc($subjects)) {
             $subjects = array_keys(array_filter($subjects));
@@ -265,17 +268,13 @@ class Tutor extends Model
                     ) / 3) + if(revs.sm is null, 0, revs.sm))/(4 + if(revs.cnt is null, 0, revs.cnt)))'), 'desc');
                 case 5:
                     if ($station_id) {
-                        if (! isset($place)) {
-                            $query->orderBy(DB::raw("LEAST(" . TutorQuery::orderByMarkerDistance($station_id) . ", " . TutorQuery::orderByMetroDistance($station_id) . ")"), "asc");
-                        } else if ($place == 1) {
-                            $query->orderBy(DB::raw(TutorQuery::orderByMarkerDistance($station_id)), 'asc');
+                        if ($place == 1) {
+                            $query->orderByDistanceToMarkers($station_id, 'green');
                         } else if ($place == 2) {
-                            $query->orderBy(DB::raw(TutorQuery::orderByMetroDistance($station_id)));
+                            $query->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
                         }
                     }
                     break;
-                // @notice break внутри if конструкции чтоб если не указан station_id перескакивал на сортиворку по популярности,
-                // что и есть дефолт сортивока изначально насколько я понял.
             }
         }
 
@@ -344,6 +343,30 @@ class Tutor extends Model
     public function scopeLoggable($scope)
     {
         return $scope->where('debt_calc', '>', 0);
+    }
+
+    /**
+     * Сначала идут преподы, которые выезжают на выбранную станцию метро
+     */
+    public static function scopeOrderByIntersectingMetro($query, $station_id)
+    {
+        return $query->orderBy(DB::raw("exists (select 1 from tutor_departures where station_id={$station_id} and tutor_id = tutors.id)"), 'desc');
+    }
+
+    /**
+     * От метки препода до станции метро
+     */
+    public static function scopeOrderByDistanceToMarkers($query, $station_id, $marker_type = null)
+    {
+        return $query->orderBy(DB::raw("
+            IFNULL(
+                (
+                    select min(minutes) from tutor_distances
+                    where station_id = {$station_id} and tutor_id = tutors.id " . ($marker_type ? " and marker_type='{$marker_type}'" : '') . "
+                ),
+                999999
+            )
+        "));
     }
 
     public static function boot()

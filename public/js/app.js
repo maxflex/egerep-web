@@ -421,6 +421,9 @@
             return $scope.search.subjects[subject_id] = true;
           });
         }
+        if (!$scope.search.place) {
+          $scope.search.place = 1;
+        }
         SubjectService.init($scope.search.subjects);
         StreamService.run('landing', 'serp');
         return $scope.filter();
@@ -1313,6 +1316,9 @@
       var params;
       if (additional == null) {
         additional = {};
+      }
+      if ($.cookie('admin')) {
+        return;
       }
       this.updateCookie({
         step: this.cookie.step + 1

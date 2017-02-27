@@ -4,7 +4,7 @@
 /.idea
 /storage
 /resources/assets/bower
-!/public/.htaccess
+/public/robots.txt
 Homestead.json
 Homestead.yaml
 .env

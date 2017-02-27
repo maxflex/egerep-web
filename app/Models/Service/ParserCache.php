@@ -7,6 +7,8 @@ use Carbon\Carbon;
  */
 class ParserCache
 {
+    const CACHE_TIME = 30; // minutes
+
     public static function get($key)
     {
         if (in_array(static::getFunctionName($key), Parser::$cached_functions)) {
@@ -17,7 +19,7 @@ class ParserCache
     public static function set($key, $value)
     {
         if (in_array(self::getFunctionName($key), Parser::$cached_functions)) {
-            \Cache::put($key, $value, Carbon::now()->addMinutes(30));
+            \Cache::put($key, $value, Carbon::now()->addMinutes(self::CACHE_TIME));
         }
     }
 
