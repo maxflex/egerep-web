@@ -864,7 +864,7 @@
     return {
       restrict: 'A',
       link: function($scope, element) {
-        return $(element).mask("+7 (999) 999-99-99", {
+        return $(element).inputmask("+7 (999) 999-99-99", {
           autoclear: false
         });
       }
@@ -1093,20 +1093,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1168,6 +1154,20 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 
