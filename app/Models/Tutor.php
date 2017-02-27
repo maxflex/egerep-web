@@ -145,9 +145,9 @@ class Tutor extends Model
             'lk',
             'tb',
             'js',
-            \DB::raw('(select group_concat(station_id) FROM tutor_departures td WHERE td.tutor_id = tutors.id) as svg_map'),
-            \DB::raw('(SELECT COUNT(*) FROM attachments WHERE attachments.tutor_id = tutors.id) as clients_count'),
-            \DB::raw('(SELECT MIN(date) FROM attachments WHERE attachments.tutor_id = tutors.id) as first_attachment_date')
+            \DB::raw('(select svg_map FROM tutor_data td WHERE td.tutor_id = tutors.id) as svg_map'),
+            \DB::raw('(select clients_count FROM tutor_data td WHERE td.tutor_id = tutors.id) as clients_count'),
+            \DB::raw('(select first_attachment_date from tutor_data td WHERE td.tutor_id = tutors.id) as first_attachment_date')
         ]);
     }
 
