@@ -15,8 +15,6 @@ class Tutor extends Model
     static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
     protected $appends = [
         'photo_url',
-        'review_avg',
-        'reviews_count',
         'subjects_string',
         'subjects_string_common',
     ];
@@ -55,38 +53,6 @@ class Tutor extends Model
         } else {
             return self::SERVER_URL . self::NO_PHOTO;
         }
-    }
-
-    public function getReviewsCountAttribute()
-    {
-        return static::reviews($this->id)->count();
-    }
-
-    public function getReviewAvgAttribute()
-    {
-        $query = Review::withoutGlobalScope(ReviewScope::class)->join('attachments', 'attachments.id', '=', 'attachment_id')->where('tutor_id', $this->id)->whereBetween('score', [1, 10]);
-        $sum = $query->newQuery()->sum('reviews.score');
-        $count = $query->newQuery()->count();
-        switch($this->js) {
-            case 6:
-            case 10: {
-                $js = 8;
-                break;
-            }
-            case 8: {
-                $js = 10;
-                break;
-            }
-            case 7: {
-                $js = 9;
-                break;
-            }
-            default: {
-                $js = $this->js;
-            }
-        }
-        $avg = (4 * (($this->lk + $this->tb + $js) / 3) + $sum)/(4 + $count);
-        return number_format($avg, 1, ',', '');
     }
 
     public function getSubjectsStringAttribute()
@@ -145,10 +111,12 @@ class Tutor extends Model
             'lk',
             'tb',
             'js',
-            \DB::raw('(select svg_map FROM tutor_data td WHERE td.tutor_id = tutors.id) as svg_map'),
-            \DB::raw('(select clients_count FROM tutor_data td WHERE td.tutor_id = tutors.id) as clients_count'),
-            \DB::raw('(select first_attachment_date from tutor_data td WHERE td.tutor_id = tutors.id) as first_attachment_date')
-        ]);
+            'tutor_data.clients_count',
+            'tutor_data.reviews_count',
+            'tutor_data.first_attachment_date',
+            'tutor_data.review_avg',
+            'tutor_data.svg_map',
+        ])->join('tutor_data', 'tutor_data.tutor_id', '=', 'tutors.id');
     }
 
     /**
