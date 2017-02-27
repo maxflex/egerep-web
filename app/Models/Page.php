@@ -84,7 +84,7 @@ class Page extends Model
     public function getH1BottomAttribute($value)
     {
         if ($value) {
-            return "<h1 class='h1-bottom'>{$value}</h1>";
+            return "<h2 class='h1-bottom'>{$value}</h2>";
         }
         return ' ';
     }
