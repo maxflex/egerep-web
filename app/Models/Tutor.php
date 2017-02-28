@@ -14,8 +14,8 @@ class Tutor extends Model
     protected $connection = 'egerep';
     static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
     protected $appends = [
-        'photo_url',
-        'subjects_string',
+        // 'photo_url',
+        // 'subjects_string',
         'subjects_string_common',
     ];
 
@@ -168,71 +168,71 @@ class Tutor extends Model
         // \DB::statement('set session query_cache_type=0');
 
         // очищаем deselect-значения  {7: false}
-        if (isAssoc($subjects)) {
-            $subjects = array_keys(array_filter($subjects));
-        }
+        // if (isAssoc($subjects)) {
+        //     $subjects = array_keys(array_filter($subjects));
+        // }
 
         $query = Tutor::with(['markers']);
 
-        foreach($subjects as $subject_id) {
-            $query->whereSubject($subject_id);
-        }
-
-        if (isset($with_pictures)) {
-            $query->where('photo_extension', '!=', '');
-        }
-
-        # Оставляем только зеленые маркеры, если клиент едет к репетитору
-        if (isset($place)) {
-            if ($place == 1) {
-                # отсеиваем репетиторов без зеленых маркеров
-                $query->has('markers');
-            } else {
-                # если "строго у себя дома", то только репетиторы с картой выезда
-                $query->has('departure');
-            }
-        }
-
-        if (isset($hidden_filter)) {
-            $hidden_filter_conditions = [];
-            foreach($hidden_filter as $phrase) {
-                $hidden_filter_conditions[] = "(
-                    LOWER(public_desc) REGEXP '[[:<:]]{$phrase}[[:>:]]'
-                    OR LOWER(education) REGEXP '[[:<:]]{$phrase}[[:>:]]'
-                    OR EXISTS (
-                        SELECT 1 FROM reviews r
-                        JOIN attachments a on a.id = r.attachment_id
-                        WHERE LOWER(r.comment) REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id AND r.state = 'published'
-                    )
-                )";
-            }
-            $query->whereRaw('(' . implode(' OR ', $hidden_filter_conditions) . ')');
-        }
-
-        if (isset($sort)) {
-            switch ($sort) {
-                case 2:
-                    $query->orderBy('public_price', 'desc');
-                    break;
-                case 3:
-                    $query->orderBy('public_price', 'asc');
-                    break;
-                case 4:
-                    $query->orderBy('review_avg', 'desc');
-                    break;
-                case 5:
-                    if ($station_id) {
-                        if ($place == 1) {
-                            $query->orderByDistanceToMarkers($station_id, 'green');
-                        } else if ($place == 2) {
-                            $query->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
-                        }
-                    }
-                    break;
-            }
-        }
-
-        $query->selectDefault()->orderBy('clients_count', 'desc');
+        // foreach($subjects as $subject_id) {
+        //     $query->whereSubject($subject_id);
+        // }
+        //
+        // if (isset($with_pictures)) {
+        //     $query->where('photo_extension', '!=', '');
+        // }
+        //
+        // # Оставляем только зеленые маркеры, если клиент едет к репетитору
+        // if (isset($place)) {
+        //     if ($place == 1) {
+        //         # отсеиваем репетиторов без зеленых маркеров
+        //         $query->has('markers');
+        //     } else {
+        //         # если "строго у себя дома", то только репетиторы с картой выезда
+        //         $query->has('departure');
+        //     }
+        // }
+        //
+        // if (isset($hidden_filter)) {
+        //     $hidden_filter_conditions = [];
+        //     foreach($hidden_filter as $phrase) {
+        //         $hidden_filter_conditions[] = "(
+        //             LOWER(public_desc) REGEXP '[[:<:]]{$phrase}[[:>:]]'
+        //             OR LOWER(education) REGEXP '[[:<:]]{$phrase}[[:>:]]'
+        //             OR EXISTS (
+        //                 SELECT 1 FROM reviews r
+        //                 JOIN attachments a on a.id = r.attachment_id
+        //                 WHERE LOWER(r.comment) REGEXP '[[:<:]]{$phrase}[[:>:]]' AND a.tutor_id = tutors.id AND r.state = 'published'
+        //             )
+        //         )";
+        //     }
+        //     $query->whereRaw('(' . implode(' OR ', $hidden_filter_conditions) . ')');
+        // }
+        //
+        // if (isset($sort)) {
+        //     switch ($sort) {
+        //         case 2:
+        //             $query->orderBy('public_price', 'desc');
+        //             break;
+        //         case 3:
+        //             $query->orderBy('public_price', 'asc');
+        //             break;
+        //         case 4:
+        //             $query->orderBy('review_avg', 'desc');
+        //             break;
+        //         case 5:
+        //             if ($station_id) {
+        //                 if ($place == 1) {
+        //                     $query->orderByDistanceToMarkers($station_id, 'green');
+        //                 } else if ($place == 2) {
+        //                     $query->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
+        //                 }
+        //             }
+        //             break;
+        //     }
+        // }
+        //
+        // $query->selectDefault()->orderBy('clients_count', 'desc');
 
         return $query;
     }
@@ -262,7 +262,7 @@ class Tutor extends Model
             $query->inRandomOrder();
         }
 
-        return $query->with(['markers'])->get();
+        return $query->get();
     }
 
     /**

@@ -5,6 +5,7 @@
 /storage
 /resources/assets/bower
 /public/robots.txt
+/public/htaccess.txt
 Homestead.json
 Homestead.yaml
 .env

@@ -1,6 +1,18 @@
 User-agent: *
-Allow: /
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+
+User-agent: Googlebot
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+
+User-agent: Yandex
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+
+Host: https://ege-repetitor.ru
 
 Sitemap: https://ege-repetitor.ru/sitemap.xml
-
-Host: ege-repetitor.ru
