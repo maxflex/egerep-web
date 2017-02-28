@@ -200,7 +200,7 @@
       markers.forEach(function(marker, index) {
         closest_metros[index] = marker.metros[0];
         return marker.metros.forEach(function(metro) {
-          if (metro.minutes < closest_metros[index].minutes) {
+          if (metro.meters < closest_metros[index].meters) {
             return closest_metros[index] = metro;
           }
         });
