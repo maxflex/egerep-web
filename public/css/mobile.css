@@ -7028,7 +7028,7 @@ p {
     position: relative;
     overflow: scroll; }
     .modal .modal-content.with-close-button {
-      margin-top: 50px; }
+      padding-top: 60px; }
   .modal .align-middle {
     height: 100%;
     display: -webkit-box;
