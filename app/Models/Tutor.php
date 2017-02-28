@@ -40,6 +40,11 @@ class Tutor extends Model
         return $this->hasMany(Account::class)->latest()->take(3);
     }
 
+    public function data()
+    {
+        return $this->hasOne(TutorData::class);
+    }
+
     public function plannedAccount()
     {
         return $this->hasOne(PlannedAccount::class);
@@ -47,9 +52,8 @@ class Tutor extends Model
 
     public function getPhotoUrlAttribute()
     {
-        $filename = self::SERVER_URL . $this->id . '.' . $this->photo_extension;
-        if ($this->photo_extension && fileExists($filename)) {
-            return $filename;
+        if ($this->data->photo_exists) {
+            return self::SERVER_URL . $this->id . '.' . $this->photo_extension;;
         } else {
             return self::SERVER_URL . self::NO_PHOTO;
         }
