@@ -104,30 +104,30 @@ class TutorsController extends Controller
         // потому что надо поменять subjects, а из $request нельзя
         $search = $request->search;
 
-        // // очищаем deselect-значения  {7: false}
-        // if (isAssoc($search['subjects'])) {
-        //     $search['subjects'] = array_keys(array_filter($search['subjects']));
-        // }
-        //
-        // @extract($search);
-        //
-        // // пытаемся найти serp-страницу с такими параметрами
-        // // если находит при пагинации страницу с похожими параметрами – не редиректить
-        // if ($request->filter_used && $request->page < 2) {
-        //     $page = Page::findByParams($search);
-        //     if ($page->exists()) {
-        //         return ['url' => $page->inRandomOrder()->value('url')];
-        //     } else
-        //     if ($id != 10) {
-        //         unset($_COOKIE['search']);
-        //         return ['url' => Page::whereId(10)->value('url')];
-        //     }
-        // }
-        //
-        // // force current page
-        // Paginator::currentPageResolver(function() use ($request) {
-        //     return $request->page;
-        // });
+        // очищаем deselect-значения  {7: false}
+        if (isAssoc($search['subjects'])) {
+            $search['subjects'] = array_keys(array_filter($search['subjects']));
+        }
+
+        @extract($search);
+
+        // пытаемся найти serp-страницу с такими параметрами
+        // если находит при пагинации страницу с похожими параметрами – не редиректить
+        if ($request->filter_used && $request->page < 2) {
+            $page = Page::findByParams($search);
+            if ($page->exists()) {
+                return ['url' => $page->inRandomOrder()->value('url')];
+            } else
+            if ($id != 10) {
+                unset($_COOKIE['search']);
+                return ['url' => Page::whereId(10)->value('url')];
+            }
+        }
+
+        // force current page
+        Paginator::currentPageResolver(function() use ($request) {
+            return $request->page;
+        });
 
         $tutors = Tutor::search($search)->paginate(10);
 
