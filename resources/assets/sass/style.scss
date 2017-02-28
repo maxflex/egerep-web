@@ -478,11 +478,11 @@ b {
 }
 .modal-open {
     & .main {
-        -webkit-filter: blur(5px);
-           -moz-filter: blur(5px);
-             -o-filter: blur(5px);
-            -ms-filter: blur(5px);
-                filter: blur(5px);
+        // -webkit-filter: blur(5px);
+        //    -moz-filter: blur(5px);
+        //      -o-filter: blur(5px);
+        //     -ms-filter: blur(5px);
+        //         filter: blur(5px);
     }
     & .lightbox-background {
         display: block;
@@ -499,10 +499,14 @@ body {
             left: 0;
             height: 100%;
             width: 100%;
-            background-color: rgba(black, 0.5);
+            background-color: rgba(black, 0.75);
             position: fixed;
             z-index: 99;
         }
+    }
+    &.no-scroll {
+        overflow-x: scroll;
+        overflow-y: hidden;
     }
 }
 
