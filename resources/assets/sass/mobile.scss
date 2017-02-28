@@ -4020,14 +4020,14 @@ p {
         right: auto;
         z-index: 99;
         &.modal-button-top {
+            & img {
+                height: 24px;
+            }
             background-color: lighten($gray-mobile, 40);
             color: $gray-mobile;
             border-radius: $border-radius-mobile $border-radius-mobile 0 0;
             top: 0;
             bottom: auto;
-            & img {
-                height: 24px;
-            }
         }
         &.modal-button-bottom {
             top: auto;
