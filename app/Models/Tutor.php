@@ -14,8 +14,8 @@ class Tutor extends Model
     protected $connection = 'egerep';
     static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
     protected $appends = [
-        // 'photo_url',
-        // 'subjects_string',
+        'photo_url',
+        'subjects_string',
         'subjects_string_common',
     ];
 
