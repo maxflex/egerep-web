@@ -145,6 +145,26 @@ a[href^="https://www.google.com/maps"] {
 .half-opacity {
   opacity: .4; }
 
+.fullscreen-loading {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: white;
+  z-index: 999;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  opacity: .9;
+  font-family: "helveticaneuecyrmedium";
+  color: black; }
+
+body.no-scroll {
+  overflow-x: scroll;
+  overflow-y: hidden; }
+
 #svg-quick-selects > div {
   position: relative; }
 
@@ -5540,22 +5560,6 @@ span.customSelect.custom-select-small .customSelectInner {
 .small {
   font-size: 12px; }
 
-.fullscreen-loading {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background: white;
-  z-index: 999;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  opacity: .9;
-  font-family: 'helveticaneuecyrmedium';
-  color: black; }
-
 .search-result-metro-list .metro-circle {
   margin-right: 1px;
   position: relative;
@@ -5947,9 +5951,6 @@ body {
       background-color: rgba(0, 0, 0, 0.75);
       position: fixed;
       z-index: 99; }
-  body.no-scroll {
-    overflow-x: scroll;
-    overflow-y: hidden; }
 
 select {
   -webkit-appearance: menu-item;

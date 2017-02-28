@@ -199,3 +199,24 @@ a[href^="https://www.google.com/maps"]{display:none !important}
 .h1-top {
     @extend h1;
 }
+
+.fullscreen-loading {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: white;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .9;
+    font-family: $font-medium;
+    color: black;
+}
+
+body {
+    &.no-scroll {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}

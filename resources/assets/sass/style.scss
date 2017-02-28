@@ -504,10 +504,6 @@ body {
             z-index: 99;
         }
     }
-    &.no-scroll {
-        overflow-x: scroll;
-        overflow-y: hidden;
-    }
 }
 
 select {
