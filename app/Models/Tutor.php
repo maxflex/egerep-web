@@ -37,12 +37,6 @@ class Tutor extends Model
         return $this->hasMany(Account::class)->latest()->take(3);
     }
 
-    // not used
-    public function data()
-    {
-        return $this->hasOne(TutorData::class);
-    }
-
     public function plannedAccount()
     {
         return $this->hasOne(PlannedAccount::class);
