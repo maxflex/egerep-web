@@ -29,8 +29,8 @@ class Review extends Model
             'tutors.last_name',
             'tutors.middle_name',
             'tutors.subjects',
-            'tutors.photo_extension'
-        );
+            'tutor_data.photo_exists'
+        )->join('tutor_data', 'tutor_data.tutor_id', '=', 'tutors.id');
     }
 
     public static function get($limit = 3, $random = false)
