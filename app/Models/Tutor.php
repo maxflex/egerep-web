@@ -165,8 +165,6 @@ class Tutor extends Model
     {
         @extract($search);
 
-        \DB::statement('set session query_cache_type=0');
-
         // очищаем deselect-значения  {7: false}
         if (isAssoc($subjects)) {
             $subjects = array_keys(array_filter($subjects));
