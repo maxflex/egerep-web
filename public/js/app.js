@@ -200,12 +200,19 @@
       markers.forEach(function(marker, index) {
         closest_metros[index] = marker.metros[0];
         return marker.metros.forEach(function(metro) {
-          if (metro.meters < closest_metros[index].meters) {
+          if (metro.minutes < closest_metros[index].minutes) {
             return closest_metros[index] = metro;
           }
         });
       });
       return closest_metros;
+    };
+    $rootScope.photoUrl = function(tutor) {
+      if (tutor.photo_exists) {
+        return "https://lk.ege-repetitor.ru/img/tutors/" + tutor.id + "." + tutor.photo_extension;
+      } else {
+        return "https://lk.ege-repetitor.ru/img/tutors/no-profile-img.gif";
+      }
     };
     return $rootScope.formatBytes = function(bytes) {
       if (bytes < 1024) {
@@ -1158,20 +1165,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1414,6 +1407,20 @@
       }
     };
     return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

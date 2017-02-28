@@ -14,13 +14,10 @@ class Tutor extends Model
     protected $connection = 'egerep';
     static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
     protected $appends = [
-        'photo_url',
         'subjects_string',
         'subjects_string_common',
     ];
 
-    const SERVER_URL = 'https://lk.ege-repetitor.ru/img/tutors/';
-    const NO_PHOTO   = 'no-profile-img.gif';
     const USER_TYPE  = 'TEACHER';
 
     protected $commaSeparated = ['subjects', 'grades', 'branches'];
@@ -40,6 +37,7 @@ class Tutor extends Model
         return $this->hasMany(Account::class)->latest()->take(3);
     }
 
+    // not used
     public function data()
     {
         return $this->hasOne(TutorData::class);
@@ -48,15 +46,6 @@ class Tutor extends Model
     public function plannedAccount()
     {
         return $this->hasOne(PlannedAccount::class);
-    }
-
-    public function getPhotoUrlAttribute()
-    {
-        if ($this->data->photo_exists) {
-            return self::SERVER_URL . $this->id . '.' . $this->photo_extension;;
-        } else {
-            return self::SERVER_URL . self::NO_PHOTO;
-        }
     }
 
     public function getSubjectsStringAttribute()
@@ -120,6 +109,7 @@ class Tutor extends Model
             'tutor_data.first_attachment_date',
             'tutor_data.review_avg',
             'tutor_data.svg_map',
+            'tutor_data.photo_exists',
         ])->join('tutor_data', 'tutor_data.tutor_id', '=', 'tutors.id');
     }
 
