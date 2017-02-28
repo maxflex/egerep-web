@@ -4013,14 +4013,15 @@ p {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: white !important;
+        color: white;
         text-decoration: none;
         position: absolute;
         left: auto;
         right: auto;
         z-index: 99;
         &.modal-button-top {
-            background: $gray;
+            background-color: lighten($gray-mobile, 40);
+            color: $gray-mobile;
             border-radius: $border-radius-mobile $border-radius-mobile 0 0;
             top: 0;
             bottom: auto;

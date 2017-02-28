@@ -7058,14 +7058,15 @@ p {
     justify-content: center;
     -webkit-box-align: center;
     align-items: center;
-    color: white !important;
+    color: white;
     text-decoration: none;
     position: absolute;
     left: auto;
     right: auto;
     z-index: 99; }
     .modal .modal-button.modal-button-top {
-      background: #a7a7a7;
+      background-color: #f0f0f0;
+      color: #8a8a8a;
       border-radius: 7px 7px 0 0;
       top: 0;
       bottom: auto; }
