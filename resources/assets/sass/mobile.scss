@@ -4025,6 +4025,9 @@ p {
             border-radius: $border-radius-mobile $border-radius-mobile 0 0;
             top: 0;
             bottom: auto;
+            & img {
+                height: 24px;
+            }
         }
         &.modal-button-bottom {
             top: auto;
