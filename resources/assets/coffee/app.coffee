@@ -137,14 +137,15 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
 
         $rootScope.closestMetros = (markers) ->
             closest_metros = []
-            markers.forEach (marker, index) ->
-                closest_metros[index] = marker.metros[0]
-                marker.metros.forEach (metro) ->
-                    closest_metros[index] = metro if metro.minutes < closest_metros[index].minutes
+            if markers
+                markers.forEach (marker, index) ->
+                    closest_metros[index] = marker.metros[0]
+                    marker.metros.forEach (metro) ->
+                        closest_metros[index] = metro if metro.minutes < closest_metros[index].minutes
             closest_metros
 
         $rootScope.photoUrl = (tutor) ->
-            if tutor.photo_exists
+            if tutor and tutor.photo_exists
                 "https://lk.ege-repetitor.ru/img/tutors/#{tutor.id}.#{tutor.photo_extension}"
             else
                 "https://lk.ege-repetitor.ru/img/tutors/no-profile-img.gif"

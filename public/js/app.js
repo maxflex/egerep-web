@@ -197,18 +197,20 @@
     $rootScope.closestMetros = function(markers) {
       var closest_metros;
       closest_metros = [];
-      markers.forEach(function(marker, index) {
-        closest_metros[index] = marker.metros[0];
-        return marker.metros.forEach(function(metro) {
-          if (metro.minutes < closest_metros[index].minutes) {
-            return closest_metros[index] = metro;
-          }
+      if (markers) {
+        markers.forEach(function(marker, index) {
+          closest_metros[index] = marker.metros[0];
+          return marker.metros.forEach(function(metro) {
+            if (metro.minutes < closest_metros[index].minutes) {
+              return closest_metros[index] = metro;
+            }
+          });
         });
-      });
+      }
       return closest_metros;
     };
     $rootScope.photoUrl = function(tutor) {
-      if (tutor.photo_exists) {
+      if (tutor && tutor.photo_exists) {
         return "https://lk.ege-repetitor.ru/img/tutors/" + tutor.id + "." + tutor.photo_extension;
       } else {
         return "https://lk.ege-repetitor.ru/img/tutors/no-profile-img.gif";
@@ -226,11 +228,6 @@
       }
     };
   });
-
-}).call(this);
-
-(function() {
-
 
 }).call(this);
 
@@ -758,6 +755,25 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
+
+
+}).call(this);
+
+(function() {
 
 
 }).call(this);
@@ -1095,20 +1111,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

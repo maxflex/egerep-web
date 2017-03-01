@@ -3789,7 +3789,7 @@ div[id^='gmap'] {
 }
 
 div[id^='svg'] {
-    height: calc(100% - 4em);
+    height: calc(100% - 3em - 60px);
     overflow: scroll;
 }
 
