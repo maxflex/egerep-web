@@ -90,7 +90,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     private function getMultiLine($value)
     {
-        return preg_replace("/\r|\n/", ", ", $value);
+        return preg_replace("/ *[\r\n]+/", ", ", $value);
     }
 
     /**
