@@ -7011,6 +7011,7 @@ p {
   top: 2.5%;
   border-radius: 7px;
   display: none;
+  overflow: hidden;
   z-index: 99; }
   .modal.active {
     display: block; }
