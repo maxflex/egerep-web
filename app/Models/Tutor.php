@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Shared\Model;
 use App\Scopes\TutorScope;
 use App\Scopes\ReviewScope;
 use DB;
 use App\Models\Queries\TutorQuery;
 use App\Service\Cacher;
 
-class Tutor extends Model
+class Tutor extends Service\Model
 {
     protected $connection = 'egerep';
     static $phone_fields = ['phone', 'phone2', 'phone3', 'phone4'];
@@ -21,6 +20,8 @@ class Tutor extends Model
     const USER_TYPE  = 'TEACHER';
 
     protected $commaSeparated = ['subjects', 'grades', 'branches'];
+
+    protected $multiLine = ['public_desc', 'education', 'achievements', 'experience', 'preferences'];
 
     public function departure()
     {
@@ -229,7 +230,7 @@ class Tutor extends Model
     public static function getSimilar(Tutor $tutor)
     {
         // пока только по предметам похожих находим
-        $query = Tutor::selectDefault()->addSelect(DB::raw('TRUE as is_similar'))
+        $query = Tutor::with(['markers'])->selectDefault()->addSelect(DB::raw('TRUE as is_similar'))
             ->where('subjects', $tutor->getClean('subjects'))
             ->where('tutors.id', '!=', $tutor->id)
             ->take(3);
