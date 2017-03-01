@@ -7028,7 +7028,7 @@ p {
     position: relative;
     overflow: scroll; }
     .modal .modal-content.with-close-button {
-      padding-top: 60px; }
+      padding-top: 64px; }
   .modal .align-middle {
     height: 100%;
     display: -webkit-box;
@@ -7245,6 +7245,9 @@ span.customSelect.custom-select-small .customSelectInner {
     position: absolute !important; }
 
 #modal-request .btn-request {
-  display: none; }
+  background-color: #53ab53;
+  border: none;
+  color: white;
+  font-family: "helveticaneuecyrmedium"; }
 
 /*# sourceMappingURL=mobile.css.map */
