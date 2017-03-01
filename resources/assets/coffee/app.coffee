@@ -132,7 +132,7 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
             closest_metro = markers[0].metros[0]
             markers.forEach (marker) ->
                 marker.metros.forEach (metro) ->
-                    closest_metro = metro if metro.minutes < closest_metro.minutes
+                    closest_metro = metro if metro.meters < closest_metro.meters
             closest_metro.station.title
 
         $rootScope.closestMetros = (markers) ->
@@ -141,7 +141,7 @@ angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'a
                 markers.forEach (marker, index) ->
                     closest_metros[index] = marker.metros[0]
                     marker.metros.forEach (metro) ->
-                        closest_metros[index] = metro if metro.minutes < closest_metros[index].minutes
+                        closest_metros[index] = metro if metro.meters < closest_metros[index].meters
             closest_metros
 
         $rootScope.photoUrl = (tutor) ->

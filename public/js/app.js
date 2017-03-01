@@ -187,7 +187,7 @@
       closest_metro = markers[0].metros[0];
       markers.forEach(function(marker) {
         return marker.metros.forEach(function(metro) {
-          if (metro.minutes < closest_metro.minutes) {
+          if (metro.meters < closest_metro.meters) {
             return closest_metro = metro;
           }
         });
@@ -201,7 +201,7 @@
         markers.forEach(function(marker, index) {
           closest_metros[index] = marker.metros[0];
           return marker.metros.forEach(function(metro) {
-            if (metro.minutes < closest_metros[index].minutes) {
+            if (metro.meters < closest_metros[index].meters) {
               return closest_metros[index] = metro;
             }
           });
@@ -228,6 +228,11 @@
       }
     };
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -755,25 +760,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
-
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -1111,6 +1097,20 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
