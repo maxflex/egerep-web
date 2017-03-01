@@ -10,6 +10,7 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
+    const SITE_TITLE = ' – ЕГЭ-Репетитор.ру';
     // Соответствия между разделами и ID предмета
     static $subject_page_id = [
         '1'   => 194,
@@ -40,6 +41,11 @@ class Page extends Model
     public function useful()
     {
         return $this->hasMany(PageUseful::class);
+    }
+
+    public function getTitleAttribute($value)
+    {
+        return $value . static::SITE_TITLE;
     }
 
     public function getSubjectsAttribute($value)
