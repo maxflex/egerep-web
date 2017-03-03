@@ -6,6 +6,11 @@
 /resources/assets/bower
 /public/robots.txt
 /public/htaccess.txt
+/public/css/app.css
+/public/css/app.css.map
+/public/css/mobile.css
+/public/css/mobile.css.map
+/resources/assets/sass
 Homestead.json
 Homestead.yaml
 .env
