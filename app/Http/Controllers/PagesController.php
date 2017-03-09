@@ -37,11 +37,13 @@ class PagesController extends Controller
         if (Tutor::whereId($id)->exists()) {
             $html = Variable::display('page-tutor-profile');
             Parser::compileTutor($id, $html);
+            $status = 200;
         } else {
             $html = Variable::display('page-404');
+            $status = 404;
         }
         $_SESSION['action'] = 'profile';
-        return view('pages.index')->with(compact('html'));
+        return response()->view('pages.index', compact('html'), $status);
     }
 
     /**
