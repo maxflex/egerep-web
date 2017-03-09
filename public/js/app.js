@@ -232,11 +232,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService, StreamService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
@@ -765,6 +760,11 @@
 }).call(this);
 
 (function() {
+
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('errors', function() {
     return {
       restrict: 'E',
@@ -786,6 +786,25 @@
             return errors;
           }
         };
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').directive('hideLoopedLink', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, $element) {
+        var anchor;
+        anchor = $element;
+        if (!$element.is('a')) {
+          anchor = $('a', $element);
+        }
+        if (window.location.pathname === anchor.attr('href')) {
+          return $element.addClass('ng-hide');
+        }
       }
     };
   });
@@ -1102,6 +1121,20 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1163,20 +1196,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
 
 }).call(this);
 
