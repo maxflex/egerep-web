@@ -3,6 +3,5 @@ angular.module 'Egerep'
     restrict: 'A'
     link: ($scope, $element) ->
       anchor = $element
-      unless $element.is 'a'
-        anchor = $ 'a', $element
+      anchor = $ 'a', $element unless $element.is 'a'
       $element.addClass 'ng-hide' if window.location.pathname is anchor.attr 'href'
