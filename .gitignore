@@ -5,7 +5,7 @@
 /storage
 /resources/assets/bower
 /public/robots.txt
-/public/htaccess.txt
+/public/.htaccess
 /public/css/app.css
 /public/css/app.css.map
 /public/css/mobile.css
