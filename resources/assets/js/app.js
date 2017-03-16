@@ -41,7 +41,7 @@
         return null;
       }
     };
-  }).run(["$rootScope", "$q", function($rootScope, $q) {
+  }).run(function($rootScope, $q) {
     $rootScope.dataLoaded = $q.defer();
     $rootScope.frontendStop = function(rebind_masks) {
       if (rebind_masks == null) {
@@ -217,7 +217,7 @@
         return (bytes / 1073741824).toFixed(1) + ' GB';
       }
     };
-  }]);
+  });
 
 }).call(this);
 
@@ -227,7 +227,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Cv', ["$scope", "$timeout", "Tutor", "FileUploader", "Cv", "PhoneService", "StreamService", function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService, StreamService) {
+  angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService, StreamService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
     $timeout(function() {
@@ -286,19 +286,19 @@
         }
       });
     };
-  }]);
+  });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Empty', ["$scope", "StreamService", function($scope, StreamService) {
+  angular.module('Egerep').controller('Empty', function($scope, StreamService) {
     return bindArguments($scope, arguments);
-  }]);
+  });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('Index', ["$scope", "$timeout", "$http", "Tutor", "StreamService", function($scope, $timeout, $http, Tutor, StreamService) {
+  angular.module('Egerep').controller('Index', function($scope, $timeout, $http, Tutor, StreamService) {
     $timeout(function() {
       return StreamService.run('landing', 'main');
     });
@@ -324,12 +324,12 @@
         return $scope.loading_review = false;
       });
     };
-  }]);
+  });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').controller('LoginCtrl', ["$scope", "$timeout", "Sms", "Tutor", "StreamService", function($scope, $timeout, Sms, Tutor, StreamService) {
+  angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor, StreamService) {
     var login;
     bindArguments($scope, arguments);
     login = function() {
@@ -366,12 +366,12 @@
         return $scope.error_message = 'код введен неверно';
       });
     };
-  }]);
+  });
 
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', ["$scope", "$timeout", "Tutor", "SubjectService", "REVIEWS_PER_PAGE", "Request", "StreamService", "Sources", function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) {
     var filter, filter_used, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -740,7 +740,7 @@
         });
       }
     });
-  }]);
+  });
 
 }).call(this);
 
@@ -762,7 +762,7 @@
       scope: {
         model: '@'
       },
-      controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+      controller: function($scope, $element, $attrs) {
         $scope.only_first = $attrs.hasOwnProperty('onlyFirst');
         return $scope.getErrors = function() {
           var errors;
@@ -776,7 +776,7 @@
             return errors;
           }
         };
-      }]
+      }
     };
   });
 
@@ -787,15 +787,10 @@
     return {
       restrict: 'A',
       link: function($scope, $element) {
-        var anchor;
-        anchor = $element;
-        if (!$element.is('a')) {
-          anchor = $('a', $element);
-        }
-        if (window.location.pathname === '/') {
-          return anchor.removeAttr('href');
-        } else {
-          if (window.location.pathname === anchor.attr('href')) {
+        if (window.location.pathname === $element.attr('href')) {
+          if (window.location.pathname === '/') {
+            return $element.removeAttr('href');
+          } else {
             return $element.parent().remove();
           }
         }
@@ -806,7 +801,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').directive('icheck', ["$timeout", "$parse", function($timeout, $parse) {
+  angular.module('Egerep').directive('icheck', function($timeout, $parse) {
     return {
       require: 'ngModel',
       link: function($scope, element, $attrs, ngModel) {
@@ -837,7 +832,7 @@
         });
       }
     };
-  }]);
+  });
 
 }).call(this);
 
@@ -910,7 +905,7 @@
         noneText: '@'
       },
       templateUrl: '/directives/plural',
-      controller: ["$scope", "$element", "$attrs", "$timeout", function($scope, $element, $attrs, $timeout) {
+      controller: function($scope, $element, $attrs, $timeout) {
         $scope.textOnly = $attrs.hasOwnProperty('textOnly');
         $scope.hideZero = $attrs.hasOwnProperty('hideZero');
         return $scope.when = {
@@ -934,7 +929,7 @@
           'taught': ['Обучен', 'Обучено', 'Обучено'],
           'address': ['адрес', 'адреса', 'адресов']
         };
-      }]
+      }
     };
   });
 
@@ -961,7 +956,7 @@
           return 'directives/request-form';
         }
       },
-      controller: ["$scope", "$element", "$timeout", "$rootScope", "Request", "Sources", function($scope, $element, $timeout, $rootScope, Request, Sources) {
+      controller: function($scope, $element, $timeout, $rootScope, Request, Sources) {
         var trackDataLayer;
         $scope.request = function() {
           if (!$scope.tutor) {
@@ -1014,7 +1009,7 @@
             }
           });
         };
-      }]
+      }
     };
   });
 
@@ -1035,13 +1030,13 @@
         "case": '@'
       },
       templateUrl: '/directives/subject-list',
-      controller: ["$scope", "$element", "$attrs", "$rootScope", function($scope, $element, $attrs, $rootScope) {
+      controller: function($scope, $element, $attrs, $rootScope) {
         $scope.byId = $attrs.byId !== void 0;
         if ($scope["case"] === void 0) {
           $scope["case"] = 'dative';
         }
         return $scope.findById = $rootScope.findById;
-      }]
+      }
     };
   });
 
@@ -1076,7 +1071,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').directive('widgetLoadable', ["$q", "$timeout", function($q, $timeout) {
+  angular.module('Egerep').directive('widgetLoadable', function($q, $timeout) {
     return {
       restrict: 'A',
       scope: {
@@ -1110,7 +1105,7 @@
         });
       }
     };
-  }]);
+  });
 
 }).call(this);
 
@@ -1125,6 +1120,71 @@
     HELP_REQUEST: 'helprequest',
     MORE_TUTORS: 'more_tutors'
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 
@@ -1157,7 +1217,7 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').service('StreamService', ["$http", "$timeout", "Stream", "SubjectService", "Sources", function($http, $timeout, Stream, SubjectService, Sources) {
+  angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
     this.identifySource = function(tutor) {
       if (tutor == null) {
         tutor = void 0;
@@ -1307,7 +1367,7 @@
       return Stream.save(params).$promise;
     };
     return this;
-  }]);
+  });
 
 }).call(this);
 
@@ -1375,67 +1435,4 @@
 
 }).call(this);
 
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', ["$resource", function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }]).factory('Request', ["$resource", function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }]).factory('Sms', ["$resource", function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }]).factory('Cv', ["$resource", function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }]).factory('Stream', ["$resource", function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  }]);
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
+//# sourceMappingURL=app.js.map

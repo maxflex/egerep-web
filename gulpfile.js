@@ -43,7 +43,7 @@ elixir(mix => {
         })
         .sass('app.scss')
         .sass('mobile.scss')
-        .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
+        .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'], 'resources/assets/js')
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .copy(fileFromBower('egerep-svg-metro/views/map.svg'), 'public/img/svg/map.svg')
         .scripts(jsFromBower([
@@ -71,6 +71,6 @@ elixir(mix => {
             'protonet/jquery.inview/jquery.inview',
             'jquery.actual/jquery.actual.min',
             'angular-sanitize/angular-sanitize.min',
-        ]).concat(['resources/assets/js/*.js', 'public/js/app.js']), 'public/js/scripts.js')
+        ]).concat(['resources/assets/js/*.js']), 'public/js/scripts.js')
         .scripts('resources/assets/js/mobile/*.js', 'public/js/mobile/scripts.js')
 });
