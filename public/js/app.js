@@ -755,20 +755,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -816,8 +802,12 @@
         if (!$element.is('a')) {
           anchor = $('a', $element);
         }
-        if (window.location.pathname === anchor.attr('href')) {
-          return $element.addClass('ng-hide');
+        if (window.location.pathname === '/') {
+          return anchor.removeAttr('href');
+        } else {
+          if (window.location.pathname === anchor.attr('href')) {
+            return $element.parent().remove();
+          }
         }
       }
     };
@@ -1130,6 +1120,20 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

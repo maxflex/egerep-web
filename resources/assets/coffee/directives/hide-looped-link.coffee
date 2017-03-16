@@ -4,4 +4,7 @@ angular.module 'Egerep'
     link: ($scope, $element) ->
       anchor = $element
       anchor = $ 'a', $element unless $element.is 'a'
-      $element.addClass 'ng-hide' if window.location.pathname is anchor.attr 'href'
+      if window.location.pathname is '/'
+        anchor.removeAttr 'href'
+      else
+        $element.parent().remove() if window.location.pathname is anchor.attr 'href'
