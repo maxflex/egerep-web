@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-    Redirect old pages
+    # Redirect old pages
     RedirectMatch 301 /tutors/metro/avtozavodskaya(.*) https://web.ege-repetitor.ru/repetitor-avtozavodskaya
     RedirectMatch 301 /tutors/metro/akademicheskaya(.*) https://web.ege-repetitor.ru/repetitor-akademicheskaya
     RedirectMatch 301 /tutors/metro/alekseevskaya(.*) https://web.ege-repetitor.ru/repetitor-alekseevskaya

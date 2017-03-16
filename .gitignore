@@ -10,8 +10,9 @@
 /public/css/app.css.map
 /public/css/mobile.css
 /public/css/mobile.css.map
+/public/js/
 /resources/assets/sass
 Homestead.json
 Homestead.yaml
 .env
-Envoy.blade
+Envoy.blade.php

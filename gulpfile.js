@@ -1,6 +1,6 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue');
+require('laravel-elixir-ng-annotate');
 
 /*
  |--------------------------------------------------------------------------
@@ -36,16 +36,10 @@ filesFromBowerFolder = (folder, files) => {
 
 elixir(mix => {
     mix
-        .browserSync({
-            port: 8085,
-            open: 'external',
-            host: 'egerep.app',
-            proxy: 'https://egecms.app:8084',
-            https: true
-        })
         .sass('app.scss')
         .sass('mobile.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
+        .annotate('app.js', 'resources/assets/js/annotated.js', 'public/js')
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .copy(fileFromBower('egerep-svg-metro/views/map.svg'), 'public/img/svg/map.svg')
         .scripts(jsFromBower([
@@ -77,5 +71,12 @@ elixir(mix => {
             'jquery.actual/jquery.actual.min',
             'angular-sanitize/angular-sanitize.min',
             'angular-nl2br/angular-nl2br.min'
-        ]).concat(['resources/assets/js/*.js']), 'public/js/vendor.js');
+        ]).concat(['resources/assets/js/*.js']), 'public/js/scripts.js')
+        .browserSync({
+            port: 8085,
+            open: 'external',
+            host: 'egerep.app',
+            proxy: 'https://egecms.app:8084',
+            https: true
+        })
 });
