@@ -1,7 +1,5 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-ng-annotate');
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -36,10 +34,16 @@ filesFromBowerFolder = (folder, files) => {
 
 elixir(mix => {
     mix
+        .browserSync({
+            port: 8085,
+            open: 'external',
+            host: 'egerep.app',
+            proxy: 'https://egecms.app:8084',
+            https: true
+        })
         .sass('app.scss')
         .sass('mobile.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'])
-        .annotate('app.js', 'resources/assets/js/annotated.js', 'public/js')
         .copy(fileFromBower('SVG-Loaders/svg-loaders/three-dots.svg'), 'public/img/svg')
         .copy(fileFromBower('egerep-svg-metro/views/map.svg'), 'public/img/svg/map.svg')
         .scripts(jsFromBower([
@@ -48,9 +52,6 @@ elixir(mix => {
             'angular-resource/angular-resource.min',
             'angular-i18n/angular-locale_ru-ru',
             'underscore/underscore-min',
-            'ladda/dist/spin.min',
-            'ladda/dist/ladda.min',
-            'angular-ladda/dist/angular-ladda.min',
             'moment/min/moment.min',
             'moment/locale/ru',
             'jquery.maskedinput/dist/jquery.maskedinput.min',
@@ -70,13 +71,6 @@ elixir(mix => {
             'protonet/jquery.inview/jquery.inview',
             'jquery.actual/jquery.actual.min',
             'angular-sanitize/angular-sanitize.min',
-            'angular-nl2br/angular-nl2br.min'
-        ]).concat(['resources/assets/js/*.js']), 'public/js/scripts.js')
-        .browserSync({
-            port: 8085,
-            open: 'external',
-            host: 'egerep.app',
-            proxy: 'https://egecms.app:8084',
-            https: true
-        })
+        ]).concat(['resources/assets/js/*.js', 'public/js/app.js']), 'public/js/scripts.js')
+        .scripts('resources/assets/js/mobile/*.js', 'public/js/mobile/scripts.js')
 });

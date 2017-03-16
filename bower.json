@@ -45,7 +45,6 @@
     "cropper": "^2.3.0",
     "pusher": "^3.0.0",
     "SVG-Loaders": "svg-loaders#^1.0.2",
-    "angular-ladda": "^0.4.2",
     "ladda": "^1.0.0",
     "StickyTableHeaders": "^0.1.19",
     "remarkable-bootstrap-notify": "^3.1.3",

@@ -1,16 +1,9 @@
-angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize', 'nl2br'])
+angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize'])
     .config [
         '$compileProvider'
         ($compileProvider) ->
             $compileProvider.aHrefSanitizationWhitelist /^\s*(https?|ftp|mailto|chrome-extension|sip):/
 	]
-    .config (laddaProvider) ->
-        laddaProvider.setOption
-            spinnerColor: '#83b060'
-    .filter 'linebreaks', ->
-        (input) ->
-            if input != undefined
-                input.replace(/\n/g, "<span class='remove-space'>,</span> ")
     .filter 'cut', ->
       (value, wordwise, max, nothing = '', tail) ->
         if !value

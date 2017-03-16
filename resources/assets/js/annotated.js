@@ -1,21 +1,11 @@
 (function() {
   var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  angular.module("Egerep", ['ngResource', 'angular-ladda', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize', 'nl2br']).config([
+  angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize']).config([
     '$compileProvider', function($compileProvider) {
       return $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|sip):/);
     }
-  ]).config(["laddaProvider", function(laddaProvider) {
-    return laddaProvider.setOption({
-      spinnerColor: '#83b060'
-    });
-  }]).filter('linebreaks', function() {
-    return function(input) {
-      if (input !== void 0) {
-        return input.replace(/\n/g, "<span class='remove-space'>,</span> ");
-      }
-    };
-  }).filter('cut', function() {
+  ]).filter('cut', function() {
     return function(value, wordwise, max, nothing, tail) {
       var lastspace;
       if (nothing == null) {
@@ -793,6 +783,29 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').directive('hideLoopedLink', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, $element) {
+        var anchor;
+        anchor = $element;
+        if (!$element.is('a')) {
+          anchor = $('a', $element);
+        }
+        if (window.location.pathname === '/') {
+          return anchor.removeAttr('href');
+        } else {
+          if (window.location.pathname === anchor.attr('href')) {
+            return $element.parent().remove();
+          }
+        }
+      }
+    };
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('icheck', ["$timeout", "$parse", function($timeout, $parse) {
     return {
       require: 'ngModel',
@@ -1116,71 +1129,6 @@
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', ["$resource", function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }]).factory('Request', ["$resource", function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }]).factory('Sms', ["$resource", function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }]).factory('Cv', ["$resource", function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }]).factory('Stream', ["$resource", function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  }]);
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1424,5 +1372,70 @@
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', ["$resource", function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }]).factory('Request', ["$resource", function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }]).factory('Sms', ["$resource", function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }]).factory('Cv', ["$resource", function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }]).factory('Stream', ["$resource", function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  }]);
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
