@@ -236,6 +236,40 @@ angular
                     position: $scope.getIndex(index)
                     tutor_id: tutor.id
 
+        $scope.shortenGrades = ->
+            a = $scope.tutor.grades
+            return if a.length < 1
+            limit = a.length - 1
+            combo_end = -1
+            pairs = []
+            i = 0
+            while i <= limit
+                combo_start = parseInt(a[i])
+
+                if combo_start > 11
+                    i++
+                    combo_end = -1
+                    pairs.push $scope.grades[combo_start].title
+                    continue
+
+                if combo_start <= combo_end
+                    i++
+                    continue
+
+                j = i
+                while j <= limit
+                    combo_end = parseInt(a[j])
+                    # если уже начинает искать по студентам
+                    break if combo_end >= 11
+                    break if parseInt(a[j + 1]) - combo_end > 1
+                    j++
+                if combo_start != combo_end
+                    pairs.push combo_start + '–' + combo_end + ' классы'
+                else
+                    pairs.push combo_start + ' класс'
+                i++
+            pairs.join ', '
+
         #
         # MOBILE
         #

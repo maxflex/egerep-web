@@ -222,11 +222,6 @@
 }).call(this);
 
 (function() {
-
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').controller('Cv', function($scope, $timeout, Tutor, FileUploader, Cv, PhoneService, StreamService) {
     bindArguments($scope, arguments);
     $scope.error_text = 'ошибка: максимальная длина текста – 1000 символов';
@@ -662,6 +657,48 @@
         }
       }
     };
+    $scope.shortenGrades = function() {
+      var a, combo_end, combo_start, i, j, limit, pairs;
+      a = $scope.tutor.grades;
+      if (a.length < 1) {
+        return;
+      }
+      limit = a.length - 1;
+      combo_end = -1;
+      pairs = [];
+      i = 0;
+      while (i <= limit) {
+        combo_start = parseInt(a[i]);
+        if (combo_start > 11) {
+          i++;
+          combo_end = -1;
+          pairs.push($scope.grades[combo_start].title);
+          continue;
+        }
+        if (combo_start <= combo_end) {
+          i++;
+          continue;
+        }
+        j = i;
+        while (j <= limit) {
+          combo_end = parseInt(a[j]);
+          if (combo_end >= 11) {
+            break;
+          }
+          if (parseInt(a[j + 1]) - combo_end > 1) {
+            break;
+          }
+          j++;
+        }
+        if (combo_start !== combo_end) {
+          pairs.push(combo_start + '–' + combo_end + ' классы');
+        } else {
+          pairs.push(combo_start + ' класс');
+        }
+        i++;
+      }
+      return pairs.join(', ');
+    };
     $scope.popup = function(id, tutor, fn, index) {
       if (tutor == null) {
         tutor = null;
@@ -741,6 +778,11 @@
       }
     });
   });
+
+}).call(this);
+
+(function() {
+
 
 }).call(this);
 
@@ -1110,20 +1152,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -1185,6 +1213,20 @@
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 

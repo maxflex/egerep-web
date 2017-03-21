@@ -95,6 +95,8 @@ class Tutor extends Service\Model
             'achievements',
             'preferences',
             'experience',
+            'tutoring_experience',
+            'grades',
             'gender',
             'lk',
             'tb',
