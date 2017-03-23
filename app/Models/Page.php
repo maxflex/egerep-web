@@ -10,6 +10,9 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
+    const MAX_BLOCK_LINKS        = 16;
+    const MAX_BLOCK_LINKS_MOBILE = 8;
+
     // Соответствия между разделами и ID предмета
     static $subject_page_id = [
         '1'   => 194,
@@ -152,13 +155,18 @@ class Page extends Model
 
     public static function getBlockLinks($block_id)
     {
-        return self::where('anchor_block_id', $block_id)->where('anchor', '<>', '')
-            ->where('anchor_published', 1)->select('anchor', 'url')->get()->all();
+        return self::publishedAnchors($block_id)->get()->all();
     }
 
     public static function getPageLinks($page_id)
     {
-        return self::where('anchor_block_id', 5)->where('anchor_published', 1)
-            ->where('anchor_page_id', $page_id)->where('anchor', '<>', '')->select('anchor', 'url')->get()->all();
+        return self::publishedAnchors(5)->where('anchor_page_id', $page_id)->get()->all();
+    }
+
+    public function scopePublishedAnchors($query, $block_id) {
+        return $query->where('anchor_block_id', $block_id)
+                     ->where('anchor_published', 1)
+                     ->where('published', 1)
+                     ->select('anchor', 'url', 'h1');
     }
 }

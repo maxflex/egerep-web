@@ -254,3 +254,8 @@
         curl_close($ch);
         if( $httpCode == 200 ){return true;}
     }
+
+    function isIndexPage()
+    {
+        return $_SERVER['REQUEST_URI'] == '/';
+    }

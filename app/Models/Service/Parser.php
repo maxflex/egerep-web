@@ -14,6 +14,14 @@
         const START_VAR = '[';
         const END_VAR   = ']';
 
+        const BLOCKS = [
+                    1 => 'Репетиторы у метро',
+                    2 => 'Репетиторы в районе',
+                    3 => 'Репетиторы для подготовки в ВУЗ',
+                    4 => 'Репетиторы',
+            'default' => 'Репетиторы',
+        ];
+
         static $cached_functions = [
             'factory',
             'tutor',
@@ -38,24 +46,29 @@
                     static::replace($html, $var, $variable->html);
                 }
             }
+
+            static::compileBlocks($html);
+
+            return $html;
+        }
+
+        private static function compileBlocks(&$html)
+        {
             // @todo: сделать красивее
-            $blocks = [];
-            if ($_SERVER['REQUEST_URI'] == '/') {
+            if (isIndexPage()) {
+                $blocks = [];
                 foreach(range(1, 4) as $index) {
                     $links = Page::getBlockLinks($index);
                     if (count($links)) {
                         $blocks[] = [
-                            'title' => 'Блок ' . $index,
+                            'title' => static::BLOCKS[$index],
                             'links' => Page::getBlockLinks($index),
                         ];
                     }
                 }
                 static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
             }
-            return $html;
         }
-
-
         /**
          * Компилирует функции типа [factory|subjects|name]
          */
@@ -194,7 +207,7 @@
             $links = Page::getPageLinks($page->id);
             if (count($links)) {
                 $blocks = [[
-                    'title' => 'Блок 1',
+                    'title' => static::BLOCKS['default'],
                     'links' => $links,
                 ]];
                 static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
