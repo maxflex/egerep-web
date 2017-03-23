@@ -38,6 +38,20 @@
                     static::replace($html, $var, $variable->html);
                 }
             }
+            // @todo: сделать красивее
+            $blocks = [];
+            if ($_SERVER['REQUEST_URI'] == '/') {
+                foreach(range(1, 4) as $index) {
+                    $links = Page::getBlockLinks($index);
+                    if (count($links)) {
+                        $blocks[] = [
+                            'title' => 'Блок ' . $index,
+                            'links' => Page::getBlockLinks($index),
+                        ];
+                    }
+                }
+                static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
+            }
             return $html;
         }
 
@@ -175,6 +189,18 @@
             ));
 
             unset($_SESSION['page_was_refreshed']);
+
+            // @todo: сделать красивее
+            $links = Page::getPageLinks($page->id);
+            if (count($links)) {
+                $blocks = [[
+                    'title' => 'Блок 1',
+                    'links' => $links,
+                ]];
+                static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
+            } else {
+                static::replace($html, 'footer-blocks', '');
+            }
         }
 
         public static function compileLinks(&$html)
@@ -186,6 +212,14 @@
                 $page_id = explode('|', $var)[1];
                 static::replace($html, $var, Page::getUrl($page_id));
             }
+        }
+
+        /**
+         * Блоки ссылок в футере
+         */
+        public static function compileFooterBlocks()
+        {
+            return '123';
         }
 
         public static function interpolate($text = '')
