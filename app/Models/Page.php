@@ -152,12 +152,13 @@ class Page extends Model
 
     public static function getBlockLinks($block_id)
     {
-        return self::where('anchor_block_id', $block_id)->where('anchor_published', 1)->select('anchor', 'url')->get()->all();
+        return self::where('anchor_block_id', $block_id)->where('anchor', '<>', '')
+            ->where('anchor_published', 1)->select('anchor', 'url')->get()->all();
     }
 
     public static function getPageLinks($page_id)
     {
         return self::where('anchor_block_id', 5)->where('anchor_published', 1)
-            ->where('anchor_page_id', $page_id)->select('anchor', 'url')->get()->all();
+            ->where('anchor_page_id', $page_id)->where('anchor', '<>', '')->select('anchor', 'url')->get()->all();
     }
 }
