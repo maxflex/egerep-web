@@ -21,9 +21,9 @@
         if ($new_tutor_id) {
             return redirect(\App\Models\Tutor::where('id_a_pers', $id)->value('id'), 301);
         } else {
-            return view('pages.index')->with([
+            return response()->view('pages.index', [
                 'html' => Variable::display('page-404')
-            ]);
+            ], 404);
         }
     });
 
