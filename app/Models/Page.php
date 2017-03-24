@@ -167,6 +167,7 @@ class Page extends Model
         return $query->where('anchor_block_id', $block_id)
                      ->where('anchor_published', 1)
                      ->where('published', 1)
-                     ->select('anchor', 'url', 'h1');
+                     ->select('anchor', 'url', 'h1')
+                     ->orderBy('anchor')->orderBy('h1');
     }
 }

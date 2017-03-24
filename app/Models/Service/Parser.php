@@ -62,7 +62,7 @@
                     if (count($links)) {
                         $blocks[] = [
                             'title' => static::BLOCKS[$index],
-                            'links' => Page::getBlockLinks($index),
+                            'links' => $links,
                         ];
                     }
                 }
