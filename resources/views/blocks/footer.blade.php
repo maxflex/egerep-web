@@ -6,7 +6,7 @@
     <ul class='footer-links' ng-init="toggler_{{ $loop->index }} = {{ count($block['links']) }} > {{ \App\Models\Page::MAX_BLOCK_LINKS_MOBILE }}; show_block_items_{{ $loop->index }} = !toggler_{{$loop->index}}">
         @foreach($block['links'] as $link)
             <li @if ($loop->index > \App\Models\Page::MAX_BLOCK_LINKS_MOBILE) ng-show="show_block_items_{{ $loop->parent->index }}" @endif>
-                <a href='{{ $link->url }}'>{{ $link->anchor ? $link->anchor : $link->getClean('h1') }}</a>
+                <a href='{{ $link->url }}'>{{ trim($link->anchor) ? $link->anchor : $link->getClean('h1') }}</a>
             </li>
         @endforeach
     </ul>
@@ -30,7 +30,7 @@
                 <b>{{ $block['title'] }}</b>
                 @foreach($block['links'] as $link)
                     <div @if ($loop->index > \App\Models\Page::MAX_BLOCK_LINKS) ng-show="show_block_items_{{ $loop->parent->index }}" @endif>
-                    <a href='{{ $link->url }}'>{{ $link->anchor ? $link->anchor : $link->getClean('h1') }}</a>
+                    <a href='{{ $link->url }}'>{{ trim($link->anchor) ? $link->anchor : $link->getClean('h1') }}</a>
                 </div>
                 @endforeach
             </div>
