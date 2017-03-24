@@ -10,7 +10,7 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
-    const MAX_BLOCK_LINKS        = 16;
+    const MAX_BLOCK_LINKS        = 15;
     const MAX_BLOCK_LINKS_MOBILE = 8;
 
     // Соответствия между разделами и ID предмета
