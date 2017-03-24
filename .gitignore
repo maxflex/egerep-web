@@ -6,6 +6,8 @@
 /resources/assets/bower
 /public/robots.txt
 /public/.htaccess
+/resources/assets/js/app.js
+/resources/assets/js/app.js.map
 /public/css/app.css
 /public/css/app.css.map
 /public/css/mobile.css
