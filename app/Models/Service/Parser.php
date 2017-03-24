@@ -179,6 +179,7 @@
             // h1 и desc
             static::replace($html, 'title', view('tutor.title', compact('tutor')));
             static::replace($html, 'desc', self::_cleanString(view('tutor.desc', compact('tutor'))));
+            static::replace($html, 'footer-blocks', '');
         }
 
         /**
