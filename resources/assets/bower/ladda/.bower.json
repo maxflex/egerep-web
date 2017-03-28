@@ -19,6 +19,6 @@
     "commit": "e5fa9e7681334a47419a126bdcb6aaefd05424da"
   },
   "_source": "https://github.com/hakimel/Ladda.git",
-  "_target": ">=0.9.8",
+  "_target": "^1.0.0",
   "_originalSource": "ladda"
 }
