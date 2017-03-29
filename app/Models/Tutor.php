@@ -43,6 +43,14 @@ class Tutor extends Service\Model
         return $this->hasOne(PlannedAccount::class);
     }
 
+    public function getDebtCalcAttribute()
+    {
+        return round(Debt::sum([
+            'tutor_id' => $this->id,
+            'after_last_meeting' => 1
+        ]));
+    }
+
     public function getSubjectsStringAttribute()
     {
         return implode(', ', array_map(function($subject_id) {
