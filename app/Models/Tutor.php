@@ -285,7 +285,7 @@ class Tutor extends Service\Model
      */
     public function scopeLoggable($scope)
     {
-        return $scope->where('debt_calc', '>', 0);
+        return $scope->whereRaw("(select sum(debt) from debts where after_last_meeting = 1 and tutor_id = tutors.id) > 0");
     }
 
     /**

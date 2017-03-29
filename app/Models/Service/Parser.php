@@ -68,6 +68,9 @@
                 }
                 static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
             }
+            else if (! isSerpPage()) {
+                static::replace($html, 'footer-blocks', '');
+            }
         }
         /**
          * Компилирует функции типа [factory|subjects|name]

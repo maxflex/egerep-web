@@ -17,6 +17,7 @@ class PagesController extends Controller
      */
     public function index($url = '')
     {
+        $_SESSION['action'] = 'serp';
         $page = Page::whereUrl($url);
         if (! $page->exists()) {
             $html = Variable::display('page-404');
@@ -25,7 +26,6 @@ class PagesController extends Controller
             $html = $page->first()->html;
             $status = 200;
         }
-        $_SESSION['action'] = 'serp';
         return response()->view('pages.index', compact('html'), $status);
     }
 
