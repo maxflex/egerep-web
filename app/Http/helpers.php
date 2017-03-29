@@ -262,5 +262,5 @@
 
     function isSerpPage()
     {
-        return $_SESSION['action'] == 'serp';
+        return isset($_SESSION['action']) && $_SESSION['action'] == 'serp';
     }
