@@ -259,3 +259,8 @@
     {
         return $_SERVER['REQUEST_URI'] == '/';
     }
+
+    function isSerpPage()
+    {
+        return $_SESSION['action'] == 'serp';
+    }
