@@ -98,7 +98,6 @@ class Tutor extends Service\Model
             'lesson_duration',
             'public_price',
             'departure_price',
-            'comment_extended',
             'education',
             'achievements',
             'preferences',
