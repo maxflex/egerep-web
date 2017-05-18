@@ -160,7 +160,7 @@ class Page extends Model
 
     public static function getPageLinks($page_id)
     {
-        return self::publishedAnchors(5)->where('anchor_page_id', $page_id)->get()->all();
+        return self::publishedAnchors(4)->where('anchor_page_id', $page_id)->get()->all();
     }
 
     public function scopePublishedAnchors($query, $block_id) {

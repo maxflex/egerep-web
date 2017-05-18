@@ -15,11 +15,10 @@
         const END_VAR   = ']';
 
         const BLOCKS = [
-                    1 => 'Репетиторы у метро',
-                    2 => 'Репетиторы в районе',
-                    3 => 'Репетиторы для подготовки в ВУЗ',
-                    4 => 'Репетиторы',
-            'default' => 'Репетиторы',
+            1 => 'Репетиторы у метро',
+            2 => 'Репетиторы в районе',
+            3 => 'Репетиторы для подготовки в ВУЗ',
+            4 => 'Репетиторы',
         ];
 
         static $cached_functions = [
@@ -57,7 +56,7 @@
             // @todo: сделать красивее
             if (isIndexPage()) {
                 $blocks = [];
-                foreach(range(1, 4) as $index) {
+                foreach(range(1, 3) as $index) {
                     $links = Page::getBlockLinks($index);
                     if (count($links)) {
                         $blocks[] = [
@@ -211,7 +210,7 @@
             $links = Page::getPageLinks($page->id);
             if (count($links)) {
                 $blocks = [[
-                    'title' => static::BLOCKS['default'],
+                    'title' => static::BLOCKS[4],
                     'links' => $links,
                 ]];
                 static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));
@@ -229,14 +228,6 @@
                 $page_id = explode('|', $var)[1];
                 static::replace($html, $var, Page::getUrl($page_id));
             }
-        }
-
-        /**
-         * Блоки ссылок в футере
-         */
-        public static function compileFooterBlocks()
-        {
-            return '123';
         }
 
         public static function interpolate($text = '')
