@@ -262,5 +262,5 @@
 
     function isSerpPage()
     {
-        return isset($_SESSION['action']) && $_SESSION['action'] == 'serp';
+        return \DB::table('pages')->whereUrl($_SERVER['REQUEST_URI'])->exists();
     }
