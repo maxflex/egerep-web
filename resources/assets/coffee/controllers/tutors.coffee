@@ -74,7 +74,7 @@ angular
             tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
 
         $scope.gmap = (tutor, index) ->
-            if tutor.map_shown is undefined then $timeout ->
+            $timeout ->
                 map = new google.maps.Map document.getElementById("gmap-#{tutor.id}"),
                     center: MAP_CENTER
                     scrollwheel: false,
