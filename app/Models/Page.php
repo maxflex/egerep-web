@@ -10,7 +10,7 @@ use App\Models\Service\Factory;
 
 class Page extends Model
 {
-    const MAX_BLOCK_LINKS        = 15;
+    const MAX_BLOCK_LINKS        = 11;
     const MAX_BLOCK_LINKS_MOBILE = 8;
 
     // Соответствия между разделами и ID предмета
@@ -165,7 +165,6 @@ class Page extends Model
 
     public function scopePublishedAnchors($query, $block_id) {
         return $query->where('anchor_block_id', $block_id)
-                     ->where('anchor_published', 1)
                      ->where('published', 1)
                      ->select('anchor', 'url', 'h1')
                      ->orderBy('anchor')->orderBy('h1');

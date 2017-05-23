@@ -15,10 +15,9 @@
         const END_VAR   = ']';
 
         const BLOCKS = [
-            1 => 'Репетиторы у метро',
-            2 => 'Репетиторы в районе',
-            3 => 'Репетиторы для подготовки в ВУЗ',
-            4 => 'Репетиторы',
+            1 => 'Репетиторы по метро и районам',
+            2 => 'Репетиторы по вузам',
+            3 => 'Остальное',
         ];
 
         static $cached_functions = [
@@ -210,7 +209,7 @@
             $links = Page::getPageLinks($page->id);
             if (count($links)) {
                 $blocks = [[
-                    'title' => static::BLOCKS[4],
+                    'title' => static::BLOCKS[3],
                     'links' => $links,
                 ]];
                 static::replace($html, 'footer-blocks', view('blocks.footer', compact('blocks')));

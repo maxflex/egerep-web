@@ -23,22 +23,22 @@
     @endforeach
 @else
     <div class='footer-blocks'>
-        <div class="footer-blocks-inner">
+        <div class="footer-blocks-inner" style='padding-bottom: 0'>
             @foreach($blocks as $block)
             <div class="footer-rows"
                 ng-init="toggler_{{ $loop->index }} = {{ count($block['links']) }} > {{ \App\Models\Page::MAX_BLOCK_LINKS }}; show_block_items_{{ $loop->index }} = !toggler_{{$loop->index}}">
                 <b>{{ $block['title'] }}</b>
                 @foreach($block['links'] as $link)
-                    <div @if ($loop->index >= \App\Models\Page::MAX_BLOCK_LINKS) ng-show="show_block_items_{{ $loop->parent->index }}" @endif>
+                <div @if ($loop->index >= \App\Models\Page::MAX_BLOCK_LINKS) ng-show="show_block_items_{{ $loop->parent->index }}" @endif>
                     <a href='{{ $link->url }}'>{{ trim($link->anchor) ? $link->anchor : $link->getClean('h1') }}</a>
                 </div>
                 @endforeach
+                <div class="toggler"
+                      ng-show="toggler_{{ $loop->index }} && !show_block_items_{{ $loop->index }}"
+                      ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">
+                      <span>Показать все</span> <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </div>
             </div>
-            <span class="toggler"
-                  ng-show="toggler_{{ $loop->index }} && !show_block_items_{{ $loop->index }}"
-                  ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">
-                  <span>Показать все</span> <i class="fa fa-angle-down" aria-hidden="true"></i>
-            </span>
             <span class="toggler"
                   ng-show="toggler_{{ $loop->index }} && show_block_items_{{ $loop->index }}"
                   ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">

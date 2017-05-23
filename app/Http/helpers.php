@@ -262,5 +262,5 @@
 
     function isSerpPage()
     {
-        return \DB::table('pages')->whereUrl($_SERVER['REQUEST_URI'])->exists();
+        return \DB::table('pages')->whereUrl(substr($_SERVER['REQUEST_URI'], 1))->exists();
     }
