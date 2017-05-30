@@ -2,7 +2,10 @@
     <div class='request-form' ng-hide='tutor.request_sent'>
         <div class="search-result-contact-row">
             <input type="text" class="input-text request-name" placeholder="ваше имя" ng-model='tutor.request.name'>
-            <input type="text" class="input-text phone-field" placeholder="ваш телефон" ng-phone ng-model='tutor.request.phone'>
+            <div class='input-group'>
+                <span>+7</span>
+                <input type="number" class="input-text" placeholder="ваш телефон" ng-model='tutor.request.phone'>
+            </div>
         </div>
 
         <textarea placeholder='краткое сообщение репетитору' class="textarea request-comment" rows="0" cols="0" ng-model='tutor.request.comment'></textarea>

@@ -5,8 +5,11 @@
                 ng-model='tutor.request.name'>
         </div>
         <div class="form-row">
-            <input ng-phone class="input-text phone-input" type="tel" placeholder="телефон" name='phone'
-                ng-model='tutor.request.phone'>
+            <div class='input-group-custom'>
+                <span>+7</span>
+                <input class="input-text" type="tel" placeholder="телефон" name='phone'
+                    ng-model='tutor.request.phone'>
+            </div>
         </div>
         <div class="form-row">
             <textarea ng-model='tutor.request.comment' class="textarea" placeholder="сообщение" maxlength='500'></textarea>

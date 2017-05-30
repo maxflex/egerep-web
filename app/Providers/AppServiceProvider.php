@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('phone_filled', function($attribute, $value, $parameters, $validator) {
             $phone = preg_replace("/[^0-9]/", "", $value);
-            return strlen($phone) == 11;
+            return strlen($phone) == 10;
         });
         // \DB::listen(function($query) {
         //     \Log::info($query->sql);

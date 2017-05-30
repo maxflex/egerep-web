@@ -24,7 +24,7 @@ class RequestStore extends FormRequest
     public function rules()
     {
         return [
-            'phone'   => ['required', 'phone_filled', 'size:18', 'regex:' . PHONE_REGEX],
+            'phone'   => ['required', 'digits:10', 'regex:' . PHONE_REGEX],
             'name'    => [
                 'regex:' . TEXT_VALIDATION_REGEX,
                 'max:' . MAX_NAME_LENGTH,

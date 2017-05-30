@@ -24,7 +24,7 @@ class SmsStore extends FormRequest
     public function rules()
     {
         return [
-            'phone'   => ['required', 'phone_filled', 'size:18', 'regex:' . MOBILE_PHONE_REGEX],
+            'phone'   => ['required', 'phone_filled', 'size:10', 'regex:' . MOBILE_PHONE_REGEX],
         ];
     }
 }
