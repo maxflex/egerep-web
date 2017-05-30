@@ -4,7 +4,7 @@
             <input type="text" class="input-text request-name" placeholder="ваше имя" ng-model='tutor.request.name'>
             <div class='input-group'>
                 <span>+7</span>
-                <input type="number" class="input-text" placeholder="ваш телефон" ng-model='tutor.request.phone'>
+                <input type="text" maxlength='25' class="input-text" placeholder="ваш телефон" ng-model='tutor.request.phone'>
             </div>
         </div>
 

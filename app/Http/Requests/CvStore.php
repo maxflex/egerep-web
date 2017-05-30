@@ -27,7 +27,7 @@ class CvStore extends FormRequest
     public function rules()
     {
         $rules = [
-            'phone'            => ['required', 'phone_filled', 'size:18', 'regex:' . PHONE_REGEX],
+            'phone'   => ['required', 'phone_filled', 'starts_with_correct_digit'],
             'birth_year'       => 'digits:4',
             'experience_years' => 'digits_between:1,2',
         ];
