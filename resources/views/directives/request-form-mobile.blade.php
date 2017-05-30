@@ -8,7 +8,7 @@
             <div class='input-group-custom'>
                 <span>+7</span>
                 <input class="input-text" type="tel" placeholder="телефон" name='phone'
-                    ng-model='tutor.request.phone'>
+                    ng-model='tutor.request.phone' maxlength='10'>
             </div>
         </div>
         <div class="form-row">
