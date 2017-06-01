@@ -68,7 +68,11 @@
      */
     function cleanNumber($number, $add_seven = false)
     {
-        return ($add_seven ? '7' : '') . preg_replace("/[^0-9]/", "", $number);
+        $number = preg_replace("/[^0-9]/", "", $number);
+        if ($number && $number[0] != '7') {
+            $number = '7' . $number;
+        }
+        return $number;
     }
 
     /**
