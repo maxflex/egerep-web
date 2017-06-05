@@ -14,26 +14,18 @@ class Account extends Model
 
     protected $appends = ['full_sum'];
 
+    public function payments()
+    {
+        return $this->hasMany(AccountPayment::class);
+    }
+
     /**
      * Сумма включая взаимозачет
      */
     public function getFullSumAttribute()
     {
-        $mutual_debt = $this->getMutualDebt();
-        if ($mutual_debt !== null) {
-            return $this->received + $mutual_debt->sum;
-        }
-        return $this->received;
-    }
-
-    public function getMutualDebt()
-    {
-        return DB::connection('egecrm')
-                 ->table('payments')
-                 ->select('sum')
-                 ->whereRaw("STR_TO_DATE(date, '%d.%c.%Y') = '{$this->date_end}'")
-                 ->where('entity_id', $this->tutor_id)
-                 ->where('entity_type', Tutor::USER_TYPE)
-                 ->where('id_status', static::MUTUAL_DEBT_STATUS)->first();
+        $payments_sum = $this->payments()->sum('sum');
+        $mutual_payments_sum = egecrm('payments')->where('id_status', 6)->where('account_id', $this->id)->sum('sum');
+        return intval($payments_sum) + intval($mutual_payments_sum);
     }
 }
