@@ -40,7 +40,7 @@ angular.module('Egerep')
                             products: [
                                 id: $scope.tutor.id
                                 price: $scope.tutor.public_price
-                                brand: $scope.tutor.subjects
+                                brand: $scope.tutor.subjects.join(',')
                                 category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year) # пол_возраст
                                 quantity: 1
                             ]
