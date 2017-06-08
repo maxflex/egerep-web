@@ -31,7 +31,7 @@ angular.module('Egerep')
                 dataLayerPush
                     event: 'purchase'
                     ecommerce:
-                        currencyCode: 'RUR'
+                        currencyCode: 'RUB'
                         purchase:
                             actionField:
                                 id: googleClientId()
