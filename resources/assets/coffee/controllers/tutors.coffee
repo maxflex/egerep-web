@@ -306,8 +306,8 @@ angular
 
         # выезжает по всей Москве
         $scope.departsEverywhere = (tutor) ->
-            return false if (tutor.svg_map is null || not tutor.svg_map.length)
-            tutor.svg_map.split(',').length >= 214
+            return false if tutor.svg_map is null
+            tutor.svg_map.length >= 214
 
         $scope.sendRequest = ->
             $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined
