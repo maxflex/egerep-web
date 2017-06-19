@@ -6,7 +6,7 @@ angular
             $scope.has_more_reviews = true
             $scope.reviews_page = 0
             $scope.reviews = []
-            searchReviews(true)
+            searchReviews()
 
         $scope.nextReviewsPage = ->
             $scope.reviews_page++
@@ -17,7 +17,7 @@ angular
 
         searchReviews = (first_load = false) ->
             $scope.searching_reviews = true
-            $http.get('/api/reviews?page=' + $scope.reviews_page + (if first_load then '&take=3' else '')).then (response) ->
+            $http.get('/api/reviews?page=' + $scope.reviews_page + "&take=" + (if isMobile then 2 else 3)).then (response) ->
                 console.log(response)
                 $scope.searching_reviews = false
                 $scope.reviews = $scope.reviews.concat(response.data.reviews)

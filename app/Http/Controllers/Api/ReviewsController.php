@@ -18,8 +18,8 @@ class ReviewsController extends Controller
 
     public function index(Request $request)
     {
-        $take = isset($request->take) ? $request->take : self::PER_PAGE;
-        $skip = 3 + (self::PER_PAGE * ($request->page - 1));
+        $take = $request->page == 0 ? $request->take : self::PER_PAGE;
+        $skip = $request->take + (self::PER_PAGE * ($request->page - 1));
 
         if ($skip < 0) {
             $skip = 0;
