@@ -1,4 +1,5 @@
     active_modal = false
+    max_stations = 215 // кол-во станций для надписи «по всей москве»
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
