@@ -4,6 +4,9 @@ angular
     .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
+        # кол-во станций для надписи «по всей москве»
+        $scope.max_stations = 215
+
         # сколько загрузок преподавателей было
         search_count = 0
 
