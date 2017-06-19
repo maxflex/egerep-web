@@ -4,9 +4,6 @@ angular
     .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
-        # кол-во станций для надписи «по всей москве»
-        $scope.max_stations = 215
-
         # сколько загрузок преподавателей было
         search_count = 0
 
@@ -306,6 +303,10 @@ angular
         $scope.hasSelectedStation = (tutor) ->
             return false if not $scope.search or $scope.search.sort != 5
             tutor.svg_map.indexOf(parseInt($scope.search.station_id)) isnt -1
+
+        # выезжает по всей Москве
+        $scope.departsEverywhere = (tutor) ->
+            tutor.svg_map.split(',').length == 215
 
         $scope.sendRequest = ->
             $scope.sending_tutor.request = {} if $scope.sending_tutor.request is undefined
