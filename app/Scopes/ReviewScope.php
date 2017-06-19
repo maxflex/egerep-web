@@ -10,6 +10,6 @@ class ReviewScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where('state', 'published');
+        return $builder->where('reviews.state', 'published');
     }
 }

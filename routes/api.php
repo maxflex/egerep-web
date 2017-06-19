@@ -6,6 +6,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('tutors/reviews/{id}', 'TutorsController@reviews');
 
     Route::get('reviews/random', 'RandomReviewsController@index');
+    Route::get('reviews', 'ReviewsController@index');
 
     Route::resource('requests', 'RequestsController', ['only' => 'store']);
 

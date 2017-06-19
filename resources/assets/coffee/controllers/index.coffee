@@ -3,6 +3,27 @@ angular
     .controller 'Index', ($scope, $timeout, $http, Tutor, StreamService) ->
         $timeout ->
             StreamService.run('landing', 'main')
+            $scope.has_more_reviews = true
+            $scope.reviews_page = 0
+            $scope.reviews = []
+            searchReviews(true)
+
+        $scope.nextReviewsPage = ->
+            $scope.reviews_page++
+            # StreamService.run('load_more_tutors', null, {page: $scope.page})
+            searchReviews()
+
+        # $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
+
+        searchReviews = (first_load = false) ->
+            $scope.searching_reviews = true
+            $http.get('/api/reviews?page=' + $scope.reviews_page + (if first_load then '&take=3' else '')).then (response) ->
+                console.log(response)
+                $scope.searching_reviews = false
+                $scope.reviews = $scope.reviews.concat(response.data.reviews)
+                $scope.has_more_reviews = response.data.has_more_reviews
+                # if $scope.mobile then $timeout -> bindToggle()
+
         bindArguments($scope, arguments)
         $scope.selected_subject = '1'
 

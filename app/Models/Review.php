@@ -13,7 +13,6 @@ class Review extends Model
     protected $connection = 'egerep';
 
     protected $hidden = [
-        'id',
         'attachment_id',
         'state',
         'updated_at',
