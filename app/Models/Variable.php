@@ -27,15 +27,12 @@ class Variable extends Model
         return $query->where('name', $name);
     }
 
-    public static function display($name, $useful_block = false)
+    public static function display($name)
     {
         if (isMobile() && self::findByName($name . '-mobile')->exists()) {
             $name .= '-mobile';
         }
         $html = self::findByName($name)->first()->html;
-        if (! $useful_block) {
-            Parser::replace($html, 'useful', '');
-        }
         return $html;
     }
 }

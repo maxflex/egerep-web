@@ -40,11 +40,6 @@ class Page extends Model
        'sort'       => 'string',
    ];
 
-    public function useful()
-    {
-        return $this->hasMany(PageUseful::class);
-    }
-
     public function getTitleAttribute($value)
     {
         return $value . ' – ЕГЭ-Репетитор.ру';
@@ -76,7 +71,7 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        $value = Variable::display('serp', true);
+        $value = Variable::display('serp');
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }
