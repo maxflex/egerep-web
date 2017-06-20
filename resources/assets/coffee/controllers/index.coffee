@@ -15,9 +15,9 @@ angular
 
         # $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
 
-        searchReviews = (first_load = false) ->
+        searchReviews = ->
             $scope.searching_reviews = true
-            $http.get('/api/reviews?page=' + $scope.reviews_page + "&take=3").then (response) ->
+            $http.get('/api/reviews?page=' + $scope.reviews_page).then (response) ->
                 $scope.searching_reviews = false
                 $scope.reviews = $scope.reviews.concat(response.data.reviews)
                 $scope.has_more_reviews = response.data.has_more_reviews

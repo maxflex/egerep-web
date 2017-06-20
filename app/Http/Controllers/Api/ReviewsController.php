@@ -14,12 +14,13 @@ use Cache;
 
 class ReviewsController extends Controller
 {
-    const PER_PAGE = 10;
+    const PER_PAGE      = 10;   //
+    const FIRST_PAGE    = 3;    // сколько отображать в начале
 
     public function index(Request $request)
     {
-        $take = $request->page == 0 ? $request->take : self::PER_PAGE;
-        $skip = $request->take + (self::PER_PAGE * ($request->page - 1));
+        $take = $request->page == 0 ? self::FIRST_PAGE : self::PER_PAGE;
+        $skip = self::FIRST_PAGE + (self::PER_PAGE * ($request->page - 1));
 
         if ($skip < 0) {
             $skip = 0;
