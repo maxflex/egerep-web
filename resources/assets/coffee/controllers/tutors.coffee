@@ -307,6 +307,8 @@ angular
         # выезжает по всей Москве
         $scope.departsEverywhere = (tutor) ->
             return false if tutor.svg_map is null
+            # @todo: в мобильной версии svg_map – string, в стационарной – array
+            tutor.svg_map = tutor.svg_map.split(',') if typeof tutor.svg_map is 'string'
             tutor.svg_map.length >= 214
 
         $scope.sendRequest = ->
