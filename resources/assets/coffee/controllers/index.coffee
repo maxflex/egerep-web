@@ -17,8 +17,7 @@ angular
 
         searchReviews = (first_load = false) ->
             $scope.searching_reviews = true
-            $http.get('/api/reviews?page=' + $scope.reviews_page + "&take=" + (if isMobile then 2 else 3)).then (response) ->
-                console.log(response)
+            $http.get('/api/reviews?page=' + $scope.reviews_page + "&take=3").then (response) ->
                 $scope.searching_reviews = false
                 $scope.reviews = $scope.reviews.concat(response.data.reviews)
                 $scope.has_more_reviews = response.data.has_more_reviews
