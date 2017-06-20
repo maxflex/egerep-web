@@ -86,7 +86,9 @@ class Page extends Model
 
     public function getH1BottomAttribute($value)
     {
-        if ($value) {
+        // отображать нижний h1 только в случае,
+        // если поле html заполнено
+        if ($value && ! empty(trim($this->getClean('html')))) {
             return "<h2 class='h1-bottom'>{$value}</h2>";
         }
         return ' ';
