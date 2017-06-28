@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CvStore;
 use App\Http\Controllers\Controller;
-use App\Service\Limiter;
+use App\Models\Service\Api;
+use App\Models\Limiter;
 use Illuminate\Support\Facades\Redis;
 
 class CvController extends Controller
