@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Service\Api;
 use App\Http\Requests\RequestStore;
 use App\Service\Limiter;
+use Illuminate\Support\Facades\Redis;
 use DB;
 
 class RequestsController extends Controller
