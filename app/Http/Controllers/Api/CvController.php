@@ -13,26 +13,14 @@ use Illuminate\Support\Facades\Redis;
 
 class CvController extends Controller
 {
-    const REDIS_CV_COUNT     = 'egerep:cv:count';
-    const REDIS_CV_BLOCKED   = 'egerep:cv:blocked';
-    const CV_MAX_COUNT       = 200;
-    const CV_FLUSH_TIME      = 3600 * 24;
-
     public function store(CvStore $request)
     {
-        $egerep_cv_count = intval(Redis::get(self::REDIS_CV_COUNT));
-        // не более 100 за последние 24 часа
-        if ($egerep_cv_count < self::CV_MAX_COUNT) {
+        // не более 200 за последние 24 часа
+        return Limiter::run('cv', 24, 200, function() use ($request) {
             Api::exec('tutorNew', $request->input());
-            Redis::incr(self::REDIS_CV_COUNT);
-            Redis::expire(self::REDIS_CV_COUNT, self::CV_FLUSH_TIME);
-        } else {
-            if ($egerep_cv_count == self::CV_MAX_COUNT) {
-                Sms::sendToAdmins('Внимание! DDoS на анкеты');
-            }
-            Redis::sadd(self::REDIS_CV_BLOCKED, json_encode($request->input()));
-            return abort(403);
-        }
+        }, function() use ($request) {
+            Redis::sadd('egerep:cv:blocked', json_encode($request->input()));
+        }, 'Внимание! DDoS на анкеты');
     }
 
     public function uploadPhoto(Request $request)

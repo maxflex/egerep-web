@@ -13,14 +13,14 @@ class Limiter
         $key = "egerep:{$key}:count";
         $count = intval(Redis::get($key));
         Redis::incr($key);
-        if ($count <= $max) {
+        if ($count < $max) {
             $return = $success();
-            if ($count == 1) {
+            if ($count == 0) {
                 Redis::expire($key, 3600 * $hours);
             }
             return $return;
         } else {
-            if ($count == ($max + 1) && $sms_text !== null) {
+            if ($count == $max && $sms_text !== null) {
                 Sms::sendToAdmins($sms_text);
             }
             if (is_callable($fail)) {
