@@ -20,9 +20,6 @@ class Limiter
             }
             return $return;
         } else {
-            if ($count == $max && $sms_text !== null) {
-                Sms::sendToAdmins($sms_text);
-            }
             if (is_callable($fail)) {
                 $fail();
             }
