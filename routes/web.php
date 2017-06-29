@@ -5,16 +5,6 @@
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
-    Route::get('enable-cookie', function() {
-        setcookie('admin', 1, 2147483647, '/');
-        return 'Cookie включена';
-    });
-    Route::get('disable-cookie', function() {
-        unset($_COOKIE['admin']);
-        setcookie('admin', null, -1, '/');
-        return 'Cookie выключена';
-    });
-
     # 301 редирект старых преподов
     Route::get('/tutors/person/{id}', function($id) {
         $new_tutor_id = \App\Models\Tutor::where('id_a_pers', $id)->value('id');

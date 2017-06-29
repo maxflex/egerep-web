@@ -375,7 +375,7 @@ function googleClientId() {
 }
 
 function dataLayerPush(object) {
-    if ($.cookie('admin')) {
+    if (getSubdomain() == 'test') {
         return;
     }
     window.dataLayer = window.dataLayer || []
