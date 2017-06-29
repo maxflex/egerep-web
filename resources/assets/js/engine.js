@@ -1,5 +1,5 @@
     active_modal = false
-    
+
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
@@ -393,4 +393,8 @@ function streamLink(url, action, type, additional) {
     scope.StreamService.run('go_' + action, type, additional).then(function() {
         window.location = url
     })
+}
+
+function getSubdomain() {
+    return window.location.host.split('.')[0]
 }
