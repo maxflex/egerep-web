@@ -12,6 +12,10 @@ class StreamController extends Controller
 {
     public function store(Request $request)
     {
+        if (strpos(@$_SERVER['HTTP_X_REAL_IP'], '213.184.130.') === 0) {
+            return;
+        }
+
         // добавляем referer
         if ($request->action == 'landing') {
             $request->merge(['referer' => $_SERVER['HTTP_REFERER']]);
