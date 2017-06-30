@@ -44,7 +44,7 @@ angular.module 'Egerep'
                 this.updateCookie({step: 0, search: 0})
 
         this.run = (action, type, additional = {}) ->
-            return if getSubdomain() is 'test' # отключаем стрим для поддомена test
+            return Promise.resolve() if getSubdomain() is 'test' # отключаем стрим для поддомена test
             this.initCookie() if this.cookie is undefined
             if not this.initialized
                 $timeout =>
