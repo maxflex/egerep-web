@@ -44,7 +44,6 @@ angular.module 'Egerep'
                 this.updateCookie({step: 0, search: 0})
 
         this.run = (action, type, additional = {}) ->
-            return Promise.resolve() if getSubdomain() is 'test' # отключаем стрим для поддомена test
             this.initCookie() if this.cookie is undefined
             if not this.initialized
                 $timeout =>
@@ -73,6 +72,7 @@ angular.module 'Egerep'
                 event: 'configuration'
                 eventCategory: "action=#{action}" + (if type then "_type=#{type}" else "")
                 eventAction: this.generateEventString(angular.copy(params))
+            return Promise.resolve() if getSubdomain() is 'test' # отключаем стрим для поддомена test
             Stream.save(params).$promise
 
         this
