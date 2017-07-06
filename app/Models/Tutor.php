@@ -205,6 +205,10 @@ class Tutor extends Service\Model
             $query->whereRaw('(' . implode(' OR ', $hidden_filter_conditions) . ')');
         }
 
+        if (isset($tutor_id) && $tutor_id) {
+            $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
+        }
+
         if (isset($sort)) {
             switch ($sort) {
                 case 2:

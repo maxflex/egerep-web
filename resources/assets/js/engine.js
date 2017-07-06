@@ -395,3 +395,8 @@ function streamLink(url, action, type, additional) {
 function getSubdomain() {
     return window.location.host.split('.')[0]
 }
+
+function getUrlParam(param) {
+    url = new URL(window.location.href)
+    return url.searchParams.get(param)
+}

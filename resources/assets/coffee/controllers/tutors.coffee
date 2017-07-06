@@ -187,6 +187,7 @@ angular
             $scope.searching = true
             Tutor.search
                 filter_used: filter_used
+                tutor_id: getUrlParam('tutor_id')
                 page: $scope.page
                 search: $scope.search
             , (response) ->

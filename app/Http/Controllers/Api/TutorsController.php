@@ -104,6 +104,8 @@ class TutorsController extends Controller
         // потому что надо поменять subjects, а из $request нельзя
         $search = $request->search;
 
+        $search['tutor_id'] = $request->tutor_id;
+
         // очищаем deselect-значения  {7: false}
         if (isAssoc($search['subjects'])) {
             $search['subjects'] = array_keys(array_filter($search['subjects']));
