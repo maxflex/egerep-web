@@ -371,7 +371,11 @@ function goTutor() {
 }
 
 function googleClientId() {
-    return ga.getAll()[0].get('clientId')
+    if (ga !== undefined) {
+        return ga.getAll()[0].get('clientId')
+    } else {
+        return ''
+    }
 }
 
 function dataLayerPush(object) {
