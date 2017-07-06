@@ -371,7 +371,7 @@ function goTutor() {
 }
 
 function googleClientId() {
-    if (ga !== undefined) {
+    if (ga && ga.getAll) {
         return ga.getAll()[0].get('clientId')
     } else {
         return ''
