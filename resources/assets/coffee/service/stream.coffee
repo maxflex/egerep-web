@@ -60,7 +60,7 @@ angular.module 'Egerep'
                 type: type
                 step: this.cookie.step
                 google_id: googleClientId()
-                yandex_id: yaCounter1411783.getClientID()
+                yandex_id: if yaCounter1411783 then yaCounter1411783.getClientID() else ''
                 mobile: if (typeof isMobile is 'undefined') then '0' else '1'
 
             $.each additional, (key, value) =>
