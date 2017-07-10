@@ -69,6 +69,7 @@ class Tutor extends Service\Model
     {
         return DB::connection('egerep')
             ->table('reviews')
+            ->join('attachments', 'attachments.id', '=', 'attachment_id')
             ->where('tutor_id', $tutor_id)
             ->where('reviews.state', 'published')
             ->whereBetween('score', [1, 10]);
