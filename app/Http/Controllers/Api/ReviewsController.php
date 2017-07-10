@@ -26,12 +26,9 @@ class ReviewsController extends Controller
             $skip = 0;
         }
 
+        // attachment-refactored
         $reviews = Review::has('tutor')->with('tutor')
-                ->join('attachments', 'attachments.id', '=', 'reviews.attachment_id')
-                ->join('archives', 'archives.attachment_id', '=', 'reviews.attachment_id')
                 ->select('reviews.*')
-                ->addSelect(DB::raw('attachments.date as attachment_date, archives.date as archive_date'))
-                ->addSelect(DB::raw('(SELECT COUNT(*) FROM account_datas ad WHERE ad.tutor_id = attachments.tutor_id AND ad.client_id = attachments.client_id) as lesson_count'))
                 ->skip($skip)->take($take)->orderBy('id', 'desc')->get();
 
         $has_more_reviews = $reviews->count() ? Review::where('id', '<', $reviews->last()->id)->exists() : false;
