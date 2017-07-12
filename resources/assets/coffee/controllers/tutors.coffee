@@ -11,6 +11,7 @@ angular
 
         $scope.filterPopup = (popup) ->
             $scope.popups[popup] = true
+            openModal("filter-#{popup}") if $scope.mobile
             StreamService.run('filter_open', popup)
 
         # получить индекс преподавателя. если не указан, береш из хэша
@@ -150,6 +151,8 @@ angular
         # чтобы не редиректило в начале
         filter_used = false
         $scope.filter = ->
+            $scope.popups = {}
+            closeModal()
             $scope.tutors = []
             $scope.page = 1
             if filter_used
@@ -166,7 +169,6 @@ angular
                 filter_used = true
 
         filter = ->
-            $scope.popups = {}
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
