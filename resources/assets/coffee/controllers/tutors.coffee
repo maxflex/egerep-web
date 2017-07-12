@@ -166,6 +166,7 @@ angular
                 filter_used = true
 
         filter = ->
+            $scope.popups = {}
             search()
             # деселект hidden_filter при смене параметров
             delete $scope.search.hidden_filter if $scope.search.hidden_filter and search_count
@@ -300,7 +301,6 @@ angular
 
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
-            $scope.filter()
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
