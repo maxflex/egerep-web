@@ -143,6 +143,8 @@ angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFil
             else
                 "https://lk.ege-repetitor.ru/img/tutors/no-profile-img.gif"
 
+        $rootScope.objectLength = (obj) -> Object.keys(obj).length
+
         $rootScope.formatBytes = (bytes) ->
           if bytes < 1024
             bytes + ' Bytes'

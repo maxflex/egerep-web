@@ -7,6 +7,12 @@ angular
         # сколько загрузок преподавателей было
         search_count = 0
 
+        $scope.popups = {}
+
+        $scope.filterPopup = (popup) ->
+            $scope.popups[popup] = true
+            StreamService.run('filter_open', popup)
+
         # получить индекс преподавателя. если не указан, береш из хэша
         $scope.getIndex = (index = null) ->
             return (parseInt(index) + 1) if index isnt null
@@ -294,6 +300,7 @@ angular
 
         $scope.syncSort = ->
             $scope.search.sort = if $scope.search.station_id then 5 else 1
+            $scope.filter()
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
