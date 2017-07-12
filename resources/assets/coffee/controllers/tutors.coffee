@@ -150,14 +150,14 @@ angular
 
         # чтобы не редиректило в начале
         filter_used = false
-        $scope.filter = ->
+        $scope.filter = (type = null) ->
             $scope.popups = {}
             closeModal()
             $scope.tutors = []
             $scope.page = 1
             if filter_used
                 StreamService.updateCookie({search: StreamService.cookie.search + 1})
-                StreamService.run 'filter', null,
+                StreamService.run 'filter', type,
                     search: StreamService.cookie.search
                     subjects: $scope.SubjectService.getSelected().join(',')
                     sort: $scope.search.sort
