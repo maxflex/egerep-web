@@ -402,5 +402,9 @@ function getSubdomain() {
 
 function getUrlParam(param) {
     url = new URL(window.location.href)
-    return url.searchParams.get(param)
+    if (url.searchParams !== undefined) {
+        return url.searchParams.get(param)
+    } else {
+        return null
+    }
 }
