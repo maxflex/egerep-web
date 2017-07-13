@@ -54,5 +54,6 @@ angular
                         $scope.errors[field] = errors
                         selector = "[ng-model$='#{field}']"
                         $("input#{selector}, textarea#{selector}").focus()
+                        $('html,body').animate({scrollTop: $("input#{selector}, textarea#{selector}").first().offset().top}, 0)
                 else
                     $scope.application.error = true
