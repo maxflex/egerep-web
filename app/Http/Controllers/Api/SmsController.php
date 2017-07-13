@@ -56,7 +56,8 @@ class SmsController extends Controller
      */
     public function store(SmsStore $request)
     {
-        return Limiter::run('sms', 24, 20, function() use ($request) {
+        // return Limiter::run('sms', 24, 20, function() use ($request) {
+        return Limiter::run('sms', 24, 100, function() use ($request) {
             $tutor = Tutor::loggable()->findByPhone($request->phone);
             if ($tutor->exists()) {
                 $tutor_id = $tutor->value('id');
