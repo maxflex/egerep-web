@@ -9,4 +9,5 @@ angular.module('Egerep').directive 'errors', ->
         $scope.getErrors = ->
             return if $scope.$parent.errors is undefined
             errors = $scope.$parent.errors[$scope.model]
+            return if not errors
             if $scope.only_first then [errors[0]] else errors
