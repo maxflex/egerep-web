@@ -11,17 +11,26 @@ use App\Http\Requests\RequestStore;
 use App\Service\Limiter;
 use Illuminate\Support\Facades\Redis;
 use DB;
+use ReCaptcha\ReCaptcha;
 
 class RequestsController extends Controller
 {
     public function store(RequestStore $request)
     {
-        DB::table('request_log')->insert($request->all());
-        return Limiter::run('request', 24, 200, function() use ($request) {
+        /**
+         * Проверка капчи
+         */
+        if (! isMobile()) {
+            $recaptcha = new ReCaptcha(config('captcha.secret'));
+            $resp = $recaptcha->verify($request->captcha, @$_SERVER['HTTP_X_REAL_IP']);
+        }
+
+        if (isMobile() || $resp->isSuccess()) {
+            DB::table('request_log')->insert($request->except('captcha'));
             $_SESSION['sent_ids'][] = $request->tutor_id;
             Api::exec('requestNew', $request->input());
-        }, function() use ($request) {
-            Redis::sadd('egerep:request:blocked', json_encode($request->input()));
-        }, 'Внимание! DDoS на заявки');
+        } else {
+            return abort(403);
+        }
     }
 }

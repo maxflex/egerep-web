@@ -1,4 +1,4 @@
-angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize'])
+angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize', 'vcRecaptcha'])
     .config [
         '$compileProvider'
         ($compileProvider) ->

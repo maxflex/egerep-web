@@ -67,7 +67,8 @@
     "angular-nl2br": "^1.0.3",
     "egerep-panzoom": "egerep-panzoom#^3.2.3",
     "egerep-icheck": "1.0.3",
-    "device.js": "devicejs#^0.2.7"
+    "device.js": "devicejs#^0.2.7",
+    "angular-recaptcha": "^4.1.0"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"

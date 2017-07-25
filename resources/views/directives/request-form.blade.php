@@ -1,4 +1,13 @@
 <form class="search-result-contact">
+    <div
+        vc-recaptcha
+        ng-model="gRecaptchaResponse"
+        size="invisible"
+        key="'{{ config('captcha.site') }}'"
+        on-success="_request(response)"
+        on-create="setWidgetId(widgetId)"
+        lang="ru"
+    ></div>
     <div class='request-form' ng-hide='tutor.request_sent'>
         <div class="search-result-contact-row">
             <input type="text" class="input-text request-name" placeholder="ваше имя" ng-model='tutor.request.name'>

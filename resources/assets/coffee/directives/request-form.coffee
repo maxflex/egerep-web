@@ -7,12 +7,20 @@ angular.module('Egerep')
             index: '='
         templateUrl: (elem, attrs) ->
             if attrs.hasOwnProperty('mobile') then 'directives/request-form-mobile' else 'directives/request-form'
-        controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
+        controller: ($scope, $element, $timeout, $rootScope, Request, Sources, vcRecaptchaService) ->
+            $scope.setResponse = (response) ->
+                console.log('here', response)
+
+            $scope.request = -> vcRecaptchaService.execute($scope.widgetId)
+
+            $scope.setWidgetId = (widgetId) -> $scope.widgetId = widgetId
+
             # отправить заявку
-            $scope.request = ->
+            $scope._request = (response) ->
                 $scope.tutor = {} if not $scope.tutor
                 $scope.tutor.request = {} if $scope.tutor.request is undefined
                 $scope.tutor.request.tutor_id = $scope.tutor.id
+                $scope.tutor.request.captcha = response
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
                     $scope.$parent.StreamService.run 'request', $scope.$parent.StreamService.identifySource($scope.tutor),
