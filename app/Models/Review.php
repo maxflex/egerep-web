@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Scopes\ReviewScope;
 use \Znck\Eloquent\Traits\BelongsToThrough;
 use DB;
+use App\Service\Months;
 
 class Review extends Model
 {
