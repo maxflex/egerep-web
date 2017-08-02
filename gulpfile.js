@@ -71,7 +71,7 @@ elixir(mix => {
             'protonet/jquery.inview/jquery.inview',
             'jquery.actual/jquery.actual.min',
             'angular-sanitize/angular-sanitize.min',
-            'angular-recaptcha/release/angular-recaptcha',
+            // 'angular-recaptcha/release/angular-recaptcha',
             'device.js/lib/device',
         ]).concat(['resources/assets/js/*.js']), 'public/js/scripts.js')
         .scripts('resources/assets/js/mobile/*.js', 'public/js/mobile/scripts.js')
