@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tutor;
 use App\Models\Page;
 use DB;
+use App\Service\Months;
 
 class TutorsController extends Controller
 {
@@ -84,13 +85,19 @@ class TutorsController extends Controller
     public function reviews($id)
     {
         // attachment-refactored
-        return Tutor::reviews($id)
+        $reviews = Tutor::reviews($id)
             ->select(
                 'reviews.created_at',
                 'reviews.score',
                 'reviews.comment',
                 'reviews.signature'
             )->orderBy('reviews.created_at', 'desc')->get();
+
+        foreach($reviews as &$review) {
+            $review->date_string = date('j ', strtotime($review->created_at)) . Months::SHORT[date('n', strtotime($review->created_at))] . date(' Y', strtotime($review->created_at));
+        }
+
+        return $reviews;
     }
 
 
