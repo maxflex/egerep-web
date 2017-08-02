@@ -20,6 +20,14 @@ class Review extends Model
         'user_id',
     ];
 
+    protected $appends = ['subject_string'];
+
+    public function getDateStringAttribute()
+    {
+        $date = $this->attributes['created_at'];
+        return date('j ', strtotime($date)) . Months::SHORT[date('n', strtotime($date))] . date(' Y', strtotime($date));
+    }
+
     public function tutor()
     {
         return $this->belongsToThrough(Tutor::class, Attachment::class)->select(
