@@ -20,7 +20,7 @@ class Review extends Model
         'user_id',
     ];
 
-    protected $appends = ['subject_string'];
+    protected $appends = ['date_string'];
 
     public function getDateStringAttribute()
     {
