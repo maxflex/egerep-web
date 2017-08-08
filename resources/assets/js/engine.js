@@ -391,9 +391,15 @@ function streamLink(url, action, type, additional) {
     if (url[0] != '/' && url[0] != 't') {
         url = '/' + url
     }
-    scope.StreamService.run('go_' + action, type, additional).then(function() {
+    
+    if (url.indexOf('tel') === -1) {
+        scope.StreamService.run('go_' + action, type, additional).then(function() {
+            window.location = url
+        })
+    } else {
+        scope.StreamService.run('go_' + action, type, additional)
         window.location = url
-    })
+    }
 }
 
 function getSubdomain() {
