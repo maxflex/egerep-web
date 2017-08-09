@@ -406,10 +406,14 @@ function streamLink(url, action, type, additional) {
 }
 
 function getUrlParam(param) {
-    url = new URL(window.location.href)
-    if (url.searchParams !== undefined) {
-        return url.searchParams.get(param)
-    } else {
+    try {
+        url = new URL(window.location.href)
+        if (url.searchParams !== undefined) {
+            return url.searchParams.get(param)
+        } else {
+            return null
+        }
+    } catch (e) {
         return null
     }
 }
