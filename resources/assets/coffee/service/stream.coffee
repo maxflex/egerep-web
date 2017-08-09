@@ -72,7 +72,6 @@ angular.module 'Egerep'
                 event: 'configuration'
                 eventCategory: "action=#{action}" + (if type then "_type=#{type}" else "")
                 eventAction: this.generateEventString(angular.copy(params))
-            return Promise.resolve() if getSubdomain() is 'test' # отключаем стрим для поддомена test
             Stream.save(params).$promise
 
         this

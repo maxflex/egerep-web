@@ -305,10 +305,13 @@ function frontendLoadingStart()
 {
 	$("#frontend-loading").fadeIn(300)
 }
+
 function frontendLoadingEnd()
 {
 	$("#frontend-loading").hide()
 }
+
+
 
 /**
  * Печать дива.
@@ -400,10 +403,6 @@ function streamLink(url, action, type, additional) {
         window.location = url
         scope.StreamService.run('go_' + action, type, additional)
     }
-}
-
-function getSubdomain() {
-    return window.location.host.split('.')[0]
 }
 
 function getUrlParam(param) {

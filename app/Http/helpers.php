@@ -268,3 +268,9 @@
     {
         return \DB::table('pages')->whereUrl(substr($_SERVER['REQUEST_URI'], 1))->exists();
     }
+
+
+    function isTestSubdomain()
+    {
+        return array_shift((explode('.', @$_SERVER['HTTP_HOST']))) === 'test';
+    }
