@@ -16,7 +16,7 @@ class CvController extends Controller
     public function store(CvStore $request)
     {
         // не более 200 за последние 24 часа
-        return Limiter::run('cv', 24, 200, function() use ($request) {
+        return Limiter::run('cv', 24, 400, function() use ($request) {
             Api::exec('tutorNew', $request->input());
         }, function() use ($request) {
             Redis::sadd('egerep:cv:blocked', json_encode($request->input()));

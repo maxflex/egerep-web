@@ -17,7 +17,7 @@ class RequestsController extends Controller
     public function store(RequestStore $request)
     {
         DB::table('request_log')->insert($request->all());
-        return Limiter::run('request', 24, 200, function() use ($request) {
+        return Limiter::run('request', 24, 400, function() use ($request) {
             $_SESSION['sent_ids'][] = $request->tutor_id;
             Api::exec('requestNew', $request->input());
         }, function() use ($request) {
