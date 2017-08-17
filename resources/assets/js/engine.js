@@ -435,5 +435,8 @@ function pluralize(number, one, two, five) {
 }
 
 function getNumber(str) {
+    if (typeof(str) !== "string") {
+        str = str.toString()
+    }
     return parseInt(str.replace(/\D/g,''))
 }
