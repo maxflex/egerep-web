@@ -167,7 +167,7 @@ class Tutor extends Service\Model
             $subjects = array_keys(array_filter($subjects));
         }
 
-        $query = Tutor::with(['markers']);
+        $query = Tutor::with(['markers'])->selectDefault();
 
         foreach($subjects as $subject_id) {
             $query->whereSubject($subject_id);
@@ -208,6 +208,18 @@ class Tutor extends Service\Model
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
 
+        if (! @isBlank($age_from) || ! @isBlank($age_to)) {
+            $age_from = @isBlank($age_from) ? 0 : filter_var($age_from, FILTER_SANITIZE_NUMBER_INT);
+            $age_to = @isBlank($age_to) ? 999 : filter_var($age_to, FILTER_SANITIZE_NUMBER_INT);
+            if ($age_to >= $age_from) {
+                $query->addSelect(DB::raw("IF((YEAR(NOW()) - birth_year) between {$age_from} and {$age_to}, 1, 0) as age_order"))->orderBy('age_order', 'desc');
+            }
+        }
+
+        if (! @isBlank($gender)) {
+            $query->addSelect(DB::raw("IF(gender='{$gender}', 1, 0) as gender_order"))->orderBy('gender_order', 'desc');
+        }
+
         if (isset($sort)) {
             switch ($sort) {
                 case 2:
@@ -231,7 +243,7 @@ class Tutor extends Service\Model
             }
         }
 
-        $query->selectDefault()->orderBy('clients_count', 'desc');
+        $query->orderBy('clients_count', 'desc');
 
         return $query;
     }

@@ -67,6 +67,9 @@ class Page extends Model
         if ($this->hidden_filter) {
             $data['hidden_filter'] = explode(',', str_replace(' ', '', mb_strtolower($this->hidden_filter)));
         }
+        $data['gender'] = '';
+        $data['age_from'] = '';
+        $data['age_to'] = '';
         return json_encode($data, JSON_FORCE_OBJECT);
     }
 

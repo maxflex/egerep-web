@@ -1,4 +1,7 @@
 angular.module('Egerep')
+    .value 'Genders',
+        male: 'мужской'
+        female: 'женский'
     .value 'Sources',
         LANDING: 'landing'
         LANDING_PROFILE: 'landing_profile'

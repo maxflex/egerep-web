@@ -39,7 +39,8 @@ elixir(mix => {
             open: 'external',
             host: 'egerep.app',
             proxy: 'https://egecms.app:8084',
-            https: true
+            https: true,
+            ghostMode: false,
         })
         .sass('app.scss')
         .sass('mobile.scss')
@@ -54,7 +55,6 @@ elixir(mix => {
             'underscore/underscore-min',
             'moment/min/moment.min',
             'moment/locale/ru',
-            'jquery.maskedinput/dist/jquery.maskedinput.min',
             'notifyjs/dist/notify',
             'jquery-ui/jquery-ui.min',
             'jquery.customSelect/jquery.customSelect.min',
@@ -62,7 +62,6 @@ elixir(mix => {
             'angular-file-upload/dist/angular-file-upload.min',
             'bootstrap/js/bootstrap.min',
             'bootstrap-select/dist/js/bootstrap-select.min',
-            'jquery.inputmask/dist/jquery.inputmask.bundle',
             'mark.js/dist/jquery.mark.min',
             'angular-toArrayFilter/toArrayFilter',
             'jquery.cookie/jquery.cookie',

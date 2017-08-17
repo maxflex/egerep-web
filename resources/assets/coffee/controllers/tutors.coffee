@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Request, StreamService, Sources) ->
+    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -12,7 +12,7 @@ angular
         $scope.filterPopup = (popup) ->
             $scope.popups[popup] = true
             openModal("filter-#{popup}") if $scope.mobile
-            StreamService.run('filter_open', popup)
+            # StreamService.run('filter_open', popup)
 
         # получить индекс преподавателя. если не указан, береш из хэша
         $scope.getIndex = (index = null) ->
@@ -163,6 +163,9 @@ angular
                     sort: $scope.search.sort
                     station_id: $scope.search.station_id
                     place: $scope.search.place
+                    age_from: $scope.search.age_from
+                    age_to: $scope.search.age_to
+                    gender: $scope.search.gender
                 .then -> filter()
             else
                 filter()

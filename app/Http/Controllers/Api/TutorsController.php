@@ -120,16 +120,16 @@ class TutorsController extends Controller
 
         // пытаемся найти serp-страницу с такими параметрами
         // если находит при пагинации страницу с похожими параметрами – не редиректить
-        if ($request->filter_used && $request->page < 2) {
-            $page = Page::findByParams($search);
-            if ($page->exists()) {
-                return ['url' => $page->inRandomOrder()->value('url')];
-            } else
-            if ($id != 10) {
-                unset($_COOKIE['search']);
-                return ['url' => Page::whereId(10)->value('url')];
-            }
-        }
+        // if ($request->filter_used && $request->page < 2) {
+        //     $page = Page::findByParams($search);
+        //     if ($page->exists()) {
+        //         return ['url' => $page->inRandomOrder()->value('url')];
+        //     } else
+        //     if ($id != 10) {
+        //         unset($_COOKIE['search']);
+        //         return ['url' => Page::whereId(10)->value('url')];
+        //     }
+        // }
 
         // force current page
         Paginator::currentPageResolver(function() use ($request) {

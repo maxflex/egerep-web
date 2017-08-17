@@ -272,5 +272,6 @@
 
     function isTestSubdomain()
     {
-        return array_shift((explode('.', @$_SERVER['HTTP_HOST']))) === 'test';
+        $parts = explode('.', @$_SERVER['HTTP_HOST']);
+        return array_shift($parts) === 'test';
     }

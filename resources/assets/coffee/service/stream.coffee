@@ -10,9 +10,10 @@ angular.module 'Egerep'
         this.generateEventString = (params) ->
             search = $.cookie('search')
             if search isnt undefined then $.each JSON.parse(search), (key, value) ->
-                params[key] = value
+                params[key] = value if not params.hasOwnProperty(key)
             parts = []
             $.each params, (key, value) ->
+                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id', 'hidden_filter'] or not value
                 switch key
                     when 'sort'
                         switch parseInt(value)
@@ -22,12 +23,12 @@ angular.module 'Egerep'
                             when 5 then value = 'bymetro'
                             else value = 'pop'
                     when 'place'
-                        switch parseInt(params.place)
-                            when 1 then where = 'tutor'
-                            when 2 then where = 'client'
-                            else where = 'any'
-                    when 'subjects' then value = SubjectService.getSelected(value).join(',')
-                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id', 'hidden_filter'] or not value
+                        switch parseInt(value)
+                            when 1 then value = 'tutor'
+                            when 2 then value = 'client'
+                            else value = 'any'
+                    when 'age_from', 'age_to' then value = value.replace(/\D/g,'')
+                    when 'subjects' then if typeof(value) is "object" then value = SubjectService.getSelected(value).join(',')
                 parts.push(key + '=' + value)
             return parts.join('_')
 
