@@ -12,11 +12,12 @@ angular.module('Egerep')
 
             $(element)
                 .on 'blur', ->
-                    if scope.ngModel
-                        if scope.prefix is 'до'
-                            $('.age-field').removeClass('has-error')
-                            $('.age-field').addClass('has-error') if parseInt(scope.$parent.search.age_from.replace(/\D/g,'')) > parseInt(scope.ngModel)
-                        updateModel(scope.prefix + ' ' + scope.ngModel + ' лет')
-                .on 'keyup', -> updateModel(scope.ngModel.replace(/\D/g,''))
-                .on 'focus', -> updateModel(scope.ngModel.replace(/\D/g,''))
+                    $('.age-field').removeClass('has-error')
+                    age_to = scope.$parent.search.age_to
+                    age_from = scope.$parent.search.age_from
+                    if (age_to && age_from)
+                        $('.age-field').addClass('has-error') if getNumber(age_from) > getNumber(age_to)
+                    updateModel(scope.prefix + ' ' + scope.ngModel + ' лет') if scope.ngModel
+                .on 'keyup', -> updateModel(getNumber(scope.ngModel))
+                .on 'focus', -> updateModel(getNumber(scope.ngModel))
 

@@ -433,3 +433,7 @@ function pluralize(number, one, two, five) {
     }
     return five;
 }
+
+function getNumber(str) {
+    return parseInt(str.replace(/\D/g,''))
+}
