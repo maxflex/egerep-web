@@ -77,6 +77,23 @@ angular
             # нужно именно так, чтобы осталось правильное склонение месяца
             text_date.substr(3)
 
+        $scope.firstAttachmentAgo = (tutor, type = 'month') ->
+            current_year = parseInt(moment().format('YYYY'))
+            attachment_year = parseInt(moment(tutor.first_attachment_date).format('YYYY'))
+
+            current_month = parseInt(moment().format('M'))
+            attachment_month = parseInt(moment(tutor.first_attachment_date).format('M'))
+
+            month_diff = current_month - attachment_month
+            year_diff = current_year - attachment_year
+
+            # если месяц отрицательный
+            if month_diff < 0
+                month_diff = 12 + month_diff
+                year_diff--
+
+            if type is 'month' then month_diff else year_diff
+
         $scope.requestSent = (tutor) ->
             tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
 

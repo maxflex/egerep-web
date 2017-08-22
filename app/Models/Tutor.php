@@ -65,6 +65,28 @@ class Tutor extends Service\Model
         }, $this->subjects));
     }
 
+    /**
+     * AB Test цена
+     */
+    public function getPublicPriceAttribute()
+    {
+        $price = $this->attributes['public_price'];
+        if (@$_COOKIE['ab-test-price'] == 1) {
+            $coef = $this->attributes['lesson_duration'] / 45;
+            return intval(round($price / $coef / 100) * 100);
+        } else {
+            return $price;
+        }
+    }
+
+    /**
+     * AB Test цена
+     */
+    public function getLessonDurationAttribute()
+    {
+        return @$_COOKIE['ab-test-price'] == 1 ? 45 : $this->attributes['lesson_duration'];
+    }
+
     public static function reviews($tutor_id)
     {
         return DB::connection('egerep')

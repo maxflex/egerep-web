@@ -1,0 +1,22 @@
+/home/egerep-web
+[10:40:57] Using gulpfile /home/egerep-web/gulpfile.js
+[10:40:57] Starting 'sass'...
+┌────────────┬──────────────────────────┬────────────────────────────────┬────────────────────┐
+│ Task       │ Summary                  │ Source Files                   │ Destination        │
+├────────────┼──────────────────────────┼────────────────────────────────┼────────────────────┤
+│ mix.sass() │ 1. Compiling Sass        │ resources/assets/sass/app.scss │ public/css/app.css │
+│            │ 2. Autoprefixing CSS     │                                │                    │
+│            │ 3. Concatenating Files   │                                │                    │
+│            │ 4. Writing Source Maps   │                                │                    │
+│            │ 5. Saving to Destination │                                │                    │
+└────────────┴──────────────────────────┴────────────────────────────────┴────────────────────┘
+┌────────────┬──────────────────────────┬───────────────────────────────────┬───────────────────────┐
+│ Task       │ Summary                  │ Source Files                      │ Destination           │
+├────────────┼──────────────────────────┼───────────────────────────────────┼───────────────────────┤
+│ mix.sass() │ 1. Compiling Sass        │ resources/assets/sass/mobile.scss │ public/css/mobile.css │
+│            │ 2. Autoprefixing CSS     │                                   │                       │
+│            │ 3. Concatenating Files   │                                   │                       │
+│            │ 4. Writing Source Maps   │                                   │                       │
+│            │ 5. Saving to Destination │                                   │                       │
+└────────────┴──────────────────────────┴───────────────────────────────────┴───────────────────────┘
+[10:40:57] Finished 'sass' after 496 ms

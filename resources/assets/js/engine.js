@@ -13,6 +13,14 @@
                 this.blur();
             })
         $('div:has(>a[href^="https://www.google.com/maps"])').remove()
+        $('body').on('mousedown', function(event) {
+            if ($(this).hasClass('modal-open')) {
+                // console.log('CLOSING MODAL', event.target.tagName)
+                if (event.target.tagName == 'BODY') {
+                    closeModal()
+                }
+            }
+        })
     })
 
     $(document).on('keyup', function(event) {
@@ -48,7 +56,7 @@
     function openModal(id) {
         $(".modal#modal-" + id).addClass('active')
         $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
-        $("body").addClass('modal-open open-modal-' + id); active_modal = id
+        $("body").addClass('fadeInUp modal-open open-modal-' + id); active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
         window.location.hash = '#modal'
     }
