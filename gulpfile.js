@@ -38,8 +38,8 @@ elixir(mix => {
             port: 8085,
             open: 'external',
             host: 'egerep.app',
-            proxy: 'http://egecms.app:8084',
-            // https: true,
+            proxy: 'https://egecms.app:8084',
+            https: true,
             ghostMode: false,
         })
         .sass('app.scss')

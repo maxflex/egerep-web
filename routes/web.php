@@ -1,7 +1,7 @@
 <?php
     use App\Models\Variable;
 
-    // URL::forceSchema('https');
+    URL::forceSchema('https');
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
