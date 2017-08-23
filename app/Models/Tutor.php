@@ -15,6 +15,8 @@ class Tutor extends Service\Model
     protected $appends = [
         'subjects_string',
         'subjects_string_common',
+        'types',
+        'lesson_duration_original',
     ];
 
     const USER_TYPE  = 'TEACHER';
@@ -66,6 +68,21 @@ class Tutor extends Service\Model
     }
 
     /**
+     * Типы подготовки (ЕГЭ, ОГЭ или ничего)
+     */
+    public function getTypesAttribute()
+    {
+        $types = [];
+        if (in_array(11, $this->grades)) {
+            $types[] = 'ЕГЭ';
+        }
+        if (in_array(9, $this->grades)) {
+            $types[] = 'ОГЭ';
+        }
+        return $types;
+    }
+
+    /**
      * AB Test цена
      */
     public function getPublicPriceAttribute()
@@ -73,7 +90,7 @@ class Tutor extends Service\Model
         $price = $this->attributes['public_price'];
         if (@$_COOKIE['ab-test-price'] == 1) {
             $coef = $this->attributes['lesson_duration'] / 45;
-            return intval(round($price / $coef / 100) * 100);
+            return intval(round($price / $coef / 50) * 50);
         } else {
             return $price;
         }
@@ -85,6 +102,11 @@ class Tutor extends Service\Model
     public function getLessonDurationAttribute()
     {
         return @$_COOKIE['ab-test-price'] == 1 ? 45 : $this->attributes['lesson_duration'];
+    }
+
+    public function getLessonDurationOriginalAttribute()
+    {
+        return $this->attributes['lesson_duration'];
     }
 
     public static function reviews($tutor_id)

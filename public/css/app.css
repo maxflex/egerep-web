@@ -5117,7 +5117,8 @@ textarea {
 .footer-contacts {
   float: right;
   position: relative;
-  font-family: 'helveticaneuecyrregular'; }
+  font-family: 'helveticaneuecyrregular';
+  width: 196px !important; }
 
 .footer-social-media {
   margin: 0 0 20px;
@@ -6464,6 +6465,13 @@ hr.full-line {
   width: 100000px;
   margin-top: 30px;
   border-top: 1px solid #e7e7e7; }
+
+.tutor-rating {
+  background-color: #2781bf;
+  color: white;
+  font-family: "helveticaneuecyrmedium";
+  padding: 2px 4px;
+  border-radius: 2px; }
 
 @font-face {
   font-family: "Flaticon";

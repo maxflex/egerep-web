@@ -37,6 +37,7 @@ angular
 
         # страница поиска
         $timeout ->
+            $scope.ab_test_price = $.cookie('ab-test-price')
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
@@ -97,6 +98,8 @@ angular
         $scope.requestSent = (tutor) ->
             tutor.request_sent or $scope.sent_ids.indexOf(tutor.id) isnt -1
 
+        # directionsService = new google.maps.DirectionsService()
+        # directionsDisplay = new google.maps.DirectionsRenderer()
         $scope.gmap = (tutor, index) ->
             # if tutor.map_shown is undefined then
             # @todo: сделать так, чтобы ранее открытые карты не инициализировались заново
@@ -113,10 +116,22 @@ angular
                         position: google.maps.ControlPosition.LEFT_BOTTOM
                     scaleControl: true
 
+                # directionsDisplay.setMap(map)
+
                 bounds = new (google.maps.LatLngBounds)
                 tutor.markers.forEach (marker) ->
-                    bounds.extend(new google.maps.LatLng(marker.lat, marker.lng))
-                    new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map)
+                    marker_location = new google.maps.LatLng(marker.lat, marker.lng)
+                    # closest_metro = marker.metros[0]
+                    bounds.extend(marker_location)
+                    new_marker = newMarker(marker_location, map)
+                    # directionsService.route
+                    #     origin: marker_location
+                    #     destination: new google.maps.LatLng(closest_metro.station.lat, closest_metro.station.lng)
+                    #     travelMode: if closest_metro.meters > 1500 then google.maps.TravelMode.DRIVING else google.maps.TravelMode.WALKING
+                    # , (response, status) ->
+                    #     if status is google.maps.DirectionsStatus.OK
+                    #         directionsDisplay.setDirections(response)
+                    #         directionsDisplay.setMap(map)
 
                 # one marker bug fix
                 if bounds.getNorthEast().equals(bounds.getSouthWest())

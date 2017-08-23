@@ -12472,9 +12472,9 @@ angular.module('svgmap', []).directive('svgMap', function() {
         alignMap();
         return $timeout(function() {
           return $element.panzoom({
-            startTransform: 'scale(1.8)',
-            minScale: 1.8,
-            maxScale: 1.8,
+            startTransform: 'scale(1.5)',
+            minScale: 1.5,
+            maxScale: 1.5,
             contain: 'automatic',
             panOnlyWhenZoomed: false
           });
@@ -13523,6 +13523,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     $timeout(function() {
       var id;
+      $scope.ab_test_price = $.cookie('ab-test-price');
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
@@ -13597,9 +13598,10 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         });
         bounds = new google.maps.LatLngBounds;
         tutor.markers.forEach(function(marker) {
-          var new_marker;
-          bounds.extend(new google.maps.LatLng(marker.lat, marker.lng));
-          return new_marker = newMarker(new google.maps.LatLng(marker.lat, marker.lng), map);
+          var marker_location, new_marker;
+          marker_location = new google.maps.LatLng(marker.lat, marker.lng);
+          bounds.extend(marker_location);
+          return new_marker = newMarker(marker_location, map);
         });
         if (bounds.getNorthEast().equals(bounds.getSouthWest())) {
           extendPoint1 = new google.maps.LatLng(bounds.getNorthEast().lat() + 0.005, bounds.getNorthEast().lng() + 0.005);
