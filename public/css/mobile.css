@@ -3837,21 +3837,21 @@ th {
  *
  * Copyright (c) 2016 Daniel Eden
  */
-.animated {
+.animated, .modal {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }
 
-.animated.infinite {
+.animated.infinite, .infinite.modal {
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite; }
 
-.animated.hinge {
+.animated.hinge, .hinge.modal {
   -webkit-animation-duration: 2s;
   animation-duration: 2s; }
 
-.animated.bounceIn, .animated.bounceOut, .animated.flipOutX, .animated.flipOutY {
+.animated.bounceIn, .bounceIn.modal, .animated.bounceOut, .bounceOut.modal, .animated.flipOutX, .flipOutX.modal, .animated.flipOutY, .flipOutY.modal {
   -webkit-animation-duration: .75s;
   animation-duration: .75s; }
 
@@ -5069,7 +5069,7 @@ th {
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; } }
 
-.animated.flip {
+.animated.flip, .flip.modal {
   -webkit-backface-visibility: visible;
   backface-visibility: visible;
   -webkit-animation-name: flip;
@@ -9396,6 +9396,8 @@ p, .p-like {
   text-transform: uppercase; }
 
 .modal {
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
   position: fixed;
   width: 100%;
   max-height: 92%;
@@ -10021,40 +10023,44 @@ span.customSelect.custom-select-small .customSelectInner {
       margin: 0;
       text-align: left; }
 
-#modal-menu {
-  -webkit-animation-duration: .3s;
-  animation-duration: .3s; }
+.modal-animate-close {
+  -webkit-animation-name: modalClose;
+  animation-name: modalClose; }
 
-.menu-close {
-  -webkit-animation-name: menuClose;
-  animation-name: menuClose; }
+.modal-animate-open {
+  -webkit-animation-name: modalOpen;
+  animation-name: modalOpen; }
 
-.menu-open {
-  -webkit-animation-name: menuOpen;
-  animation-name: menuOpen; }
-
-@-webkit-keyframes menuOpen {
+@-webkit-keyframes modalOpen {
   from {
-    opacity: 0; }
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
   to {
-    opacity: 1; } }
+    -webkit-transform: none;
+    transform: none; } }
 
-@keyframes menuOpen {
+@keyframes modalOpen {
   from {
-    opacity: 0; }
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
   to {
-    opacity: 1; } }
+    -webkit-transform: none;
+    transform: none; } }
 
-@-webkit-keyframes menuClose {
+@-webkit-keyframes modalClose {
   from {
-    opacity: 1; }
+    -webkit-transform: none;
+    transform: none; }
   to {
-    opacity: 0; } }
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); } }
 
-@keyframes menuClose {
+@keyframes modalClose {
   from {
-    opacity: 1; }
+    -webkit-transform: none;
+    transform: none; }
   to {
-    opacity: 0; } }
+    -webkit-transform: translate3d(0, 110%, 0);
+    transform: translate3d(0, 110%, 0); } }
 
 /*# sourceMappingURL=mobile.css.map */

@@ -14734,29 +14734,28 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         autoHideDelay: 3000
     }
 
-    function closeModalAnimated() {
-        $('#modal-menu').removeClass('menu-open').addClass('menu-close')
-        setTimeout(closeModal, 300)
-    }
+    // function closeModalAnimated() {
+    //     $('#modal-menu').removeClass('menu-open').addClass('menu-close')
+    //     setTimeout(closeModal, 300)
+    // }
 
     function closeModal() {
-        $('.modal').removeClass('active')
-        $('body').removeClass('modal-open')
-		$("body").removeClass('open-modal-' + active_modal);
-        active_modal = false
-        $('.container').off('touchmove');
-        if(window.location.hash == "#modal") {
-            window.history.back()
-        }
-        console.log('modal closed')
+        $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
+        setTimeout(function() {
+            $('.modal.active').removeClass('active')
+            $('body').removeClass('modal-open')
+    		$("body").removeClass('open-modal-' + active_modal);
+            active_modal = false
+            $('.container').off('touchmove');
+            if(window.location.hash == "#modal") {
+                window.history.back()
+            }
+        }, 300)
     }
 
     function openModal(id) {
         modal = $(".modal#modal-" + id)
-        modal.addClass('active')
-        if (id == 'menu') {
-            modal.removeClass('menu-close').addClass('menu-open')
-        }
+        modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
         $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
         $("body").addClass('modal-open open-modal-' + id);
         active_modal = id
