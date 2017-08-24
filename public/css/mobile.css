@@ -10033,34 +10033,26 @@ span.customSelect.custom-select-small .customSelectInner {
 
 @-webkit-keyframes modalOpen {
   from {
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0); }
+    opacity: 0; }
   to {
-    -webkit-transform: none;
-    transform: none; } }
+    opacity: 1; } }
 
 @keyframes modalOpen {
   from {
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0); }
+    opacity: 0; }
   to {
-    -webkit-transform: none;
-    transform: none; } }
+    opacity: 1; } }
 
 @-webkit-keyframes modalClose {
   from {
-    -webkit-transform: none;
-    transform: none; }
+    opacity: 1; }
   to {
-    -webkit-transform: translate3d(0, 100%, 0);
-    transform: translate3d(0, 100%, 0); } }
+    opacity: 0; } }
 
 @keyframes modalClose {
   from {
-    -webkit-transform: none;
-    transform: none; }
+    opacity: 1; }
   to {
-    -webkit-transform: translate3d(0, 110%, 0);
-    transform: translate3d(0, 110%, 0); } }
+    opacity: 0; } }
 
 /*# sourceMappingURL=mobile.css.map */
