@@ -4661,6 +4661,16 @@ span.customSelect.custom-select-small .customSelectInner {
     height: calc(100% - 64px);
 }
 
+.seo-block {
+    background: $footer-bg-color;
+    color: white;
+    & h3 {
+        color: white;
+    }
+    & h2 {
+        color: #b6b6b6;
+    }
+}
 .footer {
     color: white;
     background: $footer-bg-color;

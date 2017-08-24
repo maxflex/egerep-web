@@ -7600,6 +7600,14 @@ span.customSelect.custom-select-small .customSelectInner {
 .modal-reviews {
   height: calc(100% - 64px); }
 
+.seo-block {
+  background: #3b3b3b;
+  color: white; }
+  .seo-block h3 {
+    color: white; }
+  .seo-block h2, .seo-block .h2-like {
+    color: #b6b6b6; }
+
 .footer {
   color: white;
   background: #3b3b3b; }
