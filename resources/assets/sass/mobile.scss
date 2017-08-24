@@ -4,6 +4,7 @@
 @import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/font-awesome/css/font-awesome";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
+@import "../bower/animate.css/animate.min";
 
 @mixin zindex($index) {
     -webkit-transform:translateZ($index);
@@ -4701,5 +4702,68 @@ span.customSelect.custom-select-small .customSelectInner {
             margin: 0;
             text-align: left;
         }
+    }
+}
+
+#modal-menu {
+    animation-duration: .3s;
+}
+
+.menu-close {
+    -webkit-animation-name: menuClose;
+    animation-name: menuClose;
+}
+
+.menu-open {
+    -webkit-animation-name: menuOpen;
+    animation-name: menuOpen;
+}
+
+
+@-webkit-keyframes menuOpen {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes menuOpen {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@-webkit-keyframes menuClose {
+  from {
+      -webkit-transform: none;
+      transform: none;
+  }
+
+  to {
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes menuClose {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    to {
+        -webkit-transform: translate3d(0, 110%, 0);
+        transform: translate3d(0, 110%, 0);
     }
 }
