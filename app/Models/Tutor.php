@@ -73,11 +73,13 @@ class Tutor extends Service\Model
     public function getTypesAttribute()
     {
         $types = [];
-        if (in_array(11, $this->grades)) {
-            $types[] = 'ЕГЭ';
-        }
-        if (in_array(9, $this->grades)) {
-            $types[] = 'ОГЭ';
+        if ($this->grades !== null) {
+            if (in_array(11, $this->grades)) {
+                $types[] = 'ЕГЭ';
+            }
+            if (in_array(9, $this->grades)) {
+                $types[] = 'ОГЭ';
+            }
         }
         return $types;
     }
@@ -106,7 +108,7 @@ class Tutor extends Service\Model
 
     public function getLessonDurationOriginalAttribute()
     {
-        return $this->attributes['lesson_duration'];
+        return @$this->attributes['lesson_duration'];
     }
 
     public static function reviews($tutor_id)
