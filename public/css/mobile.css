@@ -9525,8 +9525,8 @@ p, .p-like {
   flex-direction: column;
   height: 100%; }
   #modal-map > div > div:last-child {
-    -webkit-box-flex: 1;
-    flex: 1 1 auto; }
+    height: calc(100% - 50px);
+    margin-top: 50px; }
 
 .metro-circle {
   height: 7px;
