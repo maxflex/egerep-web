@@ -13,6 +13,9 @@
                 this.blur();
             })
         $('div:has(>a[href^="https://www.google.com/maps"])').remove()
+        // document.body.addEventListener('touchstart', function(e){
+        //     $('#testy').html(event.target.tagName + '.' + $(event.target).attr('class'))
+        // })
         $('body').on('mousedown', function(event) {
             if ($(this).hasClass('modal-open')) {
                 // console.log('CLOSING MODAL', event.target.tagName)

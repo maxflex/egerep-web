@@ -4646,7 +4646,7 @@ span.customSelect.custom-select-small .customSelectInner {
     text-align: center;
     display: inline-block;
     width: 100%;
-    background: #eaeaea;
+    background: $footer-bg-color;
     padding: 2em 1em 1em !important;
     margin-bottom: 0 !important;
 }
@@ -4659,4 +4659,34 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .modal-reviews {
     height: calc(100% - 64px);
+}
+
+.footer {
+    color: white;
+    background: $footer-bg-color;
+    & b {
+        color: #b6b6b6;
+        font-size: 1.250em;
+        font-family: 'helveticaneuecyrmedium';
+    }
+    & a {
+        color: white;
+    }
+    & .toggler {
+        color: white;
+        padding: 0;
+    }
+    & > div {
+        margin: 1.70em 0;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    & .footer-links {
+        padding: 0;
+        & li {
+            padding: 0 0 0.725em 0;
+            margin: 0;
+        }
+    }
 }

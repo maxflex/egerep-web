@@ -7587,7 +7587,7 @@ span.customSelect.custom-select-small .customSelectInner {
   text-align: center;
   display: inline-block;
   width: 100%;
-  background: #eaeaea;
+  background: #3b3b3b;
   padding: 2em 1em 1em !important;
   margin-bottom: 0 !important; }
 
@@ -7599,5 +7599,27 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .modal-reviews {
   height: calc(100% - 64px); }
+
+.footer {
+  color: white;
+  background: #3b3b3b; }
+  .footer b {
+    color: #b6b6b6;
+    font-size: 1.250em;
+    font-family: 'helveticaneuecyrmedium'; }
+  .footer a {
+    color: white; }
+  .footer .toggler {
+    color: white;
+    padding: 0; }
+  .footer > div {
+    margin: 1.70em 0; }
+    .footer > div:first-child {
+      margin-top: 0; }
+  .footer .footer-links {
+    padding: 0; }
+    .footer .footer-links li {
+      padding: 0 0 0.725em 0;
+      margin: 0; }
 
 /*# sourceMappingURL=mobile.css.map */

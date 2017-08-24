@@ -675,11 +675,6 @@ select {
     @extend h4;
 }
 
-.footer-blocks {
-    background: #f0f0f0;
-    color: black;
-}
-
 .footer-blocks-inner {
     width: 960px;
     margin: 0 auto;
@@ -703,11 +698,6 @@ select {
         margin-bottom: 8px;
         & a {
             white-space: nowrap;
-            color: black;
-            text-decoration: none;
-            &:hover {
-                text-decoration: underline;
-            }
         }
     }
     & .toggler {
@@ -715,7 +705,7 @@ select {
         cursor: pointer;
         span {
             display: inline-block;
-            border-bottom: 1px dotted black;
+            border-bottom: 1px dotted white;
         }
         i {
             vertical-align: middle;
