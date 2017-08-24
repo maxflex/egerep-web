@@ -62,6 +62,7 @@
             if(window.location.hash == "#modal") {
                 window.history.back()
             }
+            console.log('close modal')
         }, 300)
     }
 
@@ -77,7 +78,7 @@
 
     // close modal on «back» button
     $(window).on('hashchange', function() {
-        if(window.location.hash != "#modal") {
+        if(window.location.hash != "#modal" && $('body').hasClass('modal-open')) {
             closeModal()
         }
     });
