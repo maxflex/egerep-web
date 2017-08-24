@@ -7572,6 +7572,7 @@ span.customSelect.custom-select-small .customSelectInner {
     margin: 0 10px 0 20px; }
 
 .tutor-card-fake {
+  background-color: rgba(0, 0, 0, 0.03);
   border-top: 1px solid #d7d7d7;
   margin-bottom: 0 !important; }
   .tutor-card-fake .tutor-card-fake-image-wrapper {
@@ -7609,8 +7610,10 @@ span.customSelect.custom-select-small .customSelectInner {
     color: #b6b6b6; }
 
 .footer {
+  text-align: left;
   color: white;
-  background: #3b3b3b; }
+  background: #3b3b3b;
+  padding: 1.458em 2em; }
   .footer b {
     color: #b6b6b6;
     font-size: 1.250em;
@@ -7628,6 +7631,7 @@ span.customSelect.custom-select-small .customSelectInner {
     padding: 0; }
     .footer .footer-links li {
       padding: 0 0 0.725em 0;
-      margin: 0; }
+      margin: 0;
+      text-align: left; }
 
 /*# sourceMappingURL=mobile.css.map */

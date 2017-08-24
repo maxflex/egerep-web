@@ -4627,7 +4627,7 @@ span.customSelect.custom-select-small .customSelectInner {
 }
 
 .tutor-card-fake {
-    // background-color: #eaeaea;
+    background-color: rgba(0, 0, 0, 0.03);
     border-top: 1px solid #d7d7d7;
     margin-bottom: 0 !important;
     & .tutor-card-fake-image-wrapper {
@@ -4672,8 +4672,10 @@ span.customSelect.custom-select-small .customSelectInner {
     }
 }
 .footer {
+    text-align: left;
     color: white;
     background: $footer-bg-color;
+    padding: 1.458em 2em;
     & b {
         color: #b6b6b6;
         font-size: 1.250em;
@@ -4697,6 +4699,7 @@ span.customSelect.custom-select-small .customSelectInner {
         & li {
             padding: 0 0 0.725em 0;
             margin: 0;
+            text-align: left;
         }
     }
 }

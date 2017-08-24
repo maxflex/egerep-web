@@ -938,7 +938,11 @@ $footer-height: 315px;
 }
 
 .seo-block {
-    background: #f0f0f0;
+    background: $footer-bg-color;
+    color: white;
+    & h2, h3, b {
+        color: #ababab;
+    }
     & .global {
         padding-bottom: 0;
         padding-top: 10px;

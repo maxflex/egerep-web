@@ -5221,7 +5221,10 @@ textarea {
   padding-bottom: 1px; }
 
 .seo-block {
-  background: #f0f0f0; }
+  background: #3b3b3b;
+  color: white; }
+  .seo-block h2, .seo-block .h2-like, .seo-block h3, .seo-block b {
+    color: #ababab; }
   .seo-block .global {
     padding-bottom: 0;
     padding-top: 10px; }
@@ -6468,6 +6471,10 @@ hr.full-line {
   font-family: "helveticaneuecyrmedium";
   padding: 2px 4px;
   border-radius: 2px; }
+
+.tutor-card-fake {
+  border-top: 1px solid #e7e7e7;
+  background-color: rgba(0, 0, 0, 0.03); }
 
 @font-face {
   font-family: "Flaticon";
