@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Tutor;
 use App\Models\Page;
+use App\Models\Marker;
 use DB;
 use App\Service\Months;
 
@@ -53,7 +54,7 @@ class TutorsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Tutor::selectDefault()->find($id);
     }
 
     /**
@@ -147,5 +148,12 @@ class TutorsController extends Controller
             return Tutor::with(['accounts', 'plannedAccount'])->find($_SESSION['tutor_id'])->append('debt_calc');
         }
         abort(401);
+    }
+
+    public function markers()
+    {
+        return egerep('markers as m')->join('tutors as t', function($join) {
+            return $join->on('t.id', '=', 'm.markerable_id')->where('m.markerable_type', '=', 'App\Models\Tutor');
+        })->where('m.type', 'green')->where('t.public_desc', '<>', '')->select('m.markerable_id', 'm.lat', 'm.lng')->get();
     }
 }

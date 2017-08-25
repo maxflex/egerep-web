@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) ->
+    .controller 'Tutors', ($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -149,6 +149,54 @@ angular
                     $('div:has(>a[href^="https://www.google.com/maps"])').remove()
 
             $scope.toggleShow(tutor, 'map_shown', 'google_map', index)
+
+        # initFullscreenGmap = ->
+        #     $scope.loaded_tutors = {}
+        #     $timeout ->
+        #         map = new google.maps.Map document.getElementById("fullscreen-gmap"),
+        #             center: MAP_CENTER
+        #             scrollwheel: false,
+        #             zoom: 11
+        #             disableDefaultUI: true
+        #             clickableLabels: false
+        #             clickableIcons: false
+        #             zoomControl: true
+        #             zoomControlOptions:
+        #                 position: google.maps.ControlPosition.LEFT_BOTTOM
+        #             scaleControl: true
+        #
+        #         $http.get('/api/tutors/markers').then (response) ->
+        #             response.data.forEach (marker) ->
+        #                 tutor_id = marker.markerable_id
+        #                 marker_location = new google.maps.LatLng(marker.lat, marker.lng)
+        #                 new_marker = newMarker(marker_location, map)
+        #                 google.maps.event.addListener new_marker, 'click', (event) ->
+        #                     if not $scope.loaded_tutors[tutor_id]
+        #                         Tutor.get {id: tutor_id}, (response) ->
+        #                             $scope.marker_tutor = response
+        #                             $scope.loaded_tutors[marker.markerable_id] = response
+        #                     else
+        #                         $scope.marker_tutor = $scope.loaded_tutors[tutor_id]
+        #
+        # initFullscreenGmap()
+        #
+        # exitHandler = ->
+        #     elem = $('#fullscreen-gmap-wrapper')
+        #     if elem.is(':visible')
+        #         elem.hide()
+        #     else
+        #         elem.show()
+        #         initFullscreenGmap()
+        #
+        # if (document.addEventListener)
+        #     document.addEventListener('webkitfullscreenchange', exitHandler, false)
+        #     document.addEventListener('mozfullscreenchange', exitHandler, false)
+        #     document.addEventListener('fullscreenchange', exitHandler, false)
+        #     document.addEventListener('MSFullscreenChange', exitHandler, false)
+        #
+        # $scope.initFullscreenMap = ->
+        #     elem = document.getElementById('fullscreen-gmap-wrapper')
+        #     if document.webkitFullscreenElement then document.webkitCancelFullScreen() else elem.webkitRequestFullScreen()
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()

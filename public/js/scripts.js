@@ -13478,7 +13478,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
+  angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
     var filter, filter_used, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
@@ -14352,23 +14352,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -14430,6 +14413,23 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 

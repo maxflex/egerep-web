@@ -9979,7 +9979,9 @@ span.customSelect.custom-select-small .customSelectInner {
   width: 100%;
   background: #3b3b3b;
   padding: 2em 1em 1em !important;
-  margin-bottom: 0 !important; }
+  margin-bottom: 0 !important;
+  top: 1px;
+  position: relative; }
 
 .button-call {
   background-color: #717171 !important;

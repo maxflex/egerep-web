@@ -1,0 +1,54 @@
+#fullscreen-gmap-wrapper {
+    display: none !important;
+    background: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    & #fullscreen-gmap {
+        width: 100%;
+        height: 100%;
+    }
+    & .controls {
+        width: 700px;
+        height: 100%;
+        float: left;
+        background: white;
+        box-shadow: 0 0 10px 3px rgba(black, .3);
+        z-index: 9;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    & .select-marker {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: $gray-light;
+        font-size: 20px;
+        font-family: $font-light;
+    }
+    & .gmap-tutor-card {
+        & .search-result-userpic {
+            float: right;
+            & img {
+                width: 100px;
+                height: auto;
+                margin: 0 0 10px 20px;
+            }
+        }
+    }
+    & .search-result-title {
+        padding-bottom: 6px;
+        line-height: normal;
+    }
+    & .bottom-indent {
+        margin-bottom: 25px;
+    }
+    & .top-indent {
+        margin-top: 25px;
+    }
+}
