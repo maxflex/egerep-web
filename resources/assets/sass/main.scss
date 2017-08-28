@@ -496,9 +496,9 @@ textarea {
 .search-result-metro-list li {
     position: relative;
     font-family: 'helveticaneuecyrregular';
-    &:not(:last-child) {
-        margin-bottom: 3px;
-    }
+    // &:not(:last-child) {
+    //     margin-bottom: 3px;
+    // }
 }
 .metro-bullet:before {
     content: '';
