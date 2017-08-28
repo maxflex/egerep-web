@@ -4813,8 +4813,6 @@ textarea {
 .search-result-metro-list li {
   position: relative;
   font-family: 'helveticaneuecyrregular'; }
-  .search-result-metro-list li:not(:last-child) {
-    margin-bottom: 3px; }
 
 .metro-bullet:before {
   content: '';
