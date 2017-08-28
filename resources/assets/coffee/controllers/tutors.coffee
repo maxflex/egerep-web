@@ -38,6 +38,7 @@ angular
         # страница поиска
         $timeout ->
             $scope.ab_test_price = $.cookie('ab-test-price')
+            $scope.ab_test_more_info = $.cookie('ab-test-more-info')
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
@@ -331,8 +332,8 @@ angular
                     position: $scope.getIndex(index)
                     tutor_id: tutor.id
 
-        $scope.shortenGrades = ->
-            a = $scope.tutor.grades
+        $scope.shortenGrades = (tutor) ->
+            a = tutor.grades
             return if a.length < 1
             limit = a.length - 1
             combo_end = -1
