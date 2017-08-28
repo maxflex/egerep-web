@@ -451,7 +451,6 @@ textarea {
     line-height: 22px;
     & b {
         color: black;
-        font-family: 'helveticaneuecyrmedium';
     }
 }
 
@@ -472,6 +471,9 @@ textarea {
 .search-result-text {
     padding: 0 0 8px;
     line-height: 20px;
+    & b {
+        font-family: $font-medium;
+    }
 }
 .search-result-cooperation {
     padding: 0 0 9px;

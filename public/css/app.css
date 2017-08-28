@@ -4773,8 +4773,7 @@ textarea {
   padding: 0 0 14px;
   line-height: 22px; }
   .search-result-title b {
-    color: black;
-    font-family: 'helveticaneuecyrmedium'; }
+    color: black; }
 
 .tutor-id {
   color: #a7a7a7;
@@ -4791,6 +4790,8 @@ textarea {
 .search-result-text {
   padding: 0 0 8px;
   line-height: 20px; }
+  .search-result-text b {
+    font-family: "helveticaneuecyrmedium"; }
 
 .search-result-cooperation {
   padding: 0 0 9px; }
