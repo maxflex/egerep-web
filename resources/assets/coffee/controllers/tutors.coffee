@@ -380,6 +380,12 @@ angular
                 position: $scope.getIndex(index)
                 tutor_id: tutor.id
 
+        $scope.expandMoreInfo = (tutor, index) ->
+            tutor.expand_info = true
+            StreamService.run 'expand_more_tutor_info', StreamService.identifySource(tutor),
+                position: $scope.getIndex(index)
+                tutor_id: tutor.id
+
         $scope.expand = (tutor, index) ->
             StreamService.run 'expand_tutor_info', StreamService.identifySource(tutor),
                 position: $scope.getIndex(index)

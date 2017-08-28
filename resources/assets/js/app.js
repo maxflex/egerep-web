@@ -792,6 +792,13 @@
         tutor_id: tutor.id
       });
     };
+    $scope.expandMoreInfo = function(tutor, index) {
+      tutor.expand_info = true;
+      return StreamService.run('expand_more_tutor_info', StreamService.identifySource(tutor), {
+        position: $scope.getIndex(index),
+        tutor_id: tutor.id
+      });
+    };
     $scope.expand = function(tutor, index) {
       return StreamService.run('expand_tutor_info', StreamService.identifySource(tutor), {
         position: $scope.getIndex(index),
