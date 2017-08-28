@@ -5751,6 +5751,14 @@ div[id^='svg'] {
   margin: 0;
   margin-bottom: 15px; }
 
+.top-indent {
+  display: block;
+  padding: 0;
+  margin-top: 15px; }
+
+.default-line-height {
+  line-height: 20px; }
+
 .circle-separator {
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 8px;
