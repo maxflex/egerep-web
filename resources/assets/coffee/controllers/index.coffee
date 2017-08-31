@@ -33,12 +33,23 @@ angular
         $scope.goSubject = (where) ->
             streamLink($scope.subject_routes[$scope.selected_subject], 'serp_' + where, $scope.findById($scope.subjects, $scope.selected_subject).eng)
 
-        # сотрудничает с 12 сентября 2000 года
-        $scope.dateToText = (date) ->
-            text_date = moment(date).format 'DD MMMM YYYY'
-            # вырезаем дату, оставляем месяц и год
-            # нужно именно так, чтобы осталось правильное склонение месяца
-            text_date.substr(3)
+        $scope.onWebsite = (tutor, type = 'month') ->
+            return if not tutor
+            current_year = parseInt(moment().format('YYYY'))
+            attachment_year = parseInt(moment(tutor.created_at).format('YYYY'))
+
+            current_month = parseInt(moment().format('M'))
+            attachment_month = parseInt(moment(tutor.created_at).format('M'))
+
+            month_diff = current_month - attachment_month
+            year_diff = current_year - attachment_year
+
+            # если месяц отрицательный
+            if month_diff < 0
+                month_diff = 12 + month_diff
+                year_diff--
+
+            if type is 'month' then month_diff else year_diff
 
         $scope.randomReview = ->
             $scope.loading_review = true

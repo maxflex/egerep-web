@@ -13419,10 +13419,29 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     $scope.goSubject = function(where) {
       return streamLink($scope.subject_routes[$scope.selected_subject], 'serp_' + where, $scope.findById($scope.subjects, $scope.selected_subject).eng);
     };
-    $scope.dateToText = function(date) {
-      var text_date;
-      text_date = moment(date).format('DD MMMM YYYY');
-      return text_date.substr(3);
+    $scope.onWebsite = function(tutor, type) {
+      var attachment_month, attachment_year, current_month, current_year, month_diff, year_diff;
+      if (type == null) {
+        type = 'month';
+      }
+      if (!tutor) {
+        return;
+      }
+      current_year = parseInt(moment().format('YYYY'));
+      attachment_year = parseInt(moment(tutor.created_at).format('YYYY'));
+      current_month = parseInt(moment().format('M'));
+      attachment_month = parseInt(moment(tutor.created_at).format('M'));
+      month_diff = current_month - attachment_month;
+      year_diff = current_year - attachment_year;
+      if (month_diff < 0) {
+        month_diff = 12 + month_diff;
+        year_diff--;
+      }
+      if (type === 'month') {
+        return month_diff;
+      } else {
+        return year_diff;
+      }
     };
     return $scope.randomReview = function() {
       $scope.loading_review = true;
@@ -14024,23 +14043,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -14453,67 +14455,19 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 
@@ -14765,6 +14719,71 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 
