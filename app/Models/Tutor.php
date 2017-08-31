@@ -123,7 +123,7 @@ class Tutor extends Service\Model
 
     public function scopeWhereSubject($query, $subject_id)
     {
-        return $query->whereRaw("FIND_IN_SET($subject_id, subjects)");;
+        return $query->whereRaw("FIND_IN_SET($subject_id, subjects)");
     }
 
     /**
@@ -153,9 +153,10 @@ class Tutor extends Service\Model
             'lk',
             'tb',
             'js',
+            'created_at',
             'tutor_data.clients_count',
             'tutor_data.reviews_count',
-            'tutor_data.first_attachment_date',
+            // 'tutor_data.first_attachment_date',
             'tutor_data.review_avg',
             'tutor_data.svg_map',
             'tutor_data.photo_exists',

@@ -150,10 +150,23 @@ class TutorsController extends Controller
         abort(401);
     }
 
-    public function markers()
+    public function markers(Request $request)
     {
-        return egerep('markers as m')->join('tutors as t', function($join) {
+        $subjects = [];
+
+        if (isAssoc($request->subjects)) {
+            $subjects = array_keys(array_filter($request->subjects));
+        }
+
+        $query = egerep('markers as m')->join('tutors as t', function($join) {
             return $join->on('t.id', '=', 'm.markerable_id')->where('m.markerable_type', '=', 'App\Models\Tutor');
-        })->where('m.type', 'green')->where('t.public_desc', '<>', '')->select('m.markerable_id', 'm.lat', 'm.lng')->get();
+        })->where('m.type', 'green')->where('t.public_desc', '<>', '')
+        ->select('m.markerable_id', 'm.lat', 'm.lng');
+
+        foreach($subjects as $subject_id) {
+            $query->whereRaw("FIND_IN_SET($subject_id, t.subjects)");
+        }
+
+        return $query->get();
     }
 }

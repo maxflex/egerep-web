@@ -395,7 +395,7 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
-    var filter, filter_used, highlight, search, search_count;
+    var exitHandler, filter, filter_used, highlight, initFullscreenGmap, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.popups = {};
@@ -473,15 +473,18 @@
       text_date = moment(date).format('DD MMMM YYYY');
       return text_date.substr(3);
     };
-    $scope.firstAttachmentAgo = function(tutor, type) {
+    $scope.onWebsite = function(tutor, type) {
       var attachment_month, attachment_year, current_month, current_year, month_diff, year_diff;
       if (type == null) {
         type = 'month';
       }
+      if (!tutor) {
+        return;
+      }
       current_year = parseInt(moment().format('YYYY'));
-      attachment_year = parseInt(moment(tutor.first_attachment_date).format('YYYY'));
+      attachment_year = parseInt(moment(tutor.created_at).format('YYYY'));
       current_month = parseInt(moment().format('M'));
-      attachment_month = parseInt(moment(tutor.first_attachment_date).format('M'));
+      attachment_month = parseInt(moment(tutor.created_at).format('M'));
       month_diff = current_month - attachment_month;
       year_diff = current_year - attachment_year;
       if (month_diff < 0) {
@@ -534,6 +537,79 @@
         });
       });
       return $scope.toggleShow(tutor, 'map_shown', 'google_map', index);
+    };
+    $scope.loaded_tutors = {};
+    initFullscreenGmap = function() {
+      return $timeout(function() {
+        var map;
+        map = new google.maps.Map(document.getElementById("fullscreen-gmap"), {
+          center: MAP_CENTER,
+          scrollwheel: false,
+          zoom: 11,
+          disableDefaultUI: true,
+          clickableLabels: false,
+          clickableIcons: false,
+          zoomControl: true,
+          zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+          },
+          scaleControl: true
+        });
+        return $http.post('/api/tutors/markers', {
+          subjects: $scope.search.subjects
+        }).then(function(response) {
+          return response.data.forEach(function(marker) {
+            var marker_location, new_marker, tutor_id;
+            tutor_id = marker.markerable_id;
+            marker_location = new google.maps.LatLng(marker.lat, marker.lng);
+            new_marker = newMarker(marker_location, map);
+            return google.maps.event.addListener(new_marker, 'click', function(event) {
+              if (!$scope.loaded_tutors[tutor_id]) {
+                return Tutor.get({
+                  id: tutor_id
+                }, function(response) {
+                  $scope.marker_tutor = response;
+                  return $scope.loaded_tutors[marker.markerable_id] = response;
+                });
+              } else {
+                return $scope.marker_tutor = $scope.loaded_tutors[tutor_id];
+              }
+            });
+          });
+        });
+      });
+    };
+    $scope.searchGmap = function() {
+      initFullscreenGmap();
+      $scope.popups = {};
+      return $scope.marker_tutor = null;
+    };
+    exitHandler = function() {
+      var elem;
+      elem = $('#fullscreen-gmap-wrapper');
+      if (elem.is(':visible')) {
+        return elem.hide();
+      } else {
+        elem.css({
+          display: 'flex'
+        });
+        return initFullscreenGmap();
+      }
+    };
+    if (document.addEventListener) {
+      document.addEventListener('webkitfullscreenchange', exitHandler, false);
+      document.addEventListener('mozfullscreenchange', exitHandler, false);
+      document.addEventListener('fullscreenchange', exitHandler, false);
+      document.addEventListener('MSFullscreenChange', exitHandler, false);
+    }
+    $scope.initFullscreenMap = function() {
+      var elem;
+      elem = document.getElementById('fullscreen-gmap-wrapper');
+      if (document.webkitFullscreenElement) {
+        return document.webkitCancelFullScreen();
+      } else {
+        return elem.webkitRequestFullScreen();
+      }
     };
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
@@ -859,6 +935,23 @@
         });
       }
     });
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1271,23 +1364,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

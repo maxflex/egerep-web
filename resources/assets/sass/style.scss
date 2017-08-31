@@ -998,3 +998,9 @@ hr.full-line {
     border-top: 1px solid #e7e7e7;
     background-color: rgba(0, 0, 0, 0.03);
 }
+
+.btn-gradient {
+    border: 1px solid $green-main;
+    background: white;
+    color: $green-main;
+}

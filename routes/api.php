@@ -6,7 +6,7 @@ if (App::environment('production')) {
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('tutors/search', 'TutorsController@search');
     Route::get('tutors/login', 'TutorsController@login');
-    Route::get('tutors/markers', 'TutorsController@markers');
+    Route::post('tutors/markers', 'TutorsController@markers');
     Route::get('tutors/reviews/{id}', 'TutorsController@reviews');
     Route::resource('tutors', 'TutorsController');
 
