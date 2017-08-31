@@ -96,6 +96,10 @@
                         case 'tutors':
                             $replacement = Tutor::bySubject(...$args)->toJson();
                             break;
+                        // is|test
+                        case 'is':
+                            $replacement = isTestSubdomain() ? 'true' : 'false';
+                            break;
                         case 'reviews':
                             if ($args[0] === 'random') {
                                 $ignore_cache = true;
