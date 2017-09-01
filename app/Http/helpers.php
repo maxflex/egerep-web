@@ -190,9 +190,12 @@
     /**
      * Get from factory
      */
-    function fact($table, $key = 'id', $select = null)
+    function fact($table, $key = 'id', $select = null, $orderBy = null)
     {
-        return \App\Models\Service\Factory::json($table, $key, $select);
+        // if ($table == 'priorities') {
+        //     return dd($orderBy);
+        // }
+        return \App\Models\Service\Factory::json($table, $key, $select, $orderBy);
     }
 
     /**

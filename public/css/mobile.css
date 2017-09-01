@@ -9830,15 +9830,17 @@ span.customSelect.custom-select-small .customSelectInner {
 .serp-body .footer {
   margin-top: 0; }
 
-.filter-group > div {
-  position: relative;
-  margin-bottom: .5em; }
-  .filter-group > div:last-child {
-    margin-bottom: 1.5em; }
-  .filter-group > div button {
-    width: 100% !important; }
-  .filter-group > div .item:not(:last-child) {
-    margin-bottom: 5px; }
+.filter-group {
+  margin-top: 10px; }
+  .filter-group > div {
+    position: relative;
+    margin-bottom: .5em; }
+    .filter-group > div:last-child {
+      margin-bottom: 1.5em; }
+    .filter-group > div button {
+      width: 100% !important; }
+    .filter-group > div .item:not(:last-child) {
+      margin-bottom: 5px; }
 
 .fake-select {
   border: 1px solid #dedede;
@@ -9960,19 +9962,6 @@ span.customSelect.custom-select-small .customSelectInner {
     height: 1.2em;
     margin: 0 10px 0 20px; }
 
-.tutor-card-fake {
-  background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1px solid #d7d7d7;
-  margin-bottom: 0 !important; }
-  .tutor-card-fake .tutor-card-fake-image-wrapper {
-    width: 6.5em;
-    text-align: center;
-    float: right; }
-    .tutor-card-fake .tutor-card-fake-image-wrapper img {
-      width: 4.5em;
-      float: none;
-      margin: 0; }
-
 .button-call-wrapper {
   text-align: center;
   display: inline-block;
@@ -10064,5 +10053,11 @@ span.customSelect.custom-select-small .customSelectInner {
   to {
     -webkit-transform: translate3d(0, 110%, 0);
     transform: translate3d(0, 110%, 0); } }
+
+.upper-select {
+  position: absolute;
+  font-size: 12px;
+  top: -18px;
+  left: 13px; }
 
 /*# sourceMappingURL=mobile.css.map */

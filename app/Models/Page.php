@@ -39,6 +39,7 @@ class Page extends Model
        'station_id' => 'string',
        'subjects'   => 'string',
        'sort'       => 'string',
+       'priority'   => 'string',
    ];
 
     public function getTitleAttribute($value)

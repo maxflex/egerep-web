@@ -759,9 +759,9 @@ select {
     background: white;
     z-index: 100;
     box-shadow: 0 0 20px rgba(black, .6);
-    padding: 10px;
-    border-radius: 5px;
+    // border-radius: 5px;
     margin-top: 5px;
+    padding: 8px 0;
     & .hidden-select {
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         opacity: 0;
@@ -878,9 +878,9 @@ input::-webkit-inner-spin-button {
             margin-right: 15px;
         }
         & button {
-            width: 100% !important;
-            height: 28px;
-            line-height: 28px;
+            // width: 100% !important;
+            height: 38px;
+            line-height: 37px;
             border-radius: 4px !important;
             // opacity: .5;
         }
@@ -897,7 +897,7 @@ input::-webkit-inner-spin-button {
     // border-top: 1px solid #dedede;
     // border-bottom: 1px solid #dedede;
     padding: 25px 0;
-    background-color: #f6f6f6;
+    // background-color: #f6f6f6;
 }
 
 .fake-select {
@@ -906,7 +906,7 @@ input::-webkit-inner-spin-button {
     background: white;
     display: flex;
     align-items: center;
-    height: 26px;
+    height: 36px;
     padding: 0 7px 0 12px;
     border-radius: 4px;
     cursor: pointer;
@@ -994,13 +994,35 @@ hr.full-line {
     border-radius: 2px;
 }
 
-.tutor-card-fake {
-    border-top: 1px solid #e7e7e7;
-    background-color: rgba(0, 0, 0, 0.03);
-}
-
 .btn-gradient {
     border: 1px solid $green-main;
     background: white;
     color: $green-main;
+}
+
+.custom-checkboxes {
+    & > div {
+        cursor: pointer !important;
+        display: flex;
+        align-items: center;
+        height: 28px;
+        &:hover {
+            background: rgb(234, 244, 255);
+        }
+        & img {
+            height: 14px;
+            margin: 0px 10px 0 10px;
+        }
+    }
+}
+
+.input-metro {
+    cursor: pointer;
+}
+
+.upper-select {
+    position: absolute;
+    font-size: 12px;
+    top: -18px;
+    left: 13px;
 }

@@ -224,17 +224,6 @@ class Tutor extends Service\Model
             $query->where('photo_extension', '!=', '');
         }
 
-        # Оставляем только зеленые маркеры, если клиент едет к репетитору
-        if (isset($place)) {
-            if ($place == 1) {
-                # отсеиваем репетиторов без зеленых маркеров
-                $query->has('markers');
-            } else {
-                # если "строго у себя дома", то только репетиторы с картой выезда
-                $query->has('departure');
-            }
-        }
-
         if (isset($hidden_filter)) {
             $hidden_filter_conditions = [];
             foreach($hidden_filter as $phrase) {
@@ -255,43 +244,48 @@ class Tutor extends Service\Model
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
 
-        if (! @isBlank($age_from) || ! @isBlank($age_to)) {
-            $age_from = @isBlank($age_from) ? 0 : filter_var($age_from, FILTER_SANITIZE_NUMBER_INT);
-            $age_to = @isBlank($age_to) ? 999 : filter_var($age_to, FILTER_SANITIZE_NUMBER_INT);
-            if ($age_to >= $age_from) {
-                $query->addSelect(DB::raw("IF((YEAR(NOW()) - birth_year) between {$age_from} and {$age_to}, 1, 0) as age_order"))->orderBy('age_order', 'desc');
-            }
-        }
+        // if (! @isBlank($age_from) || ! @isBlank($age_to)) {
+        //     $age_from = @isBlank($age_from) ? 0 : filter_var($age_from, FILTER_SANITIZE_NUMBER_INT);
+        //     $age_to = @isBlank($age_to) ? 999 : filter_var($age_to, FILTER_SANITIZE_NUMBER_INT);
+        //     if ($age_to >= $age_from) {
+        //         $query->addSelect(DB::raw("IF((YEAR(NOW()) - birth_year) between {$age_from} and {$age_to}, 1, 0) as age_order"))->orderBy('age_order', 'desc');
+        //     }
+        // }
 
-        if (! @isBlank($gender)) {
-            $query->addSelect(DB::raw("IF(gender='{$gender}', 1, 0) as gender_order"))->orderBy('gender_order', 'desc');
-        }
+        // if (! @isBlank($gender)) {
+        //     $query->addSelect(DB::raw("IF(gender='{$gender}', 1, 0) as gender_order"))->orderBy('gender_order', 'desc');
+        // }
 
-        if (isset($sort)) {
-            switch ($sort) {
+        if (isset($priority)) {
+            switch ($priority) {
+                // у репетитора
                 case 2:
+                    # отсеиваем репетиторов без зеленых маркеров
+                    $query->has('markers')->orderByDistanceToMarkers($station_id, 'green');
+                    break;
+                // у себя дома
+                case 3:
+                    $query->has('departure')->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
+                    break;
+                // сначала дороже
+                case 4:
                     $query->orderBy('public_price', 'desc');
                     break;
-                case 3:
+                // сначала дешевле
+                case 5:
                     $query->orderBy('public_price', 'asc');
                     break;
-                case 4:
+                // по средней оценке
+                case 6:
                     $query->orderBy('review_avg', 'desc');
                     break;
-                case 5:
-                    if ($station_id) {
-                        if ($place == 1) {
-                            $query->orderByDistanceToMarkers($station_id, 'green');
-                        } else if ($place == 2) {
-                            $query->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
-                        }
-                    }
-                    break;
+                // (1) по популярности
+                default:
+                    $query->orderBy('clients_count', 'desc');
             }
+        } else {
+            $query->orderBy('clients_count', 'desc');
         }
-
-        $query->orderBy('clients_count', 'desc');
-
         return $query;
     }
 

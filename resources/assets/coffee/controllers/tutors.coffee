@@ -9,10 +9,12 @@ angular
 
         $scope.popups = {}
 
+        $scope.station_ids = {}
+
         $scope.filterPopup = (popup) ->
             $scope.popups[popup] = true
             openModal("filter-#{popup}") if $scope.mobile
-            # StreamService.run('filter_open', popup)
+            StreamService.run('filter_open', popup)
 
         # получить индекс преподавателя. если не указан, береш из хэша
         $scope.getIndex = (index = null) ->
@@ -52,6 +54,9 @@ angular
 
                 # place по умолчанию
                 $scope.search.place = 1 if not $scope.search.place
+
+                if ($scope.search.priority == '2' || $scope.search.priority == '3')
+                    $scope.station_ids[$scope.search.priority] = $scope.search.station_id
 
                 SubjectService.init($scope.search.subjects)
                 StreamService.run('landing', 'serp')
@@ -250,12 +255,13 @@ angular
                 StreamService.run 'filter', type,
                     search: StreamService.cookie.search
                     subjects: $scope.SubjectService.getSelected().join(',')
-                    sort: $scope.search.sort
                     station_id: $scope.search.station_id
-                    place: $scope.search.place
-                    age_from: $scope.search.age_from
-                    age_to: $scope.search.age_to
-                    gender: $scope.search.gender
+                    priority: $scope.search.priority
+                    # sort: $scope.search.sort
+                    # place: $scope.search.place
+                    # age_from: $scope.search.age_from
+                    # age_to: $scope.search.age_to
+                    # gender: $scope.search.gender
                 .then -> filter()
             else
                 filter()
@@ -280,10 +286,13 @@ angular
 
         $scope.unselectSubjects = (subject_id) ->
             angular.forEach $scope.search.subjects, (enabled, id) ->
-                pair = _.filter scope.pairs, (p) ->
-                    p.indexOf(parseInt(subject_id)) isnt -1
-                pair.push([subject_id]) if not pair.length
-                $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
+                if subject_id
+                    pair = _.filter scope.pairs, (p) ->
+                        p.indexOf(parseInt(subject_id)) isnt -1
+                    pair.push([subject_id]) if not pair.length
+                    $scope.search.subjects[id] = false if pair[0].indexOf(parseInt(id)) is -1
+                else
+                    $scope.search.subjects[id] = false
 
         search = ->
             $scope.searching = true
@@ -317,14 +326,6 @@ angular
                         accuracy:
                             value: 'exactly'
                             limiters: ['!', '@', '#', '&', '*', '(', ')', '-', '–', '—', '+', '=', '[', ']', '{', '}', '|', ':', ';', '\'', '\"', '‘', '’', '“', '”', ',', '.', '<', '>', '/', '?']
-
-        $scope.clearMetro = ->
-            $('.search-metro-autocomplete').val('')
-            $('.search-filter-metro-wrap').removeClass('active')
-            $scope.search.station_id = 0
-            $scope.search.sort = '1'
-            $timeout ->
-                $('.custom-select-sort').trigger('render')
 
         $scope.showSvg = (tutor, index) ->
             $scope.toggleShow(tutor, 'show_svg', 'metro_map', index)
@@ -400,8 +401,16 @@ angular
                 position: $scope.getIndex(index)
                 tutor_id: tutor.id
 
-        $scope.syncSort = ->
-            $scope.search.sort = if $scope.search.station_id then 5 else 1
+        $scope.setPriority = (priority_id) ->
+            $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
+
+        $scope.syncSort = (priority_id) ->
+            if priority_id == 2 || priority_id == 3
+                if not $scope.station_ids[priority_id]
+                    $scope.search.priority = 1
+                    return
+                $scope.search.station_id = $scope.station_ids[priority_id]
+            $scope.search.priority = priority_id
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null

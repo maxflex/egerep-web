@@ -13,21 +13,17 @@ angular.module 'Egerep'
                 params[key] = value if not params.hasOwnProperty(key)
             parts = []
             $.each params, (key, value) ->
-                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id', 'hidden_filter'] or not value
+                return if key in ['action', 'type', 'google_id', 'yandex_id', 'id', 'hidden_filter', 'sort', 'place', 'gender'] or not value
                 switch key
-                    when 'sort'
+                    when 'priority'
                         switch parseInt(value)
-                            when 2 then value = 'maxprice'
-                            when 3 then value = 'minprice'
-                            when 4 then value = 'rating'
-                            when 5 then value = 'bymetro'
+                            when 2 then value = 'tutor'
+                            when 3 then value = 'client'
+                            when 4 then value = 'maxprice'
+                            when 5 then value = 'minprice'
+                            when 6 then value = 'rating'
                             else value = 'pop'
-                    when 'place'
-                        switch parseInt(value)
-                            when 1 then value = 'tutor'
-                            when 2 then value = 'client'
-                            else value = 'any'
-                    when 'age_from', 'age_to' then value = value.replace(/\D/g,'')
+                    # when 'age_from', 'age_to' then value = value.replace(/\D/g,'')
                     when 'subjects' then if typeof(value) is "object" then value = SubjectService.getSelected(value).join(',')
                 parts.push(key + '=' + value)
             return parts.join('_')

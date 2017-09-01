@@ -6,12 +6,21 @@ use Cache;
 
 class Factory
 {
-    public static function get($table, $key = 'id', $select = null)
+    public static function get($table, $key = 'id', $select = null, $orderBy = null)
     {
         $query = DB::connection('factory')->table($table);
 
         if ($select) {
             $query->select('id', $select);
+        }
+
+        if ($orderBy) {
+            if (is_array($orderBy)) {
+                list($field, $type) = $orderBy;
+                $query->orderBy($field, $type);
+            } else {
+                $query->orderBy($orderBy);
+            }
         }
 
         $return = $query->get();
@@ -23,9 +32,9 @@ class Factory
         return $return;
     }
 
-    public static function json($table, $key = 'id', $select = null)
+    public static function json($table, $key = 'id', $select = null, $orderBy = null)
     {
-        $data = static::get($table, $key, $select);
+        $data = static::get($table, $key, $select, $orderBy);
         return json_encode($data);
     }
 

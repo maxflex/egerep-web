@@ -13502,11 +13502,13 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.popups = {};
+    $scope.station_ids = {};
     $scope.filterPopup = function(popup) {
       $scope.popups[popup] = true;
       if ($scope.mobile) {
-        return openModal("filter-" + popup);
+        openModal("filter-" + popup);
       }
+      return StreamService.run('filter_open', popup);
     };
     $scope.getIndex = function(index) {
       if (index == null) {
@@ -13557,6 +13559,9 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         }
         if (!$scope.search.place) {
           $scope.search.place = 1;
+        }
+        if ($scope.search.priority === '2' || $scope.search.priority === '3') {
+          $scope.station_ids[$scope.search.priority] = $scope.search.station_id;
         }
         SubjectService.init($scope.search.subjects);
         StreamService.run('landing', 'serp');
@@ -13774,12 +13779,8 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         return StreamService.run('filter', type, {
           search: StreamService.cookie.search,
           subjects: $scope.SubjectService.getSelected().join(','),
-          sort: $scope.search.sort,
           station_id: $scope.search.station_id,
-          place: $scope.search.place,
-          age_from: $scope.search.age_from,
-          age_to: $scope.search.age_to,
-          gender: $scope.search.gender
+          priority: $scope.search.priority
         }).then(function() {
           return filter();
         });
@@ -13816,13 +13817,17 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     $scope.unselectSubjects = function(subject_id) {
       return angular.forEach($scope.search.subjects, function(enabled, id) {
         var pair;
-        pair = _.filter(scope.pairs, function(p) {
-          return p.indexOf(parseInt(subject_id)) !== -1;
-        });
-        if (!pair.length) {
-          pair.push([subject_id]);
-        }
-        if (pair[0].indexOf(parseInt(id)) === -1) {
+        if (subject_id) {
+          pair = _.filter(scope.pairs, function(p) {
+            return p.indexOf(parseInt(subject_id)) !== -1;
+          });
+          if (!pair.length) {
+            pair.push([subject_id]);
+          }
+          if (pair[0].indexOf(parseInt(id)) === -1) {
+            return $scope.search.subjects[id] = false;
+          }
+        } else {
           return $scope.search.subjects[id] = false;
         }
       });
@@ -13871,15 +13876,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
           });
         });
       }
-    };
-    $scope.clearMetro = function() {
-      $('.search-metro-autocomplete').val('');
-      $('.search-filter-metro-wrap').removeClass('active');
-      $scope.search.station_id = 0;
-      $scope.search.sort = '1';
-      return $timeout(function() {
-        return $('.custom-select-sort').trigger('render');
-      });
     };
     $scope.showSvg = function(tutor, index) {
       return $scope.toggleShow(tutor, 'show_svg', 'metro_map', index);
@@ -13984,8 +13980,20 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         tutor_id: tutor.id
       });
     };
-    $scope.syncSort = function() {
-      return $scope.search.sort = $scope.search.station_id ? 5 : 1;
+    $scope.setPriority = function(priority_id) {
+      if (priority_id !== 2 && priority_id !== 3) {
+        return $scope.search.priority = priority_id;
+      }
+    };
+    $scope.syncSort = function(priority_id) {
+      if (priority_id === 2 || priority_id === 3) {
+        if (!$scope.station_ids[priority_id]) {
+          $scope.search.priority = 1;
+          return;
+        }
+        $scope.search.station_id = $scope.station_ids[priority_id];
+      }
+      return $scope.search.priority = priority_id;
     };
     $scope.changeFilter = function(param, value) {
       if (value == null) {
@@ -14455,6 +14463,71 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').value('Genders', {
     male: 'мужской',
     female: 'женский'
@@ -14531,43 +14604,30 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
       parts = [];
       $.each(params, function(key, value) {
-        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id' || key === 'hidden_filter') || !value) {
+        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id' || key === 'hidden_filter' || key === 'sort' || key === 'place' || key === 'gender') || !value) {
           return;
         }
         switch (key) {
-          case 'sort':
+          case 'priority':
             switch (parseInt(value)) {
               case 2:
-                value = 'maxprice';
+                value = 'tutor';
                 break;
               case 3:
-                value = 'minprice';
+                value = 'client';
                 break;
               case 4:
-                value = 'rating';
+                value = 'maxprice';
                 break;
               case 5:
-                value = 'bymetro';
+                value = 'minprice';
+                break;
+              case 6:
+                value = 'rating';
                 break;
               default:
                 value = 'pop';
             }
-            break;
-          case 'place':
-            switch (parseInt(value)) {
-              case 1:
-                value = 'tutor';
-                break;
-              case 2:
-                value = 'client';
-                break;
-              default:
-                value = 'any';
-            }
-            break;
-          case 'age_from':
-          case 'age_to':
-            value = value.replace(/\D/g, '');
             break;
           case 'subjects':
             if (typeof value === "object") {
@@ -14719,71 +14779,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 

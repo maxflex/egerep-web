@@ -11,6 +11,9 @@ class ParserCache
 
     public static function get($key)
     {
+        if (\App::environment('local')) {
+            return null;
+        }
         if (in_array(static::getFunctionName($key), Parser::$cached_functions)) {
             return \Cache::get($key, false);
         }
