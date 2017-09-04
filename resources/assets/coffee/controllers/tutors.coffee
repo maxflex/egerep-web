@@ -25,7 +25,8 @@ angular
 
         $scope.profileLink = (tutor, index, async = true) ->
             index = $scope.getIndex(index)
-            link = "#{tutor.id}##{index}"
+            link = "#{tutor.id}"
+            link += "##{index}" if index
             window.open(link, '_blank') if async
             StreamService.run 'go_tutor_profile', StreamService.identifySource(tutor),
                 position: index
@@ -158,6 +159,16 @@ angular
             $scope.toggleShow(tutor, 'map_shown', 'google_map', index)
 
         $scope.loaded_tutors = {}
+
+        repaintChosen = ->
+            $scope.all_markers.forEach (marker) ->
+                if marker.tutor_id is $scope.marker_tutor.id
+                    marker.setIcon ICON_BLUE
+                    marker.setZIndex(999999999)
+                else if marker.zIndex == 999999999
+                    marker.zIndex = 1
+                    marker.setIcon(if $scope.requestSent($scope.loaded_tutors[marker.tutor_id]) then ICON_SEMI_BLACK else ICON_GREEN)
+
         initFullscreenGmap = ->
             $timeout ->
                 map = new google.maps.Map document.getElementById("fullscreen-gmap"),
@@ -172,18 +183,24 @@ angular
                         position: google.maps.ControlPosition.LEFT_BOTTOM
                     scaleControl: true
 
+                $scope.all_markers = []
                 $http.post('/api/tutors/markers', {subjects: $scope.search.subjects}).then (response) ->
                     response.data.forEach (marker) ->
                         tutor_id = marker.markerable_id
                         marker_location = new google.maps.LatLng(marker.lat, marker.lng)
-                        new_marker = newMarker(marker_location, map)
+                        new_marker = newMarker(marker_location, map, if $scope.requestSent({id: tutor_id}) then 'gray' else 'green')
+                        new_marker.tutor_id = tutor_id
                         google.maps.event.addListener new_marker, 'click', (event) ->
                             if not $scope.loaded_tutors[tutor_id]
                                 Tutor.get {id: tutor_id}, (response) ->
                                     $scope.marker_tutor = response
                                     $scope.loaded_tutors[marker.markerable_id] = response
+                                    repaintChosen()
                             else
                                 $scope.marker_tutor = $scope.loaded_tutors[tutor_id]
+                                $scope.$apply()
+                                repaintChosen()
+                        $scope.all_markers.push(new_marker)
                     # new MarkerClusterer $scope.map, $scope.markers,
                     #     gridSize: 10
                     #     imagePath: 'img/maps/clusterer/m'
@@ -424,7 +441,7 @@ angular
 
         # выезжает по всей Москве
         $scope.departsEverywhere = (tutor) ->
-            return false if tutor.svg_map is null
+            return false if not tutor.svg_map
             # @todo: в мобильной версии svg_map – string, в стационарной – array
             tutor.svg_map = tutor.svg_map.split(',') if typeof tutor.svg_map is 'string'
             tutor.svg_map.length >= 214

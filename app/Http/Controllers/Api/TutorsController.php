@@ -54,7 +54,7 @@ class TutorsController extends Controller
      */
     public function show($id)
     {
-        return Tutor::selectDefault()->find($id);
+        return Tutor::with('markers')->selectDefault()->find($id);
     }
 
     /**

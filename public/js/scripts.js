@@ -13498,7 +13498,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
-    var exitHandler, filter, filter_used, highlight, initFullscreenGmap, search, search_count;
+    var exitHandler, filter, filter_used, highlight, initFullscreenGmap, repaintChosen, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.popups = {};
@@ -13526,7 +13526,10 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         async = true;
       }
       index = $scope.getIndex(index);
-      link = tutor.id + "#" + index;
+      link = "" + tutor.id;
+      if (index) {
+        link += "#" + index;
+      }
       if (async) {
         window.open(link, '_blank');
       }
@@ -13647,6 +13650,17 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       return $scope.toggleShow(tutor, 'map_shown', 'google_map', index);
     };
     $scope.loaded_tutors = {};
+    repaintChosen = function() {
+      return $scope.all_markers.forEach(function(marker) {
+        if (marker.tutor_id === $scope.marker_tutor.id) {
+          marker.setIcon(ICON_BLUE);
+          return marker.setZIndex(999999999);
+        } else if (marker.zIndex === 999999999) {
+          marker.zIndex = 1;
+          return marker.setIcon($scope.requestSent($scope.loaded_tutors[marker.tutor_id]) ? ICON_SEMI_BLACK : ICON_GREEN);
+        }
+      });
+    };
     initFullscreenGmap = function() {
       return $timeout(function() {
         var map;
@@ -13663,6 +13677,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
           },
           scaleControl: true
         });
+        $scope.all_markers = [];
         return $http.post('/api/tutors/markers', {
           subjects: $scope.search.subjects
         }).then(function(response) {
@@ -13670,19 +13685,26 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
             var marker_location, new_marker, tutor_id;
             tutor_id = marker.markerable_id;
             marker_location = new google.maps.LatLng(marker.lat, marker.lng);
-            new_marker = newMarker(marker_location, map);
-            return google.maps.event.addListener(new_marker, 'click', function(event) {
+            new_marker = newMarker(marker_location, map, $scope.requestSent({
+              id: tutor_id
+            }) ? 'gray' : 'green');
+            new_marker.tutor_id = tutor_id;
+            google.maps.event.addListener(new_marker, 'click', function(event) {
               if (!$scope.loaded_tutors[tutor_id]) {
                 return Tutor.get({
                   id: tutor_id
                 }, function(response) {
                   $scope.marker_tutor = response;
-                  return $scope.loaded_tutors[marker.markerable_id] = response;
+                  $scope.loaded_tutors[marker.markerable_id] = response;
+                  return repaintChosen();
                 });
               } else {
-                return $scope.marker_tutor = $scope.loaded_tutors[tutor_id];
+                $scope.marker_tutor = $scope.loaded_tutors[tutor_id];
+                $scope.$apply();
+                return repaintChosen();
               }
             });
+            return $scope.all_markers.push(new_marker);
           });
         });
       });
@@ -14012,7 +14034,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       return tutor.svg_map.indexOf(parseInt($scope.search.station_id)) !== -1;
     };
     $scope.departsEverywhere = function(tutor) {
-      if (tutor.svg_map === null) {
+      if (!tutor.svg_map) {
         return false;
       }
       if (typeof tutor.svg_map === 'string') {
@@ -14463,23 +14485,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   var apiPath, countable, updatable;
 
   angular.module('Egerep').factory('Tutor', function($resource) {
@@ -14541,6 +14546,23 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
     };
   };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
 
 }).call(this);
 
@@ -15260,7 +15282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 // Generated by CoffeeScript 1.9.3
-var ICON_BLUE, ICON_GREEN, ICON_HOME, ICON_HOME_BLUE, ICON_RED, ICON_SCHOOL, ICON_SCHOOL_BLUE, ICON_SEARCH, INIT_COORDS, MAP_CENTER, RECOM_BOUNDS;
+var ICON_SEMI_BLACK, ICON_BLUE, ICON_GREEN, ICON_HOME, ICON_HOME_BLUE, ICON_RED, ICON_SCHOOL, ICON_SCHOOL_BLUE, ICON_SEARCH, INIT_COORDS, MAP_CENTER, RECOM_BOUNDS;
 
 ICON_WHITE = {
   url: "/img/maps/whitepin.png",
@@ -15288,6 +15310,12 @@ ICON_GREEN = {
 
 ICON_SCHOOL = {
   url: "/img/maps/schoolpin.png",
+  scaledSize: new google.maps.Size(22, 40),
+  origin: new google.maps.Point(0, 0)
+};
+
+ICON_SEMI_BLACK = {
+  url: "img/maps/semiblackpin.png",
   scaledSize: new google.maps.Size(22, 40),
   origin: new google.maps.Point(0, 0)
 };
@@ -15352,6 +15380,9 @@ getMarkerType = function(type) {
         }
         case 'white': {
             return ICON_WHITE
+        }
+        case 'gray': {
+            return ICON_SEMI_BLACK
         }
     }
 }
