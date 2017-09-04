@@ -23,12 +23,12 @@ angular
 
         $scope.streamLink = streamLink
 
-        $scope.profileLink = (tutor, index, async = true) ->
+        $scope.profileLink = (tutor, index, async = true, event_name = 'tutor_profile') ->
             index = $scope.getIndex(index)
             link = "#{tutor.id}"
             link += "##{index}" if index
             window.open(link, '_blank') if async
-            StreamService.run 'go_tutor_profile', StreamService.identifySource(tutor),
+            StreamService.run 'go_' + event_name, StreamService.identifySource(tutor),
                 position: index
                 tutor_id: tutor.id
             .then ->

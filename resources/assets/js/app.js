@@ -436,10 +436,13 @@
       return $scope.index_from_hash || null;
     };
     $scope.streamLink = streamLink;
-    $scope.profileLink = function(tutor, index, async) {
+    $scope.profileLink = function(tutor, index, async, event_name) {
       var link;
       if (async == null) {
         async = true;
+      }
+      if (event_name == null) {
+        event_name = 'tutor_profile';
       }
       index = $scope.getIndex(index);
       link = "" + tutor.id;
@@ -449,7 +452,7 @@
       if (async) {
         window.open(link, '_blank');
       }
-      return StreamService.run('go_tutor_profile', StreamService.identifySource(tutor), {
+      return StreamService.run('go_' + event_name, StreamService.identifySource(tutor), {
         position: index,
         tutor_id: tutor.id
       }).then(function() {
@@ -989,6 +992,23 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -1462,23 +1482,6 @@
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
 
 }).call(this);
 
