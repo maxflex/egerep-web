@@ -157,7 +157,7 @@ class Tutor extends Service\Model
             'tutor_data.clients_count',
             'tutor_data.reviews_count',
             // 'tutor_data.first_attachment_date',
-            'tutor_data.review_avg',
+            'tutor_data.review_avg_new',
             'tutor_data.svg_map',
             'tutor_data.photo_exists',
         ])->join('tutor_data', 'tutor_data.tutor_id', '=', 'tutors.id');
@@ -277,7 +277,7 @@ class Tutor extends Service\Model
                     break;
                 // по средней оценке
                 case 6:
-                    $query->orderBy('review_avg', 'desc');
+                    $query->orderBy('review_avg_new', 'desc');
                     break;
                 // (1) по популярности
                 default:
