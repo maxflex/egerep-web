@@ -78,7 +78,7 @@ class Tutor extends Service\Model
 
         if (count($types)) {
             foreach($subjects as $index => $subject) {
-                $subjects[$index] = $subject . ' (+ ' . implode(', ', $types) . ')';
+                $subjects[$index] = $subject . ' (+' . implode(', ', $types) . ')';
             }
         }
 
