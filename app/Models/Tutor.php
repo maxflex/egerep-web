@@ -15,6 +15,7 @@ class Tutor extends Service\Model
     protected $appends = [
         'subjects_string',
         'subjects_string_common',
+        'subjects_with_types',
         'types',
         'lesson_duration_original',
     ];
@@ -65,6 +66,23 @@ class Tutor extends Service\Model
         return implode(', ', array_map(function($subject_id) {
             return Cacher::getSubjectName($subject_id, 'name');
         }, $this->subjects));
+    }
+
+    public function getSubjectsWithTypesAttribute()
+    {
+        $types = $this->types;
+
+        $subjects = array_map(function($subject_id) {
+            return Cacher::getSubjectName($subject_id, 'name');
+        }, $this->subjects);
+
+        if (count($types)) {
+            foreach($subjects as $index => $subject) {
+                $subjects[$index] = $subject . ' (' . implode('+', $types) . ')';
+            }
+        }
+
+        return $subjects;
     }
 
     /**
