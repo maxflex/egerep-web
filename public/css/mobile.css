@@ -9409,7 +9409,7 @@ p, .p-like {
   display: none;
   overflow: hidden;
   z-index: 99;
-  box-shadow: 0 0 30px 7px rgba(0, 0, 0, 0.7); }
+  box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.5); }
   .modal.active {
     display: block; }
   .modal .cross {
