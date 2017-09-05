@@ -10,4 +10,4 @@
 @else
     только у ученика
 @endif
-, стоимость занятия {{ $tutor->public_price }} рублей/{{ $tutor->lesson_duration }} минут, средняя оценка {{ $tutor->review_avg_new }} и {{ $tutor->reviews_count }} отзывов
+, стоимость занятия {{ $tutor->public_price }} рублей/{{ $tutor->lesson_duration }} минут, средняя оценка {{ $tutor->review_avg }} и {{ $tutor->reviews_count }} отзывов
