@@ -916,7 +916,10 @@
       });
     };
     $scope.expand = function(tutor, index) {
-      return StreamService.run('expand_tutor_info', StreamService.identifySource(tutor), {
+      var event_name;
+      tutor.is_expanded = !tutor.is_expanded;
+      event_name = tutor.is_expanded ? 'expand_tutor_info' : 'shrink_tutor_info';
+      return StreamService.run(event_name, StreamService.identifySource(tutor), {
         position: $scope.getIndex(index),
         tutor_id: tutor.id
       });
@@ -987,23 +990,6 @@
         });
       }
     });
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1416,6 +1402,23 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

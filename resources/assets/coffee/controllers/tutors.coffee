@@ -414,7 +414,9 @@ angular
                 tutor_id: tutor.id
 
         $scope.expand = (tutor, index) ->
-            StreamService.run 'expand_tutor_info', StreamService.identifySource(tutor),
+            tutor.is_expanded = !tutor.is_expanded
+            event_name = if tutor.is_expanded then 'expand_tutor_info' else 'shrink_tutor_info'
+            StreamService.run event_name, StreamService.identifySource(tutor),
                 position: $scope.getIndex(index)
                 tutor_id: tutor.id
 
