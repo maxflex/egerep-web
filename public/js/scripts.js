@@ -13550,7 +13550,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     $timeout(function() {
       var id;
-      $scope.ab_test_price = $.cookie('ab-test-price');
       $scope.ab_test_more_info = $.cookie('ab-test-more-info');
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {

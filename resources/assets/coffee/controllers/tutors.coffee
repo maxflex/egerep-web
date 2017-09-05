@@ -40,7 +40,6 @@ angular
 
         # страница поиска
         $timeout ->
-            $scope.ab_test_price = $.cookie('ab-test-price')
             $scope.ab_test_more_info = $.cookie('ab-test-more-info')
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined

@@ -17,7 +17,6 @@ class Tutor extends Service\Model
         'subjects_string_common',
         'subjects_with_types',
         'types',
-        'lesson_duration_original',
     ];
 
     const USER_TYPE  = 'TEACHER';
@@ -100,33 +99,6 @@ class Tutor extends Service\Model
             }
         }
         return $types;
-    }
-
-    /**
-     * AB Test цена
-     */
-    public function getPublicPriceAttribute()
-    {
-        $price = $this->attributes['public_price'];
-        if (@$_COOKIE['ab-test-price'] == 1) {
-            $coef = $this->attributes['lesson_duration'] / 45;
-            return intval(round($price / $coef / 50) * 50);
-        } else {
-            return $price;
-        }
-    }
-
-    /**
-     * AB Test цена
-     */
-    public function getLessonDurationAttribute()
-    {
-        return @$_COOKIE['ab-test-price'] == 1 ? 45 : $this->attributes['lesson_duration'];
-    }
-
-    public function getLessonDurationOriginalAttribute()
-    {
-        return @$this->attributes['lesson_duration'];
     }
 
     public static function reviews($tutor_id)
