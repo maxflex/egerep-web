@@ -197,6 +197,7 @@ angular
                         new_marker.tutor_id = tutor_id
                         # if marker.hasOwnProperty('can_departure') then new_marker.setOpacity(if marker.can_departure then 1 else .1)
                         google.maps.event.addListener new_marker, 'click', (event) ->
+                            StreamService.run('marker_click', null, {tutor_id: tutor_id})
                             if not $scope.loaded_tutors[tutor_id]
                                 Tutor.get {id: tutor_id}, (response) ->
                                     $scope.marker_tutor = response

@@ -610,6 +610,9 @@
             }) ? 'gray' : marker.type);
             new_marker.tutor_id = tutor_id;
             google.maps.event.addListener(new_marker, 'click', function(event) {
+              StreamService.run('marker_click', null, {
+                tutor_id: tutor_id
+              });
               if (!$scope.loaded_tutors[tutor_id]) {
                 return Tutor.get({
                   id: tutor_id
