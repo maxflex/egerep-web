@@ -5,6 +5,7 @@ angular.module('Egerep')
             tutor: '='
             sentIds: '='
             index: '='
+            source: '@'
         templateUrl: (elem, attrs) ->
             if attrs.hasOwnProperty('mobile') then 'directives/request-form-mobile' else 'directives/request-form'
         controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
@@ -15,7 +16,7 @@ angular.module('Egerep')
                 $scope.tutor.request.tutor_id = $scope.tutor.id
                 Request.save $scope.tutor.request, ->
                     $scope.tutor.request_sent = true
-                    $scope.$parent.StreamService.run 'request', $scope.$parent.StreamService.identifySource($scope.tutor),
+                    $scope.$parent.StreamService.run 'request', $scope.source || $scope.$parent.StreamService.identifySource($scope.tutor),
                         position: $scope.index or $scope.$parent.index
                         tutor_id: $scope.tutor.id
                     trackDataLayer()

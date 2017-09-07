@@ -13659,7 +13659,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
           return marker.setZIndex(999999999);
         } else if (marker.zIndex === 999999999) {
           marker.zIndex = 1;
-          return marker.setIcon($scope.requestSent($scope.loaded_tutors[marker.tutor_id]) ? ICON_SEMI_BLACK : ICON_GREEN);
+          return marker.setIcon($scope.requestSent($scope.loaded_tutors[marker.tutor_id]) ? ICON_SEMI_BLACK : (marker.type === 'red' ? ICON_RED : ICON_GREEN));
         }
       });
     };
@@ -13681,7 +13681,9 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         });
         $scope.all_markers = [];
         return $http.post('/api/tutors/markers', {
-          subjects: $scope.search.subjects
+          subjects: $scope.search.subjects,
+          map_priority: $scope.map_priority,
+          map_station_id: $scope.map_station_id
         }).then(function(response) {
           return response.data.forEach(function(marker) {
             var marker_location, new_marker, tutor_id;
@@ -13689,7 +13691,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
             marker_location = new google.maps.LatLng(marker.lat, marker.lng);
             new_marker = newMarker(marker_location, map, $scope.requestSent({
               id: tutor_id
-            }) ? 'gray' : 'green');
+            }) ? 'gray' : marker.type);
             new_marker.tutor_id = tutor_id;
             google.maps.event.addListener(new_marker, 'click', function(event) {
               if (!$scope.loaded_tutors[tutor_id]) {
@@ -13735,8 +13737,12 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       document.addEventListener('MSFullscreenChange', exitHandler, false);
     }
     $scope.initFullscreenMap = function() {
-      var elem;
+      var elem, ref;
       elem = document.getElementById('fullscreen-gmap-wrapper');
+      $scope.map_priority = (ref = parseInt($scope.search.priority)) === 2 || ref === 3 ? $scope.search.priority : 2;
+      if ($scope.search.priority === 3) {
+        $scope.map_station_id = $scope.search.station_id;
+      }
       if (document.webkitFullscreenElement) {
         return document.webkitCancelFullScreen();
       } else {
@@ -14012,6 +14018,12 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         return $scope.search.priority = priority_id;
       }
     };
+    $scope.setMapPriority = function(priority_id) {
+      if (priority_id !== 3) {
+        $scope.map_priority = priority_id;
+        return $scope.searchGmap();
+      }
+    };
     $scope.syncSort = function(priority_id) {
       if (priority_id === 2 || priority_id === 3) {
         if (!$scope.station_ids[priority_id]) {
@@ -14021,6 +14033,16 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         $scope.search.station_id = $scope.station_ids[priority_id];
       }
       return $scope.search.priority = priority_id;
+    };
+    $scope.syncMapSort = function(priority_id) {
+      if (priority_id === 3) {
+        if (!$scope.map_station_id) {
+          $scope.map_priority = 2;
+          return;
+        }
+      }
+      $scope.map_priority = priority_id;
+      return $scope.searchGmap();
     };
     $scope.changeFilter = function(param, value) {
       if (value == null) {
@@ -14324,7 +14346,8 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       scope: {
         tutor: '=',
         sentIds: '=',
-        index: '='
+        index: '=',
+        source: '@'
       },
       templateUrl: function(elem, attrs) {
         if (attrs.hasOwnProperty('mobile')) {
@@ -14345,7 +14368,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
           $scope.tutor.request.tutor_id = $scope.tutor.id;
           return Request.save($scope.tutor.request, function() {
             $scope.tutor.request_sent = true;
-            $scope.$parent.StreamService.run('request', $scope.$parent.StreamService.identifySource($scope.tutor), {
+            $scope.$parent.StreamService.run('request', $scope.source || $scope.$parent.StreamService.identifySource($scope.tutor), {
               position: $scope.index || $scope.$parent.index,
               tutor_id: $scope.tutor.id
             });

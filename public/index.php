@@ -60,6 +60,12 @@ if (! isset($_COOKIE[$key])) {
     $_COOKIE[$key] = $variant;
 }
 
+$key = 'ab-test-map';
+if (! isset($_COOKIE[$key])) {
+    $variant = mt_rand(0, 1);
+    setcookie($key, $variant, time() + (10 * 365 * 24 * 60 * 60), '/');
+    $_COOKIE[$key] = $variant;
+}
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 

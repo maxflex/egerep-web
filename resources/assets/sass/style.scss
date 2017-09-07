@@ -1033,3 +1033,17 @@ hr.full-line {
     height: 15px;
     display: inline-block;
 }
+
+.badge-selected {
+    font-weight: $font-medium;
+    background: #cee5ce;
+    border-radius: $border-radius;
+    padding: 6px 8px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.link-dotted {
+    text-decoration: none !important;
+    border-bottom: 1px dotted $green-main;
+}

@@ -100,6 +100,10 @@
                         case 'is':
                             $replacement = isTestSubdomain() ? 'true' : 'false';
                             break;
+                        case 'ab-test-if':
+                            $key = 'ab-test-' . $args[0];
+                            $replacement = @$_COOKIE[$key] == 1 ? 'true' : 'false';
+                            break;
                         case 'reviews':
                             if ($args[0] === 'random') {
                                 $ignore_cache = true;

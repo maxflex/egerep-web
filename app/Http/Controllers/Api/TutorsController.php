@@ -160,8 +160,14 @@ class TutorsController extends Controller
 
         $query = egerep('markers as m')->join('tutors as t', function($join) {
             return $join->on('t.id', '=', 'm.markerable_id')->where('m.markerable_type', '=', 'App\Models\Tutor');
-        })->where('m.type', 'green')->where('t.public_desc', '<>', '')
-        ->select('m.markerable_id', 'm.lat', 'm.lng');
+        })->select('m.markerable_id', 'm.lat', 'm.lng', DB::raw("'green' as `type`"))->where('t.public_desc', '<>', '');
+
+        if ($request->map_priority == 3 && $request->map_station_id) {
+            // $query->addSelect(DB::raw("EXISTS (SELECT 1 FROM tutor_departures td WHERE td.tutor_id=t.id AND td.station_id={$request->map_station_id}) as can_departure"));
+            $query->whereRaw("EXISTS (SELECT 1 FROM tutor_departures td WHERE td.tutor_id=t.id AND td.station_id={$request->map_station_id})");
+        } else {
+            $query->where('m.type', 'green');
+        }
 
         foreach($subjects as $subject_id) {
             $query->whereRaw("FIND_IN_SET($subject_id, t.subjects)");

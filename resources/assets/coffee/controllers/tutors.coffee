@@ -164,9 +164,11 @@ angular
                 if marker.tutor_id is $scope.marker_tutor.id
                     marker.setIcon ICON_BLUE
                     marker.setZIndex(999999999)
+                    # marker.setOpacity(1)
                 else if marker.zIndex == 999999999
                     marker.zIndex = 1
-                    marker.setIcon(if $scope.requestSent($scope.loaded_tutors[marker.tutor_id]) then ICON_SEMI_BLACK else ICON_GREEN)
+                    marker.setIcon(if $scope.requestSent($scope.loaded_tutors[marker.tutor_id]) then ICON_SEMI_BLACK else (if marker.type is 'red' then ICON_RED else ICON_GREEN))
+                    # if marker.hasOwnProperty('can_departure') then marker.setOpacity(if marker.can_departure then 1 else .1)
 
         initFullscreenGmap = ->
             $timeout ->
@@ -183,12 +185,17 @@ angular
                     scaleControl: true
 
                 $scope.all_markers = []
-                $http.post('/api/tutors/markers', {subjects: $scope.search.subjects}).then (response) ->
+                $http.post '/api/tutors/markers',
+                    subjects: $scope.search.subjects
+                    map_priority: $scope.map_priority
+                    map_station_id: $scope.map_station_id
+                .then (response) ->
                     response.data.forEach (marker) ->
                         tutor_id = marker.markerable_id
                         marker_location = new google.maps.LatLng(marker.lat, marker.lng)
-                        new_marker = newMarker(marker_location, map, if $scope.requestSent({id: tutor_id}) then 'gray' else 'green')
+                        new_marker = newMarker(marker_location, map, if $scope.requestSent({id: tutor_id}) then 'gray' else marker.type)
                         new_marker.tutor_id = tutor_id
+                        # if marker.hasOwnProperty('can_departure') then new_marker.setOpacity(if marker.can_departure then 1 else .1)
                         google.maps.event.addListener new_marker, 'click', (event) ->
                             if not $scope.loaded_tutors[tutor_id]
                                 Tutor.get {id: tutor_id}, (response) ->
@@ -227,6 +234,8 @@ angular
 
         $scope.initFullscreenMap = ->
             elem = document.getElementById('fullscreen-gmap-wrapper')
+            $scope.map_priority = if parseInt($scope.search.priority) in [2, 3] then $scope.search.priority else 2
+            $scope.map_station_id = $scope.search.station_id if $scope.search.priority == 3
             if document.webkitFullscreenElement then document.webkitCancelFullScreen() else elem.webkitRequestFullScreen()
 
         $scope.getMetros = (tutor) ->
@@ -422,6 +431,11 @@ angular
         $scope.setPriority = (priority_id) ->
             $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
 
+        $scope.setMapPriority = (priority_id) ->
+            if priority_id != 3
+                $scope.map_priority = priority_id
+                $scope.searchGmap()
+
         $scope.syncSort = (priority_id) ->
             if priority_id == 2 || priority_id == 3
                 if not $scope.station_ids[priority_id]
@@ -429,6 +443,14 @@ angular
                     return
                 $scope.search.station_id = $scope.station_ids[priority_id]
             $scope.search.priority = priority_id
+
+        $scope.syncMapSort = (priority_id) ->
+            if priority_id == 3
+                if not $scope.map_station_id
+                    $scope.map_priority = 2
+                    return
+            $scope.map_priority = priority_id
+            $scope.searchGmap()
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
