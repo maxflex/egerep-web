@@ -234,6 +234,7 @@ angular
             document.addEventListener('MSFullscreenChange', exitHandler, false)
 
         $scope.initFullscreenMap = ->
+            StreamService.run('map_mode')
             elem = document.getElementById('fullscreen-gmap-wrapper')
             $scope.map_priority = if parseInt($scope.search.priority) in [2, 3] then $scope.search.priority else 2
             $scope.map_station_id = $scope.search.station_id if $scope.search.priority == 3

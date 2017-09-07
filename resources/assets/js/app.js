@@ -657,6 +657,7 @@
     }
     $scope.initFullscreenMap = function() {
       var elem, ref;
+      StreamService.run('map_mode');
       elem = document.getElementById('fullscreen-gmap-wrapper');
       $scope.map_priority = (ref = parseInt($scope.search.priority)) === 2 || ref === 3 ? $scope.search.priority : 2;
       if ($scope.search.priority === 3) {
