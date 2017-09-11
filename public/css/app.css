@@ -6294,7 +6294,8 @@ select {
     width: 100%;
     height: 100%; }
     .params-wrapper .hidden-select select {
-      height: 100%; }
+      height: 100%;
+      width: 100%; }
   .params-wrapper .cross {
     position: absolute;
     right: 10px;
