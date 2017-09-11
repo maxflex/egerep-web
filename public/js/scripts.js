@@ -13498,7 +13498,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
-    var exitHandler, filter, filter_used, highlight, initFullscreenGmap, repaintChosen, search, search_count;
+    var filter, filter_used, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.popups = {};
@@ -13550,7 +13550,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     $timeout(function() {
       var id;
-      $scope.ab_test_more_info = $.cookie('ab-test-more-info');
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
@@ -13650,108 +13649,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         });
       });
       return $scope.toggleShow(tutor, 'map_shown', 'google_map', index);
-    };
-    $scope.loaded_tutors = {};
-    repaintChosen = function() {
-      return $scope.all_markers.forEach(function(marker) {
-        if (marker.tutor_id === $scope.marker_tutor.id) {
-          marker.setIcon(ICON_BLUE);
-          return marker.setZIndex(999999999);
-        } else if (marker.zIndex === 999999999) {
-          marker.zIndex = 1;
-          return marker.setIcon($scope.requestSent($scope.loaded_tutors[marker.tutor_id]) ? ICON_SEMI_BLACK : (marker.type === 'red' ? ICON_RED : ICON_GREEN));
-        }
-      });
-    };
-    initFullscreenGmap = function() {
-      return $timeout(function() {
-        var map;
-        map = new google.maps.Map(document.getElementById("fullscreen-gmap"), {
-          center: MAP_CENTER,
-          scrollwheel: false,
-          zoom: 11,
-          disableDefaultUI: true,
-          clickableLabels: false,
-          clickableIcons: false,
-          zoomControl: true,
-          zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_BOTTOM
-          },
-          scaleControl: true
-        });
-        $scope.all_markers = [];
-        return $http.post('/api/tutors/markers', {
-          subjects: $scope.search.subjects,
-          map_priority: $scope.map_priority,
-          map_station_id: $scope.map_station_id
-        }).then(function(response) {
-          return response.data.forEach(function(marker) {
-            var marker_location, new_marker, tutor_id;
-            tutor_id = marker.markerable_id;
-            marker_location = new google.maps.LatLng(marker.lat, marker.lng);
-            new_marker = newMarker(marker_location, map, $scope.requestSent({
-              id: tutor_id
-            }) ? 'gray' : marker.type);
-            new_marker.tutor_id = tutor_id;
-            google.maps.event.addListener(new_marker, 'click', function(event) {
-              StreamService.run('marker_click', null, {
-                tutor_id: tutor_id
-              });
-              if (!$scope.loaded_tutors[tutor_id]) {
-                return Tutor.get({
-                  id: tutor_id
-                }, function(response) {
-                  $scope.marker_tutor = response;
-                  $scope.loaded_tutors[marker.markerable_id] = response;
-                  return repaintChosen();
-                });
-              } else {
-                $scope.marker_tutor = $scope.loaded_tutors[tutor_id];
-                $scope.$apply();
-                return repaintChosen();
-              }
-            });
-            return $scope.all_markers.push(new_marker);
-          });
-        });
-      });
-    };
-    $scope.searchGmap = function() {
-      initFullscreenGmap();
-      $scope.popups = {};
-      return $scope.marker_tutor = null;
-    };
-    exitHandler = function() {
-      var elem;
-      elem = $('#fullscreen-gmap-wrapper');
-      if (elem.is(':visible')) {
-        return elem.hide();
-      } else {
-        elem.css({
-          display: 'flex'
-        });
-        return initFullscreenGmap();
-      }
-    };
-    if (document.addEventListener) {
-      document.addEventListener('webkitfullscreenchange', exitHandler, false);
-      document.addEventListener('mozfullscreenchange', exitHandler, false);
-      document.addEventListener('fullscreenchange', exitHandler, false);
-      document.addEventListener('MSFullscreenChange', exitHandler, false);
-    }
-    $scope.initFullscreenMap = function() {
-      var elem, ref;
-      StreamService.run('map_mode');
-      elem = document.getElementById('fullscreen-gmap-wrapper');
-      $scope.map_priority = (ref = parseInt($scope.search.priority)) === 2 || ref === 3 ? $scope.search.priority : 2;
-      if ($scope.search.priority === 3) {
-        $scope.map_station_id = $scope.search.station_id;
-      }
-      if (document.webkitFullscreenElement) {
-        return document.webkitCancelFullScreen();
-      } else {
-        return elem.webkitRequestFullScreen();
-      }
     };
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
@@ -14022,12 +13919,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         return $scope.search.priority = priority_id;
       }
     };
-    $scope.setMapPriority = function(priority_id) {
-      if (priority_id !== 3) {
-        $scope.map_priority = priority_id;
-        return $scope.searchGmap();
-      }
-    };
     $scope.syncSort = function(priority_id) {
       if (priority_id === 2 || priority_id === 3) {
         if (!$scope.station_ids[priority_id]) {
@@ -14037,16 +13928,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         $scope.search.station_id = $scope.station_ids[priority_id];
       }
       return $scope.search.priority = priority_id;
-    };
-    $scope.syncMapSort = function(priority_id) {
-      if (priority_id === 3) {
-        if (!$scope.map_station_id) {
-          $scope.map_priority = 2;
-          return;
-        }
-      }
-      $scope.map_priority = priority_id;
-      return $scope.searchGmap();
     };
     $scope.changeFilter = function(param, value) {
       if (value == null) {
@@ -14534,71 +14415,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -14833,6 +14649,71 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     return this;
   });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
 
 }).call(this);
 

@@ -40,7 +40,6 @@ angular
 
         # страница поиска
         $timeout ->
-            $scope.ab_test_more_info = $.cookie('ab-test-more-info')
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
@@ -156,89 +155,6 @@ angular
                     $('div:has(>a[href^="https://www.google.com/maps"])').remove()
 
             $scope.toggleShow(tutor, 'map_shown', 'google_map', index)
-
-        $scope.loaded_tutors = {}
-
-        repaintChosen = ->
-            $scope.all_markers.forEach (marker) ->
-                if marker.tutor_id is $scope.marker_tutor.id
-                    marker.setIcon ICON_BLUE
-                    marker.setZIndex(999999999)
-                    # marker.setOpacity(1)
-                else if marker.zIndex == 999999999
-                    marker.zIndex = 1
-                    marker.setIcon(if $scope.requestSent($scope.loaded_tutors[marker.tutor_id]) then ICON_SEMI_BLACK else (if marker.type is 'red' then ICON_RED else ICON_GREEN))
-                    # if marker.hasOwnProperty('can_departure') then marker.setOpacity(if marker.can_departure then 1 else .1)
-
-        initFullscreenGmap = ->
-            $timeout ->
-                map = new google.maps.Map document.getElementById("fullscreen-gmap"),
-                    center: MAP_CENTER
-                    scrollwheel: false,
-                    zoom: 11
-                    disableDefaultUI: true
-                    clickableLabels: false
-                    clickableIcons: false
-                    zoomControl: true
-                    zoomControlOptions:
-                        position: google.maps.ControlPosition.LEFT_BOTTOM
-                    scaleControl: true
-
-                $scope.all_markers = []
-                $http.post '/api/tutors/markers',
-                    subjects: $scope.search.subjects
-                    map_priority: $scope.map_priority
-                    map_station_id: $scope.map_station_id
-                .then (response) ->
-                    response.data.forEach (marker) ->
-                        tutor_id = marker.markerable_id
-                        marker_location = new google.maps.LatLng(marker.lat, marker.lng)
-                        new_marker = newMarker(marker_location, map, if $scope.requestSent({id: tutor_id}) then 'gray' else marker.type)
-                        new_marker.tutor_id = tutor_id
-                        # if marker.hasOwnProperty('can_departure') then new_marker.setOpacity(if marker.can_departure then 1 else .1)
-                        google.maps.event.addListener new_marker, 'click', (event) ->
-                            StreamService.run('marker_click', null, {tutor_id: tutor_id})
-                            if not $scope.loaded_tutors[tutor_id]
-                                Tutor.get {id: tutor_id}, (response) ->
-                                    $scope.marker_tutor = response
-                                    $scope.loaded_tutors[marker.markerable_id] = response
-                                    repaintChosen()
-                            else
-                                $scope.marker_tutor = $scope.loaded_tutors[tutor_id]
-                                $scope.$apply()
-                                repaintChosen()
-                        $scope.all_markers.push(new_marker)
-                    # new MarkerClusterer $scope.map, $scope.markers,
-                    #     gridSize: 10
-                    #     imagePath: 'img/maps/clusterer/m'
-
-        $scope.searchGmap = ->
-            initFullscreenGmap()
-            $scope.popups = {}
-            $scope.marker_tutor = null
-
-        exitHandler = ->
-            elem = $('#fullscreen-gmap-wrapper')
-            if elem.is(':visible')
-                elem.hide()
-                # $('.map-subject-select').hide()
-            else
-                elem.css({display: 'flex'})
-                # $('.map-subject-select').show()
-                initFullscreenGmap()
-
-        if (document.addEventListener)
-            document.addEventListener('webkitfullscreenchange', exitHandler, false)
-            document.addEventListener('mozfullscreenchange', exitHandler, false)
-            document.addEventListener('fullscreenchange', exitHandler, false)
-            document.addEventListener('MSFullscreenChange', exitHandler, false)
-
-        $scope.initFullscreenMap = ->
-            StreamService.run('map_mode')
-            elem = document.getElementById('fullscreen-gmap-wrapper')
-            $scope.map_priority = if parseInt($scope.search.priority) in [2, 3] then $scope.search.priority else 2
-            $scope.map_station_id = $scope.search.station_id if $scope.search.priority == 3
-            if document.webkitFullscreenElement then document.webkitCancelFullScreen() else elem.webkitRequestFullScreen()
 
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
@@ -433,11 +349,6 @@ angular
         $scope.setPriority = (priority_id) ->
             $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
 
-        $scope.setMapPriority = (priority_id) ->
-            if priority_id != 3
-                $scope.map_priority = priority_id
-                $scope.searchGmap()
-
         $scope.syncSort = (priority_id) ->
             if priority_id == 2 || priority_id == 3
                 if not $scope.station_ids[priority_id]
@@ -445,14 +356,6 @@ angular
                     return
                 $scope.search.station_id = $scope.station_ids[priority_id]
             $scope.search.priority = priority_id
-
-        $scope.syncMapSort = (priority_id) ->
-            if priority_id == 3
-                if not $scope.map_station_id
-                    $scope.map_priority = 2
-                    return
-            $scope.map_priority = priority_id
-            $scope.searchGmap()
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null
