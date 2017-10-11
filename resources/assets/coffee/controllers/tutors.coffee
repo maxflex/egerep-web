@@ -130,14 +130,6 @@ angular
                     # closest_metro = marker.metros[0]
                     bounds.extend(marker_location)
                     new_marker = newMarker(marker_location, map)
-                    # directionsService.route
-                    #     origin: marker_location
-                    #     destination: new google.maps.LatLng(closest_metro.station.lat, closest_metro.station.lng)
-                    #     travelMode: if closest_metro.meters > 1500 then google.maps.TravelMode.DRIVING else google.maps.TravelMode.WALKING
-                    # , (response, status) ->
-                    #     if status is google.maps.DirectionsStatus.OK
-                    #         directionsDisplay.setDirections(response)
-                    #         directionsDisplay.setMap(map)
 
                 # one marker bug fix
                 if bounds.getNorthEast().equals(bounds.getSouthWest())

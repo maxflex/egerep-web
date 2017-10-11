@@ -133,8 +133,11 @@ angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFil
             if markers
                 markers.forEach (marker, index) ->
                     closest_metros[index] = marker.metros[0]
+                    closest_metros[index].comment = marker.comment
                     marker.metros.forEach (metro) ->
-                        closest_metros[index] = metro if metro.meters < closest_metros[index].meters
+                        if metro.meters < closest_metros[index].meters
+                            closest_metros[index] = metro
+                            closest_metros[index] = marker.comment
             closest_metros
 
         $rootScope.photoUrl = (tutor) ->
