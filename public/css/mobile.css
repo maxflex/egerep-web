@@ -10055,13 +10055,16 @@ span.customSelect.custom-select-small .customSelectInner {
     transform: translate3d(0, 110%, 0); } }
 
 .upper-select {
-  position: absolute;
   font-size: 12px;
-  top: -18px;
-  left: 13px; }
+  margin: 0 0 2px 13px;
+  display: block; }
 
 .departure-available {
   height: 15px;
   display: inline-block; }
+
+.fake-select.disabled {
+  opacity: .5;
+  pointer-events: none; }
 
 /*# sourceMappingURL=mobile.css.map */

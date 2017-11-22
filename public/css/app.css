@@ -6417,6 +6417,9 @@ input::-webkit-inner-spin-button {
     width: 15px;
     margin-top: 6px;
     position: relative; }
+  .fake-select.disabled {
+    opacity: .5;
+    pointer-events: none; }
 
 .multiple-options {
   display: -webkit-box;
@@ -6521,6 +6524,10 @@ hr.full-line {
 .link-dotted {
   text-decoration: none !important;
   border-bottom: 1px dotted #437943; }
+
+.btn-gradient:disabled {
+  opacity: .5;
+  background-color: white; }
 
 @font-face {
   font-family: "Flaticon";

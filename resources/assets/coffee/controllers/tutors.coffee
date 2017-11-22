@@ -40,6 +40,7 @@ angular
 
         # страница поиска
         $timeout ->
+            $scope.ab_test_filter_form = $.cookie('ab-test-filter-form')
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id

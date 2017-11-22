@@ -926,6 +926,10 @@ input::-webkit-inner-spin-button {
         margin-top: 6px;
         position: relative;
     }
+    &.disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
 }
 
 .multiple-options {
@@ -1047,4 +1051,9 @@ hr.full-line {
 .link-dotted {
     text-decoration: none !important;
     border-bottom: 1px dotted $green-main;
+}
+
+.btn-gradient:disabled {
+    opacity: .5;
+    background-color: white;
 }
