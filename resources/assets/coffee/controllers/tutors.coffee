@@ -108,6 +108,7 @@ angular
         # directionsService = new google.maps.DirectionsService()
         # directionsDisplay = new google.maps.DirectionsRenderer()
         $scope.gmap = (tutor, index) ->
+            tutor.map_initialized = true
             # if tutor.map_shown is undefined then
             # @todo: сделать так, чтобы ранее открытые карты не инициализировались заново
             $timeout ->
@@ -334,6 +335,7 @@ angular
 
         $scope.expand = (tutor, index) ->
             tutor.is_expanded = !tutor.is_expanded
+            $scope.gmap(tutor, index) if not tutor.map_initialized
             event_name = if tutor.is_expanded then 'expand_tutor_info' else 'shrink_tutor_info'
             StreamService.run event_name, StreamService.identifySource(tutor),
                 position: $scope.getIndex(index)
