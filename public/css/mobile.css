@@ -9272,8 +9272,16 @@ div[id^='svg'] {
   .connect-buttons > *:not(:last-child) {
     margin-bottom: 1em; }
 
-.gmnoprint {
+a[href^="http://maps.google.com/maps"],
+a[href^="https://maps.google.com/maps"],
+a[href^="https://www.google.com/maps"] {
   display: none !important; }
+
+.gmnoprint:not(.gm-bundled-control) {
+  display: none; }
+
+.gm-bundled-control .gmnoprint {
+  display: block; }
 
 .text-gray-mobile {
   color: #8a8a8a; }
