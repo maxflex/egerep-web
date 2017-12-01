@@ -88,8 +88,6 @@ class TutorsController extends Controller
         // attachment-refactored
         if ($_COOKIE['ab-test-rating'] == 1) {
             $reviews = Tutor::reviews($id)
-                ->where('ball', '>', 0)
-                ->where('max_ball', '>', 0)
                 ->select(
                     'reviews.created_at',
                     'reviews.score',
