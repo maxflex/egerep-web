@@ -25,12 +25,15 @@ class Sms
 				continue;
 			}
 			$params = array(
-				"api_id"	=>	"8d5c1472-6dea-d6e4-75f4-a45e1a0c0653",
-				"to"		=>	$number,
-				"text"		=>	$message,
-				"from"      =>  "EGE-Repetit",
+				"login"		=> config('sms.login'),
+				"psw"		=> config('sms.psw'),
+                "fmt"       => 1, // 1 – вернуть ответ в виде чисел: ID и количество SMS через запятую (1234,1)
+                "charset"   => "utf-8",
+				"phones"	=> $number,
+				"mes"		=> $message,
+				"sender"    => "EGE-Repetit",
 			);
-			$result = self::exec("http://sms.ru/sms/send", $params);
+			$result = self::exec(config('sms.host'), $params);
 		}
 
 
