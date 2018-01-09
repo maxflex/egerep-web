@@ -10075,4 +10075,8 @@ span.customSelect.custom-select-small .customSelectInner {
   opacity: .5;
   pointer-events: none; }
 
+.tutor-price {
+  font-size: 20px;
+  font-family: "helveticaneuecyrmedium"; }
+
 /*# sourceMappingURL=mobile.css.map */
