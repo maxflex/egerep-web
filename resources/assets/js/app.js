@@ -625,6 +625,15 @@
         return reviews_left;
       }
     };
+    $scope.withTailingDot = function(text) {
+      var char;
+      text = text.trim();
+      char = text[text.length - 1];
+      if (['!', '.'].indexOf(char) === -1) {
+        text = text + '.';
+      }
+      return text;
+    };
     filter_used = false;
     $scope.filter = function(type) {
       if (type == null) {
@@ -914,6 +923,23 @@
         });
       }
     });
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1327,23 +1353,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

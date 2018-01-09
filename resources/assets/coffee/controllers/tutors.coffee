@@ -190,6 +190,12 @@ angular
             reviews_left = tutor.reviews_count - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
 
+        $scope.withTailingDot = (text) ->
+            text = text.trim()
+            char = text[text.length - 1]
+            text = text + '.' if ['!', '.'].indexOf(char) is -1
+            text
+
         # чтобы не редиректило в начале
         filter_used = false
         $scope.filter = (type = null) ->
