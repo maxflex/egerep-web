@@ -7,6 +7,7 @@ use App\Scopes\ReviewScope;
 use DB;
 use App\Models\Queries\TutorQuery;
 use App\Service\Cacher;
+use App\Service\Months;
 
 class Tutor extends Service\Model
 {
@@ -16,6 +17,7 @@ class Tutor extends Service\Model
         'subjects_string',
         'subjects_string_common',
         'subjects_with_types',
+        'displayed_reviews',
         'types',
     ];
 
@@ -58,6 +60,11 @@ class Tutor extends Service\Model
         return implode(', ', array_map(function($subject_id) {
             return Cacher::getSubjectName($subject_id, 'dative');
         }, $this->subjects));
+    }
+
+    public function getDisplayedReviewsAttribute()
+    {
+        return self::getReviews($this->id, 2);
     }
 
     public function getSubjectsStringCommonAttribute()
@@ -362,6 +369,30 @@ class Tutor extends Service\Model
                 999999
             )
         "));
+    }
+
+    public static function getReviews($id, $take = null)
+    {
+        // attachment-refactored
+        $reviews = Tutor::reviews($id)
+            ->select(
+                'reviews.created_at',
+                'reviews.score',
+                'reviews.comment',
+                'reviews.signature'
+            )->orderBy('reviews.created_at', 'desc');
+
+        if ($take) {
+            $reviews->take($take);
+        }
+
+        $reviews = $reviews->get();
+
+        foreach($reviews as &$review) {
+            $review->date_string = date('j ', strtotime($review->created_at)) . Months::SHORT[date('n', strtotime($review->created_at))] . date(' Y', strtotime($review->created_at));
+        }
+
+        return $reviews;
     }
 
     public static function boot()

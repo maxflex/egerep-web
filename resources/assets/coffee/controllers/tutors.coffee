@@ -152,6 +152,15 @@ angular
         $scope.getMetros = (tutor) ->
             _.chain(tutor.markers).pluck('metros').flatten().value()
 
+        $scope.loadReviews = (tutor) ->
+            if tutor.all_reviews is undefined
+                tutor.reviews_loading = true
+                tutor.all_reviews = Tutor.reviews
+                    id: tutor.id
+                , (response) ->
+                    tutor.reviews_loading = false
+                    $scope.showMoreReviews(tutor)
+
         $scope.reviews = (tutor, index) ->
             StreamService.run 'reviews', StreamService.identifySource(tutor),
                 position: $scope.getIndex(index)
@@ -164,19 +173,21 @@ angular
             $scope.toggleShow(tutor, 'show_reviews', 'reviews', false)
 
         $scope.showMoreReviews = (tutor, index) ->
+            if tutor.all_reviews is undefined
+                $scope.loadReviews(tutor)
+                return
             if tutor.reviews_page then StreamService.run 'reviews_more', StreamService.identifySource(tutor),
                 position: $scope.getIndex(index)
                 tutor_id: tutor.id
-                depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
+                depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE + (if tutor.reviews_page == 1 then 2 else 0)
             tutor.reviews_page = if not tutor.reviews_page then 1 else (tutor.reviews_page + 1)
-            from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE
+            from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE + 2
             to = from + REVIEWS_PER_PAGE
             tutor.displayed_reviews = tutor.all_reviews.slice(0, to)
             highlight('search-result-reviews-text')
 
         $scope.reviewsLeft = (tutor) ->
-            return if not tutor.all_reviews or not tutor.displayed_reviews
-            reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length
+            reviews_left = tutor.reviews_count - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
 
         # чтобы не редиректило в начале

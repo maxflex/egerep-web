@@ -6529,6 +6529,15 @@ hr.full-line {
   opacity: .5;
   background-color: white; }
 
+.tutor-price {
+  font-size: 28px;
+  font-family: "helveticaneuecyrmedium"; }
+
+.tutor-reviews-wrapper {
+  background: #f8f8f8;
+  border-radius: 6px;
+  padding: 10px 20px; }
+
 @font-face {
   font-family: "Flaticon";
   src: url("../fonts/flaticon.eot");

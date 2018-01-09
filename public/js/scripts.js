@@ -13656,6 +13656,17 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     $scope.getMetros = function(tutor) {
       return _.chain(tutor.markers).pluck('metros').flatten().value();
     };
+    $scope.loadReviews = function(tutor) {
+      if (tutor.all_reviews === void 0) {
+        tutor.reviews_loading = true;
+        return tutor.all_reviews = Tutor.reviews({
+          id: tutor.id
+        }, function(response) {
+          tutor.reviews_loading = false;
+          return $scope.showMoreReviews(tutor);
+        });
+      }
+    };
     $scope.reviews = function(tutor, index) {
       StreamService.run('reviews', StreamService.identifySource(tutor), {
         position: $scope.getIndex(index),
@@ -13672,25 +13683,26 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     };
     $scope.showMoreReviews = function(tutor, index) {
       var from, to;
+      if (tutor.all_reviews === void 0) {
+        $scope.loadReviews(tutor);
+        return;
+      }
       if (tutor.reviews_page) {
         StreamService.run('reviews_more', StreamService.identifySource(tutor), {
           position: $scope.getIndex(index),
           tutor_id: tutor.id,
-          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE
+          depth: (tutor.reviews_page + 1) * REVIEWS_PER_PAGE + (tutor.reviews_page === 1 ? 2 : 0)
         });
       }
       tutor.reviews_page = !tutor.reviews_page ? 1 : tutor.reviews_page + 1;
-      from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE;
+      from = (tutor.reviews_page - 1) * REVIEWS_PER_PAGE + 2;
       to = from + REVIEWS_PER_PAGE;
       tutor.displayed_reviews = tutor.all_reviews.slice(0, to);
       return highlight('search-result-reviews-text');
     };
     $scope.reviewsLeft = function(tutor) {
       var reviews_left;
-      if (!tutor.all_reviews || !tutor.displayed_reviews) {
-        return;
-      }
-      reviews_left = tutor.all_reviews.length - tutor.displayed_reviews.length;
+      reviews_left = tutor.reviews_count - tutor.displayed_reviews.length;
       if (reviews_left > REVIEWS_PER_PAGE) {
         return REVIEWS_PER_PAGE;
       } else {
@@ -13986,23 +13998,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         });
       }
     });
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -14416,6 +14411,23 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
