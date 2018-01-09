@@ -86,37 +86,13 @@ class TutorsController extends Controller
     public function reviews($id)
     {
         // attachment-refactored
-        if ($_COOKIE['ab-test-rating'] == 1) {
-            $reviews = Tutor::reviews($id)
-                ->select(
-                    'reviews.created_at',
-                    'reviews.score',
-                    'reviews.ball',
-                    'reviews.max_ball',
-                    'reviews.comment',
-                    'reviews.signature',
-                    DB::raw('(reviews.ball / reviews.max_ball) as ball_efficency')
-                )
-                ->orderBy(DB::raw("
-                    CASE
-                        WHEN ball_efficency >= 0.81 THEN 6
-                        WHEN ball_efficency >= 0.71 THEN 5
-                        WHEN ball_efficency >= 0.61 THEN 4
-                        WHEN ball_efficency >= 0.51 THEN 3
-                        WHEN ball_efficency >= 0.41 THEN 2
-                        ELSE 1
-                    END
-                "), 'desc')
-                ->orderBy('reviews.created_at', 'desc')->get();
-        } else {
-            $reviews = Tutor::reviews($id)
-                ->select(
-                    'reviews.created_at',
-                    'reviews.score',
-                    'reviews.comment',
-                    'reviews.signature'
-                )->orderBy('reviews.created_at', 'desc')->get();
-        }
+        $reviews = Tutor::reviews($id)
+            ->select(
+                'reviews.created_at',
+                'reviews.score',
+                'reviews.comment',
+                'reviews.signature'
+            )->orderBy('reviews.created_at', 'desc')->get();
 
         foreach($reviews as &$review) {
             $review->date_string = date('j ', strtotime($review->created_at)) . Months::SHORT[date('n', strtotime($review->created_at))] . date(' Y', strtotime($review->created_at));

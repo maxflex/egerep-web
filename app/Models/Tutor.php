@@ -40,14 +40,6 @@ class Tutor extends Service\Model
         return $this->hasMany(Account::class)->latest()->take(3);
     }
 
-    public function getReviewAvgAttribute($value)
-    {
-        if (@$_COOKIE['ab-test-rating'] == 1) {
-            return round(5 + $value / 2, 2);
-        }
-        return $value;
-    }
-
     public function plannedAccount()
     {
         return $this->hasOne(PlannedAccount::class);

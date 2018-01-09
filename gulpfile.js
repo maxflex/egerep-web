@@ -37,8 +37,8 @@ elixir(mix => {
         .browserSync({
             port: 8085,
             open: 'external',
-            host: 'egerep.app',
-            proxy: 'http://egecms.app:8084',
+            host: 'egerep.localhost',
+            proxy: 'http://egerep.localhost:8084',
             // https: true,
             ghostMode: false,
         })
