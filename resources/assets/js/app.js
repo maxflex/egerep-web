@@ -945,6 +945,309 @@
 }).call(this);
 
 (function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('PhoneService', function() {
+    var isFull;
+    this.checkForm = function(element) {
+      var phone_element, phone_number;
+      phone_element = $(element).find('.phone-field');
+      if (!isFull(phone_element.val())) {
+        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
+        return false;
+      }
+      phone_number = phone_element.val().match(/\d/g).join('');
+      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
+        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
+        return false;
+      }
+      return true;
+    };
+    isFull = function(number) {
+      if (number === void 0 || number === "") {
+        return false;
+      }
+      return !number.match(/_/);
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
+    this.identifySource = function(tutor) {
+      if (tutor == null) {
+        tutor = void 0;
+      }
+      if (tutor !== void 0 && tutor.is_similar) {
+        return 'similar';
+      }
+      if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
+        return 'tutor';
+      }
+      if (window.location.pathname === '/request') {
+        return 'help';
+      }
+      if (window.location.pathname === '/') {
+        return 'main';
+      }
+      return 'serp';
+    };
+    this.generateEventString = function(params) {
+      var parts, search;
+      search = $.cookie('search');
+      if (search !== void 0) {
+        $.each(JSON.parse(search), function(key, value) {
+          if (!params.hasOwnProperty(key)) {
+            return params[key] = value;
+          }
+        });
+      }
+      parts = [];
+      $.each(params, function(key, value) {
+        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id' || key === 'hidden_filter' || key === 'sort' || key === 'place' || key === 'gender') || !value) {
+          return;
+        }
+        switch (key) {
+          case 'priority':
+            switch (parseInt(value)) {
+              case 2:
+                value = 'tutor';
+                break;
+              case 3:
+                value = 'client';
+                break;
+              case 4:
+                value = 'maxprice';
+                break;
+              case 5:
+                value = 'minprice';
+                break;
+              case 6:
+                value = 'rating';
+                break;
+              default:
+                value = 'pop';
+            }
+            break;
+          case 'subjects':
+            if (typeof value === "object") {
+              value = SubjectService.getSelected(value).join(',');
+            }
+        }
+        return parts.push(key + '=' + value);
+      });
+      return parts.join('_');
+    };
+    this.updateCookie = function(params) {
+      if (this.cookie === void 0) {
+        this.cookie = {};
+      }
+      $.each(params, (function(_this) {
+        return function(key, value) {
+          return _this.cookie[key] = value;
+        };
+      })(this));
+      return $.cookie('stream', JSON.stringify(this.cookie), {
+        expires: 365,
+        path: '/'
+      });
+    };
+    this.initCookie = function() {
+      if ($.cookie('stream') !== void 0) {
+        return this.cookie = JSON.parse($.cookie('stream'));
+      } else {
+        return this.updateCookie({
+          step: 0,
+          search: 0
+        });
+      }
+    };
+    this.run = function(action, type, additional) {
+      if (additional == null) {
+        additional = {};
+      }
+      if (this.cookie === void 0) {
+        this.initCookie();
+      }
+      if (!this.initialized) {
+        return $timeout((function(_this) {
+          return function() {
+            return _this._run(action, type, additional);
+          };
+        })(this), 1000);
+      } else {
+        return this._run(action, type, additional);
+      }
+    };
+    this._run = function(action, type, additional) {
+      var params;
+      if (additional == null) {
+        additional = {};
+      }
+      this.updateCookie({
+        step: this.cookie.step + 1
+      });
+      params = {
+        action: action,
+        type: type,
+        step: this.cookie.step,
+        google_id: googleClientId(),
+        yandex_id: yaCounter1411783 ? yaCounter1411783.getClientID() : '',
+        mobile: typeof isMobile === 'undefined' ? '0' : '1'
+      };
+      $.each(additional, (function(_this) {
+        return function(key, value) {
+          return params[key] = value;
+        };
+      })(this));
+      console.log(action, type, params);
+      if (action !== 'view') {
+        console.log(this.generateEventString(angular.copy(params)));
+      }
+      if (action !== 'view') {
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: ("action=" + action) + (type ? "_type=" + type : ""),
+          eventAction: this.generateEventString(angular.copy(params))
+        });
+      }
+      return Stream.save(params).$promise;
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').service('SubjectService', function() {
+    this.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
+    this.init = function(subjects) {
+      return this.subjects = subjects;
+    };
+    this.pairsControl = function(subject_id) {
+      if (subject_id) {
+        return angular.forEach(this.subjects, (function(_this) {
+          return function(enabled, id) {
+            var pair;
+            pair = _.filter(_this.pairs, function(p) {
+              return p.indexOf(parseInt(subject_id)) !== -1;
+            });
+            if (!pair.length) {
+              pair.push([subject_id]);
+            }
+            if (pair[0].indexOf(parseInt(id)) === -1) {
+              return _this.subjects[id] = false;
+            }
+          };
+        })(this));
+      }
+    };
+    this.selected = function(subject_id) {
+      return this.subjects !== void 0 && this.subjects[subject_id] !== void 0 && this.subjects[subject_id];
+    };
+    this.select = function(subject_id) {
+      this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
+      return this.pairsControl(subject_id);
+    };
+    this.getSelected = function(subjects) {
+      var ids;
+      if (subjects == null) {
+        subjects = null;
+      }
+      ids = [];
+      angular.forEach(subjects || this.subjects, function(enabled, id) {
+        if (enabled) {
+          return ids.push(id);
+        }
+      });
+      return ids;
+    };
+    this.opacityControl = function(id) {
+      var pair, selected_id;
+      if (!this.getSelected().length) {
+        return false;
+      }
+      selected_id = parseInt(this.getSelected()[0]);
+      pair = _.filter(this.pairs, function(p) {
+        return p.indexOf(selected_id) !== -1;
+      });
+      if (!pair.length) {
+        return selected_id !== id;
+      } else {
+        return pair[0].indexOf(parseInt(id)) === -1;
+      }
+    };
+    return this;
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -1353,309 +1656,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('PhoneService', function() {
-    var isFull;
-    this.checkForm = function(element) {
-      var phone_element, phone_number;
-      phone_element = $(element).find('.phone-field');
-      if (!isFull(phone_element.val())) {
-        phone_element.focus().notify('номер телефона не заполнен полностью', notify_options);
-        return false;
-      }
-      phone_number = phone_element.val().match(/\d/g).join('');
-      if (phone_number[1] !== '4' && phone_number[1] !== '9') {
-        phone_element.focus().notify('номер должен начинаться с 9 или 4', notify_options);
-        return false;
-      }
-      return true;
-    };
-    isFull = function(number) {
-      if (number === void 0 || number === "") {
-        return false;
-      }
-      return !number.match(/_/);
-    };
-    return this;
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('StreamService', function($http, $timeout, Stream, SubjectService, Sources) {
-    this.identifySource = function(tutor) {
-      if (tutor == null) {
-        tutor = void 0;
-      }
-      if (tutor !== void 0 && tutor.is_similar) {
-        return 'similar';
-      }
-      if (RegExp(/^\/[\d]+$/).test(window.location.pathname)) {
-        return 'tutor';
-      }
-      if (window.location.pathname === '/request') {
-        return 'help';
-      }
-      if (window.location.pathname === '/') {
-        return 'main';
-      }
-      return 'serp';
-    };
-    this.generateEventString = function(params) {
-      var parts, search;
-      search = $.cookie('search');
-      if (search !== void 0) {
-        $.each(JSON.parse(search), function(key, value) {
-          if (!params.hasOwnProperty(key)) {
-            return params[key] = value;
-          }
-        });
-      }
-      parts = [];
-      $.each(params, function(key, value) {
-        if ((key === 'action' || key === 'type' || key === 'google_id' || key === 'yandex_id' || key === 'id' || key === 'hidden_filter' || key === 'sort' || key === 'place' || key === 'gender') || !value) {
-          return;
-        }
-        switch (key) {
-          case 'priority':
-            switch (parseInt(value)) {
-              case 2:
-                value = 'tutor';
-                break;
-              case 3:
-                value = 'client';
-                break;
-              case 4:
-                value = 'maxprice';
-                break;
-              case 5:
-                value = 'minprice';
-                break;
-              case 6:
-                value = 'rating';
-                break;
-              default:
-                value = 'pop';
-            }
-            break;
-          case 'subjects':
-            if (typeof value === "object") {
-              value = SubjectService.getSelected(value).join(',');
-            }
-        }
-        return parts.push(key + '=' + value);
-      });
-      return parts.join('_');
-    };
-    this.updateCookie = function(params) {
-      if (this.cookie === void 0) {
-        this.cookie = {};
-      }
-      $.each(params, (function(_this) {
-        return function(key, value) {
-          return _this.cookie[key] = value;
-        };
-      })(this));
-      return $.cookie('stream', JSON.stringify(this.cookie), {
-        expires: 365,
-        path: '/'
-      });
-    };
-    this.initCookie = function() {
-      if ($.cookie('stream') !== void 0) {
-        return this.cookie = JSON.parse($.cookie('stream'));
-      } else {
-        return this.updateCookie({
-          step: 0,
-          search: 0
-        });
-      }
-    };
-    this.run = function(action, type, additional) {
-      if (additional == null) {
-        additional = {};
-      }
-      if (this.cookie === void 0) {
-        this.initCookie();
-      }
-      if (!this.initialized) {
-        return $timeout((function(_this) {
-          return function() {
-            return _this._run(action, type, additional);
-          };
-        })(this), 1000);
-      } else {
-        return this._run(action, type, additional);
-      }
-    };
-    this._run = function(action, type, additional) {
-      var params;
-      if (additional == null) {
-        additional = {};
-      }
-      this.updateCookie({
-        step: this.cookie.step + 1
-      });
-      params = {
-        action: action,
-        type: type,
-        step: this.cookie.step,
-        google_id: googleClientId(),
-        yandex_id: yaCounter1411783 ? yaCounter1411783.getClientID() : '',
-        mobile: typeof isMobile === 'undefined' ? '0' : '1'
-      };
-      $.each(additional, (function(_this) {
-        return function(key, value) {
-          return params[key] = value;
-        };
-      })(this));
-      console.log(action, type, params);
-      if (action !== 'view') {
-        console.log(this.generateEventString(angular.copy(params)));
-      }
-      if (action !== 'view') {
-        dataLayerPush({
-          event: 'configuration',
-          eventCategory: ("action=" + action) + (type ? "_type=" + type : ""),
-          eventAction: this.generateEventString(angular.copy(params))
-        });
-      }
-      return Stream.save(params).$promise;
-    };
-    return this;
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').service('SubjectService', function() {
-    this.pairs = [[1, 2], [3, 4], [6, 7], [8, 9]];
-    this.init = function(subjects) {
-      return this.subjects = subjects;
-    };
-    this.pairsControl = function(subject_id) {
-      if (subject_id) {
-        return angular.forEach(this.subjects, (function(_this) {
-          return function(enabled, id) {
-            var pair;
-            pair = _.filter(_this.pairs, function(p) {
-              return p.indexOf(parseInt(subject_id)) !== -1;
-            });
-            if (!pair.length) {
-              pair.push([subject_id]);
-            }
-            if (pair[0].indexOf(parseInt(id)) === -1) {
-              return _this.subjects[id] = false;
-            }
-          };
-        })(this));
-      }
-    };
-    this.selected = function(subject_id) {
-      return this.subjects !== void 0 && this.subjects[subject_id] !== void 0 && this.subjects[subject_id];
-    };
-    this.select = function(subject_id) {
-      this.subjects[subject_id] = this.subjects[subject_id] ? !this.subjects[subject_id] : true;
-      return this.pairsControl(subject_id);
-    };
-    this.getSelected = function(subjects) {
-      var ids;
-      if (subjects == null) {
-        subjects = null;
-      }
-      ids = [];
-      angular.forEach(subjects || this.subjects, function(enabled, id) {
-        if (enabled) {
-          return ids.push(id);
-        }
-      });
-      return ids;
-    };
-    this.opacityControl = function(id) {
-      var pair, selected_id;
-      if (!this.getSelected().length) {
-        return false;
-      }
-      selected_id = parseInt(this.getSelected()[0]);
-      pair = _.filter(this.pairs, function(p) {
-        return p.indexOf(selected_id) !== -1;
-      });
-      if (!pair.length) {
-        return selected_id !== id;
-      } else {
-        return pair[0].indexOf(parseInt(id)) === -1;
-      }
-    };
-    return this;
   });
 
 }).call(this);
