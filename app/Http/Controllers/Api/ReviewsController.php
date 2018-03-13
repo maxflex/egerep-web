@@ -28,8 +28,9 @@ class ReviewsController extends Controller
 
         // attachment-refactored
         $reviews = Review::has('tutor')->with('tutor')
-                ->select('reviews.*')
-                ->skip($skip)->take($take)->orderBy('id', 'desc')->get();
+            ->select('reviews.*', DB::raw('(reviews.ball / reviews.max_ball) as ball_efficency'))
+            ->skip($skip)->take($take)->orderByEfficency()
+            ->get();
 
         $has_more_reviews = $reviews->count() ? Review::where('id', '<', $reviews->last()->id)->exists() : false;
 
