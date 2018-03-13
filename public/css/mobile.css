@@ -8242,8 +8242,14 @@ textarea {
 
 /* User list */
 .user-list .tutor-img {
-  float: right;
   margin-left: 1em; }
+
+.tutor-ava-block {
+  float: right;
+  text-align: center;
+  color: #a7a7a7;
+  font-size: 12px;
+  line-height: 20px; }
 
 .user-content__priÑe {
   padding: 0; }
