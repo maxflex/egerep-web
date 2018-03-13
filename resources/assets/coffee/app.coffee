@@ -34,6 +34,12 @@ angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFil
             $rootScope.dataLoaded.resolve(true)
             rebindMasks() if rebind_masks
 
+        $rootScope.withTailingDot = (text) ->
+            text = text.trim()
+            char = text[text.length - 1]
+            text = text + '.' if ['!', '.'].indexOf(char) is -1
+            text
+
         $rootScope.range = (min, max, step) ->
           step = step or 1
           input = []

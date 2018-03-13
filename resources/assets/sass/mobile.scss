@@ -352,8 +352,9 @@ h1,h2,h3,h4 {
 }
 h1 {
     padding: 0 0 20px 0;
-
     font-size: 1.6em;
+    text-align: left;
+    font-family: $font-medium;
 }
 h2, .serp-page h1 {
     text-align: left;
@@ -797,6 +798,29 @@ textarea {
     .header__inner {
 		padding: 0.8em 1em;
     }
+
+.header-info {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    & > div {
+        color: white;
+        z-index: 1;
+        position: relative;
+        text-align: center;
+        & a {
+            margin-top: 40px;
+        }
+    }
+}
+
+.clients-count-xl {
+    font-family: $font-medium;
+    margin: 0 10px 10px;
+    font-size: 3.2em;
+}
+
         .header__logo {
             position: relative;
 

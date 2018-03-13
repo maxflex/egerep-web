@@ -6499,7 +6499,9 @@ h1, .h1-top, .h1-like, h2, .h2-like, h3, h4 {
 
 h1, .h1-top, .h1-like {
   padding: 0 0 20px 0;
-  font-size: 1.6em; }
+  font-size: 1.6em;
+  text-align: left;
+  font-family: "helveticaneuecyrmedium"; }
 
 h2, .h2-like, .serp-page h1, .serp-page .h1-top, .serp-page .h1-like {
   text-align: left;
@@ -6862,6 +6864,28 @@ textarea {
 
 .header__inner {
   padding: 0.8em 1em; }
+
+.header-info {
+  -webkit-box-flex: 1;
+  flex: 1;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: flex; }
+  .header-info > div {
+    color: white;
+    z-index: 1;
+    position: relative;
+    text-align: center; }
+    .header-info > div a {
+      margin-top: 40px; }
+
+.clients-count-xl {
+  font-family: "helveticaneuecyrmedium";
+  margin: 0 10px 10px;
+  font-size: 3.2em; }
 
 .header__logo {
   position: relative;
