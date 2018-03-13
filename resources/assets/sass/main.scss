@@ -410,12 +410,14 @@ textarea {
 }
 .search-result .search-result-item {
     padding: 30px 0;
-    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
 }
 .search-result-item.profile-card {
     margin: 0 0 65px;
 }
-
+.search-result li.search-result-item:first-child {
+    border: 0;
+}
 .search-result-left {
     display: inline-block;
     vertical-align: top;
