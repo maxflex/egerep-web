@@ -8240,6 +8240,11 @@ textarea {
 .toggle-widget__title.active .toggle-widget__arrow {
   margin-top: -1.3em; }
 
+/* User list */
+.tutor-img-popup {
+  margin-left: 1em;
+  float: right; }
+
 .tutor-ava-block {
   float: right;
   text-align: center;
