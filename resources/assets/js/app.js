@@ -1526,9 +1526,6 @@
               return angular.forEach(response.data, function(errors, field) {
                 var selector;
                 selector = "[ng-model$='" + field + "']";
-                $('html,body').animate({
-                  scrollTop: $("input" + selector + ", textarea" + selector).first().offset().top
-                }, 0);
                 return $($element).find("input" + selector + ", textarea" + selector).focus().notify(errors[0], notify_options);
               });
             } else {

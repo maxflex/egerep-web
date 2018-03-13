@@ -435,6 +435,7 @@ textarea {
     text-align: center;
     color: $gray;
     font-size: 12px;
+    line-height: 20px;
 }
 .search-result-rating-count {
     font-size: 25px;
@@ -578,10 +579,25 @@ textarea {
     font-family: 'helveticaneuecyrroman';
 }
 .search-result-contact {
-    background: #f8f8f8;
-    padding: 30px 30px 21px;
+    background: white;
+    padding: 0;
     margin: 20px 0 40px;
     border-radius: $border-radius;
+    & textarea {
+        display: block;
+        width: 270px !important;
+        height: 110px !important;
+    }
+    & .search-result-contact-button {
+        text-align: left;
+        margin-top: 20px;
+        & button {
+            & i {
+                margin-right: 6px;
+            }
+            text-transform: lowercase;
+        }
+    }
 }
 .search-result-contact-row {
     width: 296px;
@@ -593,10 +609,7 @@ textarea {
     margin: 0 0 12px;
     line-height: normal;
 }
-.search-result-contact .textarea {
-    width: 429px;
-    height: 75px;
-}
+
 .search-result-contact-button {
     text-align: right;
 }
@@ -619,7 +632,7 @@ textarea {
     margin: 0;
 }
 .index-reviews-text {
-    text-align: center;
+    text-align: left;
     font-size: 14px;
     padding: 0 0 40px;
 }
@@ -1356,24 +1369,30 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .header-wrap {
     //   background: #3a6699;
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
     position: relative;
     background: url('/img/background/main.jpeg') no-repeat 50% 50%;
     height: 470px;
     background-size: cover;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     & > div {
-        display: flex;
-        height: 100%;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px 0;
-        box-sizing: border-box;
-        align-items: center;
+        // display: flex;
+        // height: 100%;
+        // flex-direction: column;
+        // justify-content: space-between;
+        // padding: 20px 0;
+        // box-sizing: border-box;
+        // align-items: center;
         color: white;
         z-index: 1;
         position: relative;
         // font-size: 18px;
+    }
+    & .button-green {
+        margin-top: 40px;
     }
     &:after {
       content: '';
@@ -1388,8 +1407,8 @@ span.customSelect.custom-select-small .customSelectInner {
 }
 
 .clients-count-xl {
-    font-family: 'helveticaneuecyrlight';
-    margin: 0 10px;
+    font-family: 'helveticaneuecyrmedium';
+    margin: 0 10px 10px;
     font-size: 48px;
 }
 
@@ -1450,5 +1469,6 @@ span.customSelect.custom-select-small .customSelectInner {
     height: 30px !important;
     padding: 0 11px !important;
     font-size: 12px !important;
+    overflow: hidden;
     // margin-top: 13px;
 }

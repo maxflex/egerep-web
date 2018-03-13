@@ -8,11 +8,12 @@
             </div>
         </div>
 
-        <textarea placeholder='краткое сообщение репетитору' class="textarea request-comment" rows="0" cols="0" ng-model='tutor.request.comment'></textarea>
+        <textarea placeholder='комментарий' class="textarea request-comment" rows="0" cols="0" ng-model='tutor.request.comment'></textarea>
 
         <div class="search-result-contact-button">
             <button class="button-green" ng-click='request()'>
-                Отправить
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                отправить
             </button>
         </div>
 

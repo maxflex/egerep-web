@@ -24,7 +24,7 @@ angular.module('Egerep')
                     if response.status is 422
                         angular.forEach response.data, (errors, field) ->
                             selector = "[ng-model$='#{field}']"
-                            $('html,body').animate({scrollTop: $("input#{selector}, textarea#{selector}").first().offset().top}, 0)
+                            # $('html,body').animate({scrollTop: $("input#{selector}, textarea#{selector}").first().offset().top}, 0)
                             $($element).find("input#{selector}, textarea#{selector}").focus().notify errors[0], notify_options
                     else
                         $scope.tutor.request_error = true
