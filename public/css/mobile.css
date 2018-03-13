@@ -8240,10 +8240,6 @@ textarea {
 .toggle-widget__title.active .toggle-widget__arrow {
   margin-top: -1.3em; }
 
-/* User list */
-.user-list .tutor-img {
-  margin-left: 1em; }
-
 .tutor-ava-block {
   float: right;
   text-align: center;
@@ -10105,5 +10101,8 @@ span.customSelect.custom-select-small .customSelectInner {
 .tutor-price {
   font-size: 20px;
   font-family: "helveticaneuecyrmedium"; }
+
+.right-tutor-info .name {
+  margin-bottom: 1.2em; }
 
 /*# sourceMappingURL=mobile.css.map */
