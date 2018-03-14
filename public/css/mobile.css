@@ -8249,8 +8249,9 @@ textarea {
   float: right;
   text-align: center;
   color: #a7a7a7;
-  font-size: 12px;
   line-height: 20px; }
+  .tutor-ava-block > div {
+    font-size: 12px; }
 
 .user-content__priÑe {
   padding: 0; }

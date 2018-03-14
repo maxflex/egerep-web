@@ -2578,8 +2578,10 @@ textarea {
     float: right;
     text-align: center;
     color: $gray;
-    font-size: 12px;
     line-height: 20px;
+    & > div {
+        font-size: 12px;
+    }
 }
 
 .user-content__priÑe {
