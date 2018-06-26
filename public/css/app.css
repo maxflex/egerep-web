@@ -9032,7 +9032,12 @@ hr.full-line {
   justify-content: center;
   height: 100%;
   font-family: "helveticaneuecyrregular";
-  font-size: 16px; }
+  font-size: 16px;
+  text-align: center; }
+
+img.request-sent-svg {
+  height: 100px;
+  margin-bottom: 10px; }
 
 @font-face {
   font-family: "Flaticon";

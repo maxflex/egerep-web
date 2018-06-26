@@ -24,6 +24,7 @@
     </div>
     <div class="request-form-sent" ng-show='tutor.request_sent'>
         <h2>Спасибо!</h2>
-        <span>Ваше сообщение отправлено</span>
+        <img class="request-sent-svg" src="/img/svg/letter.svg">
+        <div>Ваше сообщение отправлено</div>
     </div>
 </form>

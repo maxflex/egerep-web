@@ -34,14 +34,14 @@ filesFromBowerFolder = (folder, files) => {
 
 elixir(mix => {
     mix
-        .browserSync({
-            port: 8085,
-            open: 'external',
-            host: 'egerep.localhost',
-            proxy: 'http://egerep.localhost:8084',
-            // https: true,
-            ghostMode: false,
-        })
+        // .browserSync({
+        //     port: 8085,
+        //     open: 'external',
+        //     host: 'egerep.localhost',
+        //     proxy: 'http://egerep.localhost:8084',
+        //     // https: true,
+        //     ghostMode: false,
+        // })
         .sass('app.scss')
         .sass('mobile.scss')
         .coffee(['resources/assets/coffee/*.coffee', 'resources/assets/coffee/*/*.coffee'], 'resources/assets/js')
