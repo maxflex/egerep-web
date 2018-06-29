@@ -44,7 +44,7 @@ class Page extends Model
 
     public function getTitleAttribute($value)
     {
-        return $value . ' – ЕГЭ-Репетитор.ру';
+        return $value . ' – ' . self::getWebsiteName();
     }
 
     public function getSubjectsAttribute($value)
@@ -170,5 +170,13 @@ class Page extends Model
                      ->where('published', 1)
                      ->select('anchor', 'url', 'h1')
                      ->orderBy('anchor')->orderBy('h1');
+    }
+
+    /**
+     * Название сайта для сплит-теста
+     */
+    public static function getWebsiteName()
+    {
+        return $_COOKIE['ab-test-name'] == 1 ? 'Московский репетитор' : 'ЕГЭ-Репетитор.ру';
     }
 }
