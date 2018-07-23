@@ -404,12 +404,13 @@ textarea {
 --------------------------------*/
 .search-result {
     margin: 0;
-    padding: 0 0 28px;
+    padding: 0;
+    margin-bottom: 28px;
     list-style: none;
     z-index: 999;
 }
 .search-result .search-result-item {
-    padding: 30px 0;
+    padding: 40px 0;
     border-top: 1px solid transparent;
 }
 .search-result-item.profile-card {
@@ -615,7 +616,7 @@ textarea {
 }
 .search-result-wrap-more {
     text-align: center;
-    margin-bottom: 35px;
+    margin: 41px 0 50px;
 }
 .search-result-more-info {
     padding: 0 0 15px;
@@ -949,7 +950,7 @@ $footer-height: 315px;
 .global {
     width: 960px;
     margin: 0 auto;
-    padding-bottom: 1px;
+    // padding-bottom: 1px;
 }
 
 .seo-block {
@@ -960,7 +961,7 @@ $footer-height: 315px;
     }
     & .global {
         padding-bottom: 0;
-        padding-top: 10px;
+        padding-top: 50px;
     }
 }
 
