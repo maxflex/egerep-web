@@ -10115,4 +10115,23 @@ img.request-sent-svg {
   height: 100px;
   margin-bottom: 10px; }
 
+.search-result-rating {
+  text-align: center;
+  color: #2781bf;
+  margin-top: 4px; }
+
+.stars-wrapper {
+  position: relative;
+  font-size: 14px;
+  margin: 0px 0 4px; }
+  .stars-wrapper .fa {
+    margin: 0 1px; }
+  .stars-wrapper .stars-filled {
+    position: absolute;
+    top: 0;
+    width: 100%; }
+    .stars-wrapper .stars-filled .stars-filled-percentage {
+      white-space: nowrap;
+      overflow: hidden; }
+
 /*# sourceMappingURL=mobile.css.map */
