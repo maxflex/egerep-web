@@ -19,9 +19,7 @@ angular
         # получить рейтинг с отклонием
         $scope.getStarRating = (rating) ->
             segment = (Math.floor(rating / 2) * 2) + 1
-            (segment - ((segment - rating) * 0.67)) * 10
-            # 10 - ((10 - 9) * 0.67) = 9.3
-            # 9.5 - ((9.5 - 9))
+            (segment - ((segment - rating) * 0.6)) * 10
 
         # получить индекс преподавателя. если не указан, береш из хэша
         $scope.getIndex = (index = null) ->
