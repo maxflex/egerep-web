@@ -465,3 +465,10 @@ function getNumber(str) {
     }
     return parseInt(str.replace(/\D/g,''))
 }
+
+
+function getStarRating(rating) {
+    segment = (Math.floor(rating / 2) * 2) + 1
+    console.log('segment', segment)
+    return (segment - ((segment - rating) * 0.67))
+}

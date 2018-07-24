@@ -16,6 +16,13 @@ angular
             openModal("filter-#{popup}") if $scope.mobile
             StreamService.run('filter_open', popup)
 
+        # получить рейтинг с отклонием
+        $scope.getStarRating = (rating) ->
+            segment = (Math.floor(rating / 2) * 2) + 1
+            (segment - ((segment - rating) * 0.67)) * 10
+            # 10 - ((10 - 9) * 0.67) = 9.3
+            # 9.5 - ((9.5 - 9))
+
         # получить индекс преподавателя. если не указан, береш из хэша
         $scope.getIndex = (index = null) ->
             return (parseInt(index) + 1) if index isnt null

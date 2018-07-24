@@ -13521,6 +13521,11 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
       return StreamService.run('filter_open', popup);
     };
+    $scope.getStarRating = function(rating) {
+      var segment;
+      segment = (Math.floor(rating / 2) * 2) + 1;
+      return (segment - ((segment - rating) * 0.67)) * 10;
+    };
     $scope.getIndex = function(index) {
       if (index == null) {
         index = null;
@@ -14012,6 +14017,23 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -14484,23 +14506,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
     };
   };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
 
 }).call(this);
 
@@ -15210,6 +15215,13 @@ function getNumber(str) {
         str = str.toString()
     }
     return parseInt(str.replace(/\D/g,''))
+}
+
+
+function getStarRating(rating) {
+    segment = (Math.floor(rating / 2) * 2) + 1
+    console.log('segment', segment)
+    return (segment - ((segment - rating) * 0.67))
 }
 
 <!-- Google Tag Manager -->
