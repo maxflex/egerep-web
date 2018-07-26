@@ -7263,7 +7263,8 @@ textarea {
   font-family: 'helveticaneuecyrregular'; }
 
 .search-result-reviews-more-wrap {
-  text-align: center; }
+  text-align: center;
+  margin-top: 20px; }
 
 .search-result-reviews-more {
   cursor: pointer;
@@ -8899,7 +8900,7 @@ hr.full-line {
   animation-duration: 0;
   position: fixed;
   width: 450px;
-  height: 600px;
+  height: 534px;
   background: white;
   right: 30px;
   bottom: 30px;
@@ -8907,7 +8908,7 @@ hr.full-line {
   display: none;
   overflow: hidden;
   z-index: 99;
-  box-shadow: 0 0 11px 5px rgba(0, 0, 0, 0.3); }
+  box-shadow: 0 0 11px 3px rgba(0, 0, 0, 0.3); }
   .modal.active {
     display: block; }
   .modal .cross {
@@ -9048,7 +9049,7 @@ img.request-sent-svg {
 
 .stars-wrapper {
   position: relative;
-  font-size: 16px;
+  font-size: 13px;
   margin: 2px 0 6px; }
   .stars-wrapper .fa, .stars-wrapper .glyphicon {
     margin: 0 1px; }
