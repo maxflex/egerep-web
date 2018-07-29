@@ -19,6 +19,7 @@ class Tutor extends Service\Model
         'subjects_with_types',
         'displayed_reviews',
         'types',
+        'age'
     ];
 
     const USER_TYPE  = 'TEACHER';
@@ -53,6 +54,11 @@ class Tutor extends Service\Model
             'tutor_id' => $this->id,
             'after_last_meeting' => 1
         ]));
+    }
+
+    public function getAgeAttribute()
+    {
+        return date('Y') - date('Y', strtotime($this->birthday));
     }
 
     public function getSubjectsStringAttribute()
@@ -136,7 +142,7 @@ class Tutor extends Service\Model
             'public_desc',
             'photo_extension',
             'start_career_year',
-            'birth_year',
+            'birthday',
             'lesson_duration',
             'public_price',
             'departure_price',
@@ -239,18 +245,6 @@ class Tutor extends Service\Model
         if (isset($tutor_id) && $tutor_id) {
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
-
-        // if (! @isBlank($age_from) || ! @isBlank($age_to)) {
-        //     $age_from = @isBlank($age_from) ? 0 : filter_var($age_from, FILTER_SANITIZE_NUMBER_INT);
-        //     $age_to = @isBlank($age_to) ? 999 : filter_var($age_to, FILTER_SANITIZE_NUMBER_INT);
-        //     if ($age_to >= $age_from) {
-        //         $query->addSelect(DB::raw("IF((YEAR(NOW()) - birth_year) between {$age_from} and {$age_to}, 1, 0) as age_order"))->orderBy('age_order', 'desc');
-        //     }
-        // }
-
-        // if (! @isBlank($gender)) {
-        //     $query->addSelect(DB::raw("IF(gender='{$gender}', 1, 0) as gender_order"))->orderBy('gender_order', 'desc');
-        // }
 
         if (isset($priority)) {
             switch ($priority) {

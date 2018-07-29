@@ -236,11 +236,6 @@
         return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
     }
 
-    function yearsPassed($year)
-    {
-        return date('Y') - $year;
-    }
-
     function isMobile($raw = false)
     {
         $agent = new \Jenssegers\Agent\Agent;

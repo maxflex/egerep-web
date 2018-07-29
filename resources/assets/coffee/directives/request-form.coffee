@@ -43,6 +43,6 @@ angular.module('Egerep')
                                 id: $scope.tutor.id
                                 price: $scope.tutor.public_price
                                 brand: if $scope.tutor.subjects then $scope.tutor.subjects.join(',') else null
-                                category: $scope.tutor.gender + '_' + $rootScope.yearsPassed($scope.tutor.birth_year) # пол_возраст
+                                category: $scope.tutor.gender + '_' + $scope.tutor.age # пол_возраст
                                 quantity: 1
                             ]

@@ -120,10 +120,6 @@ angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFil
                 sum += v
             sum
 
-        # сколько лет прошло с указанной даты
-        $rootScope.yearsPassed = (year) ->
-            moment().format("YYYY") - year
-
         $rootScope.deny = (ngModel, prop) ->
             ngModel[prop] = +(!ngModel[prop])
 
