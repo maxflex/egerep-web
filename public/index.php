@@ -55,7 +55,7 @@ if (! isset($_SESSION['sent_ids'])) {
 
 $key = 'ab-test-name';
 if (! isset($_COOKIE[$key])) {
-    $variant = mt_rand(0, 1);
+    $variant = mt_rand(1, 5) == 1 ? 0 : 1;
     setcookie($key, $variant, time() + (10 * 365 * 24 * 60 * 60), '/');
     $_COOKIE[$key] = $variant;
 }
