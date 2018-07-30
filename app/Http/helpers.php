@@ -276,3 +276,8 @@
         $parts = explode('.', @$_SERVER['HTTP_HOST']);
         return array_shift($parts) === 'test';
     }
+
+    function yearsPassed($year)
+    {
+        return date('Y') - $year;
+    }
