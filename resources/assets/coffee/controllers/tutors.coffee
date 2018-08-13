@@ -46,8 +46,10 @@ angular
         $scope.objectSelectedCallback = (selected_station) ->
             if selected_station
                 $scope.search.station_id = selected_station.originalObject.id
+                $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', $scope.$eval("stations[search.station_id].title | cut:false:13:'...'"))
             else
                 $scope.search.station_id = null
+                $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', '')
 
         $scope.clearStation = ->
             $scope.$broadcast('angucomplete-alt:clearInput');
@@ -56,9 +58,9 @@ angular
 
         handleScrollDesktop = ->
             wrapper = $('.new-filter-wrapper')
-            sticky = wrapper.position().top
+            sticky = wrapper.position().top - 1
             $(window).on 'scroll', ->
-                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 500
+                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 560
                     wrapper.removeClass('sticky')
                     $('.new-filter-wrapper-left').addClass('stick-to-end')
                 else
@@ -86,7 +88,7 @@ angular
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.serp_new
                     if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
-                    
+
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
