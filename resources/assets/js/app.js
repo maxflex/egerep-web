@@ -529,18 +529,22 @@
     };
     $timeout(function() {
       var id, selected_station;
-      $scope.stations_array = Object.values($scope.stations);
-      if ($scope.search.station_id) {
-        selected_station = _.find($scope.stations_array, function(station) {
-          return station.id === parseInt($scope.search.station_id);
-        });
-        $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', selected_station);
+      if ($scope.serp_new) {
+        $scope.stations_array = Object.values($scope.stations);
+        if ($scope.search.station_id) {
+          selected_station = _.find($scope.stations_array, function(station) {
+            return station.id === parseInt($scope.search.station_id);
+          });
+          $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', selected_station);
+        }
       }
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
-        if ($scope.mobile) {
-          handleScrollMobile();
-        } else {
-          handleScrollDesktop();
+        if ($scope.serp_new) {
+          if ($scope.mobile) {
+            handleScrollMobile();
+          } else {
+            handleScrollDesktop();
+          }
         }
         if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
           id = $scope.search.id;
