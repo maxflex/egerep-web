@@ -246,36 +246,58 @@ class Tutor extends Service\Model
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
 
-        if (isset($priority)) {
-            switch ($priority) {
-                // у репетитора
-                case 2:
+        if ($_COOKIE[AB_TEST_FILTER]) {
+            if (isset($place)) {
+                if ($place == 'tutor') {
+                    $query->has('markers');
+                    if (isset($sort) && $sort == 'nearest-metro') {
+                        $query->orderByDistanceToMarkers($station_id, 'green');
+                    }
+                }
+                if ($place == 'home') {
+                    $query->has('departure');
+                    if (isset($sort) && $sort == 'nearest-metro') {
+                        $query->orderByIntersectingMetro($station_id);
+                    }
+                }
+            }
+            if (isset($sort) && $sort = 'most-popular') {
+                $query->orderBy('clients_count', 'desc');
+            }
+        } else {
+            if (isset($priority)) {
+                switch ($priority) {
+                    // у репетитора
+                    case 2:
                     # отсеиваем репетиторов без зеленых маркеров
                     $query->has('markers')->orderByDistanceToMarkers($station_id, 'green');
                     break;
-                // у себя дома
-                case 3:
+                    // у себя дома
+                    case 3:
                     $query->has('departure')->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
                     break;
-                // сначала дороже
-                case 4:
+                    // сначала дороже
+                    case 4:
                     $query->orderBy('public_price', 'desc');
                     break;
-                // сначала дешевле
-                case 5:
+                    // сначала дешевле
+                    case 5:
                     $query->orderBy('public_price', 'asc');
                     break;
-                // по средней оценке
-                case 6:
+                    // по средней оценке
+                    case 6:
                     $query->orderBy('review_avg', 'desc');
                     break;
-                // (1) по популярности
-                default:
+                    // (1) по популярности
+                    default:
                     $query->orderBy('clients_count', 'desc');
+                }
+            } else {
+                $query->orderBy('clients_count', 'desc');
             }
-        } else {
-            $query->orderBy('clients_count', 'desc');
         }
+
+
         return $query;
     }
 

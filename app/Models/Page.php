@@ -68,15 +68,28 @@ class Page extends Model
         if ($this->hidden_filter) {
             $data['hidden_filter'] = explode(',', str_replace(' ', '', mb_strtolower($this->hidden_filter)));
         }
-        $data['gender'] = '';
-        $data['age_from'] = '';
-        $data['age_to'] = '';
+        if ($_COOKIE[AB_TEST_FILTER]) {
+            switch($this->priority) {
+                case 2:
+                    $data['place'] = 'tutor';
+                    $data['sort'] = 'nearest-metro';
+                    break;
+                case 3:
+                    $data['place'] = 'home';
+                    $data['sort'] = 'nearest-metro';
+                    break;
+                default:
+                    $data['place'] = 'home';
+                    $data['sort'] = 'nearest-metro';
+                    break;
+            }
+        }
         return json_encode($data, JSON_FORCE_OBJECT);
     }
 
     public function getHtmlAttribute($value)
     {
-        $value = Variable::display('serp');
+        $value = Variable::display($_COOKIE[AB_TEST_FILTER] ? 'serp-new' : 'serp');
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }

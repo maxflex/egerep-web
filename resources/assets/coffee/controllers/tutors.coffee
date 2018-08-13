@@ -43,9 +43,42 @@ angular
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
 
+        $scope.objectSelectedCallback = (selected_station) ->
+            if selected_station
+                $scope.search.station_id = selected_station.originalObject.id
+            else
+                $scope.search.station_id = null
+
+        handleScrollDesktop = ->
+            $(window).on 'scroll', ->
+                wrapper = $('.new-filter-wrapper')
+                console.log($('.search-result-wrap-more').position().top - window.pageYOffset)
+                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 605
+                    wrapper.removeClass('sticky')
+                    $('.new-filter-wrapper-left').addClass('stick-to-end')
+                else
+                    $('.new-filter-wrapper-left').removeClass('stick-to-end')
+                    if window.pageYOffset > 138 then wrapper.addClass('sticky') else wrapper.removeClass('sticky')
+
+        handleScrollMobile = ->
+            sticky = $('.filter-group').position().top - 1
+            $(window).on 'scroll', ->
+                wrapper = $('.filter-group')
+                if window.pageYOffset > sticky
+                    wrapper.addClass('sticky')
+                    $('.accordions').addClass('sticky')
+                else
+                    wrapper.removeClass('sticky')
+                    $('.accordions').removeClass('sticky')
+
         # страница поиска
         $timeout ->
+            $scope.stations_array = Object.values($scope.stations)
+            if $scope.search.station_id
+                selected_station = _.find($scope.stations_array, (station) ->  station.id == parseInt($scope.search.station_id))
+                $scope.$broadcast 'angucomplete-alt:changeInput', 'stations-autocomplete', selected_station
             if not $scope.profilePage() and window.location.pathname isnt '/request'
+                if isMobile then handleScrollMobile() else handleScrollDesktop()
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))

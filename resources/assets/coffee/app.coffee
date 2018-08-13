@@ -1,4 +1,4 @@
-angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize'])
+angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFilter', 'svgmap', 'ngSanitize', 'angucomplete-alt'])
     .config [
         '$compileProvider'
         ($compileProvider) ->
@@ -48,6 +48,8 @@ angular.module("Egerep", ['ngResource', 'angularFileUpload', 'angular-toArrayFil
             input.push i
             i += step
           input
+
+        $rootScope.yearsPassed = (year) -> moment().format("YYYY") - year
 
           # skip_values – какие значения в enum пропускать
           # allowed_user_ids – пользователи, которым разрешено выбирать значения
