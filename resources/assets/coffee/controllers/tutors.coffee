@@ -49,16 +49,21 @@ angular
             else
                 $scope.search.station_id = null
 
+        $scope.clearStation = ->
+            $scope.$broadcast('angucomplete-alt:clearInput');
+            $scope.search.station_id = null
+            $timeout -> $('.autocomplete-input').focus()
+
         handleScrollDesktop = ->
+            wrapper = $('.new-filter-wrapper')
+            sticky = wrapper.position().top
             $(window).on 'scroll', ->
-                wrapper = $('.new-filter-wrapper')
-                console.log($('.search-result-wrap-more').position().top - window.pageYOffset)
                 if $('.search-result-wrap-more').position().top - window.pageYOffset <= 605
                     wrapper.removeClass('sticky')
                     $('.new-filter-wrapper-left').addClass('stick-to-end')
                 else
                     $('.new-filter-wrapper-left').removeClass('stick-to-end')
-                    if window.pageYOffset > 138 then wrapper.addClass('sticky') else wrapper.removeClass('sticky')
+                    if window.pageYOffset > sticky then wrapper.addClass('sticky') else wrapper.removeClass('sticky')
 
         handleScrollMobile = ->
             sticky = $('.filter-group').position().top - 1
@@ -78,7 +83,7 @@ angular
                 selected_station = _.find($scope.stations_array, (station) ->  station.id == parseInt($scope.search.station_id))
                 $scope.$broadcast 'angucomplete-alt:changeInput', 'stations-autocomplete', selected_station
             if not $scope.profilePage() and window.location.pathname isnt '/request'
-                if typeof(isMobile) isnt 'undefined' then handleScrollMobile() else handleScrollDesktop()
+                if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
@@ -301,6 +306,7 @@ angular
                         tutor.svg_map = _.filter tutor.svg_map.split(',') if 'string' == typeof tutor.svg_map
                     highlight('search-result-text')
                     if $scope.mobile then $timeout -> bindToggle()
+                    $timeout -> window.dispatchEvent(new Event('scroll'))
 
         # highlight hidden filter
         highlight = (className)->

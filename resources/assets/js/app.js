@@ -487,17 +487,24 @@
         return $scope.search.station_id = null;
       }
     };
+    $scope.clearStation = function() {
+      $scope.$broadcast('angucomplete-alt:clearInput');
+      $scope.search.station_id = null;
+      return $timeout(function() {
+        return $('.autocomplete-input').focus();
+      });
+    };
     handleScrollDesktop = function() {
+      var sticky, wrapper;
+      wrapper = $('.new-filter-wrapper');
+      sticky = wrapper.position().top;
       return $(window).on('scroll', function() {
-        var wrapper;
-        wrapper = $('.new-filter-wrapper');
-        console.log($('.search-result-wrap-more').position().top - window.pageYOffset);
         if ($('.search-result-wrap-more').position().top - window.pageYOffset <= 605) {
           wrapper.removeClass('sticky');
           return $('.new-filter-wrapper-left').addClass('stick-to-end');
         } else {
           $('.new-filter-wrapper-left').removeClass('stick-to-end');
-          if (window.pageYOffset > 138) {
+          if (window.pageYOffset > sticky) {
             return wrapper.addClass('sticky');
           } else {
             return wrapper.removeClass('sticky');
@@ -530,7 +537,7 @@
         $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', selected_station);
       }
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
-        if (typeof isMobile !== 'undefined') {
+        if ($scope.mobile) {
           handleScrollMobile();
         } else {
           handleScrollDesktop();
@@ -783,10 +790,13 @@
           });
           highlight('search-result-text');
           if ($scope.mobile) {
-            return $timeout(function() {
+            $timeout(function() {
               return bindToggle();
             });
           }
+          return $timeout(function() {
+            return window.dispatchEvent(new Event('scroll'));
+          });
         }
       });
     };
@@ -980,6 +990,23 @@
         });
       }
     });
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
@@ -1391,23 +1418,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
