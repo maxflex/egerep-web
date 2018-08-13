@@ -67,6 +67,11 @@ if (! isset($_COOKIE[AB_TEST_FILTER])) {
     $_COOKIE[AB_TEST_FILTER] = $variant;
 }
 
+if (isset($_GET['af'])) {
+    setcookie(AB_TEST_FILTER, $_GET['af'], time() + (10 * 365 * 24 * 60 * 60), '/');
+    $_COOKIE[AB_TEST_FILTER] = $_GET['af'];
+}
+
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
