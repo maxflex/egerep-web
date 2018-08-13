@@ -58,7 +58,7 @@ angular
             wrapper = $('.new-filter-wrapper')
             sticky = wrapper.position().top
             $(window).on 'scroll', ->
-                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 605
+                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 500
                     wrapper.removeClass('sticky')
                     $('.new-filter-wrapper-left').addClass('stick-to-end')
                 else

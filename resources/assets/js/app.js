@@ -499,7 +499,7 @@
       wrapper = $('.new-filter-wrapper');
       sticky = wrapper.position().top;
       return $(window).on('scroll', function() {
-        if ($('.search-result-wrap-more').position().top - window.pageYOffset <= 605) {
+        if ($('.search-result-wrap-more').position().top - window.pageYOffset <= 500) {
           wrapper.removeClass('sticky');
           return $('.new-filter-wrapper-left').addClass('stick-to-end');
         } else {
@@ -995,23 +995,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -1418,6 +1401,23 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);
