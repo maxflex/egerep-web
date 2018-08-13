@@ -78,7 +78,7 @@ angular
                 selected_station = _.find($scope.stations_array, (station) ->  station.id == parseInt($scope.search.station_id))
                 $scope.$broadcast 'angucomplete-alt:changeInput', 'stations-autocomplete', selected_station
             if not $scope.profilePage() and window.location.pathname isnt '/request'
-                if typeof(isMobile) !== 'undefined' then handleScrollMobile() else handleScrollDesktop()
+                if typeof(isMobile) isnt 'undefined' then handleScrollMobile() else handleScrollDesktop()
                 if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                     id = $scope.search.id
                     $scope.search = JSON.parse($.cookie('search'))
