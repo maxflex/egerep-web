@@ -425,7 +425,7 @@
 
 (function() {
   angular.module('Egerep').constant('REVIEWS_PER_PAGE', 5).controller('Tutors', function($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) {
-    var filter, filter_used, handleScrollDesktop, handleScrollMobile, highlight, search, search_count;
+    var bindWatchers, filter, filter_used, handleScrollDesktop, handleScrollMobile, highlight, search, search_count;
     bindArguments($scope, arguments);
     search_count = 0;
     $scope.popups = {};
@@ -496,6 +496,50 @@
         return $('.autocomplete-input').focus();
       });
     };
+    bindWatchers = function() {
+      $scope.$watchCollection('search.subjects', function(newVal, oldVal) {
+        if (newVal === oldVal) {
+          return;
+        }
+        return dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'subjects',
+          eventAction: $scope.SubjectService.getSelected().map(function(subject_id) {
+            return $scope.subjects[subject_id].eng;
+          }).join(',')
+        });
+      });
+      $scope.$watchCollection('search.place', function(newVal, oldVal) {
+        if (newVal === oldVal) {
+          return;
+        }
+        return dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'place',
+          eventAction: $scope.search.place
+        });
+      });
+      $scope.$watchCollection('search.sort', function(newVal, oldVal) {
+        if (newVal === oldVal) {
+          return;
+        }
+        return dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'place',
+          eventAction: $scope.search.sort
+        });
+      });
+      return $scope.$watchCollection('search.station_id', function(newVal, oldVal) {
+        if (newVal === oldVal) {
+          return;
+        }
+        return dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'station',
+          eventAction: $scope.search.station_id ? $scope.stations[$scope.search.station_id].title : ''
+        });
+      });
+    };
     handleScrollDesktop = function() {
       var sticky, wrapper;
       wrapper = $('.new-filter-wrapper');
@@ -516,10 +560,10 @@
     };
     handleScrollMobile = function() {
       var sticky;
-      sticky = $('.filter-group').position().top - 1;
+      sticky = $('.filter-full-width').position().top - 1;
       return $(window).on('scroll', function() {
         var wrapper;
-        wrapper = $('.filter-group');
+        wrapper = $('.filter-full-width');
         if (window.pageYOffset > sticky) {
           wrapper.addClass('sticky');
           return $('.accordions').addClass('sticky');
@@ -532,6 +576,7 @@
     $timeout(function() {
       var id, selected_station;
       if ($scope.serp_new) {
+        $timeout(bindWatchers, 500);
         $scope.stations_array = Object.values($scope.stations);
         if ($scope.search.station_id) {
           selected_station = _.find($scope.stations_array, function(station) {
@@ -706,6 +751,7 @@
     };
     filter_used = false;
     $scope.filter = function(type) {
+      var params;
       if (type == null) {
         type = null;
       }
@@ -717,12 +763,23 @@
         StreamService.updateCookie({
           search: StreamService.cookie.search + 1
         });
-        return StreamService.run('filter', type, {
-          search: StreamService.cookie.search,
-          subjects: $scope.SubjectService.getSelected().join(','),
-          station_id: $scope.search.station_id,
-          priority: $scope.search.priority
-        }).then(function() {
+        if ($scope.serp_new) {
+          params = {
+            search: StreamService.cookie.search,
+            subjects: $scope.SubjectService.getSelected().join(','),
+            station_id: $scope.search.station_id,
+            sort: $scope.search.sort,
+            place: $scope.search.place
+          };
+        } else {
+          params = {
+            search: StreamService.cookie.search,
+            subjects: $scope.SubjectService.getSelected().join(','),
+            station_id: $scope.search.station_id,
+            priority: $scope.search.priority
+          };
+        }
+        return StreamService.run('filter', type, params).then(function() {
           return filter();
         });
       } else {
@@ -1429,6 +1486,71 @@
 }).call(this);
 
 (function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -1663,71 +1785,6 @@
     };
     return this;
   });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
 
 }).call(this);
 

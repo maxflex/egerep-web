@@ -56,6 +56,36 @@ angular
             $scope.search.station_id = null
             $timeout -> $('.autocomplete-input').focus()
 
+
+        bindWatchers = ->
+            $scope.$watchCollection 'search.subjects', (newVal, oldVal) ->
+                return if newVal is oldVal
+                dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'subjects'
+                    eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
+
+            $scope.$watchCollection 'search.place', (newVal, oldVal) ->
+                return if newVal is oldVal
+                dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'place'
+                    eventAction: $scope.search.place
+
+            $scope.$watchCollection 'search.sort', (newVal, oldVal) ->
+                return if newVal is oldVal
+                dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'place'
+                    eventAction: $scope.search.sort
+
+            $scope.$watchCollection 'search.station_id', (newVal, oldVal) ->
+                return if newVal is oldVal
+                dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'station'
+                    eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
+
         handleScrollDesktop = ->
             wrapper = $('.new-filter-wrapper')
             sticky = wrapper.position().top - 1
@@ -68,9 +98,9 @@ angular
                     if window.pageYOffset > sticky then wrapper.addClass('sticky') else wrapper.removeClass('sticky')
 
         handleScrollMobile = ->
-            sticky = $('.filter-group').position().top - 1
+            sticky = $('.filter-full-width').position().top - 1
             $(window).on 'scroll', ->
-                wrapper = $('.filter-group')
+                wrapper = $('.filter-full-width')
                 if window.pageYOffset > sticky
                     wrapper.addClass('sticky')
                     $('.accordions').addClass('sticky')
@@ -81,6 +111,7 @@ angular
         # страница поиска
         $timeout ->
             if $scope.serp_new
+                $timeout(bindWatchers, 500)
                 $scope.stations_array = Object.values($scope.stations)
                 if $scope.search.station_id
                     selected_station = _.find($scope.stations_array, (station) ->  station.id == parseInt($scope.search.station_id))
@@ -247,17 +278,20 @@ angular
             $scope.page = 1
             if filter_used
                 StreamService.updateCookie({search: StreamService.cookie.search + 1})
-                StreamService.run 'filter', type,
-                    search: StreamService.cookie.search
-                    subjects: $scope.SubjectService.getSelected().join(',')
-                    station_id: $scope.search.station_id
-                    priority: $scope.search.priority
-                    # sort: $scope.search.sort
-                    # place: $scope.search.place
-                    # age_from: $scope.search.age_from
-                    # age_to: $scope.search.age_to
-                    # gender: $scope.search.gender
-                .then -> filter()
+                if $scope.serp_new
+                    params =
+                        search: StreamService.cookie.search
+                        subjects: $scope.SubjectService.getSelected().join(',')
+                        station_id: $scope.search.station_id
+                        sort: $scope.search.sort
+                        place: $scope.search.place
+                else
+                    params =
+                        search: StreamService.cookie.search
+                        subjects: $scope.SubjectService.getSelected().join(',')
+                        station_id: $scope.search.station_id
+                        priority: $scope.search.priority
+                StreamService.run('filter', type, params).then -> filter()
             else
                 filter()
                 filter_used = true

@@ -10143,4 +10143,9 @@ img.request-sent-svg {
       white-space: nowrap;
       overflow: hidden; }
 
+.footer.gray-block, .footer.seo-block {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0; }
+
 /*# sourceMappingURL=mobile.css.map */
