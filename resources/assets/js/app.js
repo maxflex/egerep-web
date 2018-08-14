@@ -501,7 +501,14 @@
         if (newVal === oldVal) {
           return;
         }
-        return dataLayerPush({
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'subjects',
+          eventAction: $scope.SubjectService.getSelected().map(function(subject_id) {
+            return $scope.subjects[subject_id].eng;
+          }).join(',')
+        });
+        return console.log({
           event: 'configuration',
           eventCategory: 'subjects',
           eventAction: $scope.SubjectService.getSelected().map(function(subject_id) {
@@ -513,7 +520,12 @@
         if (newVal === oldVal) {
           return;
         }
-        return dataLayerPush({
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'place',
+          eventAction: $scope.search.place
+        });
+        return console.log({
           event: 'configuration',
           eventCategory: 'place',
           eventAction: $scope.search.place
@@ -523,9 +535,14 @@
         if (newVal === oldVal) {
           return;
         }
-        return dataLayerPush({
+        dataLayerPush({
           event: 'configuration',
-          eventCategory: 'place',
+          eventCategory: 'sort',
+          eventAction: $scope.search.sort
+        });
+        return console.log({
+          event: 'configuration',
+          eventCategory: 'sort',
           eventAction: $scope.search.sort
         });
       });
@@ -533,7 +550,12 @@
         if (newVal === oldVal) {
           return;
         }
-        return dataLayerPush({
+        dataLayerPush({
+          event: 'configuration',
+          eventCategory: 'station',
+          eventAction: $scope.search.station_id ? $scope.stations[$scope.search.station_id].title : ''
+        });
+        return console.log({
           event: 'configuration',
           eventCategory: 'station',
           eventAction: $scope.search.station_id ? $scope.stations[$scope.search.station_id].title : ''
@@ -1050,6 +1072,88 @@
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
+  var apiPath, countable, updatable;
+
+  angular.module('Egerep').factory('Tutor', function($resource) {
+    return $resource(apiPath('tutors'), {
+      id: '@id',
+      type: '@type'
+    }, {
+      search: {
+        method: 'POST',
+        url: apiPath('tutors', 'search')
+      },
+      reviews: {
+        method: 'GET',
+        isArray: true,
+        url: apiPath('tutors', 'reviews')
+      },
+      login: {
+        method: 'GET',
+        url: apiPath('tutors', 'login')
+      }
+    });
+  }).factory('Request', function($resource) {
+    return $resource(apiPath('requests'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Sms', function($resource) {
+    return $resource(apiPath('sms'), {
+      id: '@id'
+    }, updatable());
+  }).factory('Cv', function($resource) {
+    return $resource(apiPath('cv'), {
+      id: '@id'
+    });
+  }).factory('Stream', function($resource) {
+    return $resource(apiPath('stream'), {
+      id: '@id'
+    });
+  });
+
+  apiPath = function(entity, additional) {
+    if (additional == null) {
+      additional = '';
+    }
+    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
+  };
+
+  updatable = function() {
+    return {
+      update: {
+        method: 'PUT'
+      }
+    };
+  };
+
+  countable = function() {
+    return {
+      count: {
+        method: 'GET'
+      }
+    };
+  };
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -1456,88 +1560,6 @@
         });
       }
     };
-  });
-
-}).call(this);
-
-(function() {
-  var apiPath, countable, updatable;
-
-  angular.module('Egerep').factory('Tutor', function($resource) {
-    return $resource(apiPath('tutors'), {
-      id: '@id',
-      type: '@type'
-    }, {
-      search: {
-        method: 'POST',
-        url: apiPath('tutors', 'search')
-      },
-      reviews: {
-        method: 'GET',
-        isArray: true,
-        url: apiPath('tutors', 'reviews')
-      },
-      login: {
-        method: 'GET',
-        url: apiPath('tutors', 'login')
-      }
-    });
-  }).factory('Request', function($resource) {
-    return $resource(apiPath('requests'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Sms', function($resource) {
-    return $resource(apiPath('sms'), {
-      id: '@id'
-    }, updatable());
-  }).factory('Cv', function($resource) {
-    return $resource(apiPath('cv'), {
-      id: '@id'
-    });
-  }).factory('Stream', function($resource) {
-    return $resource(apiPath('stream'), {
-      id: '@id'
-    });
-  });
-
-  apiPath = function(entity, additional) {
-    if (additional == null) {
-      additional = '';
-    }
-    return ("/api/" + entity + "/") + (additional ? additional + '/' : '') + ":id";
-  };
-
-  updatable = function() {
-    return {
-      update: {
-        method: 'PUT'
-      }
-    };
-  };
-
-  countable = function() {
-    return {
-      count: {
-        method: 'GET'
-      }
-    };
-  };
-
-}).call(this);
-
-(function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

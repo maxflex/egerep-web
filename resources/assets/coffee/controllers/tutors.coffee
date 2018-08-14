@@ -64,10 +64,18 @@ angular
                     event: 'configuration'
                     eventCategory: 'subjects'
                     eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
+                console.log
+                    event: 'configuration'
+                    eventCategory: 'subjects'
+                    eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
 
             $scope.$watchCollection 'search.place', (newVal, oldVal) ->
                 return if newVal is oldVal
                 dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'place'
+                    eventAction: $scope.search.place
+                console.log
                     event: 'configuration'
                     eventCategory: 'place'
                     eventAction: $scope.search.place
@@ -76,12 +84,20 @@ angular
                 return if newVal is oldVal
                 dataLayerPush
                     event: 'configuration'
-                    eventCategory: 'place'
+                    eventCategory: 'sort'
+                    eventAction: $scope.search.sort
+                console.log
+                    event: 'configuration'
+                    eventCategory: 'sort'
                     eventAction: $scope.search.sort
 
             $scope.$watchCollection 'search.station_id', (newVal, oldVal) ->
                 return if newVal is oldVal
                 dataLayerPush
+                    event: 'configuration'
+                    eventCategory: 'station'
+                    eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
+                console.log
                     event: 'configuration'
                     eventCategory: 'station'
                     eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
