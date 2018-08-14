@@ -104,9 +104,9 @@ angular
 
         handleScrollDesktop = ->
             wrapper = $('.new-filter-wrapper')
-            sticky = wrapper.position().top - 1
+            sticky = wrapper.position().top + 19
             $(window).on 'scroll', ->
-                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 560
+                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 500
                     wrapper.removeClass('sticky')
                     $('.new-filter-wrapper-left').addClass('stick-to-end')
                 else
