@@ -6382,17 +6382,7 @@ body {
   background-color: white;
   -webkit-overflow-scrolling: touch !important; }
   body.modal-open {
-    overflow: hidden !important;
-    position: fixed;
-    width: 100%; }
-    body.modal-open:before {
-      content: '';
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      position: fixed;
-      z-index: 50; }
+    overflow-y: hidden !important; }
 
 /* HTML5 display definitions
    ========================================================================== */

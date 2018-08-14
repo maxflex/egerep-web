@@ -14977,23 +14977,6 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -15470,6 +15453,23 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 }).call(this);
 
 (function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
+  });
+
+}).call(this);
+
+(function() {
   angular.module('Egerep').service('PhoneService', function() {
     var isFull;
     this.checkForm = function(element) {
@@ -15764,7 +15764,7 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
 
     function closeModal() {
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
-        $('.modal-backdrop').hide(0)
+        // $('.modal-backdrop').hide(0)
         setTimeout(function() {
             $('.modal.active').removeClass('active')
             $('body').removeClass('modal-open')
@@ -15781,11 +15781,11 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
     function openModal(id) {
         modal = $(".modal#modal-" + id)
         modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
-        $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
+        // $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
         $("body").addClass('modal-open open-modal-' + id);
         active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
-        $('.modal-backdrop').show(0)
+        // $('.modal-backdrop').show(0)
         window.location.hash = '#modal'
     }
 

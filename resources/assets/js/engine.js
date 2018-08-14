@@ -53,7 +53,7 @@
 
     function closeModal() {
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
-        $('.modal-backdrop').hide(0)
+        // $('.modal-backdrop').hide(0)
         setTimeout(function() {
             $('.modal.active').removeClass('active')
             $('body').removeClass('modal-open')
@@ -70,11 +70,11 @@
     function openModal(id) {
         modal = $(".modal#modal-" + id)
         modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
-        $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
+        // $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
         $("body").addClass('modal-open open-modal-' + id);
         active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
-        $('.modal-backdrop').show(0)
+        // $('.modal-backdrop').show(0)
         window.location.hash = '#modal'
     }
 
