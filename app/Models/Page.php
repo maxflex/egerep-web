@@ -89,7 +89,7 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        $value = Variable::display(($_COOKIE[AB_TEST_FILTER] && isTestSubdomain()) ? 'serp-new' : 'serp');
+        $value = Variable::display($_COOKIE[AB_TEST_FILTER] ? 'serp-new' : 'serp');
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }
