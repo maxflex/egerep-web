@@ -79,8 +79,8 @@ class Page extends Model
                     $data['sort'] = 'nearest-metro';
                     break;
                 default:
-                    $data['place'] = 'home';
-                    $data['sort'] = 'nearest-metro';
+                    $data['place'] = 'tutor';
+                    $data['sort'] = 'most-popular';
                     break;
             }
         }

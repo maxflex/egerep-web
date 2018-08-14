@@ -574,7 +574,7 @@
       });
     };
     $timeout(function() {
-      var id, selected_station;
+      var selected_station;
       if ($scope.serp_new) {
         $timeout(bindWatchers, 500);
         $scope.stations_array = Object.values($scope.stations);
@@ -593,18 +593,10 @@
             handleScrollDesktop();
           }
         }
-        if ($scope.page_was_refreshed && $.cookie('search') !== void 0) {
-          id = $scope.search.id;
-          $scope.search = JSON.parse($.cookie('search'));
-          $scope.search.id = id;
-        }
         if ($scope.selected_subjects) {
           $scope.selected_subjects.split(',').forEach(function(subject_id) {
             return $scope.search.subjects[subject_id] = true;
           });
-        }
-        if (!$scope.search.place) {
-          $scope.search.place = 1;
         }
         if ($scope.search.priority === '2' || $scope.search.priority === '3') {
           $scope.station_ids[$scope.search.priority] = $scope.search.station_id;

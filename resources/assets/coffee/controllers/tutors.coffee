@@ -120,10 +120,10 @@ angular
                 if $scope.serp_new
                     if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
 
-                if $scope.page_was_refreshed and $.cookie('search') isnt undefined
-                    id = $scope.search.id
-                    $scope.search = JSON.parse($.cookie('search'))
-                    $scope.search.id = id
+                # if $scope.page_was_refreshed and $.cookie('search') isnt undefined
+                #     id = $scope.search.id
+                #     $scope.search = JSON.parse($.cookie('search'))
+                #     $scope.search.id = id
 
                 # если есть предустановленные предметы
                 if $scope.selected_subjects
@@ -131,7 +131,7 @@ angular
                         $scope.search.subjects[subject_id] = true
 
                 # place по умолчанию
-                $scope.search.place = 1 if not $scope.search.place
+                # $scope.search.place = 1 if not $scope.search.place
 
                 if ($scope.search.priority == '2' || $scope.search.priority == '3')
                     $scope.station_ids[$scope.search.priority] = $scope.search.station_id

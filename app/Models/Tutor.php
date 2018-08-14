@@ -250,13 +250,13 @@ class Tutor extends Service\Model
             if (isset($place)) {
                 if ($place == 'tutor') {
                     $query->has('markers');
-                    if (isset($sort) && $sort == 'nearest-metro') {
+                    if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
                         $query->orderByDistanceToMarkers($station_id, 'green');
                     }
                 }
                 if ($place == 'home') {
                     $query->has('departure');
-                    if (isset($sort) && $sort == 'nearest-metro') {
+                    if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
                         $query->orderByIntersectingMetro($station_id);
                     }
                 }
