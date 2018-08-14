@@ -397,19 +397,19 @@ class Tutor extends Service\Model
                 'reviews.ball',
                 'reviews.max_ball',
                 'reviews.comment',
-                'reviews.signature',
-                DB::raw('(reviews.ball / reviews.max_ball) as ball_efficency')
+                'reviews.signature'
+                // DB::raw('(reviews.ball / reviews.max_ball) as ball_efficency')
             )
-            ->orderBy(DB::raw("
-                CASE
-                    WHEN ball_efficency >= 0.81 THEN 6
-                    WHEN ball_efficency >= 0.71 THEN 5
-                    WHEN ball_efficency >= 0.61 THEN 4
-                    WHEN ball_efficency >= 0.51 THEN 3
-                    WHEN ball_efficency >= 0.41 THEN 2
-                    ELSE 1
-                END
-            "), 'desc')
+            // ->orderBy(DB::raw("
+            //     CASE
+            //         WHEN ball_efficency >= 0.81 THEN 6
+            //         WHEN ball_efficency >= 0.71 THEN 5
+            //         WHEN ball_efficency >= 0.61 THEN 4
+            //         WHEN ball_efficency >= 0.51 THEN 3
+            //         WHEN ball_efficency >= 0.41 THEN 2
+            //         ELSE 1
+            //     END
+            // "), 'desc')
             ->orderBy('reviews.created_at', 'desc');
 
         if ($take) {
