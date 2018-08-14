@@ -33,13 +33,13 @@ class CvStore extends FormRequest
         ];
         foreach(self::NAME_FIELDS as $field) {
             $rules[$field] = [
-                'regex:' . NAME_VALIDATION_REGEX,
+                // 'regex:' . NAME_VALIDATION_REGEX,
                 'max:' . MAX_NAME_LENGTH,
             ];
         }
         foreach(self::TEXT_FIELDS as $field) {
             $rules[$field] = [
-                'regex:' . TEXT_VALIDATION_REGEX,
+                // 'regex:' . TEXT_VALIDATION_REGEX,
                 'max:' . MAX_COMMENT_LENGTH,
             ];
         }
