@@ -13,7 +13,6 @@ $(document).ready(function() {
     //     }, false);
 })
 
-
 function bindToggle()
 {
     $('.accordions .accordions__title:not(.locked):not(.toggle-bound)').addClass('toggle-bound').on('click').click(function() {

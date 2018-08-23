@@ -52,6 +52,7 @@
     // }
 
     function closeModal() {
+        bodyScrollLock.enableBodyScroll(document.querySelectorAll('html, body'))
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
         // $('.modal-backdrop').hide(0)
         setTimeout(function() {
@@ -68,6 +69,7 @@
     }
 
     function openModal(id) {
+        bodyScrollLock.disableBodyScroll(document.querySelector('html, body'))
         modal = $(".modal#modal-" + id)
         modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
         // $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix

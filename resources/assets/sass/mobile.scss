@@ -209,7 +209,7 @@ body {
     background-color: white;
     -webkit-overflow-scrolling: touch !important;
     &.modal-open {
-        overflow-y: hidden !important;
+        overflow: hidden !important;
     }
     // &.modal-open {
     //     overflow: hidden !important;
@@ -3971,6 +3971,7 @@ p {
 
 .modal {
     @extend .animated;
+    transform: translate3d(0,0,0);
     animation-duration: .3s;
     position: fixed;
     width: 100%;
