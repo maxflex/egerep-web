@@ -246,7 +246,7 @@ class Tutor extends Service\Model
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
 
-        if ($_COOKIE[AB_TEST_FILTER]) {
+        if (isMobile()) {
             if (isset($place)) {
                 if ($place == 'tutor') {
                     $query->has('markers');

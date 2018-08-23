@@ -68,7 +68,7 @@ class Page extends Model
         if ($this->hidden_filter) {
             $data['hidden_filter'] = explode(',', str_replace(' ', '', mb_strtolower($this->hidden_filter)));
         }
-        if ($_COOKIE[AB_TEST_FILTER]) {
+        if (isMobile()) {
             switch($this->priority) {
                 case 2:
                     $data['place'] = 'tutor';
@@ -89,7 +89,7 @@ class Page extends Model
 
     public function getHtmlAttribute($value)
     {
-        $value = Variable::display($_COOKIE[AB_TEST_FILTER] ? 'serp-new' : 'serp');
+        $value = Variable::display('serp');
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);
     }
