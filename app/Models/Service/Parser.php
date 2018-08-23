@@ -93,6 +93,9 @@
                         case 'tutor':
                             $replacement = Tutor::find($args[0])->toJson();
                             break;
+                        case 'elixir':
+                            $replacement = elixir($args[0]);
+                            break;
                         case 'tutors':
                             $replacement = Tutor::bySubject(...$args)->toJson();
                             break;
