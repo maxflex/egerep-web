@@ -108,7 +108,7 @@ textarea {
 .header-logo {
     @extend .logo-base;
     display: block;
-    background: url(../img/logo/header.svg) no-repeat;
+    background: url(/img/logo/header.svg) no-repeat;
 }
 .header-phone {
     position: absolute;
@@ -396,7 +396,7 @@ textarea {
     right: 13px;
     width: 14px;
     height: 14px;
-    background: url(../img/svg/cross.svg) no-repeat;
+    background: url(/img/svg/cross.svg) no-repeat;
     cursor: pointer;
 }
 /*
@@ -735,7 +735,7 @@ textarea {
 --------------------------------*/
 .footer-search-tutor {
     height: 147px;
-    background: url(../img/icons/bg.jpg) no-repeat 50% 50%;
+    background: url(/img/icons/bg.jpg) no-repeat 50% 50%;
     background-size: cover;
 }
 .footer-search-tutor-inner {
@@ -837,7 +837,7 @@ $footer-height: 315px;
     position: absolute;
     top: 20px;
     left: -62px;
-    background: url(../img/logo/footer.svg) no-repeat;
+    background: url(/img/logo/footer.svg) no-repeat;
     transform: scale(0.75);
 }
 .footer-contacts {
@@ -866,7 +866,7 @@ $footer-height: 315px;
     display: inline-block;
     width: 28px;
     height: 27px;
-    background: url(../img/icons/sm-icons.png) no-repeat;
+    background: url(/img/icons/sm-icons.png) no-repeat;
     margin: 0 0 0 6px;
 }
 .sm-gl {
@@ -1064,7 +1064,7 @@ span.customSelect {
     font-family: 'helveticaneuecyrroman';
     text-align: left;
     height: 45px;
-    background: #fff url(../img/svg/dropdown.svg) no-repeat;
+    background: #fff url(/img/svg/dropdown.svg) no-repeat;
     background-position: calc(100% - 13px) 70%;
     background-size: 14px;
 }

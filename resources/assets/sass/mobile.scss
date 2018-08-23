@@ -2,7 +2,6 @@
 @import "normalize";
 @import "flaticon";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
-@import "../bower/font-awesome/css/font-awesome";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/animate.css/animate.min";
 
@@ -172,12 +171,12 @@ span.req-place {
 /* Font */
 @font-face {
     font-family: 'helveticaneuecyrbold';
-    src: url('../fonts/helveticaneuecyr-bold_1-webfont.eot');
-    src: url('../fonts/helveticaneuecyr-bold_1-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/helveticaneuecyr-bold_1-webfont.woff2') format('woff2'),
-    url('../fonts/helveticaneuecyr-bold_1-webfont.woff') format('woff'),
-    url('../fonts/helveticaneuecyr-bold_1-webfont.ttf') format('truetype'),
-    url('../fonts/helveticaneuecyr-bold_1-webfont.svg#helveticaneuecyrbold') format('svg');
+    src: url('/fonts/helveticaneuecyr-bold_1-webfont.eot');
+    src: url('/fonts/helveticaneuecyr-bold_1-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/helveticaneuecyr-bold_1-webfont.woff2') format('woff2'),
+    url('/fonts/helveticaneuecyr-bold_1-webfont.woff') format('woff'),
+    url('/fonts/helveticaneuecyr-bold_1-webfont.ttf') format('truetype'),
+    url('/fonts/helveticaneuecyr-bold_1-webfont.svg#helveticaneuecyrbold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -936,7 +935,7 @@ textarea {
         width: 0.958em;
         height: 1.917em;
 
-        background: url('../images/mobile/phone_icon.png') no-repeat;
+        background: url('/images/mobile/phone_icon.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -944,7 +943,7 @@ textarea {
         /*margin-left: auto;*/
 	    /*width: 2.083em;*/
 	    /*height: 1.417em;*/
-	    /*background: url('../images/mobile/menu_icon.png') no-repeat;*/
+	    /*background: url('/images/mobile/menu_icon.png') no-repeat;*/
 	    /*background-size: 100% 100%;*/
     }
 
@@ -1032,13 +1031,13 @@ textarea {
     .header__slider__btn-left {
         left: 1.500em;
 
-        background: url('../images/mobile/arrow-left_blue.png') no-repeat;
+        background: url('/images/mobile/arrow-left_blue.png') no-repeat;
         background-size: 100% 100%;
     }
     .header__slider__btn-right {
         right: 1.500em;
 
-        background: url('../images/mobile/arrow-right_blue.png') no-repeat;
+        background: url('/images/mobile/arrow-right_blue.png') no-repeat;
         background-size: 100% 100%;
     }
 /* header button */
@@ -1053,7 +1052,7 @@ textarea {
     min-height: 16.667em;
     padding: 2.083em 1.042em 8em 1.042em;
 /*     margin: 0 0 2.500em 0; */
-    background: url('../images/mobile/bg1.png') no-repeat 0 100%;
+    background: url('/images/mobile/bg1.png') no-repeat 0 100%;
     /* background-size: contain; */
     background-position-x: -em;
     /* background-position: center; */
@@ -1446,7 +1445,7 @@ textarea {
             width: 1.125em;
             height: 0.833em;
 
-            background: url('../images/mobile/icon1.png') no-repeat;
+            background: url('/images/mobile/icon1.png') no-repeat;
             background-size: 100% 100%;
         }
         .option-list li span {
@@ -1492,7 +1491,7 @@ textarea {
             width: 0.583em;
             height: 1.042em;
 
-            background: url('../images/mobile/arrow-right_blue.png') no-repeat;
+            background: url('/images/mobile/arrow-right_blue.png') no-repeat;
             background-size: 100% 100%;
         }
 
@@ -1639,7 +1638,7 @@ textarea {
 
         margin-top: -0.521em;
 
-        background: url('../images/mobile/arrow-left_blue.png') no-repeat;
+        background: url('/images/mobile/arrow-left_blue.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -1682,7 +1681,7 @@ textarea {
         width: 0.458em;
         height: 0.750em;
 
-        background: url('../images/mobile/icon5.png') no-repeat;
+        background: url('/images/mobile/icon5.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -1690,7 +1689,7 @@ textarea {
         width: 0.708em;
         height: 0.625em;
 
-        background: url('../images/mobile/icon6.png') no-repeat;
+        background: url('/images/mobile/icon6.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -1901,7 +1900,7 @@ textarea {
                     width: 0.583em;
                     height: 1.042em;
 
-                    background: url('../images/mobile/arrow-right_icon.png') no-repeat;
+                    background: url('/images/mobile/arrow-right_icon.png') no-repeat;
                     background-size: 100% 100%;
                 }
 
@@ -1922,7 +1921,7 @@ textarea {
     width: 1.458em;
     height: 1.458em;
 
-    background: url('../images/mobile/close-btn.png') no-repeat;
+    background: url('/images/mobile/close-btn.png') no-repeat;
     background-size: 100% 100%;
 
     cursor: pointer;
@@ -1971,7 +1970,7 @@ textarea {
         top: 1.042em;
         left: 1.250em;
 
-        background: url('../images/mobile/icon_done.png') no-repeat;
+        background: url('/images/mobile/icon_done.png') no-repeat;
         background-size: 100% 100%;
 
         width: 1.500em;
@@ -1999,7 +1998,7 @@ textarea {
 
         margin: -0.583em 0 0 0;
 
-        background: url('../images/mobile/btn_x.png') no-repeat;
+        background: url('/images/mobile/btn_x.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2153,7 +2152,7 @@ textarea {
             top: -0.500em;
             left: 0;
 
-            background: url('../images/mobile/bg.gif') no-repeat;
+            background: url('/images/mobile/bg.gif') no-repeat;
             background-size: 100% 100%;
         }
         .teacher-slider__list {
@@ -2242,11 +2241,11 @@ textarea {
     vertical-align: middle;
 }
 .arrow-round-left {
-    background: url('../images/mobile/arrow-left-round.png') no-repeat;
+    background: url('/images/mobile/arrow-left-round.png') no-repeat;
     background-size: 100% 100%;
 }
 .arrow-round-right {
-    background: url('../images/mobile/arrow-right-round.png') no-repeat;
+    background: url('/images/mobile/arrow-right-round.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -2268,7 +2267,7 @@ textarea {
         width: 1.125em;
         height: 1.125em;
 
-        background: url('../images/mobile/icon_info.png') no-repeat;
+        background: url('/images/mobile/icon_info.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2304,7 +2303,7 @@ textarea {
         width: 1.500em;
         height: 1.500em;
 
-        background: url('../images/mobile/icon_info_green.png') no-repeat;
+        background: url('/images/mobile/icon_info_green.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2392,7 +2391,7 @@ textarea {
         top: 0.917em;
         right: 0.917em;
 
-        background: url('../images/mobile/icon2.png') no-repeat;
+        background: url('/images/mobile/icon2.png') no-repeat;
         background-size: 100% 100%;
     }
     .search-form input[type=text] {
@@ -2432,17 +2431,17 @@ textarea {
     width: 0.875em;
     height: 0.833em;
 
-    background: url('../images/mobile/icon_star1.png') no-repeat;
+    background: url('/images/mobile/icon_star1.png') no-repeat;
     background-size: 100% 100%;
 
     vertical-align: middle;
 }
 .user-rating__stars__item.active {
-    background: url('../images/mobile/icon_star3.png') no-repeat;
+    background: url('/images/mobile/icon_star3.png') no-repeat;
     background-size: 100% 100%;
 }
 .user-rating__stars__item.active_half {
-    background: url('../images/mobile/icon_star2.png') no-repeat;
+    background: url('/images/mobile/icon_star2.png') no-repeat;
     background-size: 100% 100%;
 }
 .user-rating__stars__number {
@@ -2492,7 +2491,7 @@ textarea {
         width: 0.500em;
         height: 0.875em;
 
-        background: url('../images/mobile/icon3.png') no-repeat;
+        background: url('/images/mobile/icon3.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2506,7 +2505,7 @@ textarea {
         width: 0.667em;
         height: 0.833em;
 
-        background: url('../images/mobile/icon4.png') no-repeat;
+        background: url('/images/mobile/icon4.png') no-repeat;
         background-size: 100% 100%;
     }
 
@@ -2716,7 +2715,7 @@ textarea {
     width: 11.000em;
     height: 11.375em;
 
-    background: url('../images/mobile/icon_callback.png') no-repeat;
+    background: url('/images/mobile/icon_callback.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -2729,7 +2728,7 @@ textarea {
     width: 18.875em;
     height: 3.583em;
 
-    background: url('../images/mobile/bnt-vk.png') no-repeat;
+    background: url('/images/mobile/bnt-vk.png') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -3095,7 +3094,7 @@ textarea {
     width:7px;
     height:12px;
 
-    background: url("../img/icons_list.png") no-repeat;}
+    background: url("/img/icons_list.png") no-repeat;}
 
 
   .arrow-left:before {
@@ -4000,7 +3999,7 @@ p {
         right: 1em;
         width: 1.1em;
         height: 1.1em;
-        background: url(../img/svg/cross.svg) no-repeat;
+        background: url(/img/svg/cross.svg) no-repeat;
         cursor: pointer;
         z-index: 3;
         // -webkit-transform:translateZ(3px);
@@ -4176,7 +4175,7 @@ span.customSelect {
     font-family: 'helveticaneuecyrroman';
     text-align: left;
     height: 45px;
-    background: #fff url(../img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
+    background: #fff url(/img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
     background-size: 14px;
 }
 

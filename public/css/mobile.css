@@ -178,61 +178,61 @@ body.no-scroll {
 **/
 @font-face {
   font-family: 'helveticaneuecyrbold';
-  src: url("../fonts/helveticaneuecyr-bold-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-bold-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-bold-webfont.woff") format("woff"), url("../fonts/helveticaneuecyr-bold-webfont.svg#helveticaneuecyrbold") format("svg");
+  src: url("/fonts/helveticaneuecyr-bold-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-bold-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-bold-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-bold-webfont.woff") format("woff"), url("/fonts/helveticaneuecyr-bold-webfont.svg#helveticaneuecyrbold") format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrlight';
-  src: url("../fonts/helveticaneuecyr-light-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-light-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-light-webfont.woff") format("woff"), url("../fonts/helveticaneuecyr-light-webfont.svg#helveticaneuecyrlight") format("svg");
+  src: url("/fonts/helveticaneuecyr-light-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-light-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-light-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-light-webfont.woff") format("woff"), url("/fonts/helveticaneuecyr-light-webfont.svg#helveticaneuecyrlight") format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrmedium';
-  src: url("../fonts/helveticaneuecyr-medium-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-medium-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-medium-webfont.woff") format("woff"), url("../fonts/helveticaneuecyr-medium-webfont.svg#helveticaneuecyrmedium") format("svg");
+  src: url("/fonts/helveticaneuecyr-medium-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-medium-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-medium-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-medium-webfont.woff") format("woff"), url("/fonts/helveticaneuecyr-medium-webfont.svg#helveticaneuecyrmedium") format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrregular';
-  src: url("../fonts/HelveticaNeueRegular.eot") format("eot"), url("../fonts/HelveticaNeueRegular.ttf") format("ttf"), url("../fonts/HelveticaNeueRegular.woff") format("woff");
+  src: url("/fonts/HelveticaNeueRegular.eot") format("eot"), url("/fonts/HelveticaNeueRegular.ttf") format("ttf"), url("/fonts/HelveticaNeueRegular.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrroman';
-  src: url("../fonts/helveticaneuecyr-roman-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-roman-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-roman-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-roman-webfont.woff") format("woff"), url("../fonts/helveticaneuecyr-roman-webfont.svg#helveticaneuecyrroman") format("svg");
+  src: url("/fonts/helveticaneuecyr-roman-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-roman-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-roman-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-roman-webfont.woff") format("woff"), url("/fonts/helveticaneuecyr-roman-webfont.svg#helveticaneuecyrroman") format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrlight_italic';
-  src: url("../fonts/helveticaneuecyr-lightitalic-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-lightitalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-lightitalic-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-lightitalic-webfont.woff") format("woff");
+  src: url("/fonts/helveticaneuecyr-lightitalic-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-lightitalic-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-lightitalic-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-lightitalic-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'ALSRubl-Arial';
-  src: url("../fonts/alsrubl-arial-regular.eot");
-  src: url("../fonts/alsrubl-arial-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/alsrubl-arial-regular.woff") format("woff"), url("../fonts/alsrubl-arial-regular.ttf") format("truetype"), url("../fonts/alsrubl-arial-regular.svg#ALSRublArialRegular") format("svg");
+  src: url("/fonts/alsrubl-arial-regular.eot");
+  src: url("/fonts/alsrubl-arial-regular.eot?#iefix") format("embedded-opentype"), url("/fonts/alsrubl-arial-regular.woff") format("woff"), url("/fonts/alsrubl-arial-regular.ttf") format("truetype"), url("/fonts/alsrubl-arial-regular.svg#ALSRublArialRegular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'Glober';
-  src: url("../fonts/Glober-SemiBold.otf");
+  src: url("/fonts/Glober-SemiBold.otf");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'helveticaneuecyrultralight';
-  src: url("../fonts/HelveticaNeue-UltraLight.eot") format("eot"), url("../fonts/HelveticaNeue-UltraLight.ttf") format("ttf"), url("../fonts/HelveticaNeue-UltraLight.woff") format("woff");
+  src: url("/fonts/HelveticaNeue-UltraLight.eot") format("eot"), url("/fonts/HelveticaNeue-UltraLight.ttf") format("ttf"), url("/fonts/HelveticaNeue-UltraLight.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
 
@@ -6350,8 +6350,8 @@ span.req-place {
 /* Font */
 @font-face {
   font-family: 'helveticaneuecyrbold';
-  src: url("../fonts/helveticaneuecyr-bold_1-webfont.eot");
-  src: url("../fonts/helveticaneuecyr-bold_1-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/helveticaneuecyr-bold_1-webfont.woff2") format("woff2"), url("../fonts/helveticaneuecyr-bold_1-webfont.woff") format("woff"), url("../fonts/helveticaneuecyr-bold_1-webfont.ttf") format("truetype"), url("../fonts/helveticaneuecyr-bold_1-webfont.svg#helveticaneuecyrbold") format("svg");
+  src: url("/fonts/helveticaneuecyr-bold_1-webfont.eot");
+  src: url("/fonts/helveticaneuecyr-bold_1-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/helveticaneuecyr-bold_1-webfont.woff2") format("woff2"), url("/fonts/helveticaneuecyr-bold_1-webfont.woff") format("woff"), url("/fonts/helveticaneuecyr-bold_1-webfont.ttf") format("truetype"), url("/fonts/helveticaneuecyr-bold_1-webfont.svg#helveticaneuecyrbold") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -6969,14 +6969,14 @@ textarea {
   left: 1.958em;
   width: 0.958em;
   height: 1.917em;
-  background: url("../images/mobile/phone_icon.png") no-repeat;
+  background: url("/images/mobile/phone_icon.png") no-repeat;
   background-size: 100% 100%; }
 
 .header-btn__menu {
   /*margin-left: auto;*/
   /*width: 2.083em;*/
   /*height: 1.417em;*/
-  /*background: url('../images/mobile/menu_icon.png') no-repeat;*/
+  /*background: url('/images/mobile/menu_icon.png') no-repeat;*/
   /*background-size: 100% 100%;*/ }
 
 /* Header slider */
@@ -7043,12 +7043,12 @@ textarea {
 
 .header__slider__btn-left {
   left: 1.500em;
-  background: url("../images/mobile/arrow-left_blue.png") no-repeat;
+  background: url("/images/mobile/arrow-left_blue.png") no-repeat;
   background-size: 100% 100%; }
 
 .header__slider__btn-right {
   right: 1.500em;
-  background: url("../images/mobile/arrow-right_blue.png") no-repeat;
+  background: url("/images/mobile/arrow-right_blue.png") no-repeat;
   background-size: 100% 100%; }
 
 /* header button */
@@ -7061,7 +7061,7 @@ textarea {
   min-height: 16.667em;
   padding: 2.083em 1.042em 8em 1.042em;
   /*     margin: 0 0 2.500em 0; */
-  background: url("../images/mobile/bg1.png") no-repeat 0 100%;
+  background: url("/images/mobile/bg1.png") no-repeat 0 100%;
   /* background-size: contain; */
   background-position-x: -em;
   /* background-position: center; */
@@ -7362,7 +7362,7 @@ textarea {
   margin-top: -0.417em;
   width: 1.125em;
   height: 0.833em;
-  background: url("../images/mobile/icon1.png") no-repeat;
+  background: url("/images/mobile/icon1.png") no-repeat;
   background-size: 100% 100%; }
 
 .option-list li span {
@@ -7397,7 +7397,7 @@ textarea {
   margin-top: -0.591em;
   width: 0.583em;
   height: 1.042em;
-  background: url("../images/mobile/arrow-right_blue.png") no-repeat;
+  background: url("/images/mobile/arrow-right_blue.png") no-repeat;
   background-size: 100% 100%; }
 
 /* station metro */
@@ -7500,7 +7500,7 @@ textarea {
   width: 0.583em;
   height: 1.042em;
   margin-top: -0.521em;
-  background: url("../images/mobile/arrow-left_blue.png") no-repeat;
+  background: url("/images/mobile/arrow-left_blue.png") no-repeat;
   background-size: 100% 100%; }
 
 .back-link__info {
@@ -7529,13 +7529,13 @@ textarea {
   margin-top: -0.575em;
   width: 0.458em;
   height: 0.750em;
-  background: url("../images/mobile/icon5.png") no-repeat;
+  background: url("/images/mobile/icon5.png") no-repeat;
   background-size: 100% 100%; }
 
 .back-link__info_doc:before {
   width: 0.708em;
   height: 0.625em;
-  background: url("../images/mobile/icon6.png") no-repeat;
+  background: url("/images/mobile/icon6.png") no-repeat;
   background-size: 100% 100%; }
 
 /* Align  */
@@ -7719,7 +7719,7 @@ textarea {
   right: 0;
   width: 0.583em;
   height: 1.042em;
-  background: url("../images/mobile/arrow-right_icon.png") no-repeat;
+  background: url("/images/mobile/arrow-right_icon.png") no-repeat;
   background-size: 100% 100%; }
 
 .side-menu .info-block {
@@ -7733,7 +7733,7 @@ textarea {
   display: inline-block;
   width: 1.458em;
   height: 1.458em;
-  background: url("../images/mobile/close-btn.png") no-repeat;
+  background: url("/images/mobile/close-btn.png") no-repeat;
   background-size: 100% 100%;
   cursor: pointer; }
 
@@ -7770,7 +7770,7 @@ textarea {
   position: absolute;
   top: 1.042em;
   left: 1.250em;
-  background: url("../images/mobile/icon_done.png") no-repeat;
+  background: url("/images/mobile/icon_done.png") no-repeat;
   background-size: 100% 100%;
   width: 1.500em;
   height: 1.500em; }
@@ -7789,7 +7789,7 @@ textarea {
   top: 50%;
   right: 1.042em;
   margin: -0.583em 0 0 0;
-  background: url("../images/mobile/btn_x.png") no-repeat;
+  background: url("/images/mobile/btn_x.png") no-repeat;
   background-size: 100% 100%; }
 
 /* Reviews slide */
@@ -7909,7 +7909,7 @@ textarea {
   height: 0.500em;
   top: -0.500em;
   left: 0;
-  background: url("../images/mobile/bg.gif") no-repeat;
+  background: url("/images/mobile/bg.gif") no-repeat;
   background-size: 100% 100%; }
 
 .teacher-slider__list {
@@ -7976,11 +7976,11 @@ textarea {
   vertical-align: middle; }
 
 .arrow-round-left {
-  background: url("../images/mobile/arrow-left-round.png") no-repeat;
+  background: url("/images/mobile/arrow-left-round.png") no-repeat;
   background-size: 100% 100%; }
 
 .arrow-round-right {
-  background: url("../images/mobile/arrow-right-round.png") no-repeat;
+  background: url("/images/mobile/arrow-right-round.png") no-repeat;
   background-size: 100% 100%; }
 
 /* Info block */
@@ -7996,7 +7996,7 @@ textarea {
   left: 0.542em;
   width: 1.125em;
   height: 1.125em;
-  background: url("../images/mobile/icon_info.png") no-repeat;
+  background: url("/images/mobile/icon_info.png") no-repeat;
   background-size: 100% 100%; }
 
 .info-block p, .info-block .p-like {
@@ -8021,7 +8021,7 @@ textarea {
   left: 1.250em;
   width: 1.500em;
   height: 1.500em;
-  background: url("../images/mobile/icon_info_green.png") no-repeat;
+  background: url("/images/mobile/icon_info_green.png") no-repeat;
   background-size: 100% 100%; }
 
 /* btn gradient */
@@ -8088,7 +8088,7 @@ textarea {
   height: 1.292em;
   top: 0.917em;
   right: 0.917em;
-  background: url("../images/mobile/icon2.png") no-repeat;
+  background: url("/images/mobile/icon2.png") no-repeat;
   background-size: 100% 100%; }
 
 .search-form input[type=text] {
@@ -8123,16 +8123,16 @@ textarea {
   display: inline-block;
   width: 0.875em;
   height: 0.833em;
-  background: url("../images/mobile/icon_star1.png") no-repeat;
+  background: url("/images/mobile/icon_star1.png") no-repeat;
   background-size: 100% 100%;
   vertical-align: middle; }
 
 .user-rating__stars__item.active {
-  background: url("../images/mobile/icon_star3.png") no-repeat;
+  background: url("/images/mobile/icon_star3.png") no-repeat;
   background-size: 100% 100%; }
 
 .user-rating__stars__item.active_half {
-  background: url("../images/mobile/icon_star2.png") no-repeat;
+  background: url("/images/mobile/icon_star2.png") no-repeat;
   background-size: 100% 100%; }
 
 .user-rating__stars__number {
@@ -8169,7 +8169,7 @@ textarea {
   left: 0;
   width: 0.500em;
   height: 0.875em;
-  background: url("../images/mobile/icon3.png") no-repeat;
+  background: url("/images/mobile/icon3.png") no-repeat;
   background-size: 100% 100%; }
 
 .foresight_bus:before {
@@ -8179,7 +8179,7 @@ textarea {
   left: 0;
   width: 0.667em;
   height: 0.833em;
-  background: url("../images/mobile/icon4.png") no-repeat;
+  background: url("/images/mobile/icon4.png") no-repeat;
   background-size: 100% 100%; }
 
 /* metro map */
@@ -8340,7 +8340,7 @@ textarea {
   margin-bottom: 5.417em;
   width: 11.000em;
   height: 11.375em;
-  background: url("../images/mobile/icon_callback.png") no-repeat;
+  background: url("/images/mobile/icon_callback.png") no-repeat;
   background-size: 100% 100%; }
 
 .btn-vk {
@@ -8349,7 +8349,7 @@ textarea {
   margin-bottom: 1.042em;
   width: 18.875em;
   height: 3.583em;
-  background: url("../images/mobile/bnt-vk.png") no-repeat;
+  background: url("/images/mobile/bnt-vk.png") no-repeat;
   background-size: 100% 100%; }
 
 .callback-info {
@@ -8641,7 +8641,7 @@ textarea {
   content: '';
   width: 7px;
   height: 12px;
-  background: url("../img/icons_list.png") no-repeat; }
+  background: url("/img/icons_list.png") no-repeat; }
 
 .arrow-left:before {
   background-position: -54px 0; }
@@ -9444,7 +9444,7 @@ p, .p-like {
     right: 1em;
     width: 1.1em;
     height: 1.1em;
-    background: url(../img/svg/cross.svg) no-repeat;
+    background: url(/img/svg/cross.svg) no-repeat;
     cursor: pointer;
     z-index: 3; }
   .modal .modal-content {
@@ -9587,7 +9587,7 @@ span.customSelect {
   font-family: 'helveticaneuecyrroman';
   text-align: left;
   height: 45px;
-  background: #fff url(../img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
+  background: #fff url(/img/svg/dropdown.svg) no-repeat calc(100% - 13px) 70%;
   background-size: 14px; }
 
 span.customSelect .customSelectInner {
