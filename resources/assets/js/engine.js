@@ -52,7 +52,9 @@
     // }
 
     function closeModal() {
-        bodyScrollLock.enableBodyScroll(document.querySelectorAll('html, body'))
+        if (typeof(beforeCloseModal) == 'function') {
+            beforeCloseModal()
+        }
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
         // $('.modal-backdrop').hide(0)
         setTimeout(function() {
@@ -69,7 +71,9 @@
     }
 
     function openModal(id) {
-        bodyScrollLock.disableBodyScroll(document.querySelector('html, body'))
+        if (typeof(beforeOpenModal) == 'function') {
+            beforeOpenModal(id)
+        }
         modal = $(".modal#modal-" + id)
         modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
         // $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix

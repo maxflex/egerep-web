@@ -28,3 +28,11 @@ function bindToggle()
 function hideCard(el) {
     $(el).closest('li').children().first().click()
 }
+
+function beforeCloseModal() {
+	bodyScrollLock.clearAllBodyScrollLocks()
+}
+
+function beforeOpenModal(id) {
+	bodyScrollLock.disableBodyScroll(document.querySelector('#modal-' + id + ' .modal-content'))
+}
