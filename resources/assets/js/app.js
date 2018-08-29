@@ -603,11 +603,13 @@
       }
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.serp_new) {
-          if ($scope.mobile) {
-            handleScrollMobile();
-          } else {
-            handleScrollDesktop();
-          }
+          $timeout(function() {
+            if ($scope.mobile) {
+              return handleScrollMobile();
+            } else {
+              return handleScrollDesktop();
+            }
+          }, 500);
         }
         if ($scope.selected_subjects) {
           $scope.selected_subjects.split(',').forEach(function(subject_id) {

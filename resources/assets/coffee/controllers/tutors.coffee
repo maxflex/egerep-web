@@ -129,7 +129,9 @@ angular
                     $scope.$broadcast 'angucomplete-alt:changeInput', 'stations-autocomplete', selected_station
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 if $scope.serp_new
-                    if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
+                    $timeout ->
+                        if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
+                    , 500
 
                 # if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                 #     id = $scope.search.id
