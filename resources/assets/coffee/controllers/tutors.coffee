@@ -103,15 +103,10 @@ angular
                     eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
 
         handleScrollDesktop = ->
-            wrapper = $('.new-filter-wrapper')
-            sticky = wrapper.position().top + 19
+            wrapper = $('.filter-groups')
+            sticky = wrapper.position().top - 1
             $(window).on 'scroll', ->
-                if $('.search-result-wrap-more').position().top - window.pageYOffset <= 500
-                    wrapper.removeClass('sticky')
-                    $('.new-filter-wrapper-left').addClass('stick-to-end')
-                else
-                    $('.new-filter-wrapper-left').removeClass('stick-to-end')
-                    if window.pageYOffset > sticky then wrapper.addClass('sticky') else wrapper.removeClass('sticky')
+                if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
 
         handleScrollMobile = ->
             sticky = $('.filter-full-width').position().top - 1
