@@ -12,6 +12,9 @@ angular
         $scope.station_ids = {}
 
         $scope.filterPopup = (popup) ->
+            if Object.keys($scope.popups).length
+                $scope.popups = {}
+                return
             $scope.popups[popup] = true
             openModal("filter-#{popup}") if $scope.mobile
             StreamService.run('filter_open', popup)
