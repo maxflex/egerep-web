@@ -346,6 +346,10 @@ angular
             , (response) ->
                 search_count++
                 $scope.searching = false
+                if $scope.serp_new && search_count == 1
+                    $timeout ->
+                        if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
+                    , 500
                 if response.hasOwnProperty('url')
                     console.log 'redirectring...'
                     redirect response.url
@@ -359,6 +363,7 @@ angular
                     highlight('search-result-text')
                     if $scope.mobile then $timeout -> bindToggle()
                     $timeout -> window.dispatchEvent(new Event('scroll'))
+
 
         # highlight hidden filter
         highlight = (className)->

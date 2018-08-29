@@ -14530,11 +14530,13 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }
       if (!$scope.profilePage() && window.location.pathname !== '/request') {
         if ($scope.serp_new) {
-          if ($scope.mobile) {
-            handleScrollMobile();
-          } else {
-            handleScrollDesktop();
-          }
+          $timeout(function() {
+            if ($scope.mobile) {
+              return handleScrollMobile();
+            } else {
+              return handleScrollDesktop();
+            }
+          }, 500);
         }
         if ($scope.selected_subjects) {
           $scope.selected_subjects.split(',').forEach(function(subject_id) {
@@ -14775,6 +14777,15 @@ c){g.push("<a ");h.isDefined(b)&&g.push('target="',b,'" ');g.push('href="',a.rep
       }, function(response) {
         search_count++;
         $scope.searching = false;
+        if ($scope.serp_new && search_count === 1) {
+          $timeout(function() {
+            if ($scope.mobile) {
+              return handleScrollMobile();
+            } else {
+              return handleScrollDesktop();
+            }
+          }, 500);
+        }
         if (response.hasOwnProperty('url')) {
           console.log('redirectring...');
           return redirect(response.url);

@@ -850,6 +850,15 @@
       }, function(response) {
         search_count++;
         $scope.searching = false;
+        if ($scope.serp_new && search_count === 1) {
+          $timeout(function() {
+            if ($scope.mobile) {
+              return handleScrollMobile();
+            } else {
+              return handleScrollDesktop();
+            }
+          }, 500);
+        }
         if (response.hasOwnProperty('url')) {
           console.log('redirectring...');
           return redirect(response.url);
