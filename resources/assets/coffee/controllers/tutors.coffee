@@ -124,18 +124,8 @@ angular
 
         # страница поиска
         $timeout ->
-            if $scope.serp_new
-                $timeout(bindWatchers, 500)
-                $scope.stations_array = Object.values($scope.stations)
-                if $scope.search.station_id
-                    selected_station = _.find($scope.stations_array, (station) ->  station.id == parseInt($scope.search.station_id))
-                    $scope.$broadcast 'angucomplete-alt:changeInput', 'stations-autocomplete', selected_station
+            $timeout(bindWatchers, 500)
             if not $scope.profilePage() and window.location.pathname isnt '/request'
-                if $scope.serp_new
-                    $timeout ->
-                        if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
-                    , 500
-
                 # if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                 #     id = $scope.search.id
                 #     $scope.search = JSON.parse($.cookie('search'))
@@ -294,7 +284,7 @@ angular
             $scope.page = 1
             if filter_used
                 StreamService.updateCookie({search: StreamService.cookie.search + 1})
-                if $scope.serp_new
+                if true
                     params =
                         search: StreamService.cookie.search
                         subjects: $scope.SubjectService.getSelected().join(',')
@@ -349,7 +339,7 @@ angular
             , (response) ->
                 search_count++
                 $scope.searching = false
-                if $scope.serp_new && search_count == 1
+                if search_count == 1
                     $timeout ->
                         if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
                     , 500
