@@ -896,8 +896,8 @@ $footer-height: 315px;
 
 .footer-row {
     padding-top: 1px;
-    padding-right: 20px;
-    float: left;
+    // padding-right: 20px;
+    // float: left;
     width: 357px;
     & > b {
         font-weight: normal;
@@ -906,11 +906,11 @@ $footer-height: 315px;
         display: block;
     }
 
-    &.footer-contacts {
-        float: right;
-        padding-right: 10px;
-        width: 160px;
-    }
+    // &.footer-contacts {
+    //     float: right;
+    //     padding-right: 10px;
+    //     width: 160px;
+    // }
 }
 
 .footer {
@@ -923,7 +923,7 @@ $footer-height: 315px;
     }
 
     & .footer-row {
-        
+
     }
 }
 

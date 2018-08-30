@@ -28,22 +28,21 @@
             <div class="footer-rows"
                 ng-init="toggler_{{ $loop->index }} = {{ count($block['links']) }} > {{ \App\Models\Page::MAX_BLOCK_LINKS }}; show_block_items_{{ $loop->index }} = !toggler_{{$loop->index}}">
                 <b>{{ $block['title'] }}</b>
-                @foreach($block['links'] as $link)
-                <div @if ($loop->index >= \App\Models\Page::MAX_BLOCK_LINKS) ng-show="show_block_items_{{ $loop->parent->index }}" @endif>
-                    <a href='{{ $link->url }}'>{{ trim($link->anchor) ? $link->anchor : $link->getClean('h1') }}</a>
-                </div>
-                @endforeach
-                <div class="toggler"
-                      ng-show="toggler_{{ $loop->index }} && !show_block_items_{{ $loop->index }}"
-                      ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">
-                      <span>Показать все</span> <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <div class="footer-block-items">
+                    @foreach($block['links'] as $link)
+                    <div @if ($loop->index >= \App\Models\Page::MAX_BLOCK_LINKS) ng-if="show_block_items_{{ $loop->parent->index }}" @endif>
+                        <a href='{{ $link->url }}'>{{ trim($link->anchor) ? $link->anchor : $link->getClean('h1') }}</a>
+                    </div>
+                    @endforeach
+                    <div class="toggler"
+                          ng-show="toggler_{{ $loop->index }}"
+                          ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">
+                          <span ng-show="!show_block_items_{{ $loop->index }}">Показать все</span>
+                          <span ng-show="show_block_items_{{ $loop->index }}">Скрыть</span>
+                          <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
-            <span class="toggler"
-                  ng-show="toggler_{{ $loop->index }} && show_block_items_{{ $loop->index }}"
-                  ng-click="show_block_items_{{ $loop->index }} = !show_block_items_{{ $loop->index }}">
-                  <span>Скрыть</span> <i class="fa fa-angle-up" aria-hidden="true"></i>
-            </span>
             @endforeach
         </div>
     </div>
