@@ -56,7 +56,7 @@
             beforeCloseModal()
         }
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
-        // $('.modal-backdrop').hide(0)
+        $('.modal-backdrop').hide(0)
         setTimeout(function() {
             $('.modal.active').removeClass('active')
             $('body').removeClass('modal-open')
@@ -80,7 +80,7 @@
         $("body").addClass('modal-open open-modal-' + id);
         active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
-        // $('.modal-backdrop').show(0)
+        $('.modal-backdrop').show(0)
         window.location.hash = '#modal'
     }
 

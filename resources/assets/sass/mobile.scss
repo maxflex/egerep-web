@@ -4866,8 +4866,9 @@ img.request-sent-svg {
     display: flex;
     align-items: center;
     margin: 0 auto;
+    font-family: $font-medium;
     & img {
-        height: 21px;
+        height: 22px;
         margin-right: 6px;
     }
     & .params-count {
