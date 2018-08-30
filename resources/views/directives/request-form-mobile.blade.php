@@ -15,7 +15,10 @@
             <textarea ng-model='tutor.request.comment' class="textarea" placeholder="сообщение" maxlength='500'></textarea>
         </div>
         <div class="align-center">
-            <button class="btn btn-gradient btn-large btn-request" ng-click='request()'><span>отправить</span></button>
+            <button class="btn btn-gradient btn-large btn-request" ng-click='request()'>
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>отправить</span>
+            </button>
         </div>
         <div class="error-message" ng-show='tutor.request_error'>
             Отправка сообщения временно недоступна<br>
