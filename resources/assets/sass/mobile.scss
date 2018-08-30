@@ -4644,15 +4644,6 @@ span.customSelect.custom-select-small .customSelectInner {
     text-align: center;
     margin-top: 1em;
     clear: both;
-    & > span {
-        display: inline-block;
-        padding: 5px 10px;
-        color: white;
-        background-color: $green-mobile;
-        text-decoration: none;
-        border-radius: 30px;
-        font-size: 12px;
-    }
 }
 
 .btn, .btn-green, .btn-gradient {

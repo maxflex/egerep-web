@@ -19,7 +19,7 @@ function bindToggle()
 		var $parent = $(this).parent('li');
 		var $toggleBlock = $parent.children('.accordions__content');
 		$parent.toggleClass('arrow-active');
-        $parent.find('.show-hide').text($parent.hasClass('arrow-active') ? 'свернуть' : 'показать')
+        $parent.find('.show-hide').text($parent.hasClass('arrow-active') ? 'свернуть' : 'подробнее')
 		$toggleBlock.stop();
 		$toggleBlock.slideToggle();
 	})

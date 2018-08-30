@@ -120,15 +120,15 @@ angular
                 if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
 
         handleScrollMobile = ->
-            sticky = $('.filter-full-width').position().top - 1
-            $(window).on 'scroll', ->
-                wrapper = $('.filter-full-width')
-                if window.pageYOffset > sticky
-                    wrapper.addClass('sticky')
-                    $('.accordions').addClass('sticky')
-                else
-                    wrapper.removeClass('sticky')
-                    $('.accordions').removeClass('sticky')
+            # sticky = $('.filter-full-width').position().top - 1
+            # $(window).on 'scroll', ->
+            #     wrapper = $('.filter-full-width')
+            #     if window.pageYOffset > sticky
+            #         wrapper.addClass('sticky')
+            #         $('.accordions').addClass('sticky')
+            #     else
+            #         wrapper.removeClass('sticky')
+            #         $('.accordions').removeClass('sticky')
 
         # страница поиска
         $timeout ->
