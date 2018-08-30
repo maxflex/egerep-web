@@ -53,17 +53,17 @@ if (! isset($_SESSION['sent_ids'])) {
     $_SESSION['sent_ids'] = [];
 }
 
-// define('AB_TEST_FILTER', 'ab-test-filter');
-// if (! isset($_COOKIE[AB_TEST_FILTER])) {
-//     $variant = mt_rand(0, 1);
-//     setcookie(AB_TEST_FILTER, $variant, time() + (10 * 365 * 24 * 60 * 60), '/');
-//     $_COOKIE[AB_TEST_FILTER] = $variant;
-// }
-//
-// if (isset($_GET['af'])) {
-//     setcookie(AB_TEST_FILTER, $_GET['af'], time() + (10 * 365 * 24 * 60 * 60), '/');
-//     $_COOKIE[AB_TEST_FILTER] = $_GET['af'];
-// }
+define('AB_TEST_KEY', 'ab-test-call-button-inside-tutor');
+if (! isset($_COOKIE[AB_TEST_KEY])) {
+    $variant = mt_rand(0, 1);
+    setcookie(AB_TEST_KEY, $variant, time() + (86400 * 30 * 3), '/'); // кука на 3 месяца
+    $_COOKIE[AB_TEST_KEY] = $variant;
+}
+
+if (isset($_GET['af'])) {
+    setcookie(AB_TEST_KEY, $_GET['af'], time() + (86400 * 30 * 3), '/');
+    $_COOKIE[AB_TEST_KEY] = $_GET['af'];
+}
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
