@@ -11,6 +11,14 @@ angular
 
         $scope.station_ids = {}
 
+        $scope.paramsCount = ->
+            count = 0
+            count++ if $scope.search.hasOwnProperty('subjects') && Object.keys($scope.search.subjects).length
+            count++ if $scope.search.hasOwnProperty('sort') && $scope.search.sort
+            count++ if $scope.search.hasOwnProperty('place') && $scope.search.place
+            # count++ if $scope.search.hasOwnProperty('station_id') && $scope.search.station_id
+            count
+
         $scope.filterPopup = (popup) ->
             if Object.keys($scope.popups).length
                 $scope.popups = {}

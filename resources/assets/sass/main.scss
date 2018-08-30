@@ -99,7 +99,7 @@ textarea {
 * Header
 --------------------------------*/
 .header {
-    width: 960px;
+    width: calc(100vw - 40px);
     height: 72px;
     margin: 0 auto;
     padding: 25px 0 0;
@@ -113,8 +113,7 @@ textarea {
 .header-phone {
     position: absolute;
     top: 29px;
-    left: 410px;
-    padding: 0 0 0 34px;
+    right: 285px;
     font-size: 23px;
     line-height: 26px;
     color: black;
@@ -442,10 +441,15 @@ textarea {
     font-size: 25px;
     color: #444444;
 }
+
+.search-result-tutor {
+    display: flex;
+}
+
 .search-result-right {
     display: inline-block;
     vertical-align: top;
-    width: 806px;
+    flex: 1;
     margin-top: -4px;
 }
 .search-result-title {
@@ -826,7 +830,7 @@ $footer-height: 315px;
     }
 }
 .footer-inner {
-    width: 960px;
+    width: calc(100vw - 40px);
     height: calc(#{$footer-height} - 25px);
     margin: 0 auto;
     padding: 0 0 25px 0;
@@ -881,7 +885,8 @@ $footer-height: 315px;
     // justify-content: space-between;
     // height: 300px;
     position: relative;
-
+    // display: flex;
+    // justify-content: space-between;
     &:after {
         content: '';
         display:block;
@@ -907,6 +912,21 @@ $footer-height: 315px;
         width: 160px;
     }
 }
+
+.footer {
+    & .footer-rows {
+        display: flex;
+        justify-content: space-between;
+        &:after {
+            content: none;
+        }
+    }
+
+    & .footer-row {
+        
+    }
+}
+
 .footer-menu {
     margin: 0;
     padding: 0;
@@ -949,7 +969,8 @@ $footer-height: 315px;
 * Partial
 --------------------------------*/
 .global {
-    width: 960px;
+    width: calc(100vw - 40px);
+    // max-width: 1216px;
     margin: 0 auto;
     // padding-bottom: 1px;
 }

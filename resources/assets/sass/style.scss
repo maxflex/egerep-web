@@ -690,7 +690,7 @@ select {
 }
 
 .footer-blocks-inner {
-    width: 960px;
+    width: calc(100vw - 40px);
     margin: 0 auto;
     padding: 0 0 25px 0;
     position: relative;
@@ -1277,5 +1277,17 @@ img.request-sent-svg {
             white-space: nowrap;
             overflow: hidden;
         }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .global, .header, .footer-inner, .footer-blocks-inner {
+        width: $screen-width !important;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .global, .header, .footer-inner, .footer-blocks-inner {
+        width: 1240px !important;
     }
 }

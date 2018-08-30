@@ -4864,3 +4864,35 @@ img.request-sent-svg {
     width: 100%;
     margin: 0;
 }
+
+.params-button {
+    background-color: #5e8e5e;
+    text-decoration: none;
+    border-radius: 30px;
+    padding: 8px 12px;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    & img {
+        height: 18px;
+        margin-right: 6px;
+    }
+    & .params-count {
+        background-color: white;
+        border-radius: 15px;
+        padding: 1px 9px;
+        color: #5e8e5e;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+}
+
+.filter-fixed {
+    position: fixed;
+    bottom: 20px;
+    text-align: center;
+    width: calc(100% - 2em);
+    z-index: 1;
+}
