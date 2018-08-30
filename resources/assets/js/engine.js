@@ -63,10 +63,11 @@
     		$("body").removeClass('open-modal-' + active_modal);
             active_modal = false
             $('.container').off('touchmove');
-            if(window.location.hash == "#modal") {
-                window.history.back()
+            if (typeof(isMobile) !== 'undefined') {
+                if(window.location.hash == "#modal") {
+                    window.history.back()
+                }
             }
-            console.log('close modal')
         }, 50)
     }
 
@@ -81,7 +82,9 @@
         active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
         $('.modal-backdrop').show(0)
-        window.location.hash = '#modal'
+        if (typeof(isMobile) !== 'undefined') {
+            window.location.hash = '#modal'
+        }
     }
 
     // close modal on «back» button

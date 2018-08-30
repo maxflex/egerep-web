@@ -1282,6 +1282,11 @@ img.request-sent-svg {
     }
 }
 
+div[id^=svg] {
+    width: 50%;
+    // margin: 15px auto;
+}
+
 @media only screen and (max-width: 1000px) {
     .global, .header, .footer-inner, .footer-blocks-inner {
         width: $screen-width !important;

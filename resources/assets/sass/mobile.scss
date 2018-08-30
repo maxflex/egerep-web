@@ -2,7 +2,6 @@
 @import "normalize";
 @import "flaticon";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
-@import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/animate.css/animate.min";
 
 @mixin zindex($index) {
@@ -53,8 +52,8 @@ $border-radius-mobile: 7px;
 }
 
 
-iframe[id^='svg-map'] {
-/* 	width: 100% !important; */
+.svg-map {
+    width: 100% !important;
 }
 
 .google-maps-canvas {
@@ -3801,9 +3800,10 @@ div[id^='gmap'] {
 }
 
 div[id^='svg'] {
-    height: calc(100% - 50px);
+    // height: calc(100% - 50px);
     overflow: scroll;
     margin-top: 50px;
+    width: 100%;
 }
 
 .public-price {
