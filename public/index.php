@@ -54,6 +54,8 @@ if (! isset($_SESSION['sent_ids'])) {
 }
 
 define('AB_TEST_KEY', 'ab-test-call-button-inside-tutor');
+define('AB_TEST_TUTOR_OVERLAY', 'ab-test-tutor-overlay');
+
 if (! isset($_COOKIE[AB_TEST_KEY])) {
     $variant = mt_rand(0, 1);
     setcookie(AB_TEST_KEY, $variant, time() + (86400 * 30 * 3), '/'); // кука на 3 месяца
@@ -62,7 +64,9 @@ if (! isset($_COOKIE[AB_TEST_KEY])) {
 
 if (isset($_GET['af'])) {
     setcookie(AB_TEST_KEY, $_GET['af'], time() + (86400 * 30 * 3), '/');
+    setcookie(AB_TEST_TUTOR_OVERLAY, $_GET['af'], time() + (86400 * 30 * 3), '/');
     $_COOKIE[AB_TEST_KEY] = $_GET['af'];
+    $_COOKIE[AB_TEST_TUTOR_OVERLAY] = $_GET['af'];
 }
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);

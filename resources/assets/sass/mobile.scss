@@ -3802,7 +3802,6 @@ div[id^='gmap'] {
 div[id^='svg'] {
     height: calc(100% - 50px);
     overflow: scroll;
-    margin-top: 50px;
 }
 
 .public-price {
@@ -3875,6 +3874,7 @@ p {
 
 .loading-inside-button {
     padding: 0.7em 0;
+    top: -2px;
 }
 
 .request-sent-overlay {
@@ -4028,7 +4028,7 @@ p {
     & .full-height {
         height: calc(100% - 5em);
     }
-    & .loading {
+    & div.loading {
         font-size: 1.1em;
         height: 100%;
         display: flex;
@@ -4891,6 +4891,9 @@ img.request-sent-svg {
 .svg-map {
     display: flex;
     align-items: center;
+    & > div {
+        width: 100%;
+    }
 }
 
 .fa-envelope {

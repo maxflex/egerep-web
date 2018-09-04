@@ -453,6 +453,9 @@ angular
                 position: $scope.getIndex(index)
                 tutor_id: tutor.id
 
+        $scope.tutorPopup = (tutor, index) ->
+            $scope.gmap(tutor, index)
+
         $scope.setPriority = (priority_id) ->
             $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
 
