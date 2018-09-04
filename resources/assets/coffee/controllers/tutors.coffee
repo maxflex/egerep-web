@@ -454,6 +454,7 @@ angular
                 tutor_id: tutor.id
 
         $scope.tutorPopup = (tutor, index) ->
+            $('#modal-tutor .modal-content').scrollTop(0)
             $scope.gmap(tutor, index)
 
         $scope.setPriority = (priority_id) ->
