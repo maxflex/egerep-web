@@ -4816,10 +4816,6 @@ span.customSelect.custom-select-small .customSelectInner {
     font-family: $font-medium;
 }
 
-.right-tutor-info .name {
-    margin-bottom: 1.2em;
-}
-
 img.request-sent-svg {
     height: 100px;
     margin-bottom: 10px;
@@ -4898,4 +4894,10 @@ img.request-sent-svg {
 
 .fa-envelope {
     margin-right: 6px;
+}
+
+.profile-header {
+    font-size: 22px !important;
+    font-family: $font-bold;
+    margin-bottom: 16px !important;
 }
