@@ -428,6 +428,9 @@ angular
         #
         # MOBILE
         #
+
+        $scope.roundRating = (review) -> Math.round(review.ball / (review.max_ball / 5))
+
         $scope.popup = (id, tutor = null, fn = null, index = null) ->
             openModal(id)
             if tutor isnt null then $scope.popup_tutor = tutor

@@ -8,7 +8,9 @@ angular.module('Egerep')
             source: '@'
         templateUrl: (elem, attrs) ->
             if attrs.hasOwnProperty('mobile') then 'directives/request-form-mobile' else 'directives/request-form'
-        controller: ($scope, $element, $timeout, $rootScope, Request, Sources) ->
+        controller: ($scope, $element, $attrs, $timeout, $rootScope, Request, Sources) ->
+            $scope.fixedHeight = $attrs.hasOwnProperty('fixedHeight')
+
             # отправить заявку
             $scope.request = ->
                 $scope.tutor = {} if not $scope.tutor

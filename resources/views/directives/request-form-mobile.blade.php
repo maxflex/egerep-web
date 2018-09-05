@@ -1,5 +1,5 @@
 <form class='contacts-form'>
-    <div ng-hide='tutor.request_sent'>
+    <div ng-hide='tutor.request_sent && !fixedHeight'>
         <div class="form-row">
             <input class="input-text" type="text" placeholder="ваше имя" name='name' maxlength='60'
                 ng-model='tutor.request.name'>
@@ -25,7 +25,7 @@
             Оставьте заявку по телефону +7 495 646-10-80
         </div>
     </div>
-    <div class="request-form-sent" ng-show='tutor.request_sent'>
+    <div class="request-form-sent" ng-show='tutor.request_sent && !fixedHeight'>
         <h2>Спасибо!</h2>
         <img class="request-sent-svg" src="/img/svg/letter.svg">
         <div>Ваше сообщение отправлено</div>
