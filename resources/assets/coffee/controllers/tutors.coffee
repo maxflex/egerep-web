@@ -363,7 +363,9 @@ angular
                         tutor.svg_map = _.filter tutor.svg_map.split(',') if 'string' == typeof tutor.svg_map
                     highlight('search-result-text')
                     if $scope.mobile then $timeout -> bindToggle()
-                    $timeout -> window.dispatchEvent(new Event('scroll'))
+                    $timeout ->
+                        window.dispatchEvent(new Event('scroll'))
+                        $('html, body').scrollTop(0) if $scope.page == 1
 
 
         # highlight hidden filter
