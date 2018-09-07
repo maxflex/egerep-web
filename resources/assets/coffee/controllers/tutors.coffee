@@ -28,7 +28,7 @@ angular
             StreamService.run('filter_open', popup)
             if popup is 'all' && $scope.hasOwnProperty('is_first_visit')
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:open-stepper'
                 dataLayerPush(data)
                 console.log(data)
@@ -115,7 +115,7 @@ angular
             $scope.$watchCollection 'search.subjects', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:subjects'
                     eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
                 dataLayerPush(data)
@@ -124,7 +124,7 @@ angular
             $scope.$watch 'search.place', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:place'
                     eventAction: $scope.search.place
                 dataLayerPush(data)
@@ -133,7 +133,7 @@ angular
             $scope.$watch 'search.sort', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:sort'
                     eventAction: $scope.search.sort
                 dataLayerPush(data)
@@ -142,7 +142,7 @@ angular
             $scope.$watch 'search.station_id', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:station'
                     eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
                 dataLayerPush(data)
@@ -151,7 +151,7 @@ angular
             $scope.$watch 'search.grade', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:grade'
                     eventAction: $scope.search.grade
                 dataLayerPush(data)
@@ -160,7 +160,7 @@ angular
             $scope.$watch 'search.preparation_direction', (newVal, oldVal) ->
                 return if newVal is oldVal
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:preparation_direction'
                     eventAction: $scope.search.preparation_direction
                 dataLayerPush(data)
@@ -344,7 +344,7 @@ angular
             $scope.filter()
             $scope.is_first_visit = false
             data =
-                event: 'stepper'
+                event: 'configuration'
                 eventCategory: 'show-tutors'
             dataLayerPush(data)
             console.log(data)

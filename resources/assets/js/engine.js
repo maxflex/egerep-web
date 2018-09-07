@@ -71,7 +71,7 @@
         }, 50)
         if (send_event === true) {
             data = {
-                event: 'stepper',
+                event: 'configuration',
                 eventCategory: 'ex:close-stepper'
             }
             dataLayerPush(data)
@@ -487,7 +487,7 @@ function openStepper() {
     $('.stepper').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
     bodyScrollLock.disableBodyScroll(document.querySelector('.stepper'))
     data = {
-        event: 'stepper',
+        event: 'configuration',
         eventCategory: 'ex:open-stepper'
     }
     dataLayerPush(data)
@@ -499,7 +499,7 @@ function closeStepper(send_event) {
     bodyScrollLock.clearAllBodyScrollLocks()
     if (send_event === true) {
         data = {
-            event: 'stepper',
+            event: 'configuration',
             eventCategory: 'ex:close-stepper'
         }
         dataLayerPush(data)

@@ -28,7 +28,7 @@ angular.module 'Egerep'
             this.current_step++
             this.max_step = this.current_step if this.max_step < this.current_step
             data =
-                event: 'stepper'
+                event: 'configuration'
                 eventCategory: 'ex:step'
                 eventAction: 'forward-' + (this.current_step + 1)
             dataLayerPush(data)
@@ -37,7 +37,7 @@ angular.module 'Egerep'
         this.back = ->
             this.current_step--
             data =
-                event: 'stepper'
+                event: 'configuration'
                 eventCategory: 'ex:step'
                 eventAction: 'back-' + (this.current_step + 1)
             dataLayerPush(data)
@@ -47,7 +47,7 @@ angular.module 'Egerep'
             if index <= this.max_step
                 this.current_step = index
                 data =
-                    event: 'stepper'
+                    event: 'configuration'
                     eventCategory: 'ex:step'
                     eventAction: 'bar-' + (this.current_step + 1)
                 dataLayerPush(data)
