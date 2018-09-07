@@ -15,8 +15,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: fixed;
-        width: calc(100% - 2em);
+        // position: fixed;
+        // width: calc(100% - 2em);
         background: white;;
         & .round-tab {
             width: 25px;
@@ -54,7 +54,7 @@
     }
 
     &__content {
-        padding-top: 60px;
+        padding-top: 30px;
         & .stepper-question {
             font-size: 22px;
             margin-bottom: 20px;
