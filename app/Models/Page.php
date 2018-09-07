@@ -90,8 +90,8 @@ class Page extends Model
     public function getHtmlAttribute($value)
     {
         $variable_name = 'serp';
-        if (isset($_COOKIE[AB_TEST_TUTOR_OVERLAY]) && $_COOKIE[AB_TEST_TUTOR_OVERLAY]) {
-            $variable_name = 'serp-new';
+        if (isDevSubdomain()) {
+            $variable_name = 'serp-dev';
         }
         $value = Variable::display($variable_name);
         Parser::compileSeo($this, $value);

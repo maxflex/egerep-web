@@ -7,6 +7,10 @@
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
+    Route::get('/open-stepper', function() {
+        $_SESSION['stepper_opened'] = 1;
+    });
+
     # 301 редирект старых преподов
     Route::get('/tutors/person/{id}', function($id) {
         $new_tutor_id = \App\Models\Tutor::where('id_a_pers', $id)->value('id');

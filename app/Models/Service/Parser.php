@@ -101,7 +101,7 @@
                             break;
                         // is|test
                         case 'is':
-                            $replacement = isTestSubdomain() ? 'true' : 'false';
+                            $replacement = (isTestSubdomain() || isDevSubdomain()) ? 'true' : 'false';
                             break;
                         case 'ab-test-if':
                             $key = 'ab-test-' . $args[0];

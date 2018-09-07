@@ -277,6 +277,16 @@
         return array_shift($parts) === 'test';
     }
 
+    function isDevSubdomain()
+    {
+        // return false;
+        if (\App::environment('local')) {
+            return true;
+        }
+        $parts = explode('.', @$_SERVER['HTTP_HOST']);
+        return array_shift($parts) === 'dev';
+    }
+
     function yearsPassed($year)
     {
         return date('Y') - $year;

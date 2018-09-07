@@ -474,3 +474,11 @@ function getNumber(str) {
     }
     return parseInt(str.replace(/\D/g,''))
 }
+
+function openStepper() {
+    $('.stepper').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
+}
+
+function closeStepper() {
+    $('.stepper').removeClass('modal-animate-open').addClass('modal-animate-close')
+}

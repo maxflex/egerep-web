@@ -1,7 +1,7 @@
 angular
     .module 'Egerep'
     .constant 'REVIEWS_PER_PAGE', 5
-    .controller 'Tutors', ($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources) ->
+    .controller 'Tutors', ($scope, $http, $timeout, Tutor, SubjectService, REVIEWS_PER_PAGE, Genders, Request, StreamService, Sources, StepperService) ->
         bindArguments($scope, arguments)
 
         # сколько загрузок преподавателей было
@@ -152,7 +152,10 @@ angular
 
                 SubjectService.init($scope.search.subjects)
                 StreamService.run('landing', 'serp')
-                $scope.filter()
+                if $scope.hasOwnProperty('is_first_visit')
+                    $scope.filter() if not $scope.is_first_visit
+                else
+                    $scope.filter()
             else
                 $scope.index_from_hash = window.location.hash.substring(1)
                 StreamService.run 'landing', StreamService.identifySource(),
@@ -282,6 +285,11 @@ angular
         $scope.reviewsLeft = (tutor) ->
             reviews_left = tutor.reviews_count - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
+
+        $scope.stepperFilter = ->
+            closeStepper()
+            $scope.filter()
+            $scope.is_first_visit = false
 
         # чтобы не редиректило в начале
         filter_used = false

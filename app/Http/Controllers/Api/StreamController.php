@@ -14,7 +14,7 @@ class StreamController extends Controller
     {
         $ip = @$_SERVER['HTTP_X_REAL_IP'];
 
-        if (strpos($ip, '213.184.130.') === 0 || $ip == '77.37.220.250' || isTestSubdomain()) {
+        if (strpos($ip, '213.184.130.') === 0 || $ip == '77.37.220.250' || isTestSubdomain() || isDevSubdomain()) {
             return;
         }
 

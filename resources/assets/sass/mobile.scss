@@ -1,6 +1,7 @@
 @import "variables";
 @import "normalize";
 @import "flaticon";
+@import "stepper-mobile";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/animate.css/animate.min";
 
@@ -4951,7 +4952,18 @@ img.request-sent-svg {
     }
 }
 
-// компьютер – полная версия
-// помогите – колцентр
-// все анкеты – люди
-// для репетиторов я- рукопожатие
+.filter-banner {
+    background: #e8e8e8;
+    display: flex;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    &__intro {
+        text-align: center !important;
+        & h1 {
+            text-align: center !important;
+            font-size: 22px;
+        }
+    }
+}
