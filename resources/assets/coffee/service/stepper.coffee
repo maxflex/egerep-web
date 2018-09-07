@@ -54,6 +54,7 @@ angular.module 'Egerep'
                 console.log(data)
 
         this.nextStepDisabled = (step = null) ->
+            return if not scope 
             step = this.current_step if step is null
             return true if step == 0 && !scope.search.grade
             return true if step == 1 && !scope.SubjectService.getSelected().length
