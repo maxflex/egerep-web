@@ -9,7 +9,7 @@
     bottom: 0;
     height: 90%;
     z-index: 99;
-    box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.5);
     &__close {
         height: 50px;
         background: #f0f0f0;
@@ -18,18 +18,14 @@
         justify-content: center;
         cursor: pointer;
         & img {
-            height: 30px;
-            width: 30px;
+            height: 20px;
+            width: 20px;
         }
     }
     &__controls {
         position: absolute;
         bottom: 30px;
-        text-align: center;
         width: 100%;
-        & button {
-            margin: 0 20px;
-        }
         & .button-green {
             border: 1px solid $green-main;
             &:disabled {
@@ -39,8 +35,9 @@
     }
     &__steps {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        width: 500px;
         margin: 40px 0;
         & .round-tab {
             width: 25px;
@@ -56,15 +53,16 @@
             font-size: 14px;
             color: #f1f1f1;
             border: 2px solid #f1f1f1;
-            cursor: pointer;
+            cursor: default;
             &.passed {
+                cursor: pointer;
                 border-color: $green-main !important;
                 color: $green-main !important;
             }
-            &:hover {
-                border-color: rgba($green-main, .5);
-                color: rgba($green-main, .5);
-            }
+            // &:hover {
+            //     border-color: rgba($green-main, .5);
+            //     color: rgba($green-main, .5);
+            // }
         }
         & .step-separator {
             background: #f1f1f1;
@@ -78,12 +76,13 @@
     }
 
     &__content {
-        width: 60%;
-        margin: 0 auto;
+        // width: 60%;
+        // margin: 0 auto;
         & .stepper-question {
-            font-size: 22px;
-            text-align: center;
-            margin-bottom: 20px;
+            font-size: 27px;
+            text-align: left;
+            margin-bottom: 44px;
+            font-family: $font-bold;
         }
     }
 }
