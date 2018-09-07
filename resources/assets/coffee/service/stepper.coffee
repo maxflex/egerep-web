@@ -15,8 +15,11 @@ angular.module 'Egerep'
 
         # первый запуск
         this.startStepper = ->
-            openStepper()
             $.get('/open-stepper')
+            if typeof(isMobile) is 'undefined'
+                openStepper()
+            else
+                scope.filterPopup('all')
 
         this.next = ->
             if this.current_step == this.questions.length - 1

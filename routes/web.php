@@ -8,7 +8,11 @@
     Route::get('sitemap.xml', 'SitemapController@index');
 
     Route::get('/open-stepper', function() {
-        $_SESSION['stepper_opened'] = 1;
+        if (\App::environment('local')) {
+            // $_SESSION['stepper_opened'] = 1;
+        } else {
+            $_SESSION['stepper_opened'] = 1;
+        }
     });
 
     # 301 редирект старых преподов
