@@ -345,7 +345,7 @@ angular
             $scope.is_first_visit = false
             data =
                 event: 'configuration'
-                eventCategory: 'show-tutors'
+                eventCategory: 'ex:show-tutors'
             dataLayerPush(data)
             console.log(data)
 
