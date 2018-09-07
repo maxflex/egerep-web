@@ -4955,7 +4955,7 @@ img.request-sent-svg {
 .filter-banner {
     background: white;
     display: flex;
-    height: calc(100vh - 79px);
+    height: calc(100vw * 1.5);
     align-items: center;
     justify-content: center;
     padding: 1em;
