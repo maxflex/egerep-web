@@ -1310,16 +1310,25 @@ div[id^=svg] {
 }
 
 .filter-banner {
-    background: #e8e8e8;
+    background: white;
     display: flex;
-    height: 500px;
+    height: calc(100vh - 138px);
     align-items: center;
     justify-content: center;
     &__intro {
         text-align: center;
-        & h1 {
-            font-size: 22px;
+        & > div {
+            font-size: 16px;
+            line-height: 22px;
+            & b {
+                display: block;
+                font-size: 40px;
+                padding: 40px 0;
+            }
         }
+    }
+    & button {
+        margin-top: 20px;
     }
 }
 

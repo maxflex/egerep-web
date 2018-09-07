@@ -51,7 +51,7 @@
     //     setTimeout(closeModal, 300)
     // }
 
-    function closeModal() {
+    function closeModal(send_event) {
         if (typeof(beforeCloseModal) == 'function') {
             beforeCloseModal()
         }
@@ -69,6 +69,14 @@
                 }
             }
         }, 50)
+        if (send_event === true) {
+            data = {
+                event: 'stepper',
+                eventCategory: 'ex:close-stepper'
+            }
+            dataLayerPush(data)
+            console.log(data)
+        }
     }
 
     function openModal(id) {
@@ -478,9 +486,23 @@ function getNumber(str) {
 function openStepper() {
     $('.stepper').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
     bodyScrollLock.disableBodyScroll(document.querySelector('.stepper'))
+    data = {
+        event: 'stepper',
+        eventCategory: 'ex:open-stepper'
+    }
+    dataLayerPush(data)
+    console.log(data)
 }
 
-function closeStepper() {
+function closeStepper(send_event) {
     $('.stepper').removeClass('modal-animate-open').addClass('modal-animate-close')
     bodyScrollLock.clearAllBodyScrollLocks()
+    if (send_event === true) {
+        data = {
+            event: 'stepper',
+            eventCategory: 'ex:close-stepper'
+        }
+        dataLayerPush(data)
+        console.log(data)
+    }
 }

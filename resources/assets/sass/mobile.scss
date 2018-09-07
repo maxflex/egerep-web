@@ -4953,17 +4953,25 @@ img.request-sent-svg {
 }
 
 .filter-banner {
-    background: #e8e8e8;
+    background: white;
     display: flex;
-    height: 300px;
+    height: calc(100vh - 79px);
     align-items: center;
     justify-content: center;
     padding: 1em;
     &__intro {
-        text-align: center !important;
-        & h1 {
-            text-align: center !important;
-            font-size: 22px;
+        text-align: center;
+        & > div {
+            font-size: 16px;
+            line-height: 22px;
+            & b {
+                display: block;
+                font-size: 40px;
+                padding: 40px 0;
+            }
         }
+    }
+    & button {
+        margin-top: 20px;
     }
 }

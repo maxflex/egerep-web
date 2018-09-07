@@ -26,6 +26,12 @@ angular
             $scope.popups[popup] = true
             openModal("filter-#{popup}") if $scope.mobile
             StreamService.run('filter_open', popup)
+            if popup is 'all' && $scope.hasOwnProperty('is_first_visit')
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:open-stepper'
+                dataLayerPush(data)
+                console.log(data)
 
         # получить рейтинг с отклонием
         $scope.getStarRating = (rating) ->
@@ -54,70 +60,117 @@ angular
         $scope.profilePage = ->
             RegExp(/^\/[\d]+$/).test(window.location.pathname)
 
-        $scope.objectSelectedCallback = (selected_station) ->
-            if selected_station
-                $scope.search.station_id = selected_station.originalObject.id
-                $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', $scope.$eval("stations[search.station_id].title | cut:false:13:'...'"))
-            else
-                $scope.search.station_id = null
-                $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', '')
+        # $scope.objectSelectedCallback = (selected_station) ->
+        #     if selected_station
+        #         $scope.search.station_id = selected_station.originalObject.id
+        #         $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', $scope.$eval("stations[search.station_id].title | cut:false:13:'...'"))
+        #     else
+        #         $scope.search.station_id = null
+        #         $scope.$broadcast('angucomplete-alt:changeInput', 'stations-autocomplete', '')
 
-        $scope.clearStation = ->
-            $scope.$broadcast('angucomplete-alt:clearInput');
-            $scope.search.station_id = null
-            $timeout -> $('.autocomplete-input').focus()
+        # $scope.clearStation = ->
+        #     $scope.$broadcast('angucomplete-alt:clearInput');
+        #     $scope.search.station_id = null
+        #     $timeout -> $('.autocomplete-input').focus()
 
 
         bindWatchers = ->
             $scope.$watchCollection 'search.subjects', (newVal, oldVal) ->
                 return if newVal is oldVal
-                dataLayerPush
+                data =
                     event: 'configuration'
                     eventCategory: 'subjects'
                     eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
-                console.log
-                    event: 'configuration'
-                    eventCategory: 'subjects'
-                    eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
+                dataLayerPush(data)
+                console.log(data)
 
             $scope.$watchCollection 'search.place', (newVal, oldVal) ->
                 return if newVal is oldVal
-                dataLayerPush
+                data =
                     event: 'configuration'
                     eventCategory: 'place'
                     eventAction: $scope.search.place
-                console.log
-                    event: 'configuration'
-                    eventCategory: 'place'
-                    eventAction: $scope.search.place
+                dataLayerPush(data)
+                console.log(data)
 
             $scope.$watchCollection 'search.sort', (newVal, oldVal) ->
                 return if newVal is oldVal
-                dataLayerPush
+                data =
                     event: 'configuration'
                     eventCategory: 'sort'
                     eventAction: $scope.search.sort
-                console.log
-                    event: 'configuration'
-                    eventCategory: 'sort'
-                    eventAction: $scope.search.sort
+                dataLayerPush(data)
+                console.log(data)
 
             $scope.$watchCollection 'search.station_id', (newVal, oldVal) ->
                 return if newVal is oldVal
-                dataLayerPush
+                data =
                     event: 'configuration'
                     eventCategory: 'station'
                     eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
-                console.log
-                    event: 'configuration'
-                    eventCategory: 'station'
+                dataLayerPush(data)
+                console.log(data)
+
+        bindWatchersDev = ->
+            $scope.$watchCollection 'search.subjects', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:subjects'
+                    eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
+                dataLayerPush(data)
+                console.log(data)
+
+            $scope.$watch 'search.place', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:place'
+                    eventAction: $scope.search.place
+                dataLayerPush(data)
+                console.log(data)
+
+            $scope.$watch 'search.sort', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:sort'
+                    eventAction: $scope.search.sort
+                dataLayerPush(data)
+                console.log(data)
+
+            $scope.$watch 'search.station_id', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:station'
                     eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
+                dataLayerPush(data)
+                console.log(data)
+
+            $scope.$watch 'search.grade', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:grade'
+                    eventAction: $scope.search.grade
+                dataLayerPush(data)
+                console.log(data)
+
+            $scope.$watch 'search.preparation_direction', (newVal, oldVal) ->
+                return if newVal is oldVal
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:preparation_direction'
+                    eventAction: $scope.search.preparation_direction
+                dataLayerPush(data)
+                console.log(data)
 
         handleScrollDesktop = ->
-            wrapper = $('.filter-groups')
-            sticky = wrapper.position().top - 1
-            $(window).on 'scroll', ->
-                if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
+            # wrapper = $('.filter-groups')
+            # sticky = wrapper.position().top - 1
+            # $(window).on 'scroll', ->
+            #     if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
 
         handleScrollMobile = ->
             # sticky = $('.filter-full-width').position().top - 1
@@ -132,7 +185,7 @@ angular
 
         # страница поиска
         $timeout ->
-            $timeout(bindWatchers, 500)
+            $timeout((if $scope.hasOwnProperty('is_first_visit') then bindWatchersDev else bindWatchers), 500)
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 # if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                 #     id = $scope.search.id
@@ -147,8 +200,8 @@ angular
                 # place по умолчанию
                 # $scope.search.place = 1 if not $scope.search.place
 
-                if ($scope.search.priority == '2' || $scope.search.priority == '3')
-                    $scope.station_ids[$scope.search.priority] = $scope.search.station_id
+                # if ($scope.search.priority == '2' || $scope.search.priority == '3')
+                #     $scope.station_ids[$scope.search.priority] = $scope.search.station_id
 
                 SubjectService.init($scope.search.subjects)
                 StreamService.run('landing', 'serp')
@@ -290,6 +343,11 @@ angular
             closeStepper()
             $scope.filter()
             $scope.is_first_visit = false
+            data =
+                event: 'stepper'
+                eventCategory: 'show-tutors'
+            dataLayerPush(data)
+            console.log(data)
 
         # чтобы не редиректило в начале
         filter_used = false
@@ -470,16 +528,16 @@ angular
             $('#modal-tutor .modal-content').scrollTop(0)
             $scope.gmap(tutor, index)
 
-        $scope.setPriority = (priority_id) ->
-            $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
-
-        $scope.syncSort = (priority_id) ->
-            if priority_id == 2 || priority_id == 3
-                if not $scope.station_ids[priority_id]
-                    $scope.search.priority = 1
-                    return
-                $scope.search.station_id = $scope.station_ids[priority_id]
-            $scope.search.priority = priority_id
+        # $scope.setPriority = (priority_id) ->
+        #     $scope.search.priority = priority_id if priority_id != 2 && priority_id != 3
+        #
+        # $scope.syncSort = (priority_id) ->
+        #     if priority_id == 2 || priority_id == 3
+        #         if not $scope.station_ids[priority_id]
+        #             $scope.search.priority = 1
+        #             return
+        #         $scope.search.station_id = $scope.station_ids[priority_id]
+        #     $scope.search.priority = priority_id
 
         $scope.changeFilter = (param, value = null) ->
             $scope.search[param] = value if value isnt null

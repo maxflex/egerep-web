@@ -27,12 +27,31 @@ angular.module 'Egerep'
                 return
             this.current_step++
             this.max_step = this.current_step if this.max_step < this.current_step
+            data =
+                event: 'stepper'
+                eventCategory: 'ex:step'
+                eventAction: 'forward-' + (this.current_step + 1)
+            dataLayerPush(data)
+            console.log(data)
 
         this.back = ->
             this.current_step--
+            data =
+                event: 'stepper'
+                eventCategory: 'ex:step'
+                eventAction: 'back-' + (this.current_step + 1)
+            dataLayerPush(data)
+            console.log(data)
 
         this.goToStep = (index) ->
-            this.current_step = index if index <= this.max_step
+            if index <= this.max_step
+                this.current_step = index
+                data =
+                    event: 'stepper'
+                    eventCategory: 'ex:step'
+                    eventAction: 'bar-' + (this.current_step + 1)
+                dataLayerPush(data)
+                console.log(data)
 
         this.nextStepDisabled = (step = null) ->
             step = this.current_step if step is null
