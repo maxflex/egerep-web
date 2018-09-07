@@ -17,7 +17,7 @@
         align-items: center;
         // position: fixed;
         // width: calc(100% - 2em);
-        background: white;;
+        background: white;
         & .round-tab {
             width: 25px;
             height: 25px;
@@ -67,7 +67,7 @@
 .stepper-answer {
     display: flex;
     align-items: center;
-    height: 25px;
+    min-height: 25px;
     position: relative;
     padding-left: 35px;
     margin-bottom: 12px;
