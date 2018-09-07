@@ -167,10 +167,11 @@ angular
                 console.log(data)
 
         handleScrollDesktop = ->
-            # wrapper = $('.filter-groups')
-            # sticky = wrapper.position().top - 1
-            # $(window).on 'scroll', ->
-            #     if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
+            if not $scope.hasOwnProperty('is_first_visit')
+                wrapper = $('.filter-groups')
+                sticky = wrapper.position().top - 1
+                $(window).on 'scroll', ->
+                    if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
 
         handleScrollMobile = ->
             # sticky = $('.filter-full-width').position().top - 1

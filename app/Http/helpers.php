@@ -279,7 +279,7 @@
 
     function isDevSubdomain()
     {
-        // return false;
+        return false;
         if (\App::environment('local')) {
             return true;
         }
