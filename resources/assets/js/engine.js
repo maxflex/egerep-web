@@ -477,8 +477,10 @@ function getNumber(str) {
 
 function openStepper() {
     $('.stepper').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
+    bodyScrollLock.disableBodyScroll(document.querySelector('.stepper'))
 }
 
 function closeStepper() {
     $('.stepper').removeClass('modal-animate-open').addClass('modal-animate-close')
+    bodyScrollLock.clearAllBodyScrollLocks()
 }
