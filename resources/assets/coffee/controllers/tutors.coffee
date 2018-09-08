@@ -29,7 +29,7 @@ angular
             if popup is 'all' && $scope.hasOwnProperty('is_first_visit')
                 data =
                     event: 'configuration'
-                    eventCategory: 'ex:open-stepper'
+                    eventCategory: if $scope.is_first_visit then 'ex:open-stepper-first' else 'ex:open-stepper'
                 dataLayerPush(data)
                 console.log(data)
 

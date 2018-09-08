@@ -488,7 +488,7 @@ function openStepper() {
     bodyScrollLock.disableBodyScroll(document.querySelector('.stepper'))
     data = {
         event: 'configuration',
-        eventCategory: 'ex:open-stepper'
+        eventCategory: (scope.is_first_visit ? 'ex:open-stepper-first' : 'ex:open-stepper'),
     }
     dataLayerPush(data)
     console.log(data)
