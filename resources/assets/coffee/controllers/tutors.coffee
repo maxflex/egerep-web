@@ -426,8 +426,8 @@ angular
                                     position: 'center-top'
                                     arrowPosition: 'center-bottom'
                                     onHide: ->
-                                        bodyScrollLock.clearAllBodyScrollLocks()
-                                bodyScrollLock.disableBodyScroll(document.querySelector('*'))
+                                        $('body').removeClass('disable-scroll')
+                                $('body').addClass('disable-scroll')
                             else
                                 $scope.anno = new Anno
                                     target : '.filter-groups:first'

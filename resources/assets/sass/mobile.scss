@@ -211,6 +211,11 @@ body {
     &.modal-open {
         overflow: hidden !important;
     }
+    &.disable-scroll {
+        overflow: hidden !important;
+        position: fixed;
+        width: 100%;
+    }
     // &.modal-open {
     //     overflow: hidden !important;
     //     position: fixed;
