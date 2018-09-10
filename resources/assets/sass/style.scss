@@ -1356,13 +1356,13 @@ div[id^=svg] {
 }
 
 @media only screen and (max-width: 1000px) {
-    .global, .header, .footer-inner, .footer-blocks-inner {
+    .global, .header, .footer-inner, .footer-blocks-inner, .breadcrumbs-inner {
         width: $screen-width !important;
     }
 }
 
 @media only screen and (min-width: 1280px) {
-    .global, .header, .footer-inner, .footer-blocks-inner {
+    .global, .header, .footer-inner, .footer-blocks-inner, .breadcrumbs-inner {
         width: 1240px !important;
     }
 }
