@@ -420,7 +420,7 @@ angular
                         if $scope.show_intro && $scope.is_dev_subdomain
                             anno = new Anno
                                 target : '.filter-groups:first'
-                                content: 'Вы можете воспользоваться фильтрами'
+                                content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
                                 position: 'center-bottom'
                                 arrowPosition: 'center-top'
                             anno.show()
