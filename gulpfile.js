@@ -72,6 +72,8 @@ elixir(mix => {
             'angular-sanitize/angular-sanitize.min',
             // 'angular-recaptcha/release/angular-recaptcha',
             'device.js/lib/device',
+            // 'anno.js/anno',
+            // 'anno.js/scrollintoview/jquery.scrollintoview.min',
         ]).concat(['resources/assets/js/*.js']), 'public/js/scripts.js')
         .scripts('resources/assets/js/mobile/*.js', 'public/js/mobile/scripts.js')
         .version(['css/app.css', 'css/mobile.css', 'js/scripts.js', 'js/mobile/scripts.js']);

@@ -69,7 +69,8 @@
     "egerep-icheck": "1.0.3",
     "device.js": "devicejs#^0.2.7",
     "angular-recaptcha": "^4.1.0",
-    "angucomplete-alt": "^3.0.0"
+    "angucomplete-alt": "^3.0.0",
+    "anno.js": "^0.2.0"
   },
   "devDependencies": {
     "angular-bootstrap-multiselect": "https://github.com/bentorfs/angular-bootstrap-multiselect.git#^1.1.4"

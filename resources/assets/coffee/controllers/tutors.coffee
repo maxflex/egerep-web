@@ -417,6 +417,13 @@ angular
                 if search_count == 1
                     $timeout ->
                         if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
+                        if $scope.show_intro && $scope.is_dev_subdomain
+                            anno = new Anno
+                                target : '.filter-groups:first'
+                                content: 'Вы можете воспользоваться фильтрами'
+                                position: 'center-bottom'
+                                arrowPosition: 'center-top'
+                            anno.show()
                     , 500
                 if response.hasOwnProperty('url')
                     console.log 'redirectring...'

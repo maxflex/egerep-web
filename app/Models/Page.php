@@ -90,9 +90,9 @@ class Page extends Model
     public function getHtmlAttribute($value)
     {
         $variable_name = 'serp';
-        if (isDevSubdomain()) {
-            $variable_name = 'serp-dev';
-        }
+        // if (isDevSubdomain()) {
+        //     $variable_name = 'serp-dev';
+        // }
         // if ($_COOKIE[AB_TEST_KEY]) {
         //     $variable_name = 'serp-dev';
         // }

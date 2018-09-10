@@ -1337,6 +1337,11 @@ div[id^=svg] {
     color: #dadada;
 }
 
+.anno-btn-container {
+    padding: 10px;
+    text-align: center !important;
+}
+
 @media only screen and (max-width: 1000px) {
     .global, .header, .footer-inner, .footer-blocks-inner {
         width: $screen-width !important;

@@ -87,6 +87,14 @@
                         case 'mobile':
                             $replacement = isMobile($args[0] == 'raw');
                             break;
+                        case 'show-intro':
+                            if (isset($_SESSION['intro'])) {
+                                $replacement = 0;
+                            } else {
+                                $_SESSION['intro'] = 1;
+                                $replacement = 1;
+                            }
+                            break;
                         case 'factory':
                             $replacement = fact(...$args);
                             break;
@@ -102,6 +110,9 @@
                         // is|test
                         case 'is':
                             $replacement = (isTestSubdomain() || isDevSubdomain()) ? 'true' : 'false';
+                            break;
+                        case 'is-dev':
+                            $replacement = isDevSubdomain() ? 'true' : 'false';
                             break;
                         case 'ab-test-if':
                             $key = 'ab-test-' . $args[0];
