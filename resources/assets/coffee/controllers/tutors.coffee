@@ -418,11 +418,18 @@ angular
                     $timeout ->
                         if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
                         if $scope.show_intro && $scope.is_dev_subdomain
-                            anno = new Anno
-                                target : '.filter-groups:first'
-                                content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
-                                position: 'center-bottom'
-                                arrowPosition: 'center-top'
+                            if $scope.mobile
+                                anno = new Anno
+                                    target : '.filter-fixed:first'
+                                    content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
+                                    position: 'center-top'
+                                    arrowPosition: 'center-bottom'
+                            else
+                                anno = new Anno
+                                    target : '.filter-groups:first'
+                                    content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
+                                    position: 'center-bottom'
+                                    arrowPosition: 'center-top'
                             anno.show()
                     , 500
                 if response.hasOwnProperty('url')

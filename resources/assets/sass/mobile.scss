@@ -1,7 +1,7 @@
 @import "variables";
 @import "normalize";
 @import "flaticon";
-@import "stepper-mobile";
+@import "anno";
 @import "../bower/egerep-svg-metro/styles/svg-metro";
 @import "../bower/animate.css/animate.min";
 
@@ -4883,6 +4883,7 @@ img.request-sent-svg {
     text-align: center;
     width: calc(100% - 2em);
     z-index: 1;
+    background: rgba(0, 0, 0, 0) !important;
 }
 
 .svg-map {
@@ -4973,5 +4974,24 @@ img.request-sent-svg {
     }
     & button {
         margin-top: 20px;
+    }
+}
+
+.anno-btn-container {
+    padding: 10px 10px 20px;
+    text-align: center !important;
+    & .button-green {
+        @extend .btn-green;
+    }
+}
+
+.anno-content {
+    font-size: 14px !important;
+    color: black !important;
+    & h4 {
+        font-family: $font-bold;
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 10px;
     }
 }
