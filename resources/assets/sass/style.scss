@@ -1347,6 +1347,8 @@ div[id^=svg] {
 }
 
 .anno-content {
+    font-size: 14px !important;
+    color: black !important;
     & h4 {
         font-family: $font-bold;
         font-size: 22px;
