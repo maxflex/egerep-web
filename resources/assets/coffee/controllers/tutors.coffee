@@ -427,6 +427,9 @@ angular
                                     arrowPosition: 'center-bottom'
                                     onHide: ->
                                         $('body').removeClass('disable-scroll')
+                                $timeout ->
+                                    $scope.anno.show()
+                                , 100
                                 $('body').addClass('disable-scroll')
                             else
                                 $scope.anno = new Anno
@@ -435,7 +438,7 @@ angular
                                     position: 'center-bottom'
                                     arrowPosition: 'center-top'
                                 $('.fake-select').on 'click', -> $scope.anno.hide()
-                            $scope.anno.show()
+                                $scope.anno.show()
                     , 500
                 if response.hasOwnProperty('url')
                     console.log 'redirectring...'
