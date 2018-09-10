@@ -1,5 +1,9 @@
     active_modal = false
 
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0)
+    }
+
     $(document).ready(function() {
         $('.custom-select').customSelect()
         moment.locale('ru-RU')

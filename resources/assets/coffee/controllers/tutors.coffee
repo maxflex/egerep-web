@@ -26,12 +26,13 @@ angular
             $scope.popups[popup] = true
             openModal("filter-#{popup}") if $scope.mobile
             StreamService.run('filter_open', popup)
-            if popup is 'all' && $scope.hasOwnProperty('is_first_visit')
-                data =
-                    event: 'configuration'
-                    eventCategory: if $scope.is_first_visit then 'ex:open-stepper-first' else 'ex:open-stepper'
-                dataLayerPush(data)
-                console.log(data)
+            if popup is 'all'
+                $scope.anno.hide() if $scope.show_intro
+                # data =
+                #     event: 'configuration'
+                #     eventCategory: if $scope.is_first_visit then 'ex:open-stepper-first' else 'ex:open-stepper'
+                # dataLayerPush(data)
+                # console.log(data)
 
         # получить рейтинг с отклонием
         $scope.getStarRating = (rating) ->
@@ -419,18 +420,22 @@ angular
                         if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
                         if $scope.show_intro && $scope.is_dev_subdomain
                             if $scope.mobile
-                                anno = new Anno
+                                $scope.anno = new Anno
                                     target : '.filter-fixed:first'
                                     content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
                                     position: 'center-top'
                                     arrowPosition: 'center-bottom'
+                                    onHide: ->
+                                        bodyScrollLock.clearAllBodyScrollLocks()
+                                bodyScrollLock.disableBodyScroll(document.querySelector('*'))
                             else
-                                anno = new Anno
+                                $scope.anno = new Anno
                                     target : '.filter-groups:first'
                                     content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
                                     position: 'center-bottom'
                                     arrowPosition: 'center-top'
-                            anno.show()
+                                $('.fake-select').on 'click', -> $scope.anno.hide()
+                            $scope.anno.show()
                     , 500
                 if response.hasOwnProperty('url')
                     console.log 'redirectring...'
@@ -446,8 +451,6 @@ angular
                     if $scope.mobile then $timeout -> bindToggle()
                     $timeout ->
                         window.dispatchEvent(new Event('scroll'))
-                        $('html, body').scrollTop(0) if $scope.page == 1
-
 
         # highlight hidden filter
         highlight = (className)->
