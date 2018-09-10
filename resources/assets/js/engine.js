@@ -5,6 +5,7 @@
     }
 
     $(document).ready(function() {
+        $(this).scrollTop(0)
         $('.custom-select').customSelect()
         moment.locale('ru-RU')
         $('.footer-search-input')
