@@ -418,7 +418,7 @@ angular
                 if search_count == 1
                     $timeout ->
                         if $scope.mobile then handleScrollMobile() else handleScrollDesktop()
-                        if $scope.show_intro && $scope.is_dev_subdomain
+                        if $scope.show_intro
                             if $scope.mobile
                                 $scope.anno = new Anno
                                     target : '.filter-fixed:first'

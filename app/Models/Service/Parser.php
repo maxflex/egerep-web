@@ -89,7 +89,7 @@
                             break;
                         case 'show-intro':
                             if (isset($_SESSION['intro'])) {
-                                $replacement = 1;
+                                $replacement = 0;
                             } else {
                                 $_SESSION['intro'] = 1;
                                 $replacement = 1;
