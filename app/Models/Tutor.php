@@ -246,56 +246,22 @@ class Tutor extends Service\Model
             $query->orderBy(DB::raw("FIELD(id,{$tutor_id})"), 'desc');
         }
 
-        if (true) {
-            if (isset($place)) {
-                if ($place == 'tutor') {
-                    $query->has('markers');
-                    if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
-                        $query->orderByDistanceToMarkers($station_id, 'green');
-                    }
-                }
-                if ($place == 'home') {
-                    $query->has('departure');
-                    if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
-                        $query->orderByIntersectingMetro($station_id);
-                    }
+        if (isset($place)) {
+            if ($place == 'tutor') {
+                $query->has('markers');
+                if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
+                    $query->orderByDistanceToMarkers($station_id, 'green');
                 }
             }
-            if (isset($sort) && $sort = 'most-popular') {
-                $query->orderBy('clients_count', 'desc');
-            }
-        } else {
-            // старая версия – depricated
-            if (isset($priority)) {
-                switch ($priority) {
-                    // у репетитора
-                    case 2:
-                    # отсеиваем репетиторов без зеленых маркеров
-                    $query->has('markers')->orderByDistanceToMarkers($station_id, 'green');
-                    break;
-                    // у себя дома
-                    case 3:
-                    $query->has('departure')->orderByIntersectingMetro($station_id)->orderByDistanceToMarkers($station_id);
-                    break;
-                    // сначала дороже
-                    case 4:
-                    $query->orderBy('public_price', 'desc');
-                    break;
-                    // сначала дешевле
-                    case 5:
-                    $query->orderBy('public_price', 'asc');
-                    break;
-                    // по средней оценке
-                    case 6:
-                    $query->orderBy('review_avg', 'desc');
-                    break;
-                    // (1) по популярности
-                    default:
-                    $query->orderBy('clients_count', 'desc');
+            if ($place == 'home') {
+                $query->has('departure');
+                if (isset($sort) && $sort == 'nearest-metro' && $station_id) {
+                    $query->orderByIntersectingMetro($station_id);
                 }
-            } else {
-                $query->orderBy('clients_count', 'desc');
             }
+        }
+        if (isset($sort) && $sort = 'most-popular') {
+            $query->orderBy('clients_count', 'desc');
         }
 
 

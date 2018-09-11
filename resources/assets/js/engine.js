@@ -56,7 +56,7 @@
     //     setTimeout(closeModal, 300)
     // }
 
-    function closeModal(send_event) {
+    function closeModal() {
         if (typeof(beforeCloseModal) == 'function') {
             beforeCloseModal()
         }
@@ -74,14 +74,6 @@
                 }
             }
         }, 50)
-        if (send_event === true) {
-            data = {
-                event: 'configuration',
-                eventCategory: 'ex:close-stepper'
-            }
-            dataLayerPush(data)
-            console.log(data)
-        }
     }
 
     function openModal(id) {
@@ -488,26 +480,13 @@ function getNumber(str) {
     return parseInt(str.replace(/\D/g,''))
 }
 
-function openStepper() {
-    $('.stepper').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
-    bodyScrollLock.disableBodyScroll(document.querySelector('.stepper'))
-    data = {
-        event: 'configuration',
-        eventCategory: (scope.is_first_visit ? 'ex:open-stepper-first' : 'ex:open-stepper'),
-    }
-    dataLayerPush(data)
-    console.log(data)
+function openTutor() {
+    $('.tutor-profile-popup__content').scrollTop(0)
+    $('.tutor-profile-popup').show(0).removeClass('modal-animate-close').addClass('modal-animate-open')
+    bodyScrollLock.disableBodyScroll(document.querySelector('.tutor-profile-popup__content'))
 }
 
-function closeStepper(send_event) {
-    $('.stepper').removeClass('modal-animate-open').addClass('modal-animate-close')
+function closeTutor() {
+    $('.tutor-profile-popup').removeClass('modal-animate-open').addClass('modal-animate-close')
     bodyScrollLock.clearAllBodyScrollLocks()
-    if (send_event === true) {
-        data = {
-            event: 'configuration',
-            eventCategory: 'ex:close-stepper'
-        }
-        dataLayerPush(data)
-        console.log(data)
-    }
 }

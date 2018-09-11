@@ -19,6 +19,12 @@ angular
             # count++ if $scope.search.hasOwnProperty('station_id') && $scope.search.station_id
             count
 
+        # подробная анкета
+        $scope.openTutor = (tutor, index) ->
+            $scope.popup_tutor = tutor
+            $scope.gmap(tutor, index)
+            openTutor()
+
         $scope.filterPopup = (popup) ->
             if Object.keys($scope.popups).length
                 $scope.popups = {}
