@@ -35,7 +35,11 @@ class PagesController extends Controller
     public function tutor($id)
     {
         if (Tutor::whereId($id)->exists()) {
-            $html = Variable::display('page-tutor-profile');
+            $variable = 'page-tutor-profile';
+            if (isDevSubdomain()) {
+                $variable .= '-dev';
+            }
+            $html = Variable::display($variable);
             Parser::compileTutor($id, $html);
             $status = 200;
         } else {

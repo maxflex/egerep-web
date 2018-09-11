@@ -1386,25 +1386,9 @@ div[id^=svg] {
         & .search-result-contact {
             margin-top: 10px;
         }
-        & .request-sent-overlay {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-        & .request-sent-info {
-            color: #0d2034;
-            font-size: 1.5em;
-            text-align: center;
-        }
-        & .request-sent-profile-overlay {
-            height: 100%;
-            background: #dee7de;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
+        & .search-result-right {
+            padding-bottom: 100px;
+            padding-right: 20px;
         }
         & .tutor-reviews-wrapper {
             padding: 20px 20px;
@@ -1413,6 +1397,27 @@ div[id^=svg] {
             // padding: 0 !important;
         }
     }
+}
+
+.request-sent-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.request-sent-info {
+    color: #0d2034;
+    font-size: 1.5em;
+    text-align: center;
+}
+.request-sent-profile-overlay {
+    height: 100%;
+    background: #dee7de;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .search-result-contact-toggle {
@@ -1427,6 +1432,18 @@ div[id^=svg] {
     font-family: $font-bold;
     margin-bottom: 16px !important;
     padding-top: 8px;
+}
+
+.review-stars {
+	margin: 0;
+    font-size: 10px;
+    color: #5e8e5e;
+    & i {
+	    &:first-of-type {
+		    margin-left: 0 !important;
+	    }
+	    margin: 0 2px;
+    }
 }
 
 @media only screen and (max-width: 1000px) {

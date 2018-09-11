@@ -34,11 +34,6 @@ angular
             StreamService.run('filter_open', popup)
             if popup is 'all'
                 $scope.anno.hide() if $scope.show_intro
-                # data =
-                #     event: 'configuration'
-                #     eventCategory: if $scope.is_first_visit then 'ex:open-stepper-first' else 'ex:open-stepper'
-                # dataLayerPush(data)
-                # console.log(data)
 
         # получить рейтинг с отклонием
         $scope.getStarRating = (rating) ->
@@ -118,67 +113,12 @@ angular
                 dataLayerPush(data)
                 console.log(data)
 
-        bindWatchersDev = ->
-            $scope.$watchCollection 'search.subjects', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:subjects'
-                    eventAction: $scope.SubjectService.getSelected().map((subject_id) -> $scope.subjects[subject_id].eng).join(',')
-                dataLayerPush(data)
-                console.log(data)
-
-            $scope.$watch 'search.place', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:place'
-                    eventAction: $scope.search.place
-                dataLayerPush(data)
-                console.log(data)
-
-            $scope.$watch 'search.sort', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:sort'
-                    eventAction: $scope.search.sort
-                dataLayerPush(data)
-                console.log(data)
-
-            $scope.$watch 'search.station_id', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:station'
-                    eventAction: if $scope.search.station_id then $scope.stations[$scope.search.station_id].title else ''
-                dataLayerPush(data)
-                console.log(data)
-
-            $scope.$watch 'search.grade', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:grade'
-                    eventAction: $scope.search.grade
-                dataLayerPush(data)
-                console.log(data)
-
-            $scope.$watch 'search.preparation_direction', (newVal, oldVal) ->
-                return if newVal is oldVal
-                data =
-                    event: 'configuration'
-                    eventCategory: 'ex:preparation_direction'
-                    eventAction: $scope.search.preparation_direction
-                dataLayerPush(data)
-                console.log(data)
-
         handleScrollDesktop = ->
-            if not $scope.hasOwnProperty('is_first_visit')
-                wrapper = $('.filter-groups')
-                sticky = wrapper.position().top - 1
-                $(window).on 'scroll', ->
-                    if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
+            wrapper = $('.filter-groups')
+            sticky = wrapper.position().top - 1
+            $(window).on 'scroll', ->
+                console.log(window.pageYOffset, sticky, window.pageYOffset > sticky)
+                if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
 
         handleScrollMobile = ->
             # sticky = $('.filter-full-width').position().top - 1
@@ -193,7 +133,7 @@ angular
 
         # страница поиска
         $timeout ->
-            $timeout((if $scope.hasOwnProperty('is_first_visit') then bindWatchersDev else bindWatchers), 500)
+            $timeout(bindWatchers, 500)
             if not $scope.profilePage() and window.location.pathname isnt '/request'
                 # if $scope.page_was_refreshed and $.cookie('search') isnt undefined
                 #     id = $scope.search.id
@@ -213,11 +153,9 @@ angular
 
                 SubjectService.init($scope.search.subjects)
                 StreamService.run('landing', 'serp')
-                if $scope.hasOwnProperty('is_first_visit')
-                    $scope.filter() if not $scope.is_first_visit
-                else
-                    $scope.filter()
+                $scope.filter()
             else
+                $scope.gmap($scope.popup_tutor) # open tutor
                 $scope.index_from_hash = window.location.hash.substring(1)
                 StreamService.run 'landing', StreamService.identifySource(),
                     if $scope.profilePage() then {tutor_id: $scope.tutor.id, position: $scope.getIndex()} else {}
@@ -346,16 +284,6 @@ angular
         $scope.reviewsLeft = (tutor) ->
             reviews_left = tutor.reviews_count - tutor.displayed_reviews.length
             if reviews_left > REVIEWS_PER_PAGE then REVIEWS_PER_PAGE else reviews_left
-
-        $scope.stepperFilter = ->
-            closeStepper()
-            $scope.filter()
-            $scope.is_first_visit = false
-            data =
-                event: 'configuration'
-                eventCategory: 'ex:show-tutors'
-            dataLayerPush(data)
-            console.log(data)
 
         # чтобы не редиректило в начале
         filter_used = false
