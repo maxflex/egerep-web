@@ -117,8 +117,14 @@ angular
             wrapper = $('.filter-groups')
             sticky = wrapper.position().top - 1
             $(window).on 'scroll', ->
-                console.log(window.pageYOffset, sticky, window.pageYOffset > sticky)
-                if window.pageYOffset > sticky then $('body').addClass('sticky') else $('body').removeClass('sticky')
+                if window.pageYOffset > sticky
+                    if not $('body').hasClass('sticky')
+                        console.log('class added')
+                        $('body').addClass('sticky')
+                else
+                    if $('body').hasClass('sticky')
+                        console.log('class removed')
+                        $('body').removeClass('sticky')
 
         handleScrollMobile = ->
             # sticky = $('.filter-full-width').position().top - 1
