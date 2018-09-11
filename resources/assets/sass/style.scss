@@ -1404,8 +1404,13 @@ div[id^=svg] {
             width: 100%;
             top: 0;
             left: 0;
-            // border-radius: 10px;
             z-index: 1;
+        }
+        & .tutor-reviews-wrapper {
+            padding: 20px 20px;
+            // background: white;
+            // margin-top: 10px;
+            // padding: 0 !important;
         }
     }
 }
