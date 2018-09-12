@@ -316,7 +316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  Anno.prototype.overlayElem = function() {
-	    return $("<div class='anno-overlay " + this.overlayClassName + "'></div>").click((function(_this) {
+	    return $("<div onclick='introCloseOverlay()' class='anno-overlay " + this.overlayClassName + "'></div>").click((function(_this) {
 	      return function(evt) {
 	        return _this.overlayClick.call(_this, _this, evt);
 	      };
@@ -705,7 +705,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  AnnoButton.DoneButton = new AnnoButton({
 	    text: 'Понятно',
 	    click: function() {
-	      return this.hide();
+			data = {
+				event: 'configuration',
+				eventCategory: 'intro-close',
+				eventAction: 'ok-button'
+			}
+			dataLayerPush(data)
+			console.log(data)
+	      	return this.hide();
 	    }
 	  });
 

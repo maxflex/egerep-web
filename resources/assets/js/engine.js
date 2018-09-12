@@ -490,3 +490,13 @@ function closeTutor() {
     $('.tutor-profile-popup').removeClass('modal-animate-open').addClass('modal-animate-close')
     bodyScrollLock.clearAllBodyScrollLocks()
 }
+
+function introCloseOverlay() {
+    data = {
+        event: 'configuration',
+        eventCategory: 'intro-close',
+        eventAction: 'click-outside'
+    }
+    dataLayerPush(data)
+    console.log(data)
+}

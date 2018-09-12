@@ -21,6 +21,11 @@ angular
 
         # подробная анкета
         $scope.openTutor = (tutor, index) ->
+            data =
+                event: 'configuration'
+                eventCategory: 'full-tutor-profile'
+            dataLayerPush(data)
+            console.log(data)
             $scope.popup_tutor = tutor
             $scope.gmap(tutor, index)
             openTutor()
@@ -365,6 +370,7 @@ angular
                                     content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
                                     position: 'center-top'
                                     arrowPosition: 'center-bottom'
+                                    buttons: [AnnoButton.DoneButton]
                                     onHide: ->
                                         $('body').removeClass('disable-scroll')
                                 $timeout ->
@@ -377,6 +383,7 @@ angular
                                     content: '<h4>Пользуйтесь фильтрами</h4>В базе ' + $scope.tutors_count + ' репетиторов. Чтобы увидеть анкеты подходящие именно вам, пользуйтесь фильтрами'
                                     position: 'center-bottom'
                                     arrowPosition: 'center-top'
+                                    buttons: [AnnoButton.DoneButton]
                                 $('.fake-select').on 'click', -> $scope.anno.hide()
                                 $scope.anno.show()
                     , 500
