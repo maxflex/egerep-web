@@ -7,14 +7,6 @@
 
     Route::get('sitemap.xml', 'SitemapController@index');
 
-    Route::get('/open-stepper', function() {
-        if (\App::environment('local')) {
-            // $_SESSION['stepper_opened'] = 1;
-        } else {
-            $_SESSION['stepper_opened'] = 1;
-        }
-    });
-
     # 301 редирект старых преподов
     Route::get('/tutors/person/{id}', function($id) {
         $new_tutor_id = \App\Models\Tutor::where('id_a_pers', $id)->value('id');
