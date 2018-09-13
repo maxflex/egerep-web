@@ -124,11 +124,9 @@ angular
             $(window).on 'scroll', ->
                 if window.pageYOffset > sticky
                     if not $('body').hasClass('sticky')
-                        console.log('class added')
                         $('body').addClass('sticky')
                 else
                     if $('body').hasClass('sticky')
-                        console.log('class removed')
                         $('body').removeClass('sticky')
 
         handleScrollMobile = ->
