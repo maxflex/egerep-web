@@ -53,7 +53,7 @@ if (! isset($_SESSION['sent_ids'])) {
     $_SESSION['sent_ids'] = [];
 }
 
-define('AB_TEST_KEY', 'ab-test-one-window-profile');
+define('AB_TEST_KEY', 'ab-test-one-window-profile-2');
 
 if (! isset($_COOKIE[AB_TEST_KEY])) {
     $variant = mt_rand(0, 1);

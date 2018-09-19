@@ -279,8 +279,8 @@
 
     function isDevSubdomain()
     {
-        // return false;
         if (\App::environment('local')) {
+            // return false;
             return true;
         }
         $parts = explode('.', @$_SERVER['HTTP_HOST']);
