@@ -93,9 +93,6 @@ class Page extends Model
         if (isDevSubdomain()) {
             $variable_name = 'serp-dev';
         }
-        if ($_COOKIE[AB_TEST_KEY] && !isMobile()) {
-            $variable_name = 'serp-dev';
-        }
         $value = Variable::display($variable_name);
         Parser::compileSeo($this, $value);
         return Parser::compilePage($this, $value);

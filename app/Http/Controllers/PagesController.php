@@ -39,9 +39,6 @@ class PagesController extends Controller
             if (isDevSubdomain()) {
                 $variable = 'page-tutor-profile-dev';
             }
-            if ($_COOKIE[AB_TEST_KEY]) {
-                $variable_name = 'page-tutor-profile-serp-dev';
-            }
             $html = Variable::display($variable);
             Parser::compileTutor($id, $html);
             $status = 200;
