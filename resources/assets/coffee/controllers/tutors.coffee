@@ -111,6 +111,7 @@ angular
 
             $scope.$watchCollection 'search.station_id', (newVal, oldVal) ->
                 return if newVal is oldVal
+                $scope.search.sort = if newVal then 'nearest-metro' else 'most-popular'
                 data =
                     event: 'configuration'
                     eventCategory: 'station'
