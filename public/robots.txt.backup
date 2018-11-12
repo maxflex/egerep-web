@@ -1,0 +1,31 @@
+User-agent: *
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+Disallow: /tutors*
+Disallow: *=
+Disallow: /?
+Disallow: /tutors/person/*
+
+User-agent: Googlebot
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+Disallow: /tutors*
+Disallow: *=
+Disallow: /?
+Disallow: /tutors/person/*
+
+User-agent: Yandex
+Disallow: /login$
+Disallow: /for-tutors$
+Disallow: /cv$
+Disallow: /tutors*
+Disallow: *=
+Disallow: /?
+Disallow: /tutors/person/*
+
+Host: https://ege-repetitor.ru
+
+Sitemap: https://ege-repetitor.ru/sitemap.xml
+

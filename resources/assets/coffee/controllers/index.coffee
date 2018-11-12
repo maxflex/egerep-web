@@ -12,6 +12,8 @@ angular
             $scope.reviews_page++
             # StreamService.run('load_more_tutors', null, {page: $scope.page})
             searchReviews()
+        
+        $scope.roundRating = (review) -> Math.round(review.score / 2)
 
         # $scope.$watch 'page', (newVal, oldVal) -> $.cookie('page', $scope.page) if newVal isnt undefined
 
