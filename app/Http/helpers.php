@@ -291,3 +291,8 @@
     {
         return date('Y') - $year;
     }
+
+    function isExperiment($key = AB_TEST_KEY)
+    {
+      return isset($_COOKIE[$key]) && $_COOKIE[$key];
+    }

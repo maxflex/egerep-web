@@ -56,6 +56,14 @@ class Tutor extends Service\Model
         ]));
     }
 
+    public function getPublicPriceAttribute($value)
+    {
+      if (isExperiment()) {
+        return round($value * 0.75 / 100) * 100;
+      }
+      return $value;
+    }
+
     public function getAgeAttribute()
     {
         return date('Y') - date('Y', strtotime($this->birthday));
