@@ -58,7 +58,7 @@ class Tutor extends Service\Model
 
     public function getPublicPriceAttribute($value)
     {
-      if (isExperiment()) {
+      if (isExperiment() && !isset($_GET['p'])) {
         return round($value * 0.75 / 100) * 100;
       }
       return $value;
