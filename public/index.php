@@ -53,13 +53,14 @@ if (! isset($_SESSION['sent_ids'])) {
     $_SESSION['sent_ids'] = [];
 }
 
+/*
 define('AB_TEST_KEY', 'ab-test-discount-price');
 
 if (! isset($_COOKIE[AB_TEST_KEY])) {
     $variant = mt_rand(0, 1);
     setcookie(AB_TEST_KEY, $variant, time() + (86400 * 30 * 3), '/'); // кука на 3 месяца
     $_COOKIE[AB_TEST_KEY] = $variant;
-}
+}*/
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
