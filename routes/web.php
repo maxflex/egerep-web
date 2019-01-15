@@ -50,6 +50,13 @@
         return $html;
     });
 
+    Route::get('/payment-test', function() {
+        if (isDevSubdomain()) {
+            $html = Variable::display('page-payment-dev');
+            return $html;
+        }
+    });
+
     Route::get('/full', function() {
         unset($_SESSION['force_mobile']);
         $_SESSION['force_full'] = true;

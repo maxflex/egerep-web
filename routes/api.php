@@ -8,6 +8,10 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::get('tutors/login', 'TutorsController@login');
     Route::post('tutors/markers', 'TutorsController@markers');
     Route::get('tutors/reviews/{id}', 'TutorsController@reviews');
+
+    Route::post('payments/getOrderStatus', 'PaymentsController@getOrderStatus');
+    Route::post('payments', 'PaymentsController@proceed');
+    
     Route::resource('tutors', 'TutorsController');
 
     Route::get('reviews/random', 'RandomReviewsController@index');
