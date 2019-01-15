@@ -52,6 +52,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'dev-url' => env('APP_DEV_URL'),
     'api-url' => env('API_URL'),
 
     'admin-phone-numbers' => explode(',', env('ADMIN_PHONE_NUMBERS')),
