@@ -6349,7 +6349,7 @@ select {
     /* Opera */
     transition: all .1s ease;
     margin: 0 10px; }
-    #for-tutors > a i[class^='flaticon-']:before {
+    #for-tutors > a .fa:before {
       font-size: 50px;
       margin: 0; }
     #for-tutors > a > div {

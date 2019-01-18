@@ -50,6 +50,21 @@
         return $html;
     });
 
+
+    Route::get('/payment/oferta', function() {
+        if (isDevSubdomain()) {
+            $html = Variable::display('page-payment-oferta');
+            return $html;
+        }
+    });
+
+    Route::get('/payment/tariffs', function() {
+        if (isDevSubdomain()) {
+            $html = Variable::display('page-payment-tariffs');
+            return $html;
+        }
+    });
+
     Route::get('/payment-test', function() {
         if (isDevSubdomain()) {
             $html = Variable::display('page-payment-dev');

@@ -659,7 +659,7 @@ select {
         -o-transition: all .1s ease; /* Opera */
         transition: all .1s ease;
         margin: 0 10px;
-        & i[class^='flaticon-']:before {
+        & .fa:before {
             font-size: 50px;
             margin: 0;
         }
