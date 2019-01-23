@@ -23,7 +23,7 @@ class PaymentsController extends Controller
                 'orderNumber' => uniqid(),
                 'userName' => config('payment.login'),
                 'password' => config('payment.password'),
-                'returnUrl' => config('app.dev-url') . 'payment-test',
+                'returnUrl' => config('app.url') . 'payment-test',
                 'amount' => 100,
             ]
         ]);
