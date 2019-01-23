@@ -52,24 +52,18 @@
 
 
     Route::get('/payment/oferta', function() {
-        if (isDevSubdomain()) {
-            $html = Variable::display('page-payment-oferta');
-            return $html;
-        }
+        $html = Variable::display('page-payment-oferta');
+        return $html;
     });
 
     Route::get('/payment/tariffs', function() {
-        if (isDevSubdomain()) {
-            $html = Variable::display('page-payment-tariffs');
-            return $html;
-        }
+        $html = Variable::display('page-payment-tariffs');
+        return $html;
     });
 
     Route::get('/payment-test', function() {
-        if (isDevSubdomain()) {
-            $html = Variable::display('page-payment-dev');
-            return $html;
-        }
+        $html = Variable::display('page-payment');
+        return $html;
     });
 
     Route::get('/full', function() {
