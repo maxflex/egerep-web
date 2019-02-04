@@ -22,7 +22,7 @@ class PaymentsController extends Controller
             'form_params' => [
                 'orderNumber' => uniqid(),
                 'userName' => config('payment.login'),
-                'password' => config('payment.password'),
+                'password' => urlencode(config('payment.password')),
                 'returnUrl' => config('app.url') . 'payment',
                 'amount' => $request->sum * 100,
                 'description' => $request->fio,
@@ -37,7 +37,7 @@ class PaymentsController extends Controller
         $response = $this->client->request('POST', 'getOrderStatus.do', [
             'form_params' => [
                 'userName' => config('payment.login'),
-                'password' => config('payment.password'),
+                'password' => urlencode(config('payment.password')),
                 'orderId' => $request->orderId,
                 'language' => $request->lang,
             ],
