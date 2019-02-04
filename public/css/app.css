@@ -6185,7 +6185,8 @@ textarea {
 .phone-login-form {
   display: inline-block;
   margin: 0;
-  text-align: center; }
+  text-align: center;
+  position: relative; }
 
 .mb {
   margin-bottom: 10px; }

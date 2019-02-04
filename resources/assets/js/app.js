@@ -388,29 +388,36 @@
   angular.module('Egerep').controller('LoginCtrl', function($scope, $timeout, Sms, Tutor, StreamService) {
     var login;
     bindArguments($scope, arguments);
+    $scope.loading = true;
     login = function() {
       return Tutor.login({}, function(response) {
-        return $scope.tutor = response;
+        $scope.tutor = response;
+        return redirect('/payment');
       }, function() {
-        return $scope.tutor = null;
+        $scope.tutor = null;
+        return $scope.loading = false;
       });
     };
     login();
     $scope.sendCode = function() {
       $scope.error_message = false;
+      $scope.loading = true;
       return Sms.save({
         phone: $scope.phone
       }, function() {
         $scope.code_sent = true;
-        return $timeout(function() {
+        $timeout(function() {
           return $('#code-input').focus();
         });
+        return $scope.loading = false;
       }, function() {
-        return $scope.error_message = 'неверный номер телефона';
+        $scope.error_message = 'неверный номер телефона';
+        return $scope.loading = false;
       });
     };
     return $scope.checkCode = function() {
       $scope.error_message = false;
+      $scope.loading = true;
       return Sms.get({
         code: $scope.code
       }, function() {
@@ -419,7 +426,8 @@
         if (response.status === 403) {
           redirect('/');
         }
-        return $scope.error_message = 'код введен неверно';
+        $scope.error_message = 'код введен неверно';
+        return $scope.loading = false;
       });
     };
   });
@@ -431,10 +439,21 @@
     bindArguments($scope, arguments);
     $scope.loading = false;
     $scope.initial_loading = true;
+    $scope.sum = '';
+    $scope.fio = '';
+    $scope.error = '';
     $scope.proceed = function() {
+      $scope.error = '';
       $scope.loading = true;
-      return $http.post('api/payments').then(function(r) {
+      return $http.post('api/payments', {
+        sum: $scope.sum,
+        fio: $scope.fio
+      }).then(function(r) {
         return redirect(r.data.formUrl);
+      }, function(e) {
+        $scope.error = e.data[Object.keys(e.data)[0]][0];
+        $scope.loading = false;
+        return console.log('error', e);
       });
     };
     return $timeout(function() {
@@ -1109,23 +1128,6 @@
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
   angular.module('Egerep').directive('ngAge', function() {
     return {
       restrict: 'A',
@@ -1533,6 +1535,23 @@
         });
       }
     };
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

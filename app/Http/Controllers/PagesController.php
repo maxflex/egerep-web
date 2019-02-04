@@ -49,23 +49,4 @@ class PagesController extends Controller
         $_SESSION['action'] = 'profile';
         return response()->view('pages.index', compact('html'), $status);
     }
-
-    /**
-     * Auto login from CRM
-     */
-    public function login($hash)
-    {
-        $salt = 'AxQWRu2y3PhE1D';
-        $date = date('Y-m-d H');
-        $tutor_id_hash = substr($hash, -32, 32);
-        $hash = substr($hash, 0, 32);
-        if (md5($salt . $date) == $hash) {
-            $tutor = Tutor::loggable()->whereRaw("MD5(CONCAT(id, '{$salt}', '{$hash}'))='{$tutor_id_hash}'");
-            if ($tutor->exists()) {
-                Tutor::login($tutor->value('id'), false);
-                return redirect('login');
-            }
-        }
-        abort(404);
-    }
 }

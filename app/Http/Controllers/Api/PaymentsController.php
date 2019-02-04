@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\Requests\PaymentProceed;
 use App\Http\Controllers\Controller;
 
 class PaymentsController extends Controller
@@ -16,15 +16,16 @@ class PaymentsController extends Controller
         $this->client = new \GuzzleHttp\Client(['base_uri' => 'https://web.rbsuat.com/ab/rest/',]);
     }
 
-    public function proceed()
+    public function proceed(PaymentProceed $request)
     {
         $response = $this->client->request('POST', 'register.do', [
             'form_params' => [
                 'orderNumber' => uniqid(),
                 'userName' => config('payment.login'),
                 'password' => config('payment.password'),
-                'returnUrl' => config('app.url') . 'payment-test',
-                'amount' => 100,
+                'returnUrl' => config('app.url') . 'payment',
+                'amount' => $request->sum * 100,
+                'description' => $request->fio,
             ]
         ]);
 

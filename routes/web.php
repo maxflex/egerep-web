@@ -44,11 +44,11 @@
         return $html;
     });
 
-    Route::get('/login', function() {
-        $html = Variable::display('page-login');
-        $_SESSION['action'] = 'login';
-        return $html;
-    });
+    // Route::get('/login', function() {
+    //     $html = Variable::display('page-login');
+    //     $_SESSION['action'] = 'login';
+    //     return $html;
+    // });
 
 
     Route::get('/payment/oferta', function() {
@@ -61,7 +61,7 @@
         return $html;
     });
 
-    Route::get('/payment-test', function() {
+    Route::get('/payment', function() {
         $html = Variable::display('page-payment');
         return $html;
     });

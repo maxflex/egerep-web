@@ -6,10 +6,19 @@ angular
         $scope.loading = false
         $scope.initial_loading = true
 
+        $scope.sum = ''
+        $scope.fio = ''
+        $scope.error = ''
+
         $scope.proceed = ->
+            $scope.error = ''
             $scope.loading = true
-            $http.post('api/payments').then (r) ->
+            $http.post('api/payments', {sum: $scope.sum, fio: $scope.fio}).then (r) ->
                 redirect(r.data.formUrl)
+            , (e) ->
+                $scope.error = e.data[Object.keys(e.data)[0]][0]
+                $scope.loading = false
+                console.log('error', e)
         
         $timeout ->
             if $scope.orderId

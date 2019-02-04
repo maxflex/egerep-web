@@ -65,7 +65,7 @@ class SmsController extends Controller
                 $phone = cleanNumber($request->phone);
                 $_SESSION['tmp_tutor_id'] = $tutor_id;
                 $data = compact('code', 'phone');
-                return Limiter::run("code:{$phone}", 24, 5, function() use ($data) {
+                return Limiter::run("code:{$phone}", 24, 50, function() use ($data) {
                     Sms::send($data['phone'], $data['code'] . ' – код доступа к личному кабинету ЕГЭ-Репетитор');
                 });
             } else {

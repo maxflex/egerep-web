@@ -304,17 +304,9 @@ class Tutor extends Service\Model
         return $query->get();
     }
 
-    /**
-     * $log_time – логировать время входа?
-     */
-    public static function login($tutor_id, $log_time = true)
+    public static function login($tutor_id)
     {
         $_SESSION['tutor_id'] = $tutor_id;
-        if ($log_time) {
-            egerep('tutors')->whereId($tutor_id)->update([
-                'last_login_time' => now()
-            ]);
-        }
     }
 
     /**

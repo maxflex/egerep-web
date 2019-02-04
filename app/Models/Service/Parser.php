@@ -99,7 +99,11 @@
                             $replacement = fact(...$args);
                             break;
                         case 'tutor':
-                            $replacement = Tutor::find($args[0])->toJson();
+                            if ($args[0] === 'logged') {
+                                $replacement = Tutor::find($_SESSION['tutor_id'])->toJson();
+                            } else {
+                                $replacement = Tutor::find($args[0])->toJson();
+                            }
                             break;
                         case 'elixir':
                             $replacement = elixir($args[0]);
