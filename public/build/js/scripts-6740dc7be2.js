@@ -15118,23 +15118,6 @@ return /******/ (function(modules) { // webpackBootstrap
 }).call(this);
 
 (function() {
-  angular.module('Egerep').value('Genders', {
-    male: 'мужской',
-    female: 'женский'
-  }).value('Sources', {
-    LANDING: 'landing',
-    LANDING_PROFILE: 'landing_profile',
-    LANDING_HELP: 'landing_help',
-    FILTER: 'filter',
-    PROFILE_REQUEST: 'profilerequest',
-    SERP_REQUEST: 'serprequest',
-    HELP_REQUEST: 'helprequest',
-    MORE_TUTORS: 'more_tutors'
-  });
-
-}).call(this);
-
-(function() {
 
 
 }).call(this);
@@ -15348,11 +15331,10 @@ return /******/ (function(modules) { // webpackBootstrap
         sum: $scope.sum,
         fio: $scope.fio
       }).then(function(r) {
-        return console.log(r);
+        return redirect(r.data.formUrl);
       }, function(e) {
         $scope.error = e.data[Object.keys(e.data)[0]][0];
-        $scope.loading = false;
-        return console.log('error', e);
+        return $scope.loading = false;
       });
     };
     return $timeout(function() {
@@ -16022,6 +16004,23 @@ return /******/ (function(modules) { // webpackBootstrap
         });
       }
     });
+  });
+
+}).call(this);
+
+(function() {
+  angular.module('Egerep').value('Genders', {
+    male: 'мужской',
+    female: 'женский'
+  }).value('Sources', {
+    LANDING: 'landing',
+    LANDING_PROFILE: 'landing_profile',
+    LANDING_HELP: 'landing_help',
+    FILTER: 'filter',
+    PROFILE_REQUEST: 'profilerequest',
+    SERP_REQUEST: 'serprequest',
+    HELP_REQUEST: 'helprequest',
+    MORE_TUTORS: 'more_tutors'
   });
 
 }).call(this);

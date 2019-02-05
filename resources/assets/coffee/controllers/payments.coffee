@@ -14,7 +14,7 @@ angular
             $scope.error = ''
             $scope.loading = true
             $http.post('api/payments', {sum: $scope.sum, fio: $scope.fio}).then (r) ->
-                redirect(r.data.formUrl)
+                redirect(r.data.formUrl) 
             , (e) ->
                 $scope.error = e.data[Object.keys(e.data)[0]][0]
                 $scope.loading = false
