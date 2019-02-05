@@ -13,7 +13,7 @@ class PaymentsController extends Controller
 
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client(['base_uri' => 'https://web.rbsuat.com/ab/rest/',]);
+        $this->client = new \GuzzleHttp\Client(['base_uri' => config('payment.host')]);
     }
 
     public function proceed(PaymentProceed $request)
