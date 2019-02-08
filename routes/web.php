@@ -61,10 +61,7 @@
         return $html;
     });
 
-    Route::get('/payment', function() {
-        $html = Variable::display('page-payment');
-        return $html;
-    });
+    Route::get('/payment', 'Api\PaymentsController@index');
 
     Route::get('/full', function() {
         unset($_SESSION['force_mobile']);

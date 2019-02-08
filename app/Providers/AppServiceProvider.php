@@ -22,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
             $phone = preg_replace("/[^0-9]/", "", $value);
             return @in_array($phone[0], [4, 9]);
         });
+        Validator::extend('dividedby', function($attribute, $value, $parameters, $validator) {
+           return $value % 10 === 0;
+        });
         // \DB::listen(function($query) {
         //     \Log::info($query->sql);
         // });

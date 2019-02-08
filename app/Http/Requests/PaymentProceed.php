@@ -24,7 +24,12 @@ class PaymentProceed extends FormRequest
     public function rules()
     {
         return [
-            'sum'   => ['required', 'numeric', 'min:1'],
+            'sum'   => [
+                'required', 
+                'numeric', 
+                'min:10',
+                'dividedby',
+            ],
             'fio'   => ['required']
         ];
     }
@@ -37,8 +42,9 @@ class PaymentProceed extends FormRequest
     public function messages()
     {
         return [
-            'min' => 'Минимальная сума оплаты – 1 руб.',
+            'min' => 'Минимальная сума оплаты – 10 руб.',
             'numeric' => 'Сума должна быть введена числом',
+            'dividedby' => 'Сума должна быть кратна 10',
             'sum.required' => 'Введите сумму для оплаты',
             'fio.required' => 'Введите ваше ФИО',
         ];
