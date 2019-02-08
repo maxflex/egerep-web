@@ -44,7 +44,7 @@ class PaymentProceed extends FormRequest
         return [
             'min' => 'Минимальная сумма оплаты – 10 руб.',
             'numeric' => 'Сумма должна быть введена числом',
-            'dividedby' => 'Сумма должна быть кратна 10',
+            'dividedby' => 'Введите сумму, кратную 10 руб.',
             'sum.required' => 'Введите сумму для оплаты',
             'fio.required' => 'Введите ваше ФИО',
         ];
