@@ -30,7 +30,8 @@ class PaymentProceed extends FormRequest
                 'min:10',
                 'dividedby',
             ],
-            'fio'   => ['required']
+            'fio'   => ['required'],
+            'email' => ['required', 'email'],
         ];
     }
 
@@ -47,6 +48,8 @@ class PaymentProceed extends FormRequest
             'dividedby' => 'Введите сумму, кратную 10 руб.',
             'sum.required' => 'Введите сумму для оплаты',
             'fio.required' => 'Введите ваше ФИО',
+            'email.required' => 'Укажите email, на него будет отправлен чек',
+            'email.email' => 'Email указан неверно',
         ];
     }
 }

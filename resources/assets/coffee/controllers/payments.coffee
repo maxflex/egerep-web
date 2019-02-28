@@ -8,12 +8,13 @@ angular
 
         $scope.sum = ''
         $scope.fio = ''
+        $scope.email = ''
         $scope.error = ''
 
         $scope.proceed = ->
             $scope.error = ''
             $scope.loading = true
-            $http.post('api/payments', {sum: $scope.sum, fio: $scope.fio}).then (r) ->
+            $http.post('api/payments', {sum: $scope.sum, fio: $scope.fio, email: $scope.email}).then (r) ->
                 redirect(r.data.formUrl) 
             , (e) ->
                 $scope.error = e.data[Object.keys(e.data)[0]][0]

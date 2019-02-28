@@ -19,11 +19,6 @@ class PaymentsController extends Controller
 
     public function index(Request $request)
     {
-
-        // Зарегистрировать на кассе
-        // if (isset($request->orderId)) {
-        //     $this->registerOrder($request->orderId);
-        // }
         $html = Variable::display('page-payment');
         return $html;
     }
@@ -38,15 +33,19 @@ class PaymentsController extends Controller
                 'returnUrl' => config('app.url') . 'payment',
                 'amount' => $request->sum * 100,
                 'description' => $request->fio,
+                'email' => $request->email,
             ]
         ]);
+        
+        // TODO: из параметров заказа не можем получить email
+        $_SESSION['email'] = $request->email;
 
         return $response->getBody();
     }
 
     public function getOrderStatus(Request $request)
     {
-        $response = $this->client->request('POST', 'getOrderStatus.do', [
+        $response = $this->client->request('POST', 'getOrderStatusExtended.do', [
             'form_params' => [
                 'userName' => config('payment.login'),
                 'password' => config('payment.password'),
@@ -54,50 +53,56 @@ class PaymentsController extends Controller
                 'language' => $request->lang,
             ],
         ]);
-        return $response->getBody();
+        
+        $order = json_decode($response->getBody()->getContents());
+            
+        $this->registerOrder($request->orderId, $order);
+        
+        return response()->json($order);
     }
 
-    // private function registerOrder($orderId)
-    // {
-    //     $client = new \GuzzleHttp\Client(['base_uri' => config('payment.terminal-host')]);
-    //     $response = $client->request('POST', 'stores/20190131-3AD9-40A2-806B-B23697976775/sales/add', [
-    //         'headers' => [
-    //             'Content-Type' => 'application/json',
-    //             'X-Authorization' =>  config('payment.terminal-password')
-    //         ],
-    //         'json' => [
-    //             [
-    //                 'uuid' => 
-    //             ]
-    //         ],
-    //     ]);
-    // }
-
-    // "uuid": "0ecab77f-7062-4a5f-aa20-35213db1397c",
-    // "doc_date": "2016-08-25 13:48:01",
-    // "doc_num": "ТД00-000001",
-    // "client_uuid": "4a65ecb6-8b1b-11df-be16-e0cb4ed5f70f",
-    // "client_name": "Kikinda (Сербия)",
-    // "dsum": 80.25,
-    // "debt": 80.25,
-    // "info": "",
-    // "emailphone": "79111111111",
-    // "pay_type": 1,
-    // "firm_address": "мой.магазин.рф",
-    // "goods": [
-    //   {
-    //     "good_uuid": "dee6e1a8-55bc-11d9-848a-00112f43529a",
-    //     "good_name": "Кондиционер БК-2300",
-    //     "good_code": "00001",
-    //     "quantity": 1.000,
-    //     "price": 80.25,
-    //     "dsum": 80.25,
-    //     "vat_rate": 0,
-    //     "vat_sum": 0.00,
-    //     "unit_uuid": "bd72d926-55bc-11d9-848a-00112f43529a",,
-    //     "unit_name": "шт",
-    //     "tag1214": 4
-    //   }
-    // ]
-
+    /**
+     * Зарегистрировать на кассе
+     */
+    private function registerOrder($orderId, $order)
+    {
+        $price = $order->amount / 100;
+        $client = new \GuzzleHttp\Client(['base_uri' => config('payment.terminal-host')]);
+        $response = $client->request('POST', 'stores/20190131-3AD9-40A2-806B-B23697976775/sales/add', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'X-Authorization' => config('payment.terminal-password')
+            ],
+            'json' => [
+                [
+                    'uuid' => 'admin',
+                    'doc_date' => now(),
+                    'doc_num' => $order->orderNumber,
+                    'client_uuid' => uniqid(),
+                    'client_name' => $order->orderDescription,
+                    'dsum' => $price,
+                    'debt' => $price,
+                    'info' => '',
+                    'emailphone' => $_SESSION['email'],
+                    'pay_type' => 1,
+                    'firm_address' => 'ege-repetitor.ru',
+                    'goods' => [
+                        [
+                            'good_uuid' => 1,
+                            'good_name' => 'Услуга по распространению рекламно-информационных материалов',
+                            'good_code' => 1,
+                            'quantity' => 1.000,
+                            'price' => $price,
+                            'dsum' => $price,
+                            'vat_rate' => 0,
+                            'vat_sum' => 0.00,
+                            'unit_uuid' => 1,
+                            'unit_name' => 'услуга',
+                            'tag1214' => 4,
+                        ]
+                    ],
+                ]
+            ],
+        ]);
+    }
 }

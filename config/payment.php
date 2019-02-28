@@ -5,5 +5,5 @@ return [
     'login' => env('PAYMENT_LOGIN'),
     'password' => env('PAYMENT_PASSWORD'),
     'terminal-host' => env('TERMINAL_HOST'),
-    'terminal-password' => ('TERMINAL_PASSWORD'),
+    'terminal-password' => env('TERMINAL_PASSWORD'),
 ];
