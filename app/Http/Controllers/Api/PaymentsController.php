@@ -75,7 +75,7 @@ class PaymentsController extends Controller
             ],
             'json' => [
                 [
-                    'uuid' => 'admin',
+                    'uuid' => uniqid(),
                     'doc_date' => now(),
                     'doc_num' => $order->orderNumber,
                     'client_uuid' => uniqid(),
