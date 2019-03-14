@@ -37,9 +37,6 @@ class PaymentsController extends Controller
             ]
         ]);
         
-        // TODO: из параметров заказа не можем получить email
-        $_SESSION['email'] = $request->email;
-
         return $response->getBody();
     }
 
@@ -83,7 +80,7 @@ class PaymentsController extends Controller
                     'dsum' => $price,
                     'debt' => $price,
                     'info' => '',
-                    'emailphone' => $_SESSION['email'],
+                    'emailphone' => $order->payerData->email,
                     'pay_type' => 1,
                     'firm_address' => 'ege-repetitor.ru',
                     'goods' => [
