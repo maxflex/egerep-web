@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PaymentProceed;
 use App\Http\Controllers\Controller;
 use App\Models\Variable;
+use App\Models\Payment;
 
 class PaymentsController extends Controller
 {
@@ -37,7 +38,16 @@ class PaymentsController extends Controller
             ]
         ]);
         
-        return $response->getBody();
+        $response = $response->getBody();
+
+        Payment::create([
+            'name' => $request->fio,
+            'email' => $request->email,
+            'sum' => $request->sum,
+            'order_id' => json_decode($response)->orderId,
+        ]);
+
+        return $response;
     }
 
     public function getOrderStatus(Request $request)
@@ -63,46 +73,54 @@ class PaymentsController extends Controller
      */
     private function registerOrder($orderId, $order)
     {
-        $price = $order->amount / 100;
-        // Только в случае успешной оплаты
-        if ($order->orderStatus == 2) {
-            $client = new \GuzzleHttp\Client(['base_uri' => config('payment.terminal-host')]);
-            $response = $client->request('POST', 'stores/20190131-3AD9-40A2-806B-B23697976775/sales/add', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'X-Authorization' => config('payment.terminal-password')
-                ],
-                'json' => [
-                    [
-                        'uuid' => uniqid(),
-                        'doc_date' => now(),
-                        'doc_num' => $order->orderNumber,
-                        'client_uuid' => uniqid(),
-                        'client_name' => $order->orderDescription,
-                        'dsum' => $price,
-                        'debt' => $price,
-                        'info' => '',
-                        'emailphone' => $order->payerData->email,
-                        'pay_type' => 1,
-                        'firm_address' => 'ege-repetitor.ru',
-                        'goods' => [
-                            [
-                                'good_uuid' => 1,
-                                'good_name' => 'Услуга по распространению рекламно-информационных материалов',
-                                'good_code' => 1,
-                                'quantity' => 1.000,
-                                'price' => $price,
-                                'dsum' => $price,
-                                'vat_rate' => 0,
-                                'vat_sum' => 0.00,
-                                'unit_uuid' => 1,
-                                'unit_name' => 'услуга',
-                                'tag1214' => 4,
-                            ]
-                        ],
-                    ]
-                ],
-            ]);
+        $payment = Payment::where('order_id', $orderId)->where('status', 'new')->first();
+        if ($payment !== null) {
+            $price = $order->amount / 100;
+            // Только в случае успешной оплаты
+            if ($order->orderStatus == 2) {
+                $client = new \GuzzleHttp\Client(['base_uri' => config('payment.terminal-host')]);
+                $response = $client->request('POST', 'stores/20190131-3AD9-40A2-806B-B23697976775/sales/add', [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'X-Authorization' => config('payment.terminal-password')
+                    ],
+                    'json' => [
+                        [
+                            'uuid' => uniqid(),
+                            'doc_date' => now(),
+                            'doc_num' => $order->orderNumber,
+                            'client_uuid' => uniqid(),
+                            'client_name' => $order->orderDescription,
+                            'dsum' => $price,
+                            'debt' => $price,
+                            'info' => '',
+                            'emailphone' => $payment->email,
+                            // 'emailphone' => $order->payerData->email,
+                            'pay_type' => 1,
+                            'firm_address' => 'ege-repetitor.ru',
+                            'goods' => [
+                                [
+                                    'good_uuid' => 1,
+                                    'good_name' => 'Услуга по распространению рекламно-информационных материалов',
+                                    'good_code' => 1,
+                                    'quantity' => 1.000,
+                                    'price' => $price,
+                                    'dsum' => $price,
+                                    'vat_rate' => 0,
+                                    'vat_sum' => 0.00,
+                                    'unit_uuid' => 1,
+                                    'unit_name' => 'услуга',
+                                    'tag1214' => 4,
+                                ]
+                            ],
+                        ]
+                    ],
+                ]);
+                $payment->status = 'receipt_printed';
+            } else {
+                $payment->status = 'error';
+            }
+            $payment->save();
         }
     }
 }
