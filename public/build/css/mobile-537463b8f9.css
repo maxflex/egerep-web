@@ -7651,7 +7651,7 @@ img.request-sent-svg {
     margin-bottom: 10px; }
 
 .lightbox {
-  position: absolute;
+  position: fixed;
   background: black;
   left: 0;
   top: 0;
