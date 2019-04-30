@@ -6829,11 +6829,10 @@ p, .p-like {
   background: white;
   left: 0;
   bottom: 0;
-  border-radius: 0;
+  border-radius: 10px 10px 0 0;
   display: none;
   overflow: hidden;
-  z-index: 99;
-  box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.5); }
+  z-index: 99; }
   .modal.active {
     display: block; }
   .modal .cross {
@@ -6895,8 +6894,8 @@ p, .p-like {
       top: 0;
       bottom: auto; }
       .modal .modal-button.modal-button-top img {
-        width: 24px;
-        height: 24px; }
+        width: 18px;
+        height: 18px; }
     .modal .modal-button.modal-button-bottom {
       top: auto;
       bottom: 0;
@@ -7650,5 +7649,18 @@ img.request-sent-svg {
     font-size: 18px;
     text-align: left;
     margin-bottom: 10px; }
+
+.lightbox {
+  position: absolute;
+  background: black;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  opacity: 0;
+  -webkit-transition: all linear .3s;
+  transition: all linear .3s;
+  z-index: 80; }
 
 /*# sourceMappingURL=mobile.css.map */

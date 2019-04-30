@@ -3987,12 +3987,12 @@ p {
     left: 0;
     bottom: 0;
     // top: 25%;
-    border-radius: 0;
+    border-radius: 10px 10px 0 0;
     display: none;
     // overflow: scroll;
     overflow: hidden;
     z-index: 99;
-    box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.5);
+    // box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.5);
     // -webkit-transform:translateZ(99px);
     //   -moz-transform:translateZ(99px);
     //   -o-transform:translateZ(99px);
@@ -4063,8 +4063,8 @@ p {
             top: 0;
             bottom: auto;
             & img {
-                width: 24px;
-                height: 24px;
+                width: 18px;
+                height: 18px;
             }
         }
         &.modal-button-bottom {
@@ -5001,4 +5001,17 @@ img.request-sent-svg {
         text-align: left;
         margin-bottom: 10px;
     }
+}
+
+.lightbox {
+    position: absolute;
+    background: black;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    opacity: 0;
+    transition: all linear .3s;
+    z-index: 80;
 }

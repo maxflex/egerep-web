@@ -61,13 +61,16 @@
             beforeCloseModal()
         }
         $('.modal.active').removeClass('modal-animate-open').addClass('modal-animate-close')
-        $('.modal-backdrop').hide(0)
+		$('.modal-backdrop').hide(0)
+		$('.lightbox').css('opacity', 0)
+
         setTimeout(function() {
             $('.modal.active').removeClass('active')
             $('body').removeClass('modal-open')
     		$("body").removeClass('open-modal-' + active_modal);
             active_modal = false
-            $('.container').off('touchmove');
+			$('.container').off('touchmove');
+			$('.lightbox').hide()
 /*
             if (typeof(isMobile) !== 'undefined') {
                 if(window.location.hash == "#modal") {
@@ -75,7 +78,7 @@
                 }
             }
 */
-        }, 50)
+        }, 300)
     }
 
     function openModal(id) {
@@ -85,7 +88,8 @@
         modal = $(".modal#modal-" + id)
         modal.removeClass('modal-animate-close').addClass('active').addClass('modal-animate-open')
         // $('#menu-overlay').height('95%').scrollTop(); // iphone5-safari fix
-        $("body").addClass('modal-open open-modal-' + id);
+		$("body").addClass('modal-open open-modal-' + id);
+		$('.lightbox').show().css('opacity', .7)
         active_modal = id
         $('.container').on('touchmove', function(e){e.preventDefault();});
         $('.modal-backdrop').show(0)
