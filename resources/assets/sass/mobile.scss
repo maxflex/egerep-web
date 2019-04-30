@@ -4347,7 +4347,7 @@ span.customSelect.custom-select-small .customSelectInner {
 
 .h1-like {
     @extend h1;
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-family: helveticaneuecyrbold;
 }
 
@@ -4719,8 +4719,8 @@ span.customSelect.custom-select-small .customSelectInner {
     padding: 1.458em 1em;
     & b {
         color: #b6b6b6;
-        font-size: 1.250em;
-        font-family: 'helveticaneuecyrmedium';
+        font-size: 24px;
+        font-family: 'helveticaneuecyrbold';
     }
     & a {
         color: white;
@@ -4906,7 +4906,7 @@ img.request-sent-svg {
 }
 
 .profile-header {
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-family: $font-bold;
     margin-bottom: 16px !important;
     padding-top: 8px;
@@ -5014,4 +5014,101 @@ img.request-sent-svg {
     opacity: 0;
     transition: all linear .3s;
     z-index: 80;
+}
+
+#modal-filter-all h3 {
+    text-align: left;
+    font-size: 16px;
+    font-family: 'helveticaneuecyrbold';
+    margin-bottom: 10px;
+}
+
+.filter-full-width {
+    background: #f3f3f3;
+    /*transition: background .1s linear, color .3s linear;*/
+}
+
+.filter-full-width.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+    background: #5c5c5c;
+    color: white;
+}
+
+.filter-full-width.sticky h3 {
+    color: white;
+}
+
+.filter-full-width.sticky #dropdown-svg polyline {
+    fill: white;
+}
+
+.filter-group.sticky div:last-child {
+    margin-bottom: 0;
+}
+
+.accordions.sticky {
+    padding-top: 90px;
+}
+
+.filter-full-width > .content {
+    padding: 1em;
+    display: flex;
+    align-items: center;
+}
+
+#dropdown-svg {
+    width: 14px;
+    height: 16px;
+    top: 5px;
+    right: -5px;
+    position: relative;
+}
+
+.filter-full-width h3 {
+    text-align: left;
+    font-size: 14px;
+    font-family: 'helveticaneuecyrbold';
+    margin-bottom: 1em;
+}
+
+.custom-checkboxes {
+    margin-left: 0;
+}
+
+.custom-checkboxes > div {
+    border: none;
+    height: 30px;
+}
+
+.custom-checkboxes > div input {
+    margin-right: 6px;
+}
+
+.custom-checkboxes > div span {
+    position: relative;
+    top: -2px;
+}
+
+.upper-select {
+    font-family: 'helveticaneuecyrregular';
+    top: 2px;
+    left: 160px;
+    position: relative;
+    position: absolute;
+}
+
+.h1-top {
+    font-size: 24px !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 0 !important;
+    font-family: 'helveticaneuecyrbold';
+}
+
+#modal-tutor {
+    & .profile-header {
+        padding-top: 18px; 
+    }
 }
