@@ -26,7 +26,7 @@ class Tutor extends Service\Model
 
     protected $commaSeparated = ['subjects', 'grades', 'branches'];
 
-    protected $multiLine = ['public_desc', 'education', 'achievements', 'experience', 'preferences'];
+    protected $multiLine = ['public_desc', 'education', 'achievements', 'experience', 'preferences', 'tutoring_experience'];
 
     public function departure()
     {
