@@ -298,6 +298,7 @@ angular
         # чтобы не редиректило в начале
         filter_used = false
         $scope.filter = (type = null) ->
+            $('html').scrollTop(0)
             $scope.popups = {}
             closeModal()
             $scope.tutors = []

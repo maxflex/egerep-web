@@ -15677,6 +15677,7 @@ return /******/ (function(modules) { // webpackBootstrap
       if (type == null) {
         type = null;
       }
+      $('html').scrollTop(0);
       $scope.popups = {};
       closeModal();
       $scope.tutors = [];

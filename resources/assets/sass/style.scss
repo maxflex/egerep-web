@@ -1024,9 +1024,8 @@ input::-webkit-inner-spin-button {
 
 hr.full-line {
     margin: 0;
-    left: -10000px;
     position: absolute;
-    width: 100000px;
+    width: 100%;
     margin-top: 30px;
     border-top: 1px solid #e7e7e7;
 }

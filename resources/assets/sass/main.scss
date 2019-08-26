@@ -805,6 +805,7 @@ $footer-height: 315px;
 .footer, .footer-blocks {
     background: $footer-bg-color;
     color: white;
+    overflow-x: hidden;
     & b {
         color: #ababab;
     }
