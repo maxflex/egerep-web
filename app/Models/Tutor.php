@@ -38,16 +38,6 @@ class Tutor extends Service\Model
         return $this->morphMany(Marker::class, 'markerable')->where('type', 'green');
     }
 
-    public function accounts()
-    {
-        return $this->hasMany(Account::class)->latest()->take(3);
-    }
-
-    public function plannedAccount()
-    {
-        return $this->hasOne(PlannedAccount::class);
-    }
-
     public function getDebtCalcAttribute()
     {
         return round(Debt::sum([

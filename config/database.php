@@ -67,18 +67,6 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
         ],
 
-        'egecrm' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST_EGECRM', 'localhost'),
-            'database'  => env('DB_DATABASE_EGECRM', 'egecrm'),
-            'username'  => env('DB_USERNAME_EGECRM', 'root'),
-            'password'  => env('DB_PASSWORD_EGECRM', 'root'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'unix_socket'   => env('DB_SOCKET', ''),
-        ],
-
         'egerep' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST_EGEREP'),

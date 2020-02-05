@@ -128,14 +128,6 @@ class TutorsController extends Controller
         return $tutors;
     }
 
-    public function login()
-    {
-        if (isset($_SESSION['tutor_id'])) {
-            return Tutor::with(['accounts', 'plannedAccount'])->find($_SESSION['tutor_id'])->append('debt_calc');
-        }
-        abort(401);
-    }
-
     public function markers(Request $request)
     {
         $subjects = [];
